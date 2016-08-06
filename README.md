@@ -21,7 +21,6 @@
 
 ##Functionality & Libraries
 1. [`Mvp`Google官方出品的`Mvp`架构项目，含有多个不同的架构分支（此为Dagger分支）](https://github.com/googlesamples/android-architecture/tree/todo-mvp-dagger/)
-
 2. [`Dagger2`Google根据Square的Dagger1出品的依赖注入框架，通过apt动态生成代码，性能优于用反射技术依赖注入的框架](https://github.com/google/dagger)
 3. [`Rxjava`提供优雅的响应式Api解决异步请求](https://github.com/ReactiveX/RxJava)
 4. [`RxAndroid`为Android提供响应式Api](https://github.com/ReactiveX/RxAndroid)
