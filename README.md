@@ -6,6 +6,7 @@
 
 ##Notice
 * 使用框架必须有Dagger2，Rxjava的基础.
+
 * 使用框架需继承`BaseApplication``BaseActivity``BaseFragment`.
 * 本框架不提供用Ui有关的任何第三方库.
 * **网络请求层**: 默认使用Retrofit，如今主流的网络请求框架有`Volley`,`Okhttp`,`Retrofit`(`Android-async-http`停止维护了)，因为这个是库基于Rxjava， Retrofit支持Rxjava，默认使用Okhttp请求(Okhttp使用Okio，Okio基于IO和NIO所以性能优于Volley,Volley内部封装有Imageloader,支持扩展Okhttp，封装和扩展比Okhttp好，但是比较适合频繁，数据量小得网络请求)，所以此库默认直接通过Dagger注入Retrofit实例给开发者.
