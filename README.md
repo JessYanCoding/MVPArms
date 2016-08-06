@@ -33,7 +33,7 @@
 11. [`Butterknife`JakeWharton大神出品的view注入框架](https://github.com/JakeWharton/butterknife)
 12. [`Androideventbus`一个轻量级使用注解的eventbus](https://github.com/hehonghui/AndroidEventBus)
 13. [`Timber`JakeWharton大神出品Log框架，内部代码极少，但是思想非常不错](https://github.com/JakeWharton/timber)
-14. [`Glide`此库没封装但是推荐大家了解，Api和`Picasso`差不多,缓存机制比`Picasso`复杂,速度快，适合处理大型图片流，支持gfit，`Fresco`太大了！，在5.0一下优势很大，5.0以上系统使用的内存管理和`Fresco`类似](https://github.com/bumptech/glide)
+14. [`Glide`此库没封装但是推荐大家了解，Api和`Picasso`差不多,缓存机制比`Picasso`复杂,速度快，适合处理大型图片流，支持gfit，`Fresco`太大了！，在5.0一下优势很大，5.0以上系统默认使用的内存管理和`Fresco`类似](https://github.com/bumptech/glide)
  
 
 ##About Me
