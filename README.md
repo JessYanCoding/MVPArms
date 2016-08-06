@@ -19,6 +19,21 @@
 
 * **Model层数据库** 同样优秀的数据库太多，`GreenDao`,`Realm`,`SqlBrite`（Square公司出品的rx响应式api数据库）,`SqlDelight`，各有各爱，所以本框架只提供一个统一得管理类DataManager，提供统一的接口CRUD,同样使用策略者模式，可以动态替换数据库，Model层提供ServiceManager（网路请求，Retrofit Api）和DataManager（数据持久层）,来提供给开发者，实现缓存和网络请求切换.
 
+##Functionality & Libraries
+1. [Google官方`Mvp`（Dagger分支）](https://github.com/googlesamples/android-architecture/tree/todo-mvp-dagger/)
+2. [`Dagger2`Google根据Square的Dagger1出品的依赖注入框架，通过apt动态生成代码，性能优于用反射技术依赖注入的框架](https://github.com/google/dagger)
+3. [`Rxjava`提供优雅的响应式Api解决异步请求](https://github.com/ReactiveX/RxJava)
+4. [`RxAndroid`为Android提供响应式Api](https://github.com/ReactiveX/RxAndroid)
+5. [`Rxlifecycle`在Android上使用rxjava都知道的一个坑，就是生命周期的解除订阅，这个框架通过绑定activity和fragment的生命周期完美解决](https://github.com/trello/RxLifecycle)
+6. [`Rxbinding`JakeWharton大神的View绑定框架，优雅的处理View的响应事件](https://github.com/JakeWharton/RxBinding)
+7. [`Retrofit`Square出品的网络请求库，极大的减少了http请求的代码和步骤](https://github.com/square/retrofit)
+8. [`Okhttp`同样Square出品，不多介绍，做Android都应该知道](https://github.com/square/okhttp)
+9. [`Autolayout`鸿洋大神的Android全尺寸适配框架](https://github.com/hongyangAndroid/AndroidAutoLayout)
+10. [`Gson`Google官方的Json Convert框架](https://github.com/google/gson)
+11. [`Butterknife`JakeWharton大神出品的view注入框架](https://github.com/JakeWharton/butterknife)
+12. [`Androideventbus`一个轻量级使用注解的eventbus](https://github.com/hehonghui/AndroidEventBus)
+13. [`Timber`JakeWharton大神出品Log框架，内部代码极少，但是思想非常不错](https://github.com/JakeWharton/timber)
+14. [`Glide`此库没封装但是推荐大家了解，Api和`Picasso`差不多,缓存机制比`Picasso`复杂,速度快，适合处理大型图片流，支持gfit，`Fresco`太大了！，在5.0一下优势很大，5.0以上系统使用的内存管理和`Fresco`类似](https://github.com/bumptech/glide)
 ##About Me
 * **Email**: jess.yan.effort@gmail.com
 
