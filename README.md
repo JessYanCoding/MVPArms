@@ -18,7 +18,7 @@
 
 * **图片加载**:因为图片加载框架各有优缺点，`Fresco`,`Picasso`,`Glide`这些都是现在比较主流得图片加载框架，所以为了扩展性本库不默认封装，提供一个统一得管理类Imageloader,使用策略者模式，使用者只用实现接口，就可以动态替换图片框架，外部提供统一接口加载图片，替换图片加载框架毫无痛点.
 
-* **Model层数据库** 同样优秀的数据库太多，`GreenDao`,`Realm`,`SqlBrite`（Square公司出品的rx响应式api数据库）,`SqlDelight`，各有各爱，所以本框架只提供一个统一得管理类DataManager，提供统一的接口CRUD,同样使用策略者模式，可以动态替换数据库，Model层提供ServiceManager（网路请求，Retrofit Api）和DataManager（数据持久层）,来提供给开发者，实现本地缓存和网络请求切换.
+* **Model层数据库** 同样优秀的数据库太多，`GreenDao`,`Realm`,`SqlBrite`（Square公司出品，对SQLiteOpenHelper封装，提供响应式api访问数据库）,`SqlDelight`，各有各爱，所以本框架只提供一个统一得管理类DataManager，提供统一的接口CRUD,同样使用策略者模式，可以动态替换数据库，Model层提供ServiceManager（网路请求，Retrofit Api）和DataManager（数据持久层）,来提供给开发者，实现本地缓存和网络请求切换.
 
 ##Functionality & Libraries
 1. [`Mvp`Google官方出品的`Mvp`架构项目，含有多个不同的架构分支(此为Dagger分支).](https://github.com/googlesamples/android-architecture/tree/todo-mvp-dagger/)
@@ -34,7 +34,7 @@
 11. [`Butterknife`JakeWharton大神出品的view注入框架.](https://github.com/JakeWharton/butterknife)
 12. [`Androideventbus`一个轻量级使用注解的Eventbus.](https://github.com/hehonghui/AndroidEventBus)
 13. [`Timber`JakeWharton大神出品Log框架，内部代码极少，但是思想非常不错.](https://github.com/JakeWharton/timber)
-14. [`Glide`此库没封装但是推荐大家了解，Api和`Picasso`差不多,缓存机制比`Picasso`复杂,速度快，适合处理大型图片流，支持gfit，`Fresco`太大了！，在5.0一下优势很大，5.0以上系统默认使用的内存管理和`Fresco`类似.](https://github.com/bumptech/glide)
+14. [`Glide`此库为本框架默认封装图片加载库，可参照着列子更改为其他的库，Api和`Picasso`差不多,缓存机制比`Picasso`复杂,速度快，适合处理大型图片流，支持gfit，`Fresco`太大了！，在5.0一下优势很大，5.0以上系统默认使用的内存管理和`Fresco`类似.](https://github.com/bumptech/glide)
  
 
 ##About Me
