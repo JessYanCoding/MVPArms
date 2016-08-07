@@ -35,6 +35,7 @@
 12. [`Androideventbus`一个轻量级使用注解的Eventbus.](https://github.com/hehonghui/AndroidEventBus)
 13. [`Timber`JakeWharton大神出品Log框架，内部代码极少，但是思想非常不错.](https://github.com/JakeWharton/timber)
 14. [`Glide`此库为本框架默认封装图片加载库，可参照着列子更改为其他的库，Api和`Picasso`差不多,缓存机制比`Picasso`复杂,速度快，适合处理大型图片流，支持gfit，`Fresco`太大了！，在5.0一下优势很大，5.0以上系统默认使用的内存管理和`Fresco`类似.](https://github.com/bumptech/glide)
+15. [`Realm`速度和跨平台性使它成为如今最火的数据库,美中不足so库太大](https://realm.io/docs/java/latest/#getting-started)
  
 
 ##About Me
