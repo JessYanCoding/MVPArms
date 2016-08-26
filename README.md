@@ -6,7 +6,7 @@
 [source from eyepetizer（仿照开眼视频的项目,开发中...）](https://github.com/JessYanCoding/WideEyes) 
 
 ##Notice
-* 使用框架必须有Dagger2，Rxjava的基础.
+* 使用框架必须有Dagger2，Rxjava的基础. 
 
 * 使用框架必需继承`BaseApplication``BaseActivity``BaseFragment``MVP基类`，还提供有一些 `Adapter``ViewHodler`等的基类.
 
