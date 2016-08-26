@@ -10,7 +10,7 @@
 
 * 使用框架必需继承`BaseApplication``BaseActivity``BaseFragment``MVP基类`，还提供有一些 `Adapter``ViewHodler`等的基类.
 
-* 测试相关框架正在研发中.
+* 测试相关框架正在研发中. 
 * 使用此框架自带自动适配功能，请参考 [AutoLayout使用方法](https://github.com/hongyangAndroid/AndroidAutoLayout).
 * 本框架不提供与Ui有关的任何第三方库.
 
