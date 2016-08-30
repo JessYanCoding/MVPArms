@@ -44,7 +44,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
 
     /**
      * 依赖注入的入口
-     *
      */
     protected abstract void ComponentInject();
 
@@ -58,7 +57,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.onDestroy();//释放资源
+        if (mPresenter != null) mPresenter.onDestroy();//释放资源
         EventBus.getDefault().unregister(this);
     }
 

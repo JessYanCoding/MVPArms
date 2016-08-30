@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="javax.annotation-10.0-b28">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish/javax.annotation/10.0-b28/30eb3b3cc9cb0863a4edaea5a7575f8ace1b96ba/javax.annotation-10.0-b28.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish/javax.annotation/10.0-b28/b1745c49bd24e5c09a82633b377f7bf2cc8fdace/javax.annotation-10.0-b28-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -6,7 +6,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import me.jessyan.mvparms.demo.mvp.model.api.service.CommonService;
-import me.jessyan.mvparms.demo.mvp.model.api.service.ServiceManager;
 import retrofit2.Retrofit;
 
 /**
@@ -20,13 +19,5 @@ public class ServiceModule {
     CommonService provideCommonService(Retrofit retrofit) {
         return retrofit.create(CommonService.class);
     }
-
-
-    @Singleton
-    @Provides
-    ServiceManager provideServiceManager(CommonService commonService) {
-        return new ServiceManager(commonService);
-    }
-
 
 }

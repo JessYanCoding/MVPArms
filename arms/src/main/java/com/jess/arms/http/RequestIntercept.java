@@ -1,7 +1,5 @@
 package com.jess.arms.http;
 
-import com.jess.arms.utils.LogUtils;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 
@@ -19,17 +17,20 @@ import timber.log.Timber;
  * Created by jess on 7/1/16.
  */
 public class RequestIntercept implements Interceptor {
-    private String message;
+    private GlobeHttpResultHandler mHandler;
+
+    public RequestIntercept(GlobeHttpResultHandler handler) {
+        this.mHandler = handler;
+    }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-
         Buffer requestbuffer = new Buffer();
         if (request.body() != null) {
             request.body().writeTo(requestbuffer);
         } else {
-            LogUtils.warnInfo("request.body() == null");
+            Timber.tag("Request").w("request.body() == null");
         }
 
         //打印url信息
@@ -58,7 +59,10 @@ public class RequestIntercept implements Interceptor {
         String bodyString = buffer.clone().readString(charset);
         Timber.tag("Response").w("Body------>" + bodyString);
 
+        if (mHandler!=null)//这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
+            mHandler.onHttpResultResponse(bodyString);
 
         return originalResponse;
     }
+
 }

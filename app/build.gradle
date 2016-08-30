@@ -42,8 +42,8 @@ buildscript {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    apt 'com.google.dagger:dagger-compiler:2.0.2'
     testCompile rootProject.ext.dependencies["junit"]
+    apt rootProject.ext.dependencies["dagger2-apt-compiler"]
     compile rootProject.ext.dependencies["cardview-v7"]
     provided rootProject.ext.dependencies["javax.annotation"]
     compile project(':arms')

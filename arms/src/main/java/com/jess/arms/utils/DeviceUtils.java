@@ -33,13 +33,6 @@ import java.lang.reflect.Field;
 import java.text.NumberFormat;
 import java.util.List;
 
-/**
- * 常用信息工具类
- * Created by jungle on 16/5/21.
- * com.zhiyicx.zhibo.util
- * zhibo_android
- * email:335891510@qq.com
- */
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class DeviceUtils {
     // 手机网络类型

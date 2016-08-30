@@ -41,6 +41,7 @@ public class BasePresenter<M extends BaseModel, V extends BaseView> implements p
     public void onDestroy() {
         EventBus.getDefault().unregister(this);//解除注册eventbus
         unSubscribe();//解除订阅
+        mModel.onDestory();//释放资源
         this.mModel = null;
         this.mRootView = null;
     }

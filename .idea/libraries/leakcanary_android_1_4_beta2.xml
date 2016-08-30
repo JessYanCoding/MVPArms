@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="leakcanary-android-1.4-beta2">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/arms/build/intermediates/exploded-aar/com.squareup.leakcanary/leakcanary-android/1.4-beta2/res" />
+      <root url="jar://$PROJECT_DIR$/arms/build/intermediates/exploded-aar/com.squareup.leakcanary/leakcanary-android/1.4-beta2/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -3,15 +3,11 @@ package com.jess.arms.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
-/**
- * Created by jungle on 16/5/20.
- * com.zhiyicx.zhibo.util
- * zhibo_android
- * email:335891510@qq.com
- */
+
 public class LogUtils {
 
     private final static boolean isLog = true;
+    public static final String DEFAULT_TAG = "Mvparms";
 
     public static void debugInfo(String tag, String msg) {
         if (!isLog || TextUtils.isEmpty(msg)) return;
@@ -26,7 +22,7 @@ public class LogUtils {
      * @param msg void
      */
     public static void debugInfo(String msg) {
-        debugInfo("zhibo", msg);
+        debugInfo(DEFAULT_TAG, msg);
     }
 
     public static void warnInfo(String tag, String msg) {
@@ -80,7 +76,7 @@ public class LogUtils {
      * @param str void
      */
     public static void debugLongInfo(String str) {
-        debugLongInfo("zhibo", str);
+        debugLongInfo(DEFAULT_TAG, str);
     }
 
 }
