@@ -24,7 +24,6 @@ import java.util.LinkedList;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
-
 public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity {
     protected final String TAG = this.getClass().getSimpleName();
     private BroadcastReceiver mBroadcastReceiver;
