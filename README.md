@@ -41,11 +41,11 @@
  
 
 ##About Me
-* **Email**: jess.yan.effort@gmail.com 
+* **Email**: jess.yan.effort@gmail.com  
 
 ##License
 ``` 
- Copyright 2016, jessyan   
+ Copyright 2016, jessyan    
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
