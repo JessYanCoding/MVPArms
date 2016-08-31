@@ -41,7 +41,7 @@
  
 
 ##About Me
-* **Email**: jess.yan.effort@gmail.com 
+* **Email**: jess.yan.effort@gmail.com  
 
 ##License
 ``` 
