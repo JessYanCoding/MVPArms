@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/arms" />
+            <option value="$PROJECT_DIR$/rxerrorhandler" />
           </set>
         </option>
         <option name="myModules">
@@ -17,6 +18,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/arms" />
+            <option value="$PROJECT_DIR$/rxerrorhandler" />
           </set>
         </option>
       </GradleProjectSettings>

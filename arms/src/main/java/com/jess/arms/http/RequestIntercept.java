@@ -1,5 +1,8 @@
 package com.jess.arms.http;
 
+import com.jess.arms.utils.ZipHelper;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
@@ -50,17 +53,42 @@ public class RequestIntercept implements Interceptor {
         BufferedSource source = responseBody.source();
         source.request(Long.MAX_VALUE); // Buffer the entire body.
         Buffer buffer = source.buffer();
-        Charset charset = Charset.forName("UTF-8");
-        MediaType contentType = responseBody.contentType();
-        if (contentType != null) {
-            charset = contentType.charset(charset);
+
+        //获取content的压缩类型
+        String encoding = originalResponse
+                .headers()
+                .get("Content-Encoding");
+
+        Buffer clone = buffer.clone();
+        String bodyString;
+
+        //解析response content
+        if (encoding != null && encoding.equalsIgnoreCase("gzip")) {//content使用gzip压缩
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            clone.writeTo(outputStream);
+            byte[] bytes = outputStream.toByteArray();
+            bodyString = ZipHelper.decompressForGzip(bytes);//解压
+            outputStream.close();
+        } else if (encoding != null && encoding.equalsIgnoreCase("zlib")) {//content使用zlib压缩
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            clone.writeTo(outputStream);
+            byte[] bytes = outputStream.toByteArray();
+            bodyString = ZipHelper.decompressToStringForZlib(bytes);//解压
+            outputStream.close();
+        } else {//content没有被压缩
+            Charset charset = Charset.forName("UTF-8");
+            MediaType contentType = responseBody.contentType();
+            if (contentType != null) {
+                charset = contentType.charset(charset);
+            }
+            bodyString = clone.readString(charset);
         }
 
-        String bodyString = buffer.clone().readString(charset);
-        Timber.tag("Response").w("Body------>" + bodyString);
 
-        if (mHandler!=null)//这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
-            mHandler.onHttpResultResponse(bodyString);
+        Timber.tag("Result").w("Body------>" + bodyString);
+
+        if (mHandler != null)//这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
+           return mHandler.onHttpResultResponse(bodyString,chain,originalResponse);
 
         return originalResponse;
     }

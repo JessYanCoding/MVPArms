@@ -1,4 +1,4 @@
-package com.jess.arms.widget;
+package com.jess.arms.widget.autolayout;
 
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;

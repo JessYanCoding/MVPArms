@@ -1,14 +1,15 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.neenbedankt.android-apt'
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
     }
     buildTypes {
         release {
@@ -36,6 +37,7 @@ dependencies {
     compile rootProject.ext.dependencies["support-v4"]
     compile rootProject.ext.dependencies["gson"]
     compile rootProject.ext.dependencies["appcompat-v7"]
+    compile rootProject.ext.dependencies["cardview-v7"]
     compile rootProject.ext.dependencies["autolayout"]
     compile rootProject.ext.dependencies["butterknife"]
     compile rootProject.ext.dependencies["androideventbus"]
@@ -60,4 +62,5 @@ dependencies {
     releaseCompile rootProject.ext.dependencies["canary-release"]
     testCompile rootProject.ext.dependencies["canary-release"]
     apt rootProject.ext.dependencies["dagger2-apt-compiler"]
+    compile project(':rxerrorhandler')
 }

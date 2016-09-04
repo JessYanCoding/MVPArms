@@ -15,6 +15,8 @@ import dagger.Module;
 import dagger.Provides;
 import io.rx_cache.internal.RxCache;
 import io.victoralbertos.jolyglot.GsonSpeaker;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 import okhttp3.Cache;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -34,6 +36,7 @@ public class ClientModule {
     private HttpUrl mApiUrl;
     private GlobeHttpResultHandler mHandler;
     private Interceptor[] mInterceptors;
+    private ResponseErroListener mErroListener;
 
     /**
      * @author: jess
@@ -44,6 +47,7 @@ public class ClientModule {
         this.mApiUrl = buidler.apiUrl;
         this.mHandler = buidler.handler;
         this.mInterceptors = buidler.interceptors;
+        this.mErroListener = buidler.responseErroListener;
     }
 
     public static Buidler buidler() {
@@ -124,6 +128,22 @@ public class ClientModule {
                 .persistence(cacheDir, new GsonSpeaker());
     }
 
+
+    /**
+     * 提供处理Rxjava处理的管理器
+     *
+     * @return
+     */
+    @Singleton
+    @Provides
+    RxErrorHandler proRxErrorHandler(Application application) {
+        return RxErrorHandler
+                .builder()
+                .with(application)
+                .responseErroListener(mErroListener)
+                .build();
+    }
+
     /**
      * @param builder
      * @param client
@@ -175,6 +195,7 @@ public class ClientModule {
         private HttpUrl apiUrl = HttpUrl.parse("https://api.github.com/");
         private GlobeHttpResultHandler handler;
         private Interceptor[] interceptors;
+        private ResponseErroListener responseErroListener;
 
         private Buidler() {
         }
@@ -189,8 +210,13 @@ public class ClientModule {
             return this;
         }
 
-        public Buidler Interceptors(Interceptor[] interceptors) {//动态添加任意个interceptor
+        public Buidler interceptors(Interceptor[] interceptors) {//动态添加任意个interceptor
             this.interceptors = interceptors;
+            return this;
+        }
+
+        public Buidler responseErroListener(ResponseErroListener listener) {//处理所有Rxjava的onError逻辑
+            this.responseErroListener = listener;
             return this;
         }
 

@@ -12,6 +12,7 @@ import com.squareup.leakcanary.LeakCanary;
 
 import java.util.LinkedList;
 
+import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 import okhttp3.Interceptor;
 import timber.log.Timber;
 
@@ -41,7 +42,8 @@ public abstract class BaseApplication extends Application {
                 .buidler()
                 .baseurl(getBaseUrl())
                 .globeHttpResultHandler(getHttpResultHandler())
-                .Interceptors(getInterceptors())
+                .interceptors(getInterceptors())
+                .responseErroListener(getResponseErroListener())
                 .build();
         this.mAppModule = new AppModule(this);//提供application
         this.mImagerModule = new ImageModule();//图片加载框架默认使用glide
@@ -56,11 +58,17 @@ public abstract class BaseApplication extends Application {
 
     /**
      * 提供基础url给retrofit
+     *
      * @return
      */
     protected abstract String getBaseUrl();
 
 
+    /**
+     * 返回一个存储所有存在的activity的列表
+     *
+     * @return
+     */
     public LinkedList<BaseActivity> getActivityList() {
         if (mActivityList == null) {
             mActivityList = new LinkedList<BaseActivity>();
@@ -95,12 +103,28 @@ public abstract class BaseApplication extends Application {
 
     /**
      * 用来提供interceptor,如果要提供额外的interceptor可以让子application实现此方法
+     *
      * @return
      */
     protected Interceptor[] getInterceptors() {
         return null;
     }
 
+
+    /**
+     * 用来提供处理所有错误的监听
+     * 如果要使用ErrorHandleSubscriber(默认实现Subscriber的onError方法)
+     * 则让子application重写此方法
+     * @return
+     */
+    protected ResponseErroListener getResponseErroListener() {
+        return new ResponseErroListener() {
+            @Override
+            public void handleResponseError(Context context, Exception e) {
+
+            }
+        };
+    }
 
     /**
      * 返回上下文

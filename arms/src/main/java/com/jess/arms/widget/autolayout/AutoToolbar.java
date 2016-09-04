@@ -1,7 +1,8 @@
-package com.jess.arms.widget;
+package com.jess.arms.widget.autolayout;
 
 import android.content.Context;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 
@@ -11,18 +12,18 @@ import com.zhy.autolayout.utils.AutoLayoutHelper;
 /**
  * Created by jess on 16/4/14.
  */
-public class AutoCollapsingToolbarLayout extends CollapsingToolbarLayout {
+public class AutoToolbar extends Toolbar {
     private AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
 
-    public AutoCollapsingToolbarLayout(Context context) {
+    public AutoToolbar(Context context) {
         super(context);
     }
 
-    public AutoCollapsingToolbarLayout(Context context, AttributeSet attrs) {
+    public AutoToolbar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public AutoCollapsingToolbarLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AutoToolbar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -41,14 +42,14 @@ public class AutoCollapsingToolbarLayout extends CollapsingToolbarLayout {
         super.onLayout(changed, l, t, r, b);
     }
 
+
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
-        return new AutoCollapsingToolbarLayout.LayoutParams(getContext(), attrs);
+        return new AutoToolbar.LayoutParams(getContext(), attrs);
     }
 
 
-
-    public static class LayoutParams extends CollapsingToolbarLayout.LayoutParams
+    public static class LayoutParams extends Toolbar.LayoutParams
             implements AutoLayoutHelper.AutoLayoutParams
     {
         private AutoLayoutInfo mAutoLayoutInfo;
@@ -83,5 +84,4 @@ public class AutoCollapsingToolbarLayout extends CollapsingToolbarLayout {
         }
 
     }
-
 }

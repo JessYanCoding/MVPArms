@@ -11,6 +11,7 @@ public class ImageConfig {
     protected String url;
     protected ImageView imageView;
     protected int placeholder;
+    protected int errorPic;
 
 
     public String getUrl() {
@@ -25,4 +26,7 @@ public class ImageConfig {
         return placeholder;
     }
 
+    public int getErrorPic() {
+        return errorPic;
+    }
 }

@@ -15,6 +15,7 @@ public class GlideImageConfig extends ImageConfig{
         this.url = builder.url;
         this.imageView = builder.imageView;
         this.placeholder = builder.placeholder;
+        this.errorPic = builder.errorPic;
     }
 
     public static Buidler builder() {
@@ -26,6 +27,7 @@ public class GlideImageConfig extends ImageConfig{
         private String url;
         private ImageView imageView;
         private int placeholder;
+        protected int errorPic;
 
         private Buidler() {
         }
@@ -37,6 +39,11 @@ public class GlideImageConfig extends ImageConfig{
 
         public Buidler placeholder(int placeholder) {
             this.placeholder = placeholder;
+            return this;
+        }
+
+        public Buidler errorPic(int errorPic){
+            this.errorPic = errorPic;
             return this;
         }
 

@@ -3,6 +3,7 @@ package com.jess.arms.widget.imageloader.glide;
 import android.app.Activity;
 import android.content.Context;
 
+import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -21,10 +22,17 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideIm
         else
             manager = Glide.with(ctx);
 
-        manager.load(config.getUrl())
+        DrawableRequestBuilder<String> requestBuilder = manager.load(config.getUrl())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .crossFade()
-                .centerCrop()
+                .centerCrop();
+        if (config.getPlaceholder() != 0)//设置占位符
+            requestBuilder.placeholder(config.getPlaceholder());
+
+        if (config.getErrorPic() != 0)//设置错误的图片
+            requestBuilder.error(config.getErrorPic());
+
+        requestBuilder
                 .into(config.getImageView());
     }
 }

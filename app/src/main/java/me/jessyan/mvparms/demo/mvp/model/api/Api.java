@@ -5,5 +5,5 @@ package me.jessyan.mvparms.demo.mvp.model.api;
  * contact with jess.yan.effort@gmail.com
  */
 public interface Api {
-    public static final String APP_DOMAIN = "http://baobab.wandoujia.com";
+    public static final String APP_DOMAIN = "https://api.github.com";
 }

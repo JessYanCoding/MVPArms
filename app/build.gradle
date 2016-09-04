@@ -41,11 +41,10 @@ buildscript {
 
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile rootProject.ext.dependencies["junit"]
     apt rootProject.ext.dependencies["dagger2-apt-compiler"]
-    compile rootProject.ext.dependencies["cardview-v7"]
     provided rootProject.ext.dependencies["javax.annotation"]
     compile project(':arms')
-
+    compile rootProject.ext.dependencies["paginate"]
 }
