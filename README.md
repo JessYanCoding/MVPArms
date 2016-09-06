@@ -1,9 +1,12 @@
 # MVPArms [beta] 
 ##a common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects ,to make your developing quicker and easier. 
-一个整合了大量主流开源项目的Android Mvp快速搭建框架,[详细使用方法,请参照Wiki](https://github.com/JessYanCoding/MVPArms/wiki)
+一个整合了大量主流开源项目的Android Mvp快速搭建框架
 
 ##Sample [In Progress]
 [source from eyepetizer（仿照开眼视频的项目,开发中...）](https://github.com/JessYanCoding/WideEyes) 
+
+##Wiki
+[详细使用方法,请参照Wiki](https://github.com/JessYanCoding/MVPArms/wiki)
 
 ##Notice
 * 使用框架必须有Dagger2，Rxjava的基础.  
