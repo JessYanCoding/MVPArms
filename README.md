@@ -3,7 +3,7 @@
 一个整合了大量主流开源项目的Android Mvp快速搭建框架
 
 ##Wiki
-[详细使用方法,请参照Wiki](https://github.com/JessYanCoding/MVPArms/wiki)
+[Detailed usage reference Wiki(详细使用方法,请参照Wiki)](https://github.com/JessYanCoding/MVPArms/wiki)
 
 ##The project used [In Progress]
 [Inspired by eyepetizer（灵感来源于开眼视频,开发中...）](https://github.com/JessYanCoding/WideEyes) 
