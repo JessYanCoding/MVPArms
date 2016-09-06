@@ -5,8 +5,8 @@
 ##Wiki
 [详细使用方法,请参照Wiki](https://github.com/JessYanCoding/MVPArms/wiki)
 
-##Sample [In Progress]
-[source from eyepetizer（仿照开眼视频的项目,开发中...）](https://github.com/JessYanCoding/WideEyes) 
+##The project used [In Progress]
+[Inspired by eyepetizer（灵感来源于开眼视频,开发中...）](https://github.com/JessYanCoding/WideEyes) 
 
 
 ##Notice
