@@ -2,11 +2,12 @@
 ##a common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects ,to make your developing quicker and easier. 
 一个整合了大量主流开源项目的Android Mvp快速搭建框架
 
+##Wiki
+[详细使用方法,请参照Wiki](https://github.com/JessYanCoding/MVPArms/wiki)
+
 ##Sample [In Progress]
 [source from eyepetizer（仿照开眼视频的项目,开发中...）](https://github.com/JessYanCoding/WideEyes) 
 
-##Wiki
-[详细使用方法,请参照Wiki](https://github.com/JessYanCoding/MVPArms/wiki)
 
 ##Notice
 * 使用框架必须有Dagger2，Rxjava的基础.  
@@ -42,6 +43,9 @@
 16. [`Realm`速度和跨平台性使它成为如今最火的数据库,美中不足的就是so库太大](https://realm.io/docs/java/latest/#getting-started)
 17. [`LeakCanary`Square出品的专门用来检测`Android`和`Java`的内存泄漏,通过通知栏提示内存泄漏信息](https://github.com/square/leakcanary)
  
+##Acknowledgements 
+感谢为`Open Sourece`无私贡献的**Developer**和**Organizations**,使我们能更好的工作和学习,本人也会将业余时间回报给开源社区
+
 
 ##About Me
 * **Email**: jess.yan.effort@gmail.com  
