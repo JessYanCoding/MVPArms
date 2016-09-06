@@ -18,5 +18,6 @@ public abstract class WEFragment<P extends BasePresenter> extends BaseFragment<P
         setupFragmentComponent(mWeApplication.getAppComponent());
     }
 
+    //提供AppComponent(提供所有的单例对象)给子类，进行Component依赖
     protected abstract void setupFragmentComponent(AppComponent appComponent);
 }

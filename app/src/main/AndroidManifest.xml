@@ -26,7 +26,9 @@
             </intent-filter>
         </activity>
 
-        <!-- autolayout meta -->
+        <!-- autolayout meta
+        将设计图的宽高配置后,配合AutoLauout控件使用,在设计图尺寸以外的其它尺寸手机上,也能达到和设计图一样的效果
+        -->
         <meta-data
             android:name="design_width"
             android:value="1080"/>

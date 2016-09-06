@@ -15,6 +15,11 @@
         <option value="$PROJECT_DIR$/app/src/androidTest" />
         <option value="$PROJECT_DIR$/app/src/test" />
         <option value="$PROJECT_DIR$/app/src/main/res" />
+        <option value="$PROJECT_DIR$/rxerrorhandler/build" />
+        <option value="$PROJECT_DIR$/rxerrorhandler/libs" />
+        <option value="$PROJECT_DIR$/rxerrorhandler/src/test" />
+        <option value="$PROJECT_DIR$/rxerrorhandler/src/androidTest" />
+        <option value="$PROJECT_DIR$/rxerrorhandler/src/main/res" />
       </list>
     </option>
   </component>

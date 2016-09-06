@@ -32,11 +32,11 @@ public class WEApplication extends BaseApplication {
         super.onCreate();
         mAppComponent = DaggerAppComponent
                 .builder()
-                .appModule(getAppModule())
-                .clientModule(getClientModule())
-                .imageModule(getImageModule())
-                .serviceModule(new ServiceModule())
-                .cacheModule(new CacheModule())
+                .appModule(getAppModule())//baseApplication提供
+                .clientModule(getClientModule())//baseApplication提供
+                .imageModule(getImageModule())//baseApplication提供
+                .serviceModule(new ServiceModule())//需自行创建
+                .cacheModule(new CacheModule())//需自行创建
                 .build();
     }
 
@@ -45,6 +45,10 @@ public class WEApplication extends BaseApplication {
         return Api.APP_DOMAIN;
     }
 
+    /**
+     * 将AppComponent返回出去,供其它地方使用, AppComponent接口中声明的方法返回的实例, 在getAppComponent()拿到对象后都可以直接使用
+     * @return
+     */
     public AppComponent getAppComponent() {
         return mAppComponent;
     }
