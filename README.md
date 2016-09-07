@@ -47,7 +47,7 @@
 18. [`RxErroHandler``Rxjava`错误处理库,可出现错误后重试](https://github.com/JessYanCoding/RxErrorHandler)
  
 ##Acknowledgements 
-感谢为`Open Sourece`无私贡献的**Developer**和**Organizations**,使我们能更好的工作和学习,本人也会将业余时间回报给开源社区
+感谢本框架所使用到的所有三方库的**Author**,以及所有为`Open Sourece`做无私贡献的**Developer**和**Organizations**,使我们能更好的工作和学习,本人也会将业余时间回报给开源社区
 
 
 ##About Me
