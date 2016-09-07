@@ -1,4 +1,4 @@
-package me.jessyan.mvparms.demo.app.receiver;
+package me.jessyan.mvparms.demo.app.service;
 
 import com.jess.arms.base.BaseService;
 
