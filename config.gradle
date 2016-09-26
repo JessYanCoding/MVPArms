@@ -41,6 +41,7 @@ ext {
             "dagger2"                  : "com.google.dagger:dagger:${android["dagger2SdkVersion"]}",
             "dagger2-apt-compiler"     : "com.google.dagger:dagger-compiler:${android["dagger2SdkVersion"]}",
             "rxbinding-recyclerview-v7": "com.jakewharton.rxbinding:rxbinding-recyclerview-v7:0.4.0",
+            "rxpermissions"            : "com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar",
             "pickerview"               : "com.bigkoo:pickerview:2.0.8",
             "nineoldandroids"          : "com.nineoldandroids:library:2.4.0",
             "picasso"                  : "com.squareup.picasso:picasso:2.5.2",
