@@ -101,7 +101,7 @@ public class WEApplication extends BaseApplication {
 
             @Override
             public Request onHttpRequestBefore(Interceptor.Chain chain, Request request) {
-                //如果需要再请求服务器之前做一些操作,则重新返回一个做个操作的的requeat如增加header,不做操作则返回request
+                //如果需要再请求服务器之前做一些操作,则重新返回一个做过操作的的requeat如增加header,不做操作则返回request
 
                 //return chain.request().newBuilder().header("token", tokenId)
 //                .build();
