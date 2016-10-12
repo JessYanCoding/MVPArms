@@ -7,7 +7,7 @@ import android.content.Intent;
 import com.jess.arms.di.module.AppModule;
 import com.jess.arms.di.module.ClientModule;
 import com.jess.arms.di.module.ImageModule;
-import com.jess.arms.http.GlobeHttpResultHandler;
+import com.jess.arms.http.GlobeHttpHandler;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.util.LinkedList;
@@ -97,7 +97,7 @@ public abstract class BaseApplication extends Application {
      *
      * @return
      */
-    protected GlobeHttpResultHandler getHttpResultHandler() {
+    protected GlobeHttpHandler getHttpResultHandler() {
         return null;
     }
 

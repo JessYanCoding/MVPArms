@@ -20,9 +20,9 @@ import timber.log.Timber;
  * Created by jess on 7/1/16.
  */
 public class RequestIntercept implements Interceptor {
-    private GlobeHttpResultHandler mHandler;
+    private GlobeHttpHandler mHandler;
 
-    public RequestIntercept(GlobeHttpResultHandler handler) {
+    public RequestIntercept(GlobeHttpHandler handler) {
         this.mHandler = handler;
     }
 
@@ -35,6 +35,9 @@ public class RequestIntercept implements Interceptor {
         } else {
             Timber.tag("Request").w("request.body() == null");
         }
+
+        if (mHandler != null)//在请求服务器之前可以拿到request,做一些操作比如给request添加header,如果不做操作则返回参数中的request
+            request = mHandler.onHttpRequestBefore(chain,request);
 
         //打印url信息
         Timber.tag("Request").w("Sending Request %s on %n Params --->  %s%n Connection ---> %s%n Headers ---> %s", request.url()

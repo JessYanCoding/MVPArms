@@ -2,7 +2,7 @@ package com.jess.arms.di.module;
 
 import android.app.Application;
 
-import com.jess.arms.http.GlobeHttpResultHandler;
+import com.jess.arms.http.GlobeHttpHandler;
 import com.jess.arms.http.RequestIntercept;
 import com.jess.arms.utils.DataHelper;
 
@@ -34,7 +34,7 @@ public class ClientModule {
     private static final int TOME_OUT = 10;
     public static final int HTTP_RESPONSE_DISK_CACHE_MAX_SIZE = 10 * 1024 * 1024;//缓存文件最大值为10Mb
     private HttpUrl mApiUrl;
-    private GlobeHttpResultHandler mHandler;
+    private GlobeHttpHandler mHandler;
     private Interceptor[] mInterceptors;
     private ResponseErroListener mErroListener;
 
@@ -193,7 +193,7 @@ public class ClientModule {
 
     public static final class Buidler {
         private HttpUrl apiUrl = HttpUrl.parse("https://api.github.com/");
-        private GlobeHttpResultHandler handler;
+        private GlobeHttpHandler handler;
         private Interceptor[] interceptors;
         private ResponseErroListener responseErroListener;
 
@@ -205,7 +205,7 @@ public class ClientModule {
             return this;
         }
 
-        public Buidler globeHttpResultHandler(GlobeHttpResultHandler handler) {//用来处理http响应结果
+        public Buidler globeHttpResultHandler(GlobeHttpHandler handler) {//用来处理http响应结果
             this.handler = handler;
             return this;
         }

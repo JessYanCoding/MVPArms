@@ -3,7 +3,7 @@ package me.jessyan.mvparms.demo.app;
 import android.content.Context;
 
 import com.jess.arms.base.BaseApplication;
-import com.jess.arms.http.GlobeHttpResultHandler;
+import com.jess.arms.http.GlobeHttpHandler;
 import com.jess.arms.utils.UiUtils;
 
 import org.json.JSONArray;
@@ -17,6 +17,7 @@ import me.jessyan.mvparms.demo.di.module.ServiceModule;
 import me.jessyan.mvparms.demo.mvp.model.api.Api;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 import okhttp3.Interceptor;
+import okhttp3.Request;
 import okhttp3.Response;
 import timber.log.Timber;
 
@@ -62,8 +63,8 @@ public class WEApplication extends BaseApplication {
      * @return
      */
     @Override
-    public GlobeHttpResultHandler getHttpResultHandler() {
-        return new GlobeHttpResultHandler() {
+    public GlobeHttpHandler getHttpResultHandler() {
+        return new GlobeHttpHandler() {
             @Override
             public Response onHttpResultResponse(String httpResult, Interceptor.Chain chain, Response response) {
                 //这里可以先客户端一步拿到每一次http请求的结果,可以解析成json,做一些操作,如检测到token过期后
@@ -79,17 +80,32 @@ public class WEApplication extends BaseApplication {
                     e.printStackTrace();
                 }
 
+
                 //这里如果发现token过期,可以先请求最新的token,然后在拿新的token去重新请求之前的http请求
                 // create a new request and modify it accordingly using the new token
-//                Request newRequest = chain.request().newBuilder().header("token", newToken)
-//                        .build();
+//                    Request newRequest = chain.request().newBuilder().header("token", newToken)
+//                            .build();
 //
-//                // retry the request
+//                    // retry the request
 //
-//                originalResponse.body().close();
-//                return chain.proceed(newRequest);
+//                    response.body().close();
+//                    try {
+//                        return chain.proceed(newRequest);
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+
                 //如果需要返回新的结果,则直接把response参数返回出去
                 return response;
+            }
+
+            @Override
+            public Request onHttpRequestBefore(Interceptor.Chain chain, Request request) {
+                //如果需要再请求服务器之前做一些操作,则重新返回一个做个操作的的requeat如增加header,不做操作则返回request
+
+                //return chain.request().newBuilder().header("token", tokenId)
+//                .build();
+                return request;
             }
         };
     }
