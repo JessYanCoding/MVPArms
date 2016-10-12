@@ -63,7 +63,7 @@ public class WEApplication extends BaseApplication {
      * @return
      */
     @Override
-    public GlobeHttpHandler getHttpResultHandler() {
+    public GlobeHttpHandler getHttpHandler() {
         return new GlobeHttpHandler() {
             @Override
             public Response onHttpResultResponse(String httpResult, Interceptor.Chain chain, Response response) {

@@ -41,7 +41,7 @@ public abstract class BaseApplication extends Application {
         this.mClientModule = ClientModule//用于提供okhttp和retrofit的单列
                 .buidler()
                 .baseurl(getBaseUrl())
-                .globeHttpResultHandler(getHttpResultHandler())
+                .globeHttpHandler(getHttpHandler())
                 .interceptors(getInterceptors())
                 .responseErroListener(getResponseErroListener())
                 .build();
@@ -97,7 +97,7 @@ public abstract class BaseApplication extends Application {
      *
      * @return
      */
-    protected GlobeHttpHandler getHttpResultHandler() {
+    protected GlobeHttpHandler getHttpHandler() {
         return null;
     }
 

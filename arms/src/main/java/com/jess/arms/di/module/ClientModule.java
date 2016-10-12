@@ -205,7 +205,7 @@ public class ClientModule {
             return this;
         }
 
-        public Buidler globeHttpResultHandler(GlobeHttpHandler handler) {//用来处理http响应结果
+        public Buidler globeHttpHandler(GlobeHttpHandler handler) {//用来处理http响应结果
             this.handler = handler;
             return this;
         }
