@@ -12,6 +12,8 @@
 ##Notice
 * 使用框架必须有Dagger2，Rxjava的基础.  
 
+* AppComponent是一个管理所有单例对象的类,使用dagger2管理, DaggerAppComponent为Dagger2使用apt自动生成如果缺少的话，先把报错的部分注释掉，然后编译下项目, DaggerAppComponent就自动生成了，这个时候打开注释就可以了,具体用法请参照dagger2的文档
+
 * 使用框架必需继承`BaseApplication``BaseActivity``BaseFragment``MVP基类`，还提供有一些 `Adapter``ViewHodler`等的基类.
 
 * 使用此框架自带自动适配功能，请参考 [AutoLayout使用方法](https://github.com/hongyangAndroid/AndroidAutoLayout).
