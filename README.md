@@ -18,7 +18,7 @@
 
 * 使用此框架自带自动适配功能，请参考 [AutoLayout使用方法](https://github.com/hongyangAndroid/AndroidAutoLayout).
 
-* 测试相关框架正在研发中. 
+* 此框架使用RxPermissions用于权限管理(适配android6.0),并提供PermissionUtil工具类一行代码实现权限请求. 
 
 * 本框架不提供与**UI**有关的任何第三方库(除了`AutoLayout`屏幕适配方案).
 
