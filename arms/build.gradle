@@ -49,6 +49,7 @@ dependencies {
     provided rootProject.ext.dependencies["rxbinding-recyclerview-v7"]
     compile rootProject.ext.dependencies["rxcache"]
     compile rootProject.ext.dependencies["rxcache-jolyglot-gson"]
+    compile rootProject.ext.dependencies["rxpermissions"]
     compile rootProject.ext.dependencies["retrofit"]
     compile rootProject.ext.dependencies["retrofit-converter-gson"]
     compile rootProject.ext.dependencies["retrofit-adapter-rxjava"]

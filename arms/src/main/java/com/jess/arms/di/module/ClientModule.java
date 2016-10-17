@@ -5,6 +5,7 @@ import android.app.Application;
 import com.jess.arms.http.GlobeHttpHandler;
 import com.jess.arms.http.RequestIntercept;
 import com.jess.arms.utils.DataHelper;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -130,7 +131,7 @@ public class ClientModule {
 
 
     /**
-     * 提供处理Rxjava处理的管理器
+     * 提供处理Rxjava错误的管理器
      *
      * @return
      */
@@ -143,6 +144,18 @@ public class ClientModule {
                 .responseErroListener(mErroListener)
                 .build();
     }
+
+    /**
+     * 提供权限管理类,用于请求权限,适配6.0的权限管理
+     * @param application
+     * @return
+     */
+    @Singleton
+    @Provides
+    RxPermissions provideRxPermissions(Application application) {
+        return RxPermissions.getInstance(application);
+    }
+
 
     /**
      * @param builder

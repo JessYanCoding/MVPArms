@@ -7,6 +7,7 @@ import com.jess.arms.di.module.AppModule;
 import com.jess.arms.di.module.ClientModule;
 import com.jess.arms.di.module.ImageModule;
 import com.jess.arms.widget.imageloader.ImageLoader;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import javax.inject.Singleton;
 
@@ -34,6 +35,9 @@ public interface AppComponent {
 
     //Rxjava错误处理管理类
     RxErrorHandler rxErrorHandler();
+
+    //用于请求权限,适配6.0的权限管理
+    RxPermissions rxPermissions();
 
     OkHttpClient okHttpClient();
 
