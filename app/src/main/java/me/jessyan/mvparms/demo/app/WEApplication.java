@@ -5,11 +5,13 @@ import android.content.Context;
 import com.jess.arms.base.BaseApplication;
 import com.jess.arms.http.GlobeHttpHandler;
 import com.jess.arms.utils.UiUtils;
+import com.squareup.leakcanary.LeakCanary;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import me.jessyan.mvparms.demo.BuildConfig;
 import me.jessyan.mvparms.demo.di.component.AppComponent;
 import me.jessyan.mvparms.demo.di.component.DaggerAppComponent;
 import me.jessyan.mvparms.demo.di.module.CacheModule;
@@ -39,6 +41,13 @@ public class WEApplication extends BaseApplication {
                 .serviceModule(new ServiceModule())//需自行创建
                 .cacheModule(new CacheModule())//需自行创建
                 .build();
+
+        if (BuildConfig.LOG_DEBUG){//Timber日志打印
+            Timber.plant(new Timber.DebugTree());
+        }
+        if (BuildConfig.USE_CANARY){//leakCanary内存泄露检查
+            LeakCanary.install(this);
+        }
     }
 
     @Override

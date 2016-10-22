@@ -8,13 +8,11 @@ import com.jess.arms.di.module.AppModule;
 import com.jess.arms.di.module.ClientModule;
 import com.jess.arms.di.module.ImageModule;
 import com.jess.arms.http.GlobeHttpHandler;
-import com.squareup.leakcanary.LeakCanary;
 
 import java.util.LinkedList;
 
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 import okhttp3.Interceptor;
-import timber.log.Timber;
 
 /**
  * 本项目由
@@ -48,12 +46,6 @@ public abstract class BaseApplication extends Application {
         this.mAppModule = new AppModule(this);//提供application
         this.mImagerModule = new ImageModule();//图片加载框架默认使用glide
 
-        if (Config.Debug) {//Timber日志打印
-            Timber.plant(new Timber.DebugTree());
-        }
-        if (Config.useCanary) {//leakCanary内存泄露检查
-            LeakCanary.install(this);
-        }
     }
 
     /**

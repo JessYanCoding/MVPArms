@@ -5,6 +5,4 @@ package com.jess.arms.base;
  * Contact with jess.yan.effort@gmail.com
  */
 public class Config {
-    public static boolean Debug = true;
-    public static boolean useCanary = Debug;
 }
