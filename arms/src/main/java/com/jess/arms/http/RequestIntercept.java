@@ -15,6 +15,8 @@ import okio.Buffer;
 import okio.BufferedSource;
 import timber.log.Timber;
 
+import static com.jess.arms.utils.CharactorHandler.jsonFormat;
+
 
 /**
  * Created by jess on 7/1/16.
@@ -88,7 +90,7 @@ public class RequestIntercept implements Interceptor {
         }
 
 
-        Timber.tag("Result").w("Body------>" + bodyString);
+        Timber.tag("Result").w(jsonFormat(bodyString));
 
         if (mHandler != null)//这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
            return mHandler.onHttpResultResponse(bodyString,chain,originalResponse);
