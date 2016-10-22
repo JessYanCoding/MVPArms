@@ -18,6 +18,7 @@ public class CustomPopupWindow extends PopupWindow {
     private boolean isFocus;
     private Drawable mBackgroundDrawable;
     private int mAnimationStyle;
+    private boolean isWrap;
 
     private CustomPopupWindow(Builder builder) {
         this.mContentView = builder.contentView;
@@ -27,6 +28,7 @@ public class CustomPopupWindow extends PopupWindow {
         this.isFocus = builder.isFocus;
         this.mBackgroundDrawable = builder.backgroundDrawable;
         this.mAnimationStyle = builder.animationStyle;
+        this.isWrap = builder.isWrap;
         initLayout();
     }
 
@@ -36,8 +38,8 @@ public class CustomPopupWindow extends PopupWindow {
 
     private void initLayout() {
         mListener.initPopupView(mContentView);
-        setWidth(LayoutParams.MATCH_PARENT);
-        setHeight(LayoutParams.MATCH_PARENT);
+        setWidth(isWrap ? LayoutParams.WRAP_CONTENT : LayoutParams.MATCH_PARENT);
+        setHeight(isWrap ? LayoutParams.WRAP_CONTENT : LayoutParams.MATCH_PARENT);
         setFocusable(isFocus);
         setOutsideTouchable(isOutsideTouch);
         setBackgroundDrawable(mBackgroundDrawable);
@@ -83,6 +85,7 @@ public class CustomPopupWindow extends PopupWindow {
         private boolean isFocus = true;//默认为true
         private Drawable backgroundDrawable = new ColorDrawable(0x00000000);//默认为透明
         private int animationStyle = -1;
+        private boolean isWrap;
 
         private Builder() {
         }
@@ -96,6 +99,12 @@ public class CustomPopupWindow extends PopupWindow {
             this.parentView = parentView;
             return this;
         }
+
+        public Builder isWrap(boolean isWrap) {
+            this.isWrap = isWrap;
+            return this;
+        }
+
 
         public Builder customListener(CustomPopupWindowListener listener) {
             this.listener = listener;
