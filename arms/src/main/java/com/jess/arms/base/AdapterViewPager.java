@@ -10,47 +10,48 @@ import android.view.ViewGroup;
 import java.util.List;
 
 public class AdapterViewPager extends FragmentStatePagerAdapter {
-	private List<BaseFragment> list;
-	private String[] mLitles;
+    private List<BaseFragment> list;
+    private CharSequence[] mTitles;
 
-	public AdapterViewPager(FragmentManager fragmentManager) {
-		super(fragmentManager);
-	}
-	
-	public void bindData(List<BaseFragment> list) {
-		this.list = list;
-		notifyDataSetChanged();
-	}
-	public void bindData(List<BaseFragment> list, String[] titles) {
-		this.list = list;
-		this.mLitles = titles;
-		notifyDataSetChanged();
-	}
+    public AdapterViewPager(FragmentManager fragmentManager) {
+        super(fragmentManager);
+    }
 
-	@Override
-	public Fragment getItem(int position) {
-		return list.get(position);
-	}
+    public void bindData(List<BaseFragment> list) {
+        this.list = list;
+        notifyDataSetChanged();
+    }
 
-	@Override
-	public CharSequence getPageTitle(int position) {
-		if (mLitles!=null){
-			return mLitles[position];
-		}
-		return super.getPageTitle(position);
-	}
+    public void bindData(List<BaseFragment> list, CharSequence[] titles) {
+        this.list = list;
+        this.mTitles = titles;
+        notifyDataSetChanged();
+    }
 
-	@Override
-	public int  getCount() {
-		return list.size();
-	}
-	
-	@Override  
-	public Parcelable saveState() {  
-	    return null;  
-	}  
-	
-	@Override
+    @Override
+    public Fragment getItem(int position) {
+        return list.get(position);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        if (mTitles != null) {
+            return mTitles[position];
+        }
+        return super.getPageTitle(position);
+    }
+
+    @Override
+    public int getCount() {
+        return list.size();
+    }
+
+    @Override
+    public Parcelable saveState() {
+        return null;
+    }
+
+    @Override
     public Object instantiateItem(ViewGroup container, int position) {
         Fragment f = (Fragment) super.instantiateItem(container, position);
         View view = f.getView();
