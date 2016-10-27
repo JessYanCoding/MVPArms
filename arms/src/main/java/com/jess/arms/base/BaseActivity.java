@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.jess.arms.mvp.BasePresenter;
+import com.squareup.leakcanary.RefWatcher;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.AutoLinearLayout;
@@ -114,6 +115,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         if (mPresenter != null) mPresenter.onDestroy();//释放资源
         ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
+        RefWatcher watcher = BaseApplication.getRefWatcher(this);
+        if (watcher != null) {
+            watcher.watch(this);
+        }
     }
 
     @Override
