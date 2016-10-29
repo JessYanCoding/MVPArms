@@ -8,8 +8,6 @@ import com.jess.arms.di.module.AppModule;
 import com.jess.arms.di.module.ClientModule;
 import com.jess.arms.di.module.ImageModule;
 import com.jess.arms.http.GlobeHttpHandler;
-import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
 
 import java.util.LinkedList;
 
@@ -29,7 +27,6 @@ public abstract class BaseApplication extends Application {
     static private BaseApplication mApplication;
     public LinkedList<BaseActivity> mActivityList;
     private ClientModule mClientModule;
-    private RefWatcher mRefWatcher;//leakCanary观察器
     private AppModule mAppModule;
     private ImageModule mImagerModule;
     protected final String TAG = this.getClass().getSimpleName();
@@ -48,22 +45,8 @@ public abstract class BaseApplication extends Application {
                 .build();
         this.mAppModule = new AppModule(this);//提供application
         this.mImagerModule = new ImageModule();//图片加载框架默认使用glide
-
     }
 
-    protected void installLeakCanary() {
-        this.mRefWatcher  = LeakCanary.install(this);
-    }
-
-    /**
-     * 获得leakCanary观察器
-     * @param context
-     * @return
-     */
-    public static RefWatcher getRefWatcher(Context context) {
-        BaseApplication application = (BaseApplication) context.getApplicationContext();
-        return application.mRefWatcher;
-    }
 
     /**
      * 提供基础url给retrofit

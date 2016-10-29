@@ -6,6 +6,7 @@ import com.jess.arms.base.BaseApplication;
 import com.jess.arms.http.GlobeHttpHandler;
 import com.jess.arms.utils.UiUtils;
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +30,7 @@ import timber.log.Timber;
  */
 public class WEApplication extends BaseApplication {
     private AppComponent mAppComponent;
+    private RefWatcher mRefWatcher;//leakCanary观察器
 
     @Override
     public void onCreate() {
@@ -42,13 +44,32 @@ public class WEApplication extends BaseApplication {
                 .cacheModule(new CacheModule())//需自行创建
                 .build();
 
-        if (BuildConfig.LOG_DEBUG){//Timber日志打印
+        if (BuildConfig.LOG_DEBUG) {//Timber日志打印
             Timber.plant(new Timber.DebugTree());
         }
-        if (BuildConfig.USE_CANARY){//leakCanary内存泄露检查
-            LeakCanary.install(this);
-        }
+
+        installLeakCanary();//leakCanary内存泄露检查
     }
+
+
+    /**
+     * 安装leakCanary检测内存泄露
+     */
+    protected void installLeakCanary() {
+        this.mRefWatcher = BuildConfig.USE_CANARY ? LeakCanary.install(this) : RefWatcher.DISABLED;
+    }
+
+    /**
+     * 获得leakCanary观察器
+     *
+     * @param context
+     * @return
+     */
+    public static RefWatcher getRefWatcher(Context context) {
+        WEApplication application = (WEApplication) context.getApplicationContext();
+        return application.mRefWatcher;
+    }
+
 
     @Override
     public String getBaseUrl() {
@@ -57,6 +78,7 @@ public class WEApplication extends BaseApplication {
 
     /**
      * 将AppComponent返回出去,供其它地方使用, AppComponent接口中声明的方法返回的实例, 在getAppComponent()拿到对象后都可以直接使用
+     *
      * @return
      */
     public AppComponent getAppComponent() {

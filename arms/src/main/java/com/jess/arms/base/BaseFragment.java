@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jess.arms.mvp.BasePresenter;
-import com.squareup.leakcanary.RefWatcher;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import org.simple.eventbus.EventBus;
@@ -60,10 +59,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
         super.onDestroy();
         if (mPresenter != null) mPresenter.onDestroy();//释放资源
         EventBus.getDefault().unregister(this);
-        RefWatcher watcher = BaseApplication.getRefWatcher(getActivity());
-        if (watcher != null) {
-            watcher.watch(this);
-        }
     }
 
 

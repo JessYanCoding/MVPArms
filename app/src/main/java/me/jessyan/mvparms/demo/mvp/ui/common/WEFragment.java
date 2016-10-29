@@ -2,6 +2,7 @@ package me.jessyan.mvparms.demo.mvp.ui.common;
 
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.mvp.BasePresenter;
+import com.squareup.leakcanary.RefWatcher;
 
 import me.jessyan.mvparms.demo.app.WEApplication;
 import me.jessyan.mvparms.demo.di.component.AppComponent;
@@ -20,4 +21,13 @@ public abstract class WEFragment<P extends BasePresenter> extends BaseFragment<P
 
     //提供AppComponent(提供所有的单例对象)给子类，进行Component依赖
     protected abstract void setupFragmentComponent(AppComponent appComponent);
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RefWatcher watcher = WEApplication.getRefWatcher(getActivity());
+        if (watcher != null) {
+            watcher.watch(this);
+        }
+    }
 }

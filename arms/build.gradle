@@ -59,9 +59,6 @@ dependencies {
     compile rootProject.ext.dependencies["okhttp3"]
     compile rootProject.ext.dependencies["timber"]
     compile rootProject.ext.dependencies["glide"]
-    debugCompile rootProject.ext.dependencies["canary-debug"]
-    releaseCompile rootProject.ext.dependencies["canary-release"]
-    testCompile rootProject.ext.dependencies["canary-release"]
     apt rootProject.ext.dependencies["dagger2-apt-compiler"]
     compile project(':rxerrorhandler')
 }
