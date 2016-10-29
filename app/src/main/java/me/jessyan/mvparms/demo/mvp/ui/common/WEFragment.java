@@ -25,7 +25,7 @@ public abstract class WEFragment<P extends BasePresenter> extends BaseFragment<P
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RefWatcher watcher = WEApplication.getRefWatcher(getActivity());
+        RefWatcher watcher = WEApplication.getRefWatcher(getActivity());//使用leakCanary检测fragment的内存泄漏
         if (watcher != null) {
             watcher.watch(this);
         }
