@@ -7,7 +7,7 @@ ext {
                versionCode             : 1,
                versionName             : "1.0",
                androidSupportSdkVersion: "23.3.0",
-               retrofitSdkVersion      : "2.0.0-beta4",
+               retrofitSdkVersion      : "2.1.0",
                dagger2SdkVersion       : "2.6",
                rxlifecycleSdkVersion   : "0.6.1",
                espressoSdkVersion      : "2.2.2"

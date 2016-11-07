@@ -22,7 +22,6 @@ import okhttp3.Cache;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import retrofit2.BaseUrl;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -166,14 +165,9 @@ public class ClientModule {
      * @date 8/30/16 1:15 PM
      * @description:配置retrofit
      */
-    private Retrofit configureRetrofit(Retrofit.Builder builder, OkHttpClient client, final HttpUrl httpUrl) {
+    private Retrofit configureRetrofit(Retrofit.Builder builder, OkHttpClient client, HttpUrl httpUrl) {
         return builder
-                .baseUrl(new BaseUrl() {
-                    @Override
-                    public HttpUrl url() {
-                        return httpUrl;
-                    }
-                })//域名
+                .baseUrl(httpUrl)//域名
                 .client(client)//设置okhttp
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//使用rxjava
                 .addConverterFactory(GsonConverterFactory.create())//使用Gson

@@ -161,5 +161,34 @@ public class PermissionUtil {
         }
     }
 
+
+    /**
+     * 请求获取手机状态的权限
+     */
+    public static void readPhonestate(final RequestPermission requestPermission, RxPermissions rxPermissions, RxErrorHandler errorHandler) {
+//先确保是否已经申请过权限
+        boolean isPermissionsGranted =
+                rxPermissions
+                        .isGranted(Manifest.permission.READ_PHONE_STATE);
+
+        if (isPermissionsGranted) {//已经申请过，直接执行操作
+            requestPermission.onRequestPermissionSuccess();
+        } else {//没有申请过，则申请
+            rxPermissions
+                    .request(Manifest.permission.READ_PHONE_STATE)
+                    .subscribe(new ErrorHandleSubscriber<Boolean>(errorHandler) {
+                        @Override
+                        public void onNext(Boolean granted) {
+                            if (granted) {
+                                Timber.tag(TAG).d("request SEND_SMS success");
+                                requestPermission.onRequestPermissionSuccess();
+                            } else {
+                                Timber.tag(TAG).e("request permissons failure");
+                            }
+                        }
+                    });
+        }
+    }
+
 }
 

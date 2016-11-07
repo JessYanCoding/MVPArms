@@ -8,6 +8,8 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
@@ -32,11 +34,12 @@ public class UiUtils {
 
     /**
      * 设置hint大小
+     *
      * @param size
      * @param v
      * @param res
      */
-    public static void setViewHintSize(int size, TextView v, int res){
+    public static void setViewHintSize(int size, TextView v, int res) {
         SpannableString ss = new SpannableString(getResources().getString(
                 res));
         // 新建一个属性对象,设置文字的大小
@@ -47,7 +50,7 @@ public class UiUtils {
         // 设置hint  
         v.setHint(new SpannedString(ss)); // 一定要进行转换,否则属性会消失
     }
-    
+
 
     /**
      * dip转pix
@@ -372,7 +375,6 @@ public class UiUtils {
      *
      * @param string
      * @return
-     *
      * @throws Exception
      */
     public static String MD5encode(String string) {
@@ -408,5 +410,18 @@ public class UiUtils {
     }
 
 
+    /**
+     * 配置recycleview
+     *
+     * @param recyclerView
+     * @param layoutManager
+     */
+    public static void configRecycleView(final RecyclerView recyclerView
+            , RecyclerView.LayoutManager layoutManager) {
+        recyclerView.setLayoutManager(layoutManager);
+        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+    }
 
 }
