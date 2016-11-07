@@ -13,6 +13,7 @@
 
 
 ##Notice
+
 * 如果你是构建一个全新的项目,直接将整个项目**clone**(或者下载)下来运行,直接将**Demo**当成主**Module**,更改一下**Demo**的**applicationId**为你自己的项目包名,再将项目包名改成自己的包名,**Demo**包含可以直接使用的项目结构,一个主流的`MVP`+`Dagger2`+`Retrofit`框架就这样轻松的构建成功了，现在你按照**Demo Mvp**包下的**UserActivity**的格式,构建**MVP**相关类就进行开发就可以了,如果有基础可以快速上手,如果没有基础,也没关系多使用几次也可以慢慢熟悉,都是些模版代码,在实践中学习是最快的,总比去看那些枯燥难懂的文章(这些框架门槛比较高,要把他们揉合到一起更要费些功夫),浪费几天时间,却连一个基本框架都搭建不起强太多了.
 
 * 使用框架必须有Dagger2，Rxjava的基础.
@@ -26,6 +27,9 @@
 * 此框架使用`RxPermissions`用于权限管理(适配android6.0),并提供PermissionUtil工具类一行代码实现权限请求. 
 
 * 本框架不提供与**UI**有关的任何第三方库(除了`AutoLayout`屏幕适配方案).
+
+
+##Feature
 
 * **网络请求层**: 默认使用Retrofit，如今主流的网络请求框架有`Volley`,`Okhttp`,`Retrofit`(`Android-async-http`停止维护了)，因为这个是库基于Rxjava， Retrofit支持Rxjava，默认使用Okhttp请求(Okhttp使用Okio，Okio基于IO和NIO所以性能优于Volley,Volley内部封装有Imageloader,支持扩展Okhttp，封装和扩展比Okhttp好，但是比较适合频繁，数据量小得网络请求)，所以此库默认直接通过Dagger注入Retrofit实例给开发者.
 
