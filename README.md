@@ -12,13 +12,13 @@
 * 现在你按照**Demo Mvp**包下的**UserActivity**的格式,构建**MVP**相关类就可以进行开发了,如果有基础可以快速上手,如果没有基础,也没关系多使用几次也可以慢慢熟悉,都是些模版代码,在实践中学习是最快的,总比去看那些枯燥难懂的文章(这些框架门槛比较高,要把他们揉合到一起更要费些功夫),浪费几天时间,却连一个基本框架都搭建不起强太多了.
  
 ### Old Project
-* [Detailed usage reference Wiki(详细使用方法,请参照Wiki)](https://github.com/JessYanCoding/MVPArms/wiki)
+* [老项目想引入此框架,可以参考Wiki文档,写的非常详细](https://github.com/JessYanCoding/MVPArms/wiki)
 
 ##Wiki
-[Detailed usage reference Wiki(详细使用方法,请参照Wiki)](https://github.com/JessYanCoding/MVPArms/wiki)
+[Detailed usage reference Wiki(详细使用方法及扩展功能,请参照Wiki)](https://github.com/JessYanCoding/MVPArms/wiki)
 
-##The project used [In Progress]
-[Inspired by eyepetizer（灵感来源于开眼视频,开发中...）](https://github.com/JessYanCoding/WideEyes) 
+<!--##The project used [In Progress]
+[Inspired by eyepetizer（灵感来源于开眼视频,开发中...）](https://github.com/JessYanCoding/WideEyes) -->
 
 
 ##Notice
