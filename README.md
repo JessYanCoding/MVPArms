@@ -5,12 +5,6 @@
 ##a common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects ,to make your developing quicker and easier. 
 一个整合了大量主流开源项目的Android Mvp快速搭建框架
 
-##Wiki
-[Detailed usage reference Wiki(详细使用方法,请参照Wiki)](https://github.com/JessYanCoding/MVPArms/wiki)
-
-##The project used [In Progress]
-[Inspired by eyepetizer（灵感来源于开眼视频,开发中...）](https://github.com/JessYanCoding/WideEyes) 
-
 ##Usage
 ### New Project
 * 如果你是构建一个全新的项目,直接将整个项目**clone**(或者下载)下来运行,直接将**Demo**当成主**Module**,更改一下**Demo**的**applicationId**为你自己的项目包名,再将项目包名改成自己的包名,**Demo**包含可以直接使用的项目结构,一个主流的`MVP`+`Dagger2`+`Retrofit`框架就这样轻松的构建成功了
@@ -19,6 +13,12 @@
  
 ### Old Project
 * [Detailed usage reference Wiki(详细使用方法,请参照Wiki)](https://github.com/JessYanCoding/MVPArms/wiki)
+
+##Wiki
+[Detailed usage reference Wiki(详细使用方法,请参照Wiki)](https://github.com/JessYanCoding/MVPArms/wiki)
+
+##The project used [In Progress]
+[Inspired by eyepetizer（灵感来源于开眼视频,开发中...）](https://github.com/JessYanCoding/WideEyes) 
 
 
 ##Notice
