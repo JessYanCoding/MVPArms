@@ -13,9 +13,11 @@
 
 
 ##Notice
-* 使用框架必须有Dagger2，Rxjava的基础.  
+* 如果你是构建一个全新的项目,直接将整个项目**clone**(或者下载)下来运行,直接将**Demo**当成主**Module**,更改一下**Demo**的**applicationId**为你自己的项目包名,再将项目包名改成自己的包名,**Demo**包含可以直接使用的项目结构,一个主流的`MVP`+`Dagger2`+`Retrofit`框架就这样轻松的构建成功了，现在你按照**Demo Mvp**包下的**UserActivity**的格式,构建**MVP**相关类就进行开发就可以了,如果有基础可以快速上手,如果没有基础,也没关系多使用几次也可以慢慢熟悉,都是些模版代码,在实践中学习是最快的,总比去看那些枯燥难懂的文章(这些框架门槛比较高,要把他们揉合到一起更要费些功夫),浪费几天时间,却连一个基本框架都搭建不起强太多了.
 
-* AppComponent是一个管理所有单例对象的类,使用dagger2管理, DaggerAppComponent为Dagger2使用apt自动生成如果缺少的话，先把报错的部分注释掉，然后编译下项目, DaggerAppComponent就自动生成了，这个时候打开注释就可以了,具体用法请参照dagger2的文档
+* 使用框架必须有Dagger2，Rxjava的基础.
+
+* AppComponent是一个管理所有单例对象的类,使用dagger2管理, DaggerAppComponent为Dagger2使用apt自动生成如果缺少的话，先把报错的部分注释掉，然后编译下项目, DaggerAppComponent就自动生成了，这个时候打开注释就可以了,具体用法请参照dagger2的文档.
 
 * 使用框架必需继承`BaseApplication``BaseActivity``BaseFragment``MVP基类`，还提供有一些 `Adapter``ViewHodler`等的基类.
 
