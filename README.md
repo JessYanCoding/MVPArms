@@ -1,20 +1,33 @@
-# MVPArms [beta] 
+# MVPArms 
+[![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](http://www.apache.org/licenses/LICENSE-2.0)
+[![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square)](https://developer.android.com/about/versions/android-4.0.3.html)
+
 ##a common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects ,to make your developing quicker and easier. 
 一个整合了大量主流开源项目的Android Mvp快速搭建框架
 
-##Wiki
-[Detailed usage reference Wiki(详细使用方法,请参照Wiki)](https://github.com/JessYanCoding/MVPArms/wiki)
+##Usage
+### New Project
+* 如果你是构建一个全新的项目,直接将整个项目**clone**(或者下载)下来运行,直接将**Demo**当成主**Module**,更改一下**Demo**的**applicationId**为你自己的项目包名,再将项目包名改成自己的包名,**Demo**包含可以直接使用的项目结构,一个主流的`MVP`+`Dagger2`+`Retrofit`+`Rxjava`框架就这样轻松的构建成功了
 
-##The project used [In Progress]
-[Inspired by eyepetizer（灵感来源于开眼视频,开发中...）](https://github.com/JessYanCoding/WideEyes) 
+* 现在你按照**Demo Mvp**包下的**UserActivity**的格式,构建**MVP**相关类就可以进行开发了,如果有基础可以快速上手,如果没有基础,也没关系多使用几次再配合查阅[Wiki文档](https://github.com/JessYanCoding/MVPArms/wiki)也可以慢慢掌握,都是些模版代码,在实践中学习是最快的,总比去看那些枯燥难懂的文章(这些框架门槛比较高,要把他们揉合到一起更要费些功夫),浪费几天时间,却连一个基本框架都搭建不起强太多了.
+ 
+### Old Project
+* [老项目想引入此框架,可以参考Wiki文档,写的非常详细](https://github.com/JessYanCoding/MVPArms/wiki)
+
+##Wiki
+[Detailed usage reference Wiki(详细使用方法及扩展功能,请参照Wiki)](https://github.com/JessYanCoding/MVPArms/wiki)
+
+<!--##The project used [In Progress]
+[Inspired by eyepetizer（灵感来源于开眼视频,开发中...）](https://github.com/JessYanCoding/WideEyes) -->
 
 
 ##Notice
-* 使用框架必须有Dagger2，Rxjava的基础.  
 
-* AppComponent是一个管理所有单例对象的类,使用dagger2管理, DaggerAppComponent为Dagger2使用apt自动生成如果缺少的话，先把报错的部分注释掉，然后编译下项目, DaggerAppComponent就自动生成了，这个时候打开注释就可以了,具体用法请参照dagger2的文档
+* 使用框架必须有Dagger2，Rxjava的基础.
 
-* 使用框架必需继承`BaseApplication``BaseActivity``BaseFragment``MVP基类`，还提供有一些 `Adapter``ViewHodler`等的基类.
+* 第一次运行**Demo**时,冷启动会白屏很久,这并不是因为本框架导致的,是因为`Instant run`在**Debug**模式下会在第一次启动时部署一些资源,如果签名打**Release**安装包则不会出现冷启动很慢的情况,所以不用担心影响用户体验
+
+* AppComponent是一个管理所有单例对象的类,使用dagger2管理, DaggerAppComponent为Dagger2使用apt自动生成如果缺少的话，先把报错的部分注释掉，然后编译下项目, DaggerAppComponent就自动生成了，这个时候打开注释就可以了,具体用法请参照dagger2的文档.
 
 * 使用此框架自带自动适配功能，请参考 [AutoLayout使用方法](https://github.com/hongyangAndroid/AndroidAutoLayout).
 
@@ -22,9 +35,12 @@
 
 * 本框架不提供与**UI**有关的任何第三方库(除了`AutoLayout`屏幕适配方案).
 
+
+##Feature
+
 * **网络请求层**: 默认使用Retrofit，如今主流的网络请求框架有`Volley`,`Okhttp`,`Retrofit`(`Android-async-http`停止维护了)，因为这个是库基于Rxjava， Retrofit支持Rxjava，默认使用Okhttp请求(Okhttp使用Okio，Okio基于IO和NIO所以性能优于Volley,Volley内部封装有Imageloader,支持扩展Okhttp，封装和扩展比Okhttp好，但是比较适合频繁，数据量小得网络请求)，所以此库默认直接通过Dagger注入Retrofit实例给开发者.
 
-* **图片加载**:因为图片加载框架各有优缺点，`Fresco`,`Picasso`,`Glide`这些都是现在比较主流得图片加载框架，所以为了扩展性本库提供一个统一的管理类Imageloader,使用策略者模式，使用者只用实现接口，就可以动态替换图片框架，外部提供统一接口加载图片，替换图片加载框架毫无痛点,并且为了快速实现,默认提供一个Glide的实现类,有其它需求可以参照[**Wiki**](https://github.com/JessYanCoding/MVPArms/wiki)替换为别的图片加载框架
+* **图片加载**:因为图片加载框架各有优缺点，`Fresco`,`Picasso`,`Glide`这些都是现在比较主流得图片加载框架，所以为了扩展性本库提供一个统一的管理类Imageloader,使用策略者模式，使用者只用实现接口，就可以动态替换图片框架，外部提供统一接口加载图片，替换图片加载框架毫无痛点,并且为了快速实现,默认提供一个Glide的实现类,有其它需求可以参照[**Wiki**](https://github.com/JessYanCoding/MVPArms/wiki#3.4)替换为别的图片加载框架
 
 * **Model层** 优秀的数据库太多，`GreenDao`,`Realm`,`SqlBrite`（Square公司出品，对SQLiteOpenHelper封装，提供响应式api访问数据库）,`SqlDelight`,`Storio`,`DBFlow`，每个框架的使用方法都不一样，本框架只提供一个管理类CacheManager里面默认封装了RxCache(此库根据`Retrofit`Api实现了缓存逻辑,并提供响应式接口)，有其他需求的可以自己使用数据库实现缓存逻辑并替换，通过Dagger2向Model层提供ServiceManager（网络请求，Retrofit Api）和CacheManager（数据持久层）,来提供给开发者，这样的好处的是上层（activity/fragment/presenter）不需要知道数据源的细节（来自于网络、数据库，亦或是内存等等），底层可以根据需求修改（缓存的实现细节）上下两层分离互不影响.
 
