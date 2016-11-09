@@ -1,6 +1,7 @@
 package com.jess.arms.di.module;
 
 import android.app.Application;
+import android.text.TextUtils;
 
 import com.jess.arms.http.GlobeHttpHandler;
 import com.jess.arms.http.RequestIntercept;
@@ -208,6 +209,9 @@ public class ClientModule {
         }
 
         public Buidler baseurl(String baseurl) {//基础url
+            if (TextUtils.isEmpty(baseurl)) {
+                throw new IllegalArgumentException("baseurl can not be empty");
+            }
             this.apiUrl = HttpUrl.parse(baseurl);
             return this;
         }
