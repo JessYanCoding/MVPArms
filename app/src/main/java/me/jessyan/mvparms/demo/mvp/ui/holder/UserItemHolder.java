@@ -33,6 +33,7 @@ public class UserItemHolder extends BaseHolder<User> {
 
     public UserItemHolder(View itemView) {
         super(itemView);
+        //可以在任何可以拿到Application的地方,拿到AppComponent,从而得到用Dagger管理的单例对象
         mApplication = (WEApplication) itemView.getContext().getApplicationContext();
         mImageLoader = mApplication.getAppComponent().imageLoader();
     }
