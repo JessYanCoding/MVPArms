@@ -24,6 +24,8 @@ import java.util.LinkedList;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity {
     protected final String TAG = this.getClass().getSimpleName();
     private BroadcastReceiver mBroadcastReceiver;
@@ -35,6 +37,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     private static final String LAYOUT_LINEARLAYOUT = "LinearLayout";
     private static final String LAYOUT_FRAMELAYOUT = "FrameLayout";
     private static final String LAYOUT_RELATIVELAYOUT = "RelativeLayout";
+    private Unbinder mUnbinder;
 
 
     @Override
@@ -81,7 +84,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         }
         EventBus.getDefault().register(this);//注册到事件主线
         setContentView(initView());
-        ButterKnife.bind(this);//绑定到butterknife
+        //绑定到butterknife
+        mUnbinder = ButterKnife.bind(this);
         ComponentInject();//依赖注入
         initData();
     }
@@ -112,7 +116,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
             mApplication.getActivityList().remove(this);
         }
         if (mPresenter != null) mPresenter.onDestroy();//释放资源
-        ButterKnife.unbind(this);
+        if (mUnbinder != Unbinder.EMPTY) mUnbinder.unbind();
         EventBus.getDefault().unregister(this);
     }
 

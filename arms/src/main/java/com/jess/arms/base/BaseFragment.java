@@ -14,6 +14,7 @@ import org.simple.eventbus.EventBus;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by jess on 2015/12/8.
@@ -24,12 +25,14 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
     protected final String TAG = this.getClass().getSimpleName();
     @Inject
     protected P mPresenter;
+    private Unbinder mUnbinder;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRootView = initView();
-        ButterKnife.bind(this, mRootView);//绑定到butterknife
+        //绑定到butterknife
+        mUnbinder = ButterKnife.bind(this, mRootView);
         return mRootView;
     }
 
@@ -51,7 +54,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        if (mUnbinder != Unbinder.EMPTY) mUnbinder.unbind();
     }
 
     @Override

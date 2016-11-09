@@ -13,7 +13,7 @@ import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.utils.UiUtils;
 import com.paginate.Paginate;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.di.component.AppComponent;
 import me.jessyan.mvparms.demo.di.component.DaggerUserComponent;
@@ -26,14 +26,16 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import timber.log.Timber;
 
+import static me.jessyan.mvparms.demo.R.id.SwipeRefreshLayout;
+
 
 public class UserActivity extends WEActivity<UserPresenter> implements UserContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @Nullable
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @Nullable
-    @Bind(R.id.SwipeRefreshLayout)
+    @BindView(SwipeRefreshLayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     private Paginate mPaginate;

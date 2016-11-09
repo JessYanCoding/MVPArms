@@ -10,7 +10,7 @@ import com.jess.arms.base.BaseHolder;
 import com.jess.arms.widget.imageloader.ImageLoader;
 import com.jess.arms.widget.imageloader.glide.GlideImageConfig;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.app.WEApplication;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
@@ -23,10 +23,10 @@ import rx.Observable;
 public class UserItemHolder extends BaseHolder<User> {
 
     @Nullable
-    @Bind(R.id.iv_avatar)
+    @BindView(R.id.iv_avatar)
     ImageView mAvater;
     @Nullable
-    @Bind(R.id.tv_name)
+    @BindView(R.id.tv_name)
     TextView mName;
     private ImageLoader mImageLoader;//用于加载图片的管理类,默认使用glide,使用策略模式,可替换框架
     private final WEApplication mApplication;

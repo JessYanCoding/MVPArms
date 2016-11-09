@@ -55,6 +55,7 @@ dependencies {
     testCompile rootProject.ext.dependencies["junit"]
     apt rootProject.ext.dependencies["dagger2-apt-compiler"]
     provided rootProject.ext.dependencies["javax.annotation"]
+    apt rootProject.ext.dependencies["butterknife-apt"]
     compile project(':arms')
     compile rootProject.ext.dependencies["paginate"]
     debugCompile rootProject.ext.dependencies["canary-debug"]
