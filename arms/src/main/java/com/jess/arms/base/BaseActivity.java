@@ -37,6 +37,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     private static final String LAYOUT_LINEARLAYOUT = "LinearLayout";
     private static final String LAYOUT_FRAMELAYOUT = "FrameLayout";
     private static final String LAYOUT_RELATIVELAYOUT = "RelativeLayout";
+    public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_add_activity_list";//是否加入到activity的list，管理
     private Unbinder mUnbinder;
 
 
@@ -78,11 +79,15 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApplication = (BaseApplication) getApplication();
+        //如果intent包含了此字段,并且为true说明不加入到list
+        // 默认为false,如果不需要管理(比如不需要在退出所有activity(killAll)时，退出此activity就在intent加此字段为true)
+        boolean isNotAdd = getIntent().getBooleanExtra(IS_NOT_ADD_ACTIVITY_LIST, false);
         synchronized (BaseActivity.class) {
-
-            mApplication.getActivityList().add(this);
+            if (!isNotAdd)
+                mApplication.getActivityList().add(this);
         }
-        EventBus.getDefault().register(this);//注册到事件主线
+        if (useEventBus())//如果要使用eventbus请将此方法返回true
+            EventBus.getDefault().register(this);//注册到事件主线
         setContentView(initView());
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(this);
@@ -117,8 +122,19 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         }
         if (mPresenter != null) mPresenter.onDestroy();//释放资源
         if (mUnbinder != Unbinder.EMPTY) mUnbinder.unbind();
-        EventBus.getDefault().unregister(this);
+        if (useEventBus())//如果要使用eventbus请将此方法返回true
+            EventBus.getDefault().unregister(this);
     }
+
+    /**
+     * 是否使用eventBus,默认为使用(true)，
+     *
+     * @return
+     */
+    protected boolean useEventBus() {
+        return false;
+    }
+
 
     @Override
     public void onBackPressed() {

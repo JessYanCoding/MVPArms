@@ -6,8 +6,6 @@ import android.view.View;
 import com.jess.arms.utils.KnifeUtil;
 import com.zhy.autolayout.utils.AutoUtils;
 
-import org.simple.eventbus.EventBus;
-
 /**
  * Created by jess on 2015/11/24.
  */
@@ -19,7 +17,6 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
         itemView.setOnClickListener(this);//点击事件
         AutoUtils.autoSize(itemView);//适配
         KnifeUtil.bindTarget(this, itemView);//绑定
-        EventBus.getDefault().register(this);//注册eventbus
     }
 
 

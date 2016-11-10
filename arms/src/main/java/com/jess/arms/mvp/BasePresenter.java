@@ -34,12 +34,14 @@ public class BasePresenter<M, V extends BaseView> implements presenter {
 
     @Override
     public void onStart() {
-        EventBus.getDefault().register(this);//注册eventbus
+        if (useEventBus())//如果要使用eventbus请将此方法返回true
+            EventBus.getDefault().register(this);//注册eventbus
     }
 
     @Override
     public void onDestroy() {
-        EventBus.getDefault().unregister(this);//解除注册eventbus
+        if (useEventBus())//如果要使用eventbus请将此方法返回true
+            EventBus.getDefault().unregister(this);//解除注册eventbus
         unSubscribe();//解除订阅
         this.mModel = null;
         this.mRootView = null;
@@ -47,6 +49,15 @@ public class BasePresenter<M, V extends BaseView> implements presenter {
 
     protected void handleError(Throwable throwable) {
 
+    }
+
+    /**
+     * 是否使用eventBus,默认为使用(true)，
+     *
+     * @return
+     */
+    protected boolean useEventBus() {
+        return false;
     }
 
 
