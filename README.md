@@ -23,6 +23,8 @@
 
 ##Notice
 
+* [我们为什么要把Dagger2,MVP以及Rxjava引入项目中?](http://www.jianshu.com/p/91c2bb8e6369)
+
 * 使用框架必须有Dagger2，Rxjava的基础.
 
 * 第一次运行**Demo**时,冷启动会白屏很久,这并不是因为本框架导致的,是因为`Instant run`在**Debug**模式下会在第一次启动时部署一些资源,如果签名打**Release**安装包则不会出现冷启动很慢的情况,所以不用担心影响用户体验
