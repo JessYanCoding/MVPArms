@@ -2,7 +2,7 @@
 [![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](http://www.apache.org/licenses/LICENSE-2.0)
 [![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square)](https://developer.android.com/about/versions/android-4.0.3.html)
 
-##a common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects ,to make your developing quicker and easier. 
+##a common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects(Dagger2,Rxjava,Retrofit...) ,to make your developing quicker and easier. 
 一个整合了大量主流开源项目的Android Mvp快速搭建框架
 
 ##Usage
