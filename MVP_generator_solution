@@ -1,0 +1,410 @@
+MVPArms框架自动生成MVP及Dagger2相关文件解决方案
+
+
+(设置)Setting -> Editor ->  File and Code Templates -> Files 然后点击左上角绿色的+号
+
+
+下面有7个Template,将分隔符上Name: 后的字符复制到Name输入框里,将分隔符里的内容复制进下面的大输入框,复制完后在继续点+
+创建下一个,重复之前的操作,一共创建7个Template,点击右下角的ok按钮,现在在对应的包下点鼠标右键New选择项里就有刚才创建的
+Template了,点击对应Template,在输入框中输入名字就可以创建对应的文件
+再按照Contract->Model->Presenter->Activity->Module->Component的顺序在对应包下构建这6个模版,名字必须一样,这下
+对应页面的Dagger和Mvp类即自动生成了,就可以专注写逻辑了
+以下模版可以根据需求做相应修改
+
+
+
+Name: Activity
+--------------------------------------------------------------------------------------
+
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+
+import com.jess.arms.utils.UiUtils;
+
+
+import static com.jess.arms.utils.Preconditions.checkNotNull;
+
+/**
+  * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同
+  * 由于每个项目包结构都不一定相同,所以每生成一个文件需要自己导入import包名,可以在设置中设置自动导入包名
+  * 请在对应包下按以下顺序生成对应代码,Contract->Model->Presenter->Activity->Module->Component
+  * 因为生成Activity时,Module和Component还没生成,但是Activity中有它们的引用,所以会报错,但是不用理会
+  * 继续将Module和Component生成完后,编译一下项目再回到Activity,按提示修改一个方法名即可
+  * 如果想生成Fragment的相关文件,则将上面构建顺序中的Activity换为Fragment,并将Component中inject方法的参数改为此Fragment
+  */
+
+#parse("File Header.java")
+
+public class ${NAME}Activity extends WEActivity<${NAME}Presenter> implements ${NAME}Contract.View {
+
+
+    @Override
+    protected void setupActivityComponent(AppComponent appComponent) {
+        Dagger${NAME}Component
+                .builder()
+                .appComponent(appComponent)
+                .${NAME}Module(new ${NAME}Module(this)) //请将${NAME}Module()第一个首字母改为小写
+                .build()
+                .inject(this);
+    }
+
+    @Override
+    protected View initView() {
+        return LayoutInflater.from(this).inflate(layout_id, null, false);
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showMessage(@NonNull String message) {
+        checkNotNull(message);
+        UiUtils.SnackbarText(message);
+    }
+
+    @Override
+    public void launchActivity(@NonNull Intent intent) {
+        checkNotNull(intent);
+        UiUtils.startActivity(this, intent);
+    }
+
+    @Override
+    public void killMyself() {
+        finish();
+    }
+
+
+}
+
+--------------------------------------------------------------------------------------
+
+
+
+
+Name: Component
+--------------------------------------------------------------------------------------
+
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+
+import com.jess.arms.di.scope.ActivityScope;
+
+import dagger.Component;
+
+/**
+  * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同
+  * 由于每个项目包结构都不一定相同,所以每生成一个文件需要自己导入import包名,可以在设置中设置自动导入包名
+  * 请在对应包下按以下顺序生成对应代码,Contract->Model->Presenter->Activity->Module->Component
+  * 因为生成Activity时,Module和Component还没生成,但是Activity中有它们的引用,所以会报错,但是不用理会
+  * 继续将Module和Component生成完后,编译一下项目再回到Activity,按提示修改一个方法名即可
+  * 如果想生成Fragment的相关文件,则将上面构建顺序中的Activity换为Fragment,并将Component中inject方法的参数改为此Fragment
+  */
+
+#parse("File Header.java")
+
+@ActivityScope
+@Component(modules = ${NAME}Module.class,dependencies = AppComponent.class)
+public interface ${NAME}Component {
+    void inject(${NAME}Activity activity);
+}
+--------------------------------------------------------------------------------------
+
+
+
+
+Name: Contract
+--------------------------------------------------------------------------------------
+
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+
+import com.jess.arms.mvp.BaseView;
+
+/**
+  * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同
+  * 由于每个项目包结构都不一定相同,所以每生成一个文件需要自己导入import包名,可以在设置中设置自动导入包名
+  * 请在对应包下按以下顺序生成对应代码,Contract->Model->Presenter->Activity->Module->Component
+  * 因为生成Activity时,Module和Component还没生成,但是Activity中有它们的引用,所以会报错,但是不用理会
+  * 继续将Module和Component生成完后,编译一下项目再回到Activity,按提示修改一个方法名即可
+  * 如果想生成Fragment的相关文件,则将上面构建顺序中的Activity换为Fragment,并将Component中inject方法的参数改为此Fragment
+  */
+
+#parse("File Header.java")
+
+public interface ${NAME}Contract {
+    //对于经常使用的关于UI的方法可以定义到BaseView中,如显示隐藏进度条,和显示文字消息
+    interface View extends BaseView {
+
+    }
+    //Model层定义接口,外部只需关心model返回的数据,无需关心内部细节,及是否使用缓存
+    interface Model {
+
+    }
+}
+--------------------------------------------------------------------------------------
+
+
+Name: Fragment
+--------------------------------------------------------------------------------------
+
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+
+import com.jess.arms.utils.UiUtils;
+
+import butterknife.Bind;
+
+import static com.jess.arms.utils.Preconditions.checkNotNull;
+
+/**
+  * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同
+  * 由于每个项目包结构都不一定相同,所以每生成一个文件需要自己导入import包名,可以在设置中设置自动导入包名
+  * 请在对应包下按以下顺序生成对应代码,Contract->Model->Presenter->Activity->Module->Component
+  * 因为生成Activity时,Module和Component还没生成,但是Activity中有它们的引用,所以会报错,但是不用理会
+  * 继续将Module和Component生成完后,编译一下项目再回到Activity,按提示修改一个方法名即可
+  * 如果想生成Fragment的相关文件,则将上面构建顺序中的Activity换为Fragment,并将Component中inject方法的参数改为此Fragment
+  */
+
+#parse("File Header.java")
+
+public class ${NAME}Fragment extends WEFragment<${NAME}Presenter> implements ${NAME}Contract.View{
+
+
+    public static ${NAME}Fragment newInstance() {
+        ${NAME}Fragment fragment = new ${NAME}Fragment();
+        return fragment;
+    }
+
+    @Override
+    protected void setupFragmentComponent(AppComponent appComponent) {
+        Dagger${NAME}Component
+                .builder()
+                .appComponent(appComponent)
+                .${NAME}Module(new ${NAME}Module(this))//请将${NAME}Module()第一个首字母改为小写
+                .build()
+                .inject(this);
+    }
+
+    @Override
+    protected View initView() {
+        return LayoutInflater.from(getActivity()).inflate(layout_id, null, false);
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    /**
+     * 此方法是让外部调用使fragment做一些操作的,比如说外部的activity想让fragment对象执行一些方法,
+     * 建议在有多个需要让外界调用的方法时,统一传bundle,里面存一个what字段,来区分不同的方法,在setData
+     * 方法中就可以switch做不同的操作,这样就可以用统一的入口方法做不同的事,和message同理
+     *
+     * 使用此方法时请注意调用时fragment的生命周期,如果调用此setData方法时onActivityCreated
+     * 还没执行,setData里调用presenter的方法时,是会报空的,因为dagger注入是在onActivityCreated
+     * 方法中执行的,如果要做一些初始化操作,可以不必让外部调setData,在内部onActivityCreated中
+     * 初始化就可以了
+     *
+     * @param data
+     */
+
+    @Override
+    public void setData(Object data) {
+
+    }
+
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showMessage(@NonNull String message) {
+        checkNotNull(message);
+        UiUtils.SnackbarText(message);
+    }
+
+    @Override
+    public void launchActivity(@NonNull Intent intent) {
+        checkNotNull(intent);
+        UiUtils.startActivity(getActivity(), intent);
+    }
+
+    @Override
+    public void killMyself() {
+
+    }
+
+}
+--------------------------------------------------------------------------------------
+
+
+Name: Model
+--------------------------------------------------------------------------------------
+
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+
+import android.app.Application;
+import com.google.gson.Gson;
+import com.jess.arms.mvp.BaseModel;
+
+import static com.jess.arms.utils.Preconditions.checkNotNull;
+
+
+/**
+  * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同
+  * 由于每个项目包结构都不一定相同,所以每生成一个文件需要自己导入import包名,可以在设置中设置自动导入包名
+  * 请在对应包下按以下顺序生成对应代码,Contract->Model->Presenter->Activity->Module->Component
+  * 因为生成Activity时,Module和Component还没生成,但是Activity中有它们的引用,所以会报错,但是不用理会
+  * 继续将Module和Component生成完后,编译一下项目再回到Activity,按提示修改一个方法名即可
+  * 如果想生成Fragment的相关文件,则将上面构建顺序中的Activity换为Fragment,并将Component中inject方法的参数改为此Fragment
+  */
+
+#parse("File Header.java")
+
+public class ${NAME}Model extends BaseModel<ServiceManager,CacheManager> implements ${NAME}Contract.Model{
+    private Gson mGson;
+    private Application mApplication;
+
+    public ${NAME}Model(ServiceManager serviceManager, CacheManager cacheManager, Gson gson, Application application) {
+        super(serviceManager, cacheManager);
+        this.mGson = gson;
+        this.mApplication = application;
+    }
+
+
+}
+
+--------------------------------------------------------------------------------------
+
+
+Name: Module
+--------------------------------------------------------------------------------------
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+
+import com.google.gson.Gson;
+import android.app.Application;
+import com.jess.arms.di.scope.ActivityScope;
+
+import dagger.Module;
+import dagger.Provides;
+
+/**
+  * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同
+  * 由于每个项目包结构都不一定相同,所以每生成一个文件需要自己导入import包名,可以在设置中设置自动导入包名
+  * 请在对应包下按以下顺序生成对应代码,Contract->Model->Presenter->Activity->Module->Component
+  * 因为生成Activity时,Module和Component还没生成,但是Activity中有它们的引用,所以会报错,但是不用理会
+  * 继续将Module和Component生成完后,编译一下项目再回到Activity,按提示修改一个方法名即可
+  * 如果想生成Fragment的相关文件,则将上面构建顺序中的Activity换为Fragment,并将Component中inject方法的参数改为此Fragment
+  */
+
+#parse("File Header.java")
+
+@Module
+public class ${NAME}Module {
+    private ${NAME}Contract.View view;
+
+    /**
+     * 构建${NAME}Module时,将View的实现类传进来,这样就可以提供View的实现类给presenter
+     * @param view
+     */
+    public ${NAME}Module(${NAME}Contract.View view) {
+        this.view = view;
+    }
+
+    @ActivityScope
+    @Provides
+    ${NAME}Contract.View provide${NAME}View(){
+        return this.view;
+    }
+
+    @ActivityScope
+    @Provides
+    ${NAME}Contract.Model provide${NAME}Model(ServiceManager serviceManager, CacheManager cacheManager
+    ,Gson gson,Application application){
+        return new ${NAME}Model(serviceManager,cacheManager,gson,application);
+    }
+}
+--------------------------------------------------------------------------------------
+
+
+Name: Presenter
+--------------------------------------------------------------------------------------
+
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+
+import android.app.Application;
+
+import com.jess.arms.di.scope.ActivityScope;
+import com.jess.arms.mvp.BasePresenter;
+import com.jess.arms.widget.imageloader.ImageLoader;
+import com.tbruyelle.rxpermissions.RxPermissions;
+
+/**
+  * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同
+  * 由于每个项目包结构都不一定相同,所以每生成一个文件需要自己导入import包名,可以在设置中设置自动导入包名
+  * 请在对应包下按以下顺序生成对应代码,Contract->Model->Presenter->Activity->Module->Component
+  * 因为生成Activity时,Module和Component还没生成,但是Activity中有它们的引用,所以会报错,但是不用理会
+  * 继续将Module和Component生成完后,编译一下项目再回到Activity,按提示修改一个方法名即可
+  * 如果想生成Fragment的相关文件,则将上面构建顺序中的Activity换为Fragment,并将Component中inject方法的参数改为此Fragment
+  */
+
+import javax.inject.Inject;
+
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+
+#parse("File Header.java")
+
+@ActivityScope
+public class ${NAME}Presenter extends BasePresenter<${NAME}Contract.Model, ${NAME}Contract.View> {
+    private RxErrorHandler mErrorHandler;
+    private Application mApplication;
+    private RxPermissions mRxPermissions;
+    private ImageLoader mImageLoader;
+
+    @Inject
+    public ${NAME}Presenter (${NAME}Contract.Model model, ${NAME}Contract.View rootView
+            , RxErrorHandler handler, Application application, RxPermissions rxPermissions
+            , ImageLoader imageLoader) {
+        super(model, rootView);
+        this.mErrorHandler = handler;
+        this.mApplication = application;
+        this.mRxPermissions = rxPermissions;
+        this.mImageLoader = imageLoader;
+    }
+
+
+}
+
+--------------------------------------------------------------------------------------
+
+
