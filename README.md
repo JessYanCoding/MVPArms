@@ -9,7 +9,7 @@
 > New Project
 >> 如果你是构建一个全新的项目,直接将整个项目**clone**(或者下载)下来运行,直接将**Demo**当成主**Module**,更改一下**Demo**的**applicationId**为你自己的项目包名,再将项目包名改成自己的包名,**Demo**包含可以直接使用的项目结构,一个主流的`MVP`+`Dagger2`+`Retrofit`+`Rxjava`框架就这样轻松的构建成功了
 
->>现在你按照**Demo Mvp**包下的**UserActivity**的格式,构建**MVP**相关类就可以进行开发了,如果有基础可以快速上手,如果没有基础,也没关系多使用几次再配合查阅[Wiki文档](https://github.com/JessYanCoding/MVPArms/wiki)也可以慢慢掌握,都是些模版代码,在实践中学习是最快的,总比去看那些枯燥难懂的文章(这些框架门槛比较高,要把他们揉合到一起更要费些功夫),浪费几天时间,却连一个基本框架都搭建不起强太多了.
+>>现在你参考**Demo Mvp**包下的**UserActivity**的格式,[使用Template在对应包下构建MVP,Dagger2相关类](https://github.com/JessYanCoding/MVPArms/blob/master/MVP_generator_solution),配合查阅[Wiki文档](https://github.com/JessYanCoding/MVPArms/wiki)慢慢掌握本框架,看再多文章不如早点在项目中使用它,在实践中学习是最快的.
  
 > Old Project
 >> [老项目想引入此框架,可以参考Wiki文档,写的非常详细](https://github.com/JessYanCoding/MVPArms/wiki)
