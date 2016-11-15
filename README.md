@@ -23,7 +23,7 @@
 
 * [我们为什么要把Dagger2,MVP以及Rxjava引入项目中?](http://www.jianshu.com/p/91c2bb8e6369)
 
-* 看了上面的文章,对为什么使用这些技术应该比较了解了,使用这些技术对项目后期的维护和迭代特别是大型项目非常有帮助,但是就是开发前期每写一个页面要多写很多`MVP`,`Dagger2`的类和接口,这对于前期确实比较头疼,现在作者已经可以通过Template生成一些`MVP`,`Dagger2`的模版代码,现在大家可以非常轻松的使用本框架,[mvp_generator_solution](https://github.com/JessYanCoding/MVPArms/blob/master/MVP_generator_solution).
+* 看了上面的文章,对为什么使用这些技术应该比较了解了,使用这些技术对项目后期的维护和迭代特别是大型项目非常有帮助,但是就是开发前期每写一个页面要多写很多`MVP`,`Dagger2`的类和接口,这对于开发前期确实比较头疼,现在作者已经可以通过Template自动生成一些`MVP`,`Dagger2`的模版代码,现在大家可以非常轻松的使用本框架,[mvp_generator_solution](https://github.com/JessYanCoding/MVPArms/blob/master/MVP_generator_solution).
 
 * 使用框架必须有Dagger2,Rxjava的基础.
 
