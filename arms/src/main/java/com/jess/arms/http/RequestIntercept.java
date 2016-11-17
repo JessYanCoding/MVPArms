@@ -4,6 +4,7 @@ import com.jess.arms.utils.ZipHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.nio.charset.Charset;
 
 import okhttp3.Interceptor;
@@ -43,7 +44,7 @@ public class RequestIntercept implements Interceptor {
 
         //打印url信息
         Timber.tag("Request").w("Sending Request %s on %n Params --->  %s%n Connection ---> %s%n Headers ---> %s", request.url()
-                , request.body() != null ? requestbuffer.readUtf8() : "null"
+                , request.body() != null ? URLDecoder.decode(requestbuffer.readUtf8(), "UTF-8")  : "null"
                 , chain.connection()
                 , request.headers());
 
