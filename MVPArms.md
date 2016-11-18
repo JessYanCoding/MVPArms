@@ -7,7 +7,7 @@
 
 ##Usage
 > New Project
->> 如果你是构建一个全新的项目,直接将整个项目**clone**(或者下载)下来,直接将**Demo**当成主**Module**,再将项目包名改成自己的包名,**Demo**包含可以直接使用的包结构,一个主流的`MVP`+`Dagger2`+`Retrofit`+`Rxjava`框架就这样轻松的构建成功了,现在你参考**Demo Mvp**包下的**UserActivity**的格式,[使用Template在对应包下自动生成MVP,Dagger2相关类](https://github.com/JessYanCoding/MVPArms/blob/master/MVP_generator_solution),配合查阅[Wiki文档](https://github.com/JessYanCoding/MVPArms/wiki)慢慢掌握本框架,看再多文章不如早点在项目中使用它,在实践中学习是最快的
+>> 如果你是构建一个全新的项目,直接将整个项目**clone**(或者下载)下来,直接将**Demo**当成主**Module**,再将项目包名改成自己的包名,**Demo**包含可以直接使用的包结构,一个主流的`MVP`+`Dagger2`+`Retrofit`+`Rxjava`框架就这样轻松的构建成功了,现在你参考**Demo Mvp**包下的**UserActivity**的格式,[使用Template在对应包下自动生成MVP,Dagger2相关类](http://www.jianshu.com/p/56cf17ab896d),配合查阅[Wiki文档](https://github.com/JessYanCoding/MVPArms/wiki)慢慢掌握本框架,看再多文章不如早点在项目中使用它,在实践中学习是最快的
  
 > Old Project
 >> [老项目想引入此框架,可以参考Wiki文档,写的非常详细](https://github.com/JessYanCoding/MVPArms/wiki)
@@ -23,7 +23,7 @@
 
 * [我们为什么要把Dagger2,MVP以及Rxjava引入项目中?](http://www.jianshu.com/p/91c2bb8e6369)
 
-* 看了上面的文章,对为什么使用这些技术应该比较了解了,使用这些技术对项目后期的维护和迭代特别是大型项目非常有帮助,但是就是开发前期每写一个页面要多写很多`MVP`,`Dagger2`的类和接口,这对于开发前期确实比较头疼,现在作者已经可以通过[mvp_generator_solution](https://github.com/JessYanCoding/MVPArms/blob/master/MVP_generator_solution)自动生成一些`MVP`,`Dagger2`的模版代码,现在大家可以非常轻松的使用本框架.
+* 看了上面的文章,对为什么使用这些技术应该比较了解了,使用这些技术对项目后期的维护和迭代特别是大型项目非常有帮助,但是就是开发前期每写一个页面要多写很多`MVP`,`Dagger2`的类和接口,这对于开发前期确实比较头疼,现在作者已经可以通过[Template](http://www.jianshu.com/p/56cf17ab896d)自动生成一些`MVP`,`Dagger2`的模版代码,现在大家可以非常轻松的使用本框架.
 
 * 第一次运行**Demo**时,冷启动会白屏很久,这并不是因为本框架导致的,是因为`Instant run`在**Debug**模式下会在第一次启动时部署一些资源,如果签名打**Release**安装包则不会出现冷启动很慢的情况,所以不用担心影响用户体验
 
