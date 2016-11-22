@@ -5,7 +5,7 @@
 ##a common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects( like Dagger2,Rxjava,Retrofit... ),to make your developing quicker and easier. 
 一个整合了大量主流开源项目的Android Mvp快速搭建框架
 
-qq群:301733278 有什么问题可以直接我
+qq群:301733278 有什么问题可以直接问我
 
 ##Usage
 > New Project
