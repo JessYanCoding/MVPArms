@@ -1,12 +1,16 @@
 package com.jess.arms.http;
 
+import android.support.annotation.NonNull;
+
 import com.jess.arms.utils.ZipHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 
+import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Request;
@@ -40,11 +44,11 @@ public class RequestIntercept implements Interceptor {
         }
 
         if (mHandler != null)//在请求服务器之前可以拿到request,做一些操作比如给request添加header,如果不做操作则返回参数中的request
-            request = mHandler.onHttpRequestBefore(chain,request);
+            request = mHandler.onHttpRequestBefore(chain, request);
 
         //打印url信息
         Timber.tag("Request").w("Sending Request %s on %n Params --->  %s%n Connection ---> %s%n Headers ---> %s", request.url()
-                , request.body() != null ? URLDecoder.decode(requestbuffer.readUtf8(), "UTF-8")  : "null"
+                , request.body() != null ? parseParams(request.headers(), requestbuffer) : "null"
                 , chain.connection()
                 , request.headers());
 
@@ -94,9 +98,17 @@ public class RequestIntercept implements Interceptor {
         Timber.tag("Result").w(jsonFormat(bodyString));
 
         if (mHandler != null)//这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
-           return mHandler.onHttpResultResponse(bodyString,chain,originalResponse);
+            return mHandler.onHttpResultResponse(bodyString, chain, originalResponse);
 
         return originalResponse;
+    }
+
+    @NonNull
+    private String parseParams(Headers headers, Buffer requestbuffer) throws UnsupportedEncodingException {
+        if (!headers.get("Content-Type").contains("multipart")) {
+            return URLDecoder.decode(requestbuffer.readUtf8(), "UTF-8");
+        }
+        return "null";
     }
 
 }
