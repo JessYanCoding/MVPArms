@@ -10,10 +10,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 
-import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.Buffer;
@@ -36,6 +36,12 @@ public class RequestIntercept implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
+
+
+        if (mHandler != null)//在请求服务器之前可以拿到request,做一些操作比如给request添加header,如果不做操作则返回参数中的request
+            request = mHandler.onHttpRequestBefore(chain, request);
+
+
         Buffer requestbuffer = new Buffer();
         if (request.body() != null) {
             request.body().writeTo(requestbuffer);
@@ -43,12 +49,10 @@ public class RequestIntercept implements Interceptor {
             Timber.tag("Request").w("request.body() == null");
         }
 
-        if (mHandler != null)//在请求服务器之前可以拿到request,做一些操作比如给request添加header,如果不做操作则返回参数中的request
-            request = mHandler.onHttpRequestBefore(chain, request);
 
         //打印url信息
         Timber.tag("Request").w("Sending Request %s on %n Params --->  %s%n Connection ---> %s%n Headers ---> %s", request.url()
-                , request.body() != null ? parseParams(request.headers(), requestbuffer) : "null"
+                , request.body() != null ? parseParams(request.body(), requestbuffer) : "null"
                 , chain.connection()
                 , request.headers());
 
@@ -104,8 +108,8 @@ public class RequestIntercept implements Interceptor {
     }
 
     @NonNull
-    private String parseParams(Headers headers, Buffer requestbuffer) throws UnsupportedEncodingException {
-        if (!headers.get("Content-Type").contains("multipart")) {
+    public static String parseParams(RequestBody body, Buffer requestbuffer) throws UnsupportedEncodingException {
+        if (!body.contentType().toString().contains("multipart")) {
             return URLDecoder.decode(requestbuffer.readUtf8(), "UTF-8");
         }
         return "null";
