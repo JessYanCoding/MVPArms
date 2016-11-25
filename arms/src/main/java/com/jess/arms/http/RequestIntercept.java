@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 
 import com.jess.arms.utils.ZipHelper;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -78,17 +77,9 @@ public class RequestIntercept implements Interceptor {
 
         //解析response content
         if (encoding != null && encoding.equalsIgnoreCase("gzip")) {//content使用gzip压缩
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            clone.writeTo(outputStream);
-            byte[] bytes = outputStream.toByteArray();
-            bodyString = ZipHelper.decompressForGzip(bytes);//解压
-            outputStream.close();
+            bodyString = ZipHelper.decompressForGzip(clone.readByteArray());//解压
         } else if (encoding != null && encoding.equalsIgnoreCase("zlib")) {//content使用zlib压缩
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            clone.writeTo(outputStream);
-            byte[] bytes = outputStream.toByteArray();
-            bodyString = ZipHelper.decompressToStringForZlib(bytes);//解压
-            outputStream.close();
+            bodyString = ZipHelper.decompressToStringForZlib(clone.readByteArray());//解压
         } else {//content没有被压缩
             Charset charset = Charset.forName("UTF-8");
             MediaType contentType = responseBody.contentType();

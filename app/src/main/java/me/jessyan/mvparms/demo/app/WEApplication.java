@@ -112,21 +112,18 @@ public class WEApplication extends BaseApplication {
                 }
 
 
-                //这里如果发现token过期,可以先请求最新的token,然后在拿新的token去重新请求之前的http请求
+                //这里如果发现token过期,可以先请求最新的token,然后在拿新的token放入request里去重新请求
+                //注意在这个回调之前已经调用过proceed,所以这里必须自己去建立网络请求,如使用okhttp使用新的request去请求
                 // create a new request and modify it accordingly using the new token
 //                    Request newRequest = chain.request().newBuilder().header("token", newToken)
 //                            .build();
-//
+
 //                    // retry the request
 //
 //                    response.body().close();
-//                    try {
-//                        return chain.proceed(newRequest);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
+                //如果使用okhttp将新的请求,请求成功后,将返回的response  return出去即可
 
-                //如果需要返回新的结果,则直接把response参数返回出去
+                //如果不需要返回新的结果,则直接把response参数返回出去
                 return response;
             }
 
