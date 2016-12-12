@@ -29,7 +29,7 @@ qq群:301733278 有什么问题可以直接问我
 
 * 第一次运行**Demo**时,冷启动会白屏很久,这并不是因为本框架导致的,是因为`Instant run`在**Debug**模式下会在第一次启动时部署一些资源,如果签名打**Release**安装包则不会出现冷启动很慢的情况,所以不用担心影响用户体验
 
-* 如果你将WEApplication修改为其他名字,启动app时报如下错误 `Unable to instantiate application com.android.tools.fd.runtime.BootstrapApplication`,将instant run 关闭即可
+* 如果你将**WEApplication**修改为其他名字,在启动app时报如下错误 `Unable to instantiate application com.android.tools.fd.runtime.BootstrapApplication`,请将instant run 关闭即可
 
 * AppComponent是一个管理所有单例对象的类,使用dagger2管理, DaggerAppComponent为Dagger2使用apt自动生成如果缺少的话，先把报错的部分注释掉，然后编译下项目, DaggerAppComponent就自动生成了，这个时候打开注释就可以了,具体用法请参照dagger2的文档.
 
