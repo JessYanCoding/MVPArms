@@ -26,7 +26,7 @@ ext {
             "retrofit-converter-gson"  : "com.squareup.retrofit2:converter-gson:${android["retrofitSdkVersion"]}",
             "retrofit-adapter-rxjava"  : "com.squareup.retrofit2:adapter-rxjava:${android["retrofitSdkVersion"]}",
             "junit"                    : "junit:junit:4.12",
-            "okhttp3"                  : "com.squareup.okhttp3:okhttp:3.2.0",
+            "okhttp3"                  : "com.squareup.okhttp3:okhttp:3.4.2",
             "gson"                     : "com.google.code.gson:gson:2.6.2",
             "autolayout"               : "com.zhy:autolayout:1.4.1",
             "butterknife"              : "com.jakewharton:butterknife:8.4.0",
