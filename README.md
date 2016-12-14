@@ -18,17 +18,19 @@
 
 ##Notice
 
-* The use of these technologies for the latter part of the project maintenance and iterative, especially large projects is very helpful, but is to develop a pre-write a page to write a lot of `MVP`,` Dagger2` class and interface, which is indeed a headache for the development of pre- Now the author has been able to [mvp_generator_solution](https://github.com/JessYanCoding/MVPArms/blob/master/MVP_generator_solution) automatically generate some `MVP`,` Dagger2` template code, and now we can very easily use the framework.
+* The use of these technologies for the latter part of the project maintenance and iterative, especially large projects is very helpful, but is to develop a pre-write a page to write a lot of `MVP`,` Dagger2` class and interface, which is indeed a headache for the development of pre- Now the framework has been able to [mvp_generator_solution](https://github.com/JessYanCoding/MVPArms/blob/master/MVP_generator_solution) automatically generate some `MVP`,` Dagger2` template code, and now we can very easily use the framework.
 
-* First run **Demo**, the cold start will be a long time, this is not because of this framework, because the `Instant run` in **Debug** mode will start the first deployment of some resources, if the signature to play **Release** package is not There will be a cold start is very slow, so do not worry about affecting the user experience
+* First run **app**, the cold start will be a long time, this is not because of this framework, because the `Instant run` in **Debug** mode will start the first deployment of some resources, if the signature to play **Release** package is not There will be a cold start is very slow, so do not worry about affecting the user experience.
+
+* If you rename **WEApplication**, the following error occurs in the startup **app**: `Unable to instantiate application com.android.tools.fd.runtime.BootstrapApplication`, please close the instant run.
 
 * AppComponent is a management of all single-instance object class, the use of dagger2 management, DaggerAppComponent for Dagger2 automatically generated using apt if missing, the first part of the error comment out, and then compile the project, DaggerAppComponent automatically generated, this time to open the Notes on Can, the specific use of dagger2 please refer to the document.
 
-* Use this frame comes with automatic adaptation function, please refer to [AndroidAutoLayout](https://github.com/hongyangAndroid/AndroidAutoLayout)
+* Use this frame comes with automatic adaptation function, please refer to [AndroidAutoLayout](https://github.com/hongyangAndroid/AndroidAutoLayout).
 
 * This framework uses `RxPermissions` for rights management (adaptation android6.0), and provides a PermissionUtil tool class line of code to implement the permission request.
 
-* This framework does not provide any third-party libraries associated with the **UI**
+* This framework does not provide any third-party libraries associated with the **UI**.
 
 
 ##Functionality & Libraries
