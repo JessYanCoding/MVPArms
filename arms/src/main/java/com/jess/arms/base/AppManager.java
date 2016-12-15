@@ -5,9 +5,12 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
+import org.simple.eventbus.ThreadMode;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +18,7 @@ import java.util.List;
 import timber.log.Timber;
 
 /**
- * 用于管理所有activity
+ * 用于管理所有activity,和在前台的 activity
  * 可以通过直接持有AppManager对象执行对应方法
  * 也可以通过eventbus post事件,远程遥控执行对应方法
  * Created by jess on 14/12/2016 13:50
@@ -45,13 +48,18 @@ public class AppManager {
     /**
      * 通过eventbus post事件,远程遥控执行对应方法
      */
-    @Subscriber(tag = APPMANAGER_MESSAGE)
-    public void onReceive(Message message){
-        switch (message.what){
+    @Subscriber(tag = APPMANAGER_MESSAGE, mode = ThreadMode.MAIN)
+    public void onReceive(Message message) {
+        switch (message.what) {
             case START_ACTIVITY:
-                startActivity((Intent) message.obj);
+                if (message.obj == null)
+                    break;
+                dispatchStart(message);
                 break;
             case SHOW_SNACKBAR:
+                if (message.obj == null)
+                    break;
+                showSnackbar((String) message.obj, message.arg1 == 0 ? false : true);
                 break;
             case KILL_ALL:
                 killAll();
@@ -62,24 +70,54 @@ public class AppManager {
         }
     }
 
+    private void dispatchStart(Message message) {
+        if (message.obj instanceof Intent)
+            startActivity((Intent) message.obj);
+        else if (message.obj instanceof Class)
+            startActivity((Class) message.obj);
+        return;
+    }
+
+
+    /**
+     * 使用snackbar显示内容
+     *
+     * @param message
+     * @param isLong
+     */
+    public void showSnackbar(String message, boolean isLong) {
+        if (getCurrentActivity() == null) {
+            Timber.tag(TAG).w("mCurrentActivity == null when showSnackbar(String,boolean)");
+            return;
+        }
+        View view = getCurrentActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+        Snackbar.make(view, message, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
+    }
+
+
     /**
      * 让在前台的activity,打开下一个activity
+     *
      * @param intent
      */
     public void startActivity(Intent intent) {
-        if (getCurrentActivity()!=null){
-            getCurrentActivity().startActivity(intent);
+        if (getCurrentActivity() == null) {
+            Timber.tag(TAG).w("mCurrentActivity == null when startActivity(Intent)");
+            //如果没有前台的activity就使用new_task模式启动activity
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mApplication.startActivity(intent);
+            return;
         }
+        getCurrentActivity().startActivity(intent);
     }
 
     /**
      * 让在前台的activity,打开下一个activity
+     *
      * @param activityClass
      */
     public void startActivity(Class activityClass) {
-        if (getCurrentActivity()!=null){
-            getCurrentActivity().startActivity(new Intent(mApplication,activityClass));
-        }
+        startActivity(new Intent(mApplication, activityClass));
     }
 
     /**
@@ -104,6 +142,7 @@ public class AppManager {
 
     /**
      * 获得当前在前台的activity
+     *
      * @return
      */
     public BaseActivity getCurrentActivity() {

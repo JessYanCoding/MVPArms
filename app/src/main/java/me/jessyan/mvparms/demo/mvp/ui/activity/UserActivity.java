@@ -119,7 +119,7 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
 
     @Override
     public void launchActivity(Intent intent) {
-
+        UiUtils.startActivity(intent);
     }
 
     @Override

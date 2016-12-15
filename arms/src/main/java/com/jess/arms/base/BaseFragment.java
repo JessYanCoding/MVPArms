@@ -76,7 +76,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
      * @return
      */
     protected boolean useEventBus() {
-        return false;
+        return true;
     }
 
 

@@ -1,5 +1,8 @@
 package me.jessyan.mvparms.demo.mvp.presenter;
 
+import android.app.Application;
+
+import com.jess.arms.base.AppManager;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.scope.ActivityScope;
@@ -30,6 +33,8 @@ import rx.schedulers.Schedulers;
 public class UserPresenter extends BasePresenter<UserContract.Model, UserContract.View> {
     private RxErrorHandler mErrorHandler;
     private RxPermissions mRxPermissions;
+    private AppManager mAppManager;
+    private Application mApplication;
     private List<User> mUsers = new ArrayList<>();
     private DefaultAdapter mAdapter;
     private int lastUserId = 1;
@@ -37,16 +42,17 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
 
     @Inject
     public UserPresenter(UserContract.Model model, UserContract.View rootView, RxErrorHandler handler
-            , RxPermissions rxPermissions) {
+            , RxPermissions rxPermissions, AppManager appManager, Application application) {
         super(model, rootView);
+        this.mApplication = application;
         this.mErrorHandler = handler;
         this.mRxPermissions = rxPermissions;
+        this.mAppManager = appManager;
         mAdapter = new UserAdapter(mUsers);
         mRootView.setAdapter(mAdapter);//设置Adapter
     }
 
     public void requestUsers(final boolean pullToRefresh) {
-
         //请求外部存储权限用于适配android6.0的权限管理机制
         PermissionUtil.externalStorage(new PermissionUtil.RequestPermission() {
             @Override

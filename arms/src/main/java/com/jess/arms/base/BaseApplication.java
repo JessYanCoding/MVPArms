@@ -2,7 +2,6 @@ package com.jess.arms.base;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 
 import com.jess.arms.di.component.DaggerBaseComponent;
 import com.jess.arms.di.module.AppModule;
@@ -145,16 +144,6 @@ public abstract class BaseApplication extends Application {
      */
     public static Context getContext() {
         return mApplication;
-    }
-
-
-    /**
-     * 退出所有activity
-     */
-    public static void killAll() {
-        Intent intent = new Intent(BaseActivity.ACTION_RECEIVER_ACTIVITY);
-        intent.putExtra("type", "killAll");
-        getContext().sendBroadcast(intent);
     }
 
 }

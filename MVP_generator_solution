@@ -364,11 +364,14 @@ Name: Presenter
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 
 import android.app.Application;
-
+import com.jess.arms.base.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.widget.imageloader.ImageLoader;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import javax.inject.Inject;
+
 
 /**
   * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同
@@ -379,9 +382,7 @@ import com.tbruyelle.rxpermissions.RxPermissions;
   * 如果想生成Fragment的相关文件,则将上面构建顺序中的Activity换为Fragment,并将Component中inject方法的参数改为此Fragment
   */
 
-import javax.inject.Inject;
 
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 
 #parse("File Header.java")
 
@@ -391,16 +392,18 @@ public class ${NAME}Presenter extends BasePresenter<${NAME}Contract.Model, ${NAM
     private Application mApplication;
     private RxPermissions mRxPermissions;
     private ImageLoader mImageLoader;
+    private AppManager mAppManager;
 
     @Inject
     public ${NAME}Presenter (${NAME}Contract.Model model, ${NAME}Contract.View rootView
             , RxErrorHandler handler, Application application, RxPermissions rxPermissions
-            , ImageLoader imageLoader) {
+            , ImageLoader imageLoader, AppManager appManager) {
         super(model, rootView);
         this.mErrorHandler = handler;
         this.mApplication = application;
         this.mRxPermissions = rxPermissions;
         this.mImageLoader = imageLoader;
+        this.mAppManager = appManager;
     }
 
 

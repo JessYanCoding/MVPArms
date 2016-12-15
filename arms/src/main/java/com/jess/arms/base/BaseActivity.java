@@ -1,12 +1,9 @@
 package com.jess.arms.base;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -25,9 +22,8 @@ import butterknife.Unbinder;
 
 public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity {
     protected final String TAG = this.getClass().getSimpleName();
-    private BroadcastReceiver mBroadcastReceiver;
-    public static final String ACTION_RECEIVER_ACTIVITY = "com.jess.activity";
     protected BaseApplication mApplication;
+    private Unbinder mUnbinder;
     @Inject
     protected P mPresenter;
 
@@ -35,7 +31,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     private static final String LAYOUT_FRAMELAYOUT = "FrameLayout";
     private static final String LAYOUT_RELATIVELAYOUT = "RelativeLayout";
     public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_add_activity_list";//是否加入到activity的list，管理
-    private Unbinder mUnbinder;
 
 
     @Override
@@ -134,7 +129,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
      * @return
      */
     protected boolean useEventBus() {
-        return false;
+        return true;
     }
 
 
@@ -147,38 +142,5 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     protected abstract View initView();
 
     protected abstract void initData();
-
-    /**
-     * 用于处理当前activity需要
-     */
-    class ActivityReceriver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent != null) {
-                switch (intent.getStringExtra("type")) {
-                    case "startActivity"://启动activity
-                        Intent content = intent.getExtras().getParcelable("content");
-                        startActivity(content);
-                        break;
-                    case "showSnackbar"://显示snackbar
-                        String text = intent.getStringExtra("content");
-                        boolean isLong = intent.getBooleanExtra("long", false);
-                        View view = BaseActivity.this.getWindow().getDecorView().findViewById(android.R.id.content);
-                        Snackbar.make(view, text, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
-                        break;
-                    case "killAll":
-//                        LinkedList<BaseActivity> copy;
-//                        synchronized (BaseActivity.class) {
-//                            copy = new LinkedList<BaseActivity>(mApplication.getActivityList());
-//                        }
-//                        for (BaseActivity baseActivity : copy) {
-//                            baseActivity.finish();
-//                        }
-                        //		android.os.Process.killProcess(android.os.Process.myPid());
-                        break;
-                }
-            }
-        }
-    }
 
 }
