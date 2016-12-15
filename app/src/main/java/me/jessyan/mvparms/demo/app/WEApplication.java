@@ -52,6 +52,15 @@ public class WEApplication extends BaseApplication {
     }
 
 
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        if (mAppComponent != null)
+            this.mAppComponent = null;
+        if (mRefWatcher != null)
+            this.mRefWatcher = null;
+    }
+
     /**
      * 安装leakCanary检测内存泄露
      */

@@ -29,5 +29,6 @@ public abstract class WEFragment<P extends BasePresenter> extends BaseFragment<P
         if (watcher != null) {
             watcher.watch(this);
         }
+        this.mWeApplication =null;
     }
 }

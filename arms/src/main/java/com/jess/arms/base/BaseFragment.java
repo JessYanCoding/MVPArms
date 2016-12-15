@@ -64,6 +64,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
         if (mPresenter != null) mPresenter.onDestroy();//释放资源
         if (useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().unregister(this);
+        this.mPresenter = null;
+        this.mActivity = null;
+        this.mRootView = null;
+        this.mUnbinder = null;
     }
 
     /**

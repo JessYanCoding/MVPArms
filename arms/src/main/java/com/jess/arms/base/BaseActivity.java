@@ -3,7 +3,6 @@ package com.jess.arms.base;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,8 +17,6 @@ import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.AutoRelativeLayout;
 
 import org.simple.eventbus.EventBus;
-
-import java.util.LinkedList;
 
 import javax.inject.Inject;
 
@@ -65,13 +62,15 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     @Override
     protected void onResume() {
         super.onResume();
-        registReceiver();//注册广播
+        mApplication.getAppManager().setCurrentActivity(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        unregistReceriver();
+        if (mApplication.getAppManager().getCurrentActivity() == this) {
+            mApplication.getAppManager().setCurrentActivity(null);
+        }
     }
 
     @Nullable
@@ -81,11 +80,13 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         mApplication = (BaseApplication) getApplication();
         //如果intent包含了此字段,并且为true说明不加入到list
         // 默认为false,如果不需要管理(比如不需要在退出所有activity(killAll)时，退出此activity就在intent加此字段为true)
-        boolean isNotAdd = getIntent().getBooleanExtra(IS_NOT_ADD_ACTIVITY_LIST, false);
-        synchronized (BaseActivity.class) {
-            if (!isNotAdd)
-                mApplication.getActivityList().add(this);
-        }
+        boolean isNotAdd = false;
+        if (getIntent() != null)
+            getIntent().getBooleanExtra(IS_NOT_ADD_ACTIVITY_LIST, false);
+
+        if (!isNotAdd)
+            mApplication.getAppManager().addActivity(this);
+
         if (useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().register(this);//注册到事件主线
         setContentView(initView());
@@ -117,13 +118,14 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        synchronized (BaseActivity.class) {
-            mApplication.getActivityList().remove(this);
-        }
+        mApplication.getAppManager().removeActivity(this);
         if (mPresenter != null) mPresenter.onDestroy();//释放资源
         if (mUnbinder != Unbinder.EMPTY) mUnbinder.unbind();
         if (useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().unregister(this);
+        this.mPresenter = null;
+        this.mUnbinder = null;
+        this.mApplication = null;
     }
 
     /**
@@ -141,32 +143,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         super.onBackPressed();
     }
 
-    /**
-     * 注册广播
-     */
-    public void registReceiver() {
-        try {
-            mBroadcastReceiver = new ActivityReceriver();
-            IntentFilter filter = new IntentFilter(ACTION_RECEIVER_ACTIVITY);
-            registerReceiver(mBroadcastReceiver, filter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    /**
-     * 解除注册广播
-     */
-    public void unregistReceriver() {
-        if (mBroadcastReceiver == null) return;
-        try {
-            unregisterReceiver(mBroadcastReceiver);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
 
     protected abstract View initView();
 
@@ -191,13 +167,13 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
                         Snackbar.make(view, text, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
                         break;
                     case "killAll":
-                        LinkedList<BaseActivity> copy;
-                        synchronized (BaseActivity.class) {
-                            copy = new LinkedList<BaseActivity>(mApplication.getActivityList());
-                        }
-                        for (BaseActivity baseActivity : copy) {
-                            baseActivity.finish();
-                        }
+//                        LinkedList<BaseActivity> copy;
+//                        synchronized (BaseActivity.class) {
+//                            copy = new LinkedList<BaseActivity>(mApplication.getActivityList());
+//                        }
+//                        for (BaseActivity baseActivity : copy) {
+//                            baseActivity.finish();
+//                        }
                         //		android.os.Process.killProcess(android.os.Process.myPid());
                         break;
                 }

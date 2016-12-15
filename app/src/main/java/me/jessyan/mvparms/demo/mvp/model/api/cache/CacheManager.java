@@ -10,7 +10,7 @@ import javax.inject.Singleton;
  * Contact with jess.yan.effort@gmail.com
  */
 @Singleton
-public class CacheManager extends BaseCacheManager {
+public class CacheManager implements BaseCacheManager {
     private CommonCache mCommonCache;
 
     /**
@@ -25,5 +25,13 @@ public class CacheManager extends BaseCacheManager {
 
     public CommonCache getCommonCache() {
         return mCommonCache;
+    }
+
+    /**
+     * 这里可以释放一些资源(注意这里是单例，即不需要在activity的生命周期调用)
+     */
+    @Override
+    public void onDestory() {
+
     }
 }

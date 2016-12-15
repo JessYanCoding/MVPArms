@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +24,12 @@ import android.widget.Toast;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.BaseApplication;
 
+import org.simple.eventbus.EventBus;
+
 import java.security.MessageDigest;
+
+import static com.jess.arms.base.AppManager.APPMANAGER_MESSAGE;
+import static com.jess.arms.base.AppManager.START_ACTIVITY;
 
 /**
  * Created by jess on 2015/11/23.
@@ -265,12 +270,18 @@ public class UiUtils {
      * @param
      */
     public static void startActivity(Intent content) {
-        Intent intent = new Intent(BaseActivity.ACTION_RECEIVER_ACTIVITY);
-        intent.putExtra("type", "startActivity");
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("content", content);
-        intent.putExtras(bundle);
-        getContext().sendBroadcast(intent);
+//        Intent intent = new Intent(BaseActivity.ACTION_RECEIVER_ACTIVITY);
+//        intent.putExtra("type", "startActivity");
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelable("content", content);
+//        intent.putExtras(bundle);
+//        getContext().sendBroadcast(intent);
+
+
+        Message message = new Message();
+        message.what = START_ACTIVITY;
+        message.obj = content;
+        EventBus.getDefault().post(message,APPMANAGER_MESSAGE);
     }
 
     /**

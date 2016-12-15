@@ -2,6 +2,7 @@ package me.jessyan.mvparms.demo.mvp.contract;
 
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.mvp.BaseView;
+import com.jess.arms.mvp.IModel;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface UserContract {
         void endLoadMore();
     }
     //Model层定义接口,外部只需关心model返回的数据,无需关心内部细节,及是否使用缓存
-    interface Model {
+    interface Model extends IModel{
         Observable<List<User>> getUsers(int lastIdQueried, boolean update);
     }
 }
