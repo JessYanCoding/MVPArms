@@ -5,5 +5,6 @@ package me.jessyan.mvparms.demo.mvp.model.api;
  * contact with jess.yan.effort@gmail.com
  */
 public interface Api {
-    public static final String APP_DOMAIN = "https://api.github.com";
+    String APP_DOMAIN = "https://api.github.com";
+    String RequestSuccess = "0";
 }

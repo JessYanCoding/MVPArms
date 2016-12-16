@@ -3,11 +3,11 @@ package me.jessyan.mvparms.demo.mvp.presenter;
 import android.app.Application;
 
 import com.jess.arms.base.AppManager;
-import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.PermissionUtil;
+import com.jess.arms.utils.RxUtils;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.util.ArrayList;
@@ -86,7 +86,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
                             mRootView.endLoadMore();
                     }
                 })
-                .compose(((BaseActivity) mRootView).<List<User>>bindToLifecycle())//使用RXlifecycle,使subscription和activity一起销毁
+                .compose(RxUtils.<List<User>>bindToLifecycle(mRootView))//使用RXlifecycle,使subscription和activity一起销毁
                 .subscribe(new ErrorHandleSubscriber<List<User>>(mErrorHandler) {
                     @Override
                     public void onNext(List<User> users) {

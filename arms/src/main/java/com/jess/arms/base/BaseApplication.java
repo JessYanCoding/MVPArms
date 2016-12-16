@@ -52,7 +52,6 @@ public abstract class BaseApplication extends Application {
                 .build();
         this.mAppModule = new AppModule(this, mAppManager);//提供application
         this.mImagerModule = new ImageModule();//图片加载框架默认使用glide
-
     }
 
     /**

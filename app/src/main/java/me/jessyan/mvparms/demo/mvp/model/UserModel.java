@@ -28,7 +28,7 @@ public class UserModel extends BaseModel<ServiceManager, CacheManager> implement
 
     @Override
     public Observable<List<User>> getUsers(int lastIdQueried, boolean update) {
-        Observable<List<User>> users = mServiceManager.getCommonService()
+        Observable<List<User>> users = mServiceManager.getUserService()
                 .getUsers(lastIdQueried, USERS_PER_PAGE);
         //使用rxcache缓存,上拉刷新则不读取缓存,加载更多读取缓存
         return mCacheManager.getCommonCache()
