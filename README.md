@@ -51,7 +51,17 @@
 15. [`Glide`](https://github.com/bumptech/glide)
 16. [`LeakCanary`](https://github.com/square/leakcanary)
 17. [`RxErroHandler`](https://github.com/JessYanCoding/RxErrorHandler)
- 
+
+
+##Update
+* Thursday, 15 December 2016: [**AppManager**](https://github.com/JessYanCoding/MVPArms/wiki#3.11)
+
+
+##TODO
+* Improve RxErrorHandler
+* Improve RequestIntercept
+
+
 ##Acknowledgements 
 Thanks to all the three libraries used in this framework **Author**, and all for the 'Open Sourece' selfless contributions **Developer** and **Organizations**, so that we can better work and study, I will also spare time return to the open source community
 
