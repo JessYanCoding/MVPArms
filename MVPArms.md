@@ -72,9 +72,11 @@ qq群:301733278 有什么问题可以直接问我
 ##Update
 * Thursday, 15 December 2016: [**AppManager**](https://github.com/JessYanCoding/MVPArms/wiki#3.11)
 
+
 ##TODO
 * Improve RxErrorHandler
 * Improve RequestIntercept
+
  
 ##Acknowledgements 
 感谢本框架所使用到的所有三方库的**Author**,以及所有为`Open Sourece`做无私贡献的**Developer**和**Organizations**,使我们能更好的工作和学习,本人也会将业余时间回报给开源社区
