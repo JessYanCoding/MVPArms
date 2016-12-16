@@ -12,6 +12,7 @@ import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
 import org.simple.eventbus.ThreadMode;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -269,13 +270,16 @@ public class AppManager {
      * 关闭所有activity
      */
     public void killAll() {
-        LinkedList<BaseActivity> copy;
-        synchronized (AppManager.class) {
-            copy = new LinkedList<>(getActivityList());
+//        while (getActivityList().size() != 0) { //此方法只能兼容LinkedList
+//            getActivityList().remove(0).finish();
+//        }
+
+        Iterator<BaseActivity> iterator = getActivityList().iterator();
+        while (iterator.hasNext()) {
+            iterator.next().finish();
+            iterator.remove();
         }
-        for (BaseActivity baseActivity : copy) {
-            baseActivity.finish();
-        }
+
     }
 
 
@@ -285,11 +289,14 @@ public class AppManager {
     public void AppExit() {
         try {
             killAll();
+            if (mActivityList != null)
+                mActivityList = null;
             ActivityManager activityMgr =
                     (ActivityManager) mApplication.getSystemService(Context.ACTIVITY_SERVICE);
             activityMgr.killBackgroundProcesses(mApplication.getPackageName());
             System.exit(0);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
