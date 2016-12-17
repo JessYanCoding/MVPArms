@@ -37,7 +37,7 @@ qq群:301733278 有什么问题可以直接问我
 
 * 此框架使用`RxPermissions`用于权限管理(适配android6.0),并提供PermissionUtil工具类一行代码实现权限请求. 
 
-* 本框架不提供与**UI**有关的任何第三方库(除了`AutoLayout`屏幕适配方案).
+* 作为通用框架,本框架不提供与**UI**有关的任何第三方库(除了`AutoLayout`屏幕适配方案).
 
 
 ##Feature
