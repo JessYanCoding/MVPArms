@@ -8,7 +8,7 @@ import com.jess.arms.widget.imageloader.ImageConfig;
 /**
  * Created by jess on 8/5/16 15:19
  * contact with jess.yan.effort@gmail.com
- * 图片加载的配置信息,可以一直扩展参数,如果外部调用时想让图片加载框架
+ * 这里放Glide专属的配置信息,可以一直扩展字段,如果外部调用时想让图片加载框架
  * 做一些操作,比如清除或则切换缓存策略,则可以定义一个int类型的变量,内部根据int做不同过的操作
  * 其他操作同理
  */
