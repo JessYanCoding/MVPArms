@@ -2,20 +2,35 @@ package com.jess.arms.widget.imageloader.glide;
 
 import android.widget.ImageView;
 
+import com.bumptech.glide.load.Transformation;
 import com.jess.arms.widget.imageloader.ImageConfig;
 
 /**
  * Created by jess on 8/5/16 15:19
  * contact with jess.yan.effort@gmail.com
- * 图片加载的配置信息
+ * 图片加载的配置信息,可以一直扩展参数,如果外部调用时想让图片加载框架
+ * 做一些操作,比如清除或则切换缓存策略,则可以定义一个int类型的变量,内部根据int做不同过的操作
+ * 其他操作同理
  */
 public class GlideImageConfig extends ImageConfig{
+    private int cacheStrategy;//0对应DiskCacheStrategy.all,1对应DiskCacheStrategy.NONE,2对应DiskCacheStrategy.SOURCE,3对应DiskCacheStrategy.RESULT
+    private Transformation transformation;//glide用它来改变图形的形状
 
     private GlideImageConfig(Buidler builder) {
         this.url = builder.url;
         this.imageView = builder.imageView;
         this.placeholder = builder.placeholder;
         this.errorPic = builder.errorPic;
+        this.cacheStrategy = builder.cacheStrategy;
+        this.transformation = builder.transformation;
+    }
+
+    public int getCacheStrategy() {
+        return cacheStrategy;
+    }
+
+    public Transformation getTransformation() {
+        return transformation;
     }
 
     public static Buidler builder() {
@@ -27,7 +42,9 @@ public class GlideImageConfig extends ImageConfig{
         private String url;
         private ImageView imageView;
         private int placeholder;
-        protected int errorPic;
+        private int errorPic;
+        private int cacheStrategy;//0对应DiskCacheStrategy.all,1对应DiskCacheStrategy.NONE,2对应DiskCacheStrategy.SOURCE,3对应DiskCacheStrategy.RESULT
+        private Transformation transformation;//glide用它来改变图形的形状
 
         private Buidler() {
         }
@@ -51,6 +68,17 @@ public class GlideImageConfig extends ImageConfig{
             this.imageView = imageView;
             return this;
         }
+
+        public Buidler cacheStrategy(int cacheStrategy) {
+            this.cacheStrategy = cacheStrategy;
+            return this;
+        }
+
+        public Buidler transformation(Transformation transformation) {
+            this.transformation = transformation;
+            return this;
+        }
+
 
         public GlideImageConfig build() {
             if (url == null) throw new IllegalStateException("url is required");
