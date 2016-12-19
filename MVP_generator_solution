@@ -84,7 +84,7 @@ public class ${NAME}Activity extends WEActivity<${NAME}Presenter> implements ${N
     @Override
     public void launchActivity(@NonNull Intent intent) {
         checkNotNull(intent);
-        UiUtils.startActivity(this, intent);
+        UiUtils.startActivity(intent);
     }
 
     @Override
@@ -257,7 +257,7 @@ public class ${NAME}Fragment extends WEFragment<${NAME}Presenter> implements ${N
     @Override
     public void launchActivity(@NonNull Intent intent) {
         checkNotNull(intent);
-        UiUtils.startActivity(getActivity(), intent);
+        UiUtils.startActivity(intent);
     }
 
     @Override

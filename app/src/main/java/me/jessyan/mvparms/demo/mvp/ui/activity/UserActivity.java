@@ -124,7 +124,7 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
 
     @Override
     public void killMyself() {
-
+        finish();
     }
 
     @Override

@@ -77,7 +77,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         // 默认为false,如果不需要管理(比如不需要在退出所有activity(killAll)时，退出此activity就在intent加此字段为true)
         boolean isNotAdd = false;
         if (getIntent() != null)
-            getIntent().getBooleanExtra(IS_NOT_ADD_ACTIVITY_LIST, false);
+            isNotAdd = getIntent().getBooleanExtra(IS_NOT_ADD_ACTIVITY_LIST, false);
 
         if (!isNotAdd)
             mApplication.getAppManager().addActivity(this);
