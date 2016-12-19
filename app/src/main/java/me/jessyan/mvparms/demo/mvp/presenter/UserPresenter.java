@@ -99,4 +99,15 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
                     }
                 });
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.mAdapter = null;
+        this.mUsers = null;
+        this.mErrorHandler = null;
+        this.mRxPermissions = null;
+        this.mAppManager = null;
+        this.mApplication = null;
+    }
 }

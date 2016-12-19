@@ -302,6 +302,12 @@ public class ${NAME}Model extends BaseModel<ServiceManager,CacheManager> impleme
         this.mApplication = application;
     }
 
+    @Override
+    public void onDestory() {
+        super.onDestory();
+        this.mGson = null;
+        this.mApplication = null;
+    }
 
 }
 
@@ -406,6 +412,15 @@ public class ${NAME}Presenter extends BasePresenter<${NAME}Contract.Model, ${NAM
         this.mAppManager = appManager;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.mErrorHandler = null;
+        this.mRxPermissions = null;
+        this.mAppManager = null;
+        this.mImageLoader = null;
+        this.mApplication = null;
+    }
 
 }
 
