@@ -100,7 +100,7 @@ public class RequestIntercept implements Interceptor {
 
     @NonNull
     public static String parseParams(RequestBody body, Buffer requestbuffer) throws UnsupportedEncodingException {
-        if (!body.contentType().toString().contains("multipart")) {
+        if (body.contentType() != null && !body.contentType().toString().contains("multipart")) {
             return URLDecoder.decode(requestbuffer.readUtf8(), "UTF-8");
         }
         return "null";
