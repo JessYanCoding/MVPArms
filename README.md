@@ -8,7 +8,7 @@
 [中文说明](MVPArms.md)
 
 ##Architectural
-<img src="https://github.com/JessYanCoding/MVPArms/raw/master/image/Architecture.png" >
+<img src="https://github.com/JessYanCoding/MVPArms/raw/master/image/Architecture.png" width="80%" height="80%">
 
 ##Usage
 > New Project
