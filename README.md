@@ -8,7 +8,7 @@
 [中文说明](MVPArms.md)
 
 ##Architectural
-![](https://github.com/JessYanCoding/MVPArms/raw/master/image/Architecture.png)
+<img src="https://github.com/JessYanCoding/MVPArms/raw/master/image/Architecture.png" >
 
 ##Usage
 > New Project
