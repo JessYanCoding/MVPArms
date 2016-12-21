@@ -32,7 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module
 public class ClientModule {
-    private static final int TOME_OUT = 10;
+    private static final int TIME_OUT = 10;
     public static final int HTTP_RESPONSE_DISK_CACHE_MAX_SIZE = 10 * 1024 * 1024;//缓存文件最大值为10Mb
     private HttpUrl mApiUrl;
     private GlobeHttpHandler mHandler;
@@ -185,8 +185,8 @@ public class ClientModule {
 
 
         OkHttpClient.Builder builder = okHttpClient
-                .connectTimeout(TOME_OUT, TimeUnit.SECONDS)
-                .readTimeout(TOME_OUT, TimeUnit.SECONDS)
+                .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
+                .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .cache(cache)//设置缓存
                 .addNetworkInterceptor(intercept);
         if (mInterceptors != null && mInterceptors.length > 0) {//如果外部提供了interceptor的数组则遍历添加
