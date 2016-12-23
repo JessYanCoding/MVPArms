@@ -1,7 +1,7 @@
 package com.jess.arms.di.component;
 
 import com.jess.arms.base.BaseApplication;
-import com.jess.arms.di.module.BaseModule;
+import com.jess.arms.di.module.AppModule;
 
 import javax.inject.Singleton;
 
@@ -12,7 +12,7 @@ import dagger.Component;
  * Contact with jess.yan.effort@gmail.com
  */
 @Singleton
-@Component(modules={BaseModule.class})
+@Component(modules={AppModule.class})
 public interface BaseComponent {
     void inject(BaseApplication application);
 }

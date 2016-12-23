@@ -3,7 +3,6 @@ package com.jess.arms.di.module;
 import android.app.Application;
 
 import com.google.gson.Gson;
-import com.jess.arms.base.AppManager;
 
 import javax.inject.Singleton;
 
@@ -16,11 +15,9 @@ import dagger.Provides;
 @Module
 public class AppModule {
     private Application mApplication;
-    private AppManager mAppManager;
 
-    public AppModule(Application application, AppManager appManager) {
+    public AppModule(Application application) {
         this.mApplication = application;
-        this.mAppManager = appManager;
     }
 
     @Singleton
@@ -33,7 +30,4 @@ public class AppModule {
     @Provides
     public Gson provideGson(){return new Gson();}
 
-    @Singleton
-    @Provides
-    public AppManager provideAppManager(){return mAppManager;}
 }

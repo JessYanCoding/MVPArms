@@ -5,7 +5,6 @@ import android.content.Context;
 
 import com.jess.arms.di.component.DaggerBaseComponent;
 import com.jess.arms.di.module.AppModule;
-import com.jess.arms.di.module.BaseModule;
 import com.jess.arms.di.module.ClientModule;
 import com.jess.arms.di.module.ImageModule;
 import com.jess.arms.http.GlobeHttpHandler;
@@ -38,20 +37,21 @@ public abstract class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mApplication = this;
+        this.mAppModule = new AppModule(this);//提供application
         DaggerBaseComponent
                 .builder()
-                .baseModule(new BaseModule(this))
+                .appModule(mAppModule)
                 .build()
                 .inject(this);
+        this.mImagerModule = new ImageModule();//图片加载框架默认使用glide
         this.mClientModule = ClientModule//用于提供okhttp和retrofit的单列
                 .buidler()
                 .baseurl(getBaseUrl())
                 .globeHttpHandler(getHttpHandler())
                 .interceptors(getInterceptors())
+                .appManager(mAppManager)//DaggerBaseComponent.inject()后,mAppManager才有值
                 .responseErroListener(getResponseErroListener())
                 .build();
-        this.mAppModule = new AppModule(this, mAppManager);//提供application
-        this.mImagerModule = new ImageModule();//图片加载框架默认使用glide
     }
 
     /**
