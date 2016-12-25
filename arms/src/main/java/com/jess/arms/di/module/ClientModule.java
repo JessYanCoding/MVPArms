@@ -1,14 +1,13 @@
 package com.jess.arms.di.module;
 
 import android.app.Application;
-import android.text.TextUtils;
 
-import com.jess.arms.http.GlobeHttpHandler;
+import com.jess.arms.base.AppManager;
 import com.jess.arms.http.RequestIntercept;
-import com.jess.arms.utils.DataHelper;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -34,62 +33,71 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ClientModule {
     private static final int TIME_OUT = 10;
     public static final int HTTP_RESPONSE_DISK_CACHE_MAX_SIZE = 10 * 1024 * 1024;//缓存文件最大值为10Mb
-    private HttpUrl mApiUrl;
-    private GlobeHttpHandler mHandler;
-    private Interceptor[] mInterceptors;
-    private ResponseErroListener mErroListener;
+    private AppManager mAppManager;
 
-    /**
-     * @author: jess
-     * @date 8/5/16 11:03 AM
-     * @description: 设置baseurl
-     */
-    private ClientModule(Buidler buidler) {
-        this.mApiUrl = buidler.apiUrl;
-        this.mHandler = buidler.handler;
-        this.mInterceptors = buidler.interceptors;
-        this.mErroListener = buidler.responseErroListener;
-    }
 
-    public static Buidler buidler() {
-        return new Buidler();
+    public ClientModule(AppManager appManager) {
+        this.mAppManager = appManager;
     }
 
     /**
-     * @param cache     缓存
-     * @param intercept 拦截器
-     * @return
-     * @author: jess
-     * @date 8/30/16 1:12 PM
-     * @description:提供OkhttpClient
-     */
-    @Singleton
-    @Provides
-    OkHttpClient provideClient(Cache cache, Interceptor intercept) {
-        final OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
-        return configureClient(okHttpClient, cache, intercept);
-    }
-
-    /**
+     * @param builder
      * @param client
      * @param httpUrl
      * @return
      * @author: jess
-     * @date 8/30/16 1:13 PM
-     * @description: 提供retrofit
+     * @date 8/30/16 1:15 PM
+     * @description:提供retrofit
      */
     @Singleton
     @Provides
-    Retrofit provideRetrofit(OkHttpClient client, HttpUrl httpUrl) {
-        final Retrofit.Builder builder = new Retrofit.Builder();
-        return configureRetrofit(builder, client, httpUrl);
+    Retrofit provideRetrofit(Retrofit.Builder builder, OkHttpClient client, HttpUrl httpUrl) {
+        return builder
+                .baseUrl(httpUrl)//域名
+                .client(client)//设置okhttp
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//使用rxjava
+                .addConverterFactory(GsonConverterFactory.create())//使用Gson
+                .build();
     }
+
+    /**
+     * 提供OkhttpClient
+     *
+     * @param okHttpClient
+     * @return
+     */
+    @Singleton
+    @Provides
+    OkHttpClient provideClient(OkHttpClient.Builder okHttpClient, Cache cache, Interceptor intercept
+            , List<Interceptor> interceptors) {
+        OkHttpClient.Builder builder = okHttpClient
+                .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
+                .readTimeout(TIME_OUT, TimeUnit.SECONDS)
+                .cache(cache)//设置缓存
+                .addNetworkInterceptor(intercept);
+        if (interceptors != null && interceptors.size() > 0) {//如果外部提供了interceptor的数组则遍历添加
+            for (Interceptor interceptor : interceptors) {
+                builder.addInterceptor(interceptor);
+            }
+        }
+        return builder
+                .build();
+    }
+
 
     @Singleton
     @Provides
-    HttpUrl provideBaseUrl() {
-        return mApiUrl;
+    Retrofit.Builder provideRetrofitBuilder() {
+        return new Retrofit.Builder();
     }
+
+
+    @Singleton
+    @Provides
+    OkHttpClient.Builder provideClientBuilder() {
+        return new OkHttpClient.Builder();
+    }
+
 
     @Singleton
     @Provides
@@ -100,20 +108,10 @@ public class ClientModule {
 
     @Singleton
     @Provides
-    Interceptor provideIntercept() {
-        return new RequestIntercept(mHandler);//打印请求信息的拦截器
+    Interceptor provideIntercept(RequestIntercept intercept) {
+        return intercept;//打印请求信息的拦截器
     }
 
-
-    /**
-     * 提供缓存地址
-     */
-
-    @Singleton
-    @Provides
-    File provideCacheFile(Application application) {
-        return DataHelper.getCacheFile(application);
-    }
 
     /**
      * 提供RXCache客户端
@@ -137,16 +135,17 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    RxErrorHandler proRxErrorHandler(Application application) {
+    RxErrorHandler proRxErrorHandler(Application application, ResponseErroListener listener) {
         return RxErrorHandler
                 .builder()
                 .with(application)
-                .responseErroListener(mErroListener)
+                .responseErroListener(listener)
                 .build();
     }
 
     /**
      * 提供权限管理类,用于请求权限,适配6.0的权限管理
+     *
      * @param application
      * @return
      */
@@ -158,89 +157,16 @@ public class ClientModule {
 
 
     /**
-     * @param builder
-     * @param client
-     * @param httpUrl
-     * @return
-     * @author: jess
-     * @date 8/30/16 1:15 PM
-     * @description:配置retrofit
-     */
-    private Retrofit configureRetrofit(Retrofit.Builder builder, OkHttpClient client, HttpUrl httpUrl) {
-        return builder
-                .baseUrl(httpUrl)//域名
-                .client(client)//设置okhttp
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//使用rxjava
-                .addConverterFactory(GsonConverterFactory.create())//使用Gson
-                .build();
-    }
-
-    /**
-     * 配置okhttpclient
+     * 提供管理所有activity的管理类
      *
-     * @param okHttpClient
      * @return
      */
-    private OkHttpClient configureClient(OkHttpClient.Builder okHttpClient, Cache cache, Interceptor intercept) {
-
-
-        OkHttpClient.Builder builder = okHttpClient
-                .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
-                .readTimeout(TIME_OUT, TimeUnit.SECONDS)
-                .cache(cache)//设置缓存
-                .addNetworkInterceptor(intercept);
-        if (mInterceptors != null && mInterceptors.length > 0) {//如果外部提供了interceptor的数组则遍历添加
-            for (Interceptor interceptor : mInterceptors) {
-                builder.addInterceptor(interceptor);
-            }
-        }
-        return builder
-                .build();
+    @Singleton
+    @Provides
+    AppManager provideAppManager() {
+        return mAppManager;
     }
 
-
-    public static final class Buidler {
-        private HttpUrl apiUrl = HttpUrl.parse("https://api.github.com/");
-        private GlobeHttpHandler handler;
-        private Interceptor[] interceptors;
-        private ResponseErroListener responseErroListener;
-
-        private Buidler() {
-        }
-
-        public Buidler baseurl(String baseurl) {//基础url
-            if (TextUtils.isEmpty(baseurl)) {
-                throw new IllegalArgumentException("baseurl can not be empty");
-            }
-            this.apiUrl = HttpUrl.parse(baseurl);
-            return this;
-        }
-
-        public Buidler globeHttpHandler(GlobeHttpHandler handler) {//用来处理http响应结果
-            this.handler = handler;
-            return this;
-        }
-
-        public Buidler interceptors(Interceptor[] interceptors) {//动态添加任意个interceptor
-            this.interceptors = interceptors;
-            return this;
-        }
-
-        public Buidler responseErroListener(ResponseErroListener listener) {//处理所有Rxjava的onError逻辑
-            this.responseErroListener = listener;
-            return this;
-        }
-
-
-        public ClientModule build() {
-            if (apiUrl == null) {
-                throw new IllegalStateException("baseurl is required");
-            }
-            return new ClientModule(this);
-        }
-
-
-    }
 
 //    .addNetworkInterceptor(new Interceptor() {
 //        @Override

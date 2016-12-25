@@ -16,6 +16,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import timber.log.Timber;
 
 /**
@@ -25,7 +28,7 @@ import timber.log.Timber;
  * Created by jess on 14/12/2016 13:50
  * Contact with jess.yan.effort@gmail.com
  */
-
+@Singleton
 public class AppManager {
     protected final String TAG = this.getClass().getSimpleName();
     public static final String APPMANAGER_MESSAGE = "appmanager_message";
@@ -40,6 +43,7 @@ public class AppManager {
     //当前在前台的activity
     private BaseActivity mCurrentActivity;
 
+    @Inject
     public AppManager(Application application) {
         this.mApplication = application;
         EventBus.getDefault().register(this);

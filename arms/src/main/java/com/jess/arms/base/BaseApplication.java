@@ -5,15 +5,13 @@ import android.content.Context;
 
 import com.jess.arms.di.component.DaggerBaseComponent;
 import com.jess.arms.di.module.AppModule;
-import com.jess.arms.di.module.BaseModule;
 import com.jess.arms.di.module.ClientModule;
+import com.jess.arms.di.module.GlobeConfigModule;
 import com.jess.arms.di.module.ImageModule;
-import com.jess.arms.http.GlobeHttpHandler;
 
 import javax.inject.Inject;
 
-import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
-import okhttp3.Interceptor;
+import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 /**
  * 本项目由
@@ -29,6 +27,7 @@ public abstract class BaseApplication extends Application {
     private ClientModule mClientModule;
     private AppModule mAppModule;
     private ImageModule mImagerModule;
+    private GlobeConfigModule mGlobeConfigModule;
     @Inject
     protected AppManager mAppManager;
     protected final String TAG = this.getClass().getSimpleName();
@@ -38,20 +37,16 @@ public abstract class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mApplication = this;
+        this.mAppModule = new AppModule(this);//提供application
         DaggerBaseComponent
                 .builder()
-                .baseModule(new BaseModule(this))
+                .appModule(mAppModule)
                 .build()
                 .inject(this);
-        this.mClientModule = ClientModule//用于提供okhttp和retrofit的单列
-                .buidler()
-                .baseurl(getBaseUrl())
-                .globeHttpHandler(getHttpHandler())
-                .interceptors(getInterceptors())
-                .responseErroListener(getResponseErroListener())
-                .build();
-        this.mAppModule = new AppModule(this, mAppManager);//提供application
         this.mImagerModule = new ImageModule();//图片加载框架默认使用glide
+        this.mClientModule = new ClientModule(mAppManager);//用于提供okhttp和retrofit的单例
+        this.mGlobeConfigModule = checkNotNull(getGlobeConfigModule(), "lobeConfigModule is required");
+
     }
 
     /**
@@ -74,12 +69,13 @@ public abstract class BaseApplication extends Application {
             this.mApplication = null;
     }
 
+
     /**
-     * 提供基础url给retrofit
+     * 将app的全局配置信息封装进module(使用Dagger注入到需要配置信息的地方)
      *
      * @return
      */
-    protected abstract String getBaseUrl();
+    protected abstract GlobeConfigModule getGlobeConfigModule();
 
 
     public ClientModule getClientModule() {
@@ -99,42 +95,6 @@ public abstract class BaseApplication extends Application {
         return mAppManager;
     }
 
-    /**
-     * 这里可以提供一个全局处理http响应结果的处理类,
-     * 这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
-     * 默认不实现,如果有需求可以重写此方法
-     *
-     * @return
-     */
-    protected GlobeHttpHandler getHttpHandler() {
-        return null;
-    }
-
-    /**
-     * 用来提供interceptor,如果要提供额外的interceptor可以让子application实现此方法
-     *
-     * @return
-     */
-    protected Interceptor[] getInterceptors() {
-        return null;
-    }
-
-
-    /**
-     * 用来提供处理所有错误的监听
-     * 如果要使用ErrorHandleSubscriber(默认实现Subscriber的onError方法)
-     * 则让子application重写此方法
-     *
-     * @return
-     */
-    protected ResponseErroListener getResponseErroListener() {
-        return new ResponseErroListener() {
-            @Override
-            public void handleResponseError(Context context, Exception e) {
-
-            }
-        };
-    }
 
     /**
      * 返回上下文

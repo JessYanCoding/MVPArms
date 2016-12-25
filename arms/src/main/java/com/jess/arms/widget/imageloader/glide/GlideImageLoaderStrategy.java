@@ -9,11 +9,20 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jess.arms.widget.imageloader.BaseImageLoaderStrategy;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Created by jess on 8/5/16 16:28
  * contact with jess.yan.effort@gmail.com
  */
+@Singleton
 public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideImageConfig> {
+
+    @Inject
+    public GlideImageLoaderStrategy() {
+    }
+
     @Override
     public void loadImage(Context ctx, GlideImageConfig config) {
         RequestManager manager;

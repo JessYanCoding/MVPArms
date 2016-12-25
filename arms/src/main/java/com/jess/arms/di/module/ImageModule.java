@@ -1,7 +1,6 @@
 package com.jess.arms.di.module;
 
 import com.jess.arms.widget.imageloader.BaseImageLoaderStrategy;
-import com.jess.arms.widget.imageloader.ImageLoader;
 import com.jess.arms.widget.imageloader.glide.GlideImageLoaderStrategy;
 
 import javax.inject.Singleton;
@@ -18,13 +17,8 @@ public class ImageModule {
 
     @Singleton
     @Provides
-    public BaseImageLoaderStrategy provideImageLoaderStrategy() {
-        return new GlideImageLoaderStrategy();
+    public BaseImageLoaderStrategy provideImageLoaderStrategy(GlideImageLoaderStrategy glideImageLoaderStrategy) {
+        return glideImageLoaderStrategy;
     }
 
-    @Singleton
-    @Provides
-    public ImageLoader provideImageLoader(BaseImageLoaderStrategy strategy) {
-        return new ImageLoader(strategy);
-    }
 }

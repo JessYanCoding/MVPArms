@@ -72,6 +72,7 @@ qq群:301733278 有什么问题可以直接问我
  
 ##Update
 * Thursday, 15 December 2016: [**AppManager**](https://github.com/JessYanCoding/MVPArms/wiki#3.11)
+* Sunday, 25 December 2016: [**GlobeConfigModule**](https://github.com/JessYanCoding/MVPArms/wiki#3.1)
 
 
 ##TODO
