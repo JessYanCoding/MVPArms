@@ -93,15 +93,17 @@ public class WEApplication extends BaseApplication {
     }
 
 
+    /**
+     * app的全局配置信息封装进module(使用Dagger注入到需要配置信息的地方)
+     * @return
+     */
     @Override
     protected GlobeConfigModule getGlobeConfigModule() {
         return GlobeConfigModule
                 .buidler()
                 .baseurl(Api.APP_DOMAIN)
-                .globeHttpHandler(new GlobeHttpHandler() {
-                    // 这里可以提供一个全局处理http响应结果的处理类,
+                .globeHttpHandler(new GlobeHttpHandler() {// 这里可以提供一个全局处理http响应结果的处理类,
                     // 这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
-                    // 默认不实现,如果有需求可以重写此方法
                     @Override
                     public Response onHttpResultResponse(String httpResult, Interceptor.Chain chain, Response response) {
                         //这里可以先客户端一步拿到每一次http请求的结果,可以解析成json,做一些操作,如检测到token过期后
@@ -136,6 +138,7 @@ public class WEApplication extends BaseApplication {
                         return response;
                     }
 
+                    // 这里可以在请求服务器之前可以拿到request,做一些操作比如给request统一添加token或者header
                     @Override
                     public Request onHttpRequestBefore(Interceptor.Chain chain, Request request) {
                         //如果需要再请求服务器之前做一些操作,则重新返回一个做过操作的的requeat如增加header,不做操作则返回request

@@ -71,7 +71,7 @@ public abstract class BaseApplication extends Application {
 
 
     /**
-     * 全局的配置的module
+     * 将app的全局配置信息封装进module(使用Dagger注入到需要配置信息的地方)
      *
      * @return
      */
