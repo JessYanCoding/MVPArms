@@ -9,6 +9,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Request;
@@ -25,9 +28,11 @@ import static com.jess.arms.utils.CharactorHandler.jsonFormat;
 /**
  * Created by jess on 7/1/16.
  */
+@Singleton
 public class RequestIntercept implements Interceptor {
     private GlobeHttpHandler mHandler;
 
+    @Inject
     public RequestIntercept(GlobeHttpHandler handler) {
         this.mHandler = handler;
     }

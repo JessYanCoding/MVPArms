@@ -12,4 +12,17 @@ public interface GlobeHttpHandler {
     Response onHttpResultResponse(String httpResult, Interceptor.Chain chain, Response response);
 
     Request onHttpRequestBefore(Interceptor.Chain chain, Request request);
+
+    GlobeHttpHandler EMPTY = new GlobeHttpHandler() {
+        @Override
+        public Response onHttpResultResponse(String httpResult, Interceptor.Chain chain, Response response) {
+            return null;
+        }
+
+        @Override
+        public Request onHttpRequestBefore(Interceptor.Chain chain, Request request) {
+            return null;
+        }
+    };
+
 }

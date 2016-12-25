@@ -1,15 +1,13 @@
 package com.jess.arms.di.module;
 
 import android.app.Application;
-import android.text.TextUtils;
 
 import com.jess.arms.base.AppManager;
-import com.jess.arms.http.GlobeHttpHandler;
 import com.jess.arms.http.RequestIntercept;
-import com.jess.arms.utils.DataHelper;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -35,29 +33,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ClientModule {
     private static final int TIME_OUT = 10;
     public static final int HTTP_RESPONSE_DISK_CACHE_MAX_SIZE = 10 * 1024 * 1024;//缓存文件最大值为10Mb
-    private HttpUrl mApiUrl;
-    private GlobeHttpHandler mHandler;
-    private Interceptor[] mInterceptors;
-    private ResponseErroListener mErroListener;
     private AppManager mAppManager;
 
-    /**
-     * @author: jess
-     * @date 8/5/16 11:03 AM
-     * @description: 设置baseurl
-     */
-    private ClientModule(Buidler buidler) {
-        this.mApiUrl = buidler.apiUrl;
-        this.mHandler = buidler.handler;
-        this.mInterceptors = buidler.interceptors;
-        this.mErroListener = buidler.responseErroListener;
-        this.mAppManager = buidler.appManager;
-    }
 
-    public static Buidler buidler() {
-        return new Buidler();
+    public ClientModule(AppManager appManager) {
+        this.mAppManager = appManager;
     }
-
 
     /**
      * @param builder
@@ -87,14 +68,15 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    OkHttpClient provideClient(OkHttpClient.Builder okHttpClient, Cache cache, Interceptor intercept) {
+    OkHttpClient provideClient(OkHttpClient.Builder okHttpClient, Cache cache, Interceptor intercept
+            , List<Interceptor> interceptors) {
         OkHttpClient.Builder builder = okHttpClient
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .cache(cache)//设置缓存
                 .addNetworkInterceptor(intercept);
-        if (mInterceptors != null && mInterceptors.length > 0) {//如果外部提供了interceptor的数组则遍历添加
-            for (Interceptor interceptor : mInterceptors) {
+        if (interceptors != null && interceptors.size() > 0) {//如果外部提供了interceptor的数组则遍历添加
+            for (Interceptor interceptor : interceptors) {
                 builder.addInterceptor(interceptor);
             }
         }
@@ -119,12 +101,6 @@ public class ClientModule {
 
     @Singleton
     @Provides
-    HttpUrl provideBaseUrl() {
-        return mApiUrl;
-    }
-
-    @Singleton
-    @Provides
     Cache provideCache(File cacheFile) {
         return new Cache(cacheFile, HTTP_RESPONSE_DISK_CACHE_MAX_SIZE);//设置缓存路径和大小
     }
@@ -132,20 +108,10 @@ public class ClientModule {
 
     @Singleton
     @Provides
-    Interceptor provideIntercept() {
-        return new RequestIntercept(mHandler);//打印请求信息的拦截器
+    Interceptor provideIntercept(RequestIntercept intercept) {
+        return intercept;//打印请求信息的拦截器
     }
 
-
-    /**
-     * 提供缓存地址
-     */
-
-    @Singleton
-    @Provides
-    File provideCacheFile(Application application) {
-        return DataHelper.getCacheFile(application);
-    }
 
     /**
      * 提供RXCache客户端
@@ -169,11 +135,11 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    RxErrorHandler proRxErrorHandler(Application application) {
+    RxErrorHandler proRxErrorHandler(Application application, ResponseErroListener listener) {
         return RxErrorHandler
                 .builder()
                 .with(application)
-                .responseErroListener(mErroListener)
+                .responseErroListener(listener)
                 .build();
     }
 
@@ -192,6 +158,7 @@ public class ClientModule {
 
     /**
      * 提供管理所有activity的管理类
+     *
      * @return
      */
     @Singleton
@@ -200,57 +167,6 @@ public class ClientModule {
         return mAppManager;
     }
 
-
-    public static final class Buidler {
-        private HttpUrl apiUrl = HttpUrl.parse("https://api.github.com/");
-        private GlobeHttpHandler handler;
-        private Interceptor[] interceptors;
-        private ResponseErroListener responseErroListener;
-        private AppManager appManager;
-
-        private Buidler() {
-        }
-
-        public Buidler baseurl(String baseurl) {//基础url
-            if (TextUtils.isEmpty(baseurl)) {
-                throw new IllegalArgumentException("baseurl can not be empty");
-            }
-            this.apiUrl = HttpUrl.parse(baseurl);
-            return this;
-        }
-
-        public Buidler globeHttpHandler(GlobeHttpHandler handler) {//用来处理http响应结果
-            this.handler = handler;
-            return this;
-        }
-
-        public Buidler interceptors(Interceptor[] interceptors) {//动态添加任意个interceptor
-            this.interceptors = interceptors;
-            return this;
-        }
-
-        public Buidler responseErroListener(ResponseErroListener listener) {//处理所有Rxjava的onError逻辑
-            this.responseErroListener = listener;
-            return this;
-        }
-
-        public Buidler appManager(AppManager appManager) {//管理所有activity的管理类
-            this.appManager = appManager;
-            return this;
-        }
-
-
-        public ClientModule build() {
-            if (apiUrl == null)
-                throw new IllegalStateException("baseurl is required");
-            if (appManager == null)
-                throw new IllegalStateException("appManager is required");
-
-            return new ClientModule(this);
-        }
-
-
-    }
 
 //    .addNetworkInterceptor(new Interceptor() {
 //        @Override
