@@ -12,7 +12,7 @@ import com.jess.arms.widget.imageloader.glide.GlideImageConfig;
 
 import butterknife.BindView;
 import me.jessyan.mvparms.demo.R;
-import me.jessyan.mvparms.demo.app.WEApplication;
+import common.WEApplication;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
 import rx.Observable;
 

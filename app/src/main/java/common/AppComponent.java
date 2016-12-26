@@ -1,4 +1,4 @@
-package me.jessyan.mvparms.demo.di.component;
+package common;
 
 import android.app.Application;
 
