@@ -20,7 +20,10 @@
 ##Wiki
 [Detailed usage reference Wiki](https://github.com/JessYanCoding/MVPArms/wiki)
 
+
 ##Notice
+
+* [Version Updata](https://github.com/JessYanCoding/MVPArms/wiki#1.6)
 
 * The use of these technologies for the latter part of the project maintenance and iterative, especially large projects is very helpful, but is to develop a pre-write a page to write a lot of `MVP`,` Dagger2` class and interface, which is indeed a headache for the development of pre- Now the framework has been able to [mvp_generator_solution](https://github.com/JessYanCoding/MVPArms/blob/master/MVP_generator_solution) automatically generate some `MVP`,` Dagger2` template code, and now we can very easily use the framework.
 
@@ -60,6 +63,7 @@
 ##Update
 * Thursday, 15 December 2016: [**AppManager**](https://github.com/JessYanCoding/MVPArms/wiki#3.11)
 * Sunday, 25 December 2016: [**GlobeConfigModule**](https://github.com/JessYanCoding/MVPArms/wiki#3.1)
+* Monday, 26 December 2016: [**Version Update**](https://github.com/JessYanCoding/MVPArms/wiki#1.6)
 
 
 ##TODO
