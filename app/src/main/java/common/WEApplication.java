@@ -1,4 +1,4 @@
-package me.jessyan.mvparms.demo.app;
+package common;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -15,8 +15,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import me.jessyan.mvparms.demo.BuildConfig;
-import me.jessyan.mvparms.demo.di.component.AppComponent;
-import me.jessyan.mvparms.demo.di.component.DaggerAppComponent;
 import me.jessyan.mvparms.demo.di.module.CacheModule;
 import me.jessyan.mvparms.demo.di.module.ServiceModule;
 import me.jessyan.mvparms.demo.mvp.model.api.Api;
