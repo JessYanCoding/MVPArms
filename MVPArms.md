@@ -24,6 +24,8 @@ qq群:301733278 有什么问题可以直接问我
 
 ##Notice
 
+* [版本更新](https://github.com/JessYanCoding/MVPArms/wiki#1.6) 
+
 * [我们为什么要把Dagger2,MVP以及Rxjava引入项目中?](http://www.jianshu.com/p/91c2bb8e6369)
 
 * 看了上面的文章,对为什么使用这些技术应该比较了解了,使用这些技术对项目后期的维护和迭代特别是大型项目非常有帮助,但是就是开发前期每写一个页面要多写很多`MVP`,`Dagger2`的类和接口,这对于开发前期确实比较头疼,现在本框架已经可以通过[Template](http://www.jianshu.com/p/56cf17ab896d)自动生成一些`MVP`,`Dagger2`的模版代码,现在大家可以非常轻松的使用本框架.
@@ -73,6 +75,7 @@ qq群:301733278 有什么问题可以直接问我
 ##Update
 * Thursday, 15 December 2016: [**AppManager**](https://github.com/JessYanCoding/MVPArms/wiki#3.11)
 * Sunday, 25 December 2016: [**GlobeConfigModule**](https://github.com/JessYanCoding/MVPArms/wiki#3.1)
+* Monday, 26 December 2016:[**Version Update**](https://github.com/JessYanCoding/MVPArms/wiki#1.6)
 
 
 ##TODO
