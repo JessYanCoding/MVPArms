@@ -13,6 +13,7 @@ import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import timber.log.Timber;
 
 /**
+ * 如果申请权限无效,请把每个方法中的「compose(PermissionUtil.<Boolean>bindToLifecycle(view))」删掉
  * Created by jess on 17/10/2016 10:09
  * Contact with jess.yan.effort@gmail.com
  */

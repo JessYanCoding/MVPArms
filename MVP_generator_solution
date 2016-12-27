@@ -375,7 +375,6 @@ import com.jess.arms.base.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.widget.imageloader.ImageLoader;
-import com.tbruyelle.rxpermissions.RxPermissions;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import javax.inject.Inject;
 
@@ -397,18 +396,16 @@ import javax.inject.Inject;
 public class ${NAME}Presenter extends BasePresenter<${NAME}Contract.Model, ${NAME}Contract.View> {
     private RxErrorHandler mErrorHandler;
     private Application mApplication;
-    private RxPermissions mRxPermissions;
     private ImageLoader mImageLoader;
     private AppManager mAppManager;
 
     @Inject
     public ${NAME}Presenter (${NAME}Contract.Model model, ${NAME}Contract.View rootView
-            , RxErrorHandler handler, Application application, RxPermissions rxPermissions
+            , RxErrorHandler handler, Application application
             , ImageLoader imageLoader, AppManager appManager) {
         super(model, rootView);
         this.mErrorHandler = handler;
         this.mApplication = application;
-        this.mRxPermissions = rxPermissions;
         this.mImageLoader = imageLoader;
         this.mAppManager = appManager;
     }
@@ -417,7 +414,6 @@ public class ${NAME}Presenter extends BasePresenter<${NAME}Contract.Model, ${NAM
     public void onDestroy() {
         super.onDestroy();
         this.mErrorHandler = null;
-        this.mRxPermissions = null;
         this.mAppManager = null;
         this.mImageLoader = null;
         this.mApplication = null;

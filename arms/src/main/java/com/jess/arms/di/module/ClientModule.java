@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.jess.arms.base.AppManager;
 import com.jess.arms.http.RequestIntercept;
-import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.io.File;
 import java.util.List;
@@ -143,17 +142,6 @@ public class ClientModule {
                 .build();
     }
 
-    /**
-     * 提供权限管理类,用于请求权限,适配6.0的权限管理
-     *
-     * @param application
-     * @return
-     */
-    @Singleton
-    @Provides
-    RxPermissions provideRxPermissions(Application application) {
-        return RxPermissions.getInstance(application);
-    }
 
 
     /**

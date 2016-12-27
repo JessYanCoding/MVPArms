@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="rxpermissions-0.9.1">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/arms/build/intermediates/exploded-aar/com.tbruyelle.rxpermissions/rxpermissions/0.9.1/res" />
+      <root url="jar://$PROJECT_DIR$/arms/build/intermediates/exploded-aar/com.tbruyelle.rxpermissions/rxpermissions/0.9.1/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.tbruyelle.rxpermissions/rxpermissions/0.9.1/975902941000744ebdb6d3285f5e10ae1134f29e/rxpermissions-0.9.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

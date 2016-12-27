@@ -8,7 +8,6 @@ import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.PermissionUtil;
 import com.jess.arms.utils.RxUtils;
-import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,6 @@ import rx.schedulers.Schedulers;
 @ActivityScope
 public class UserPresenter extends BasePresenter<UserContract.Model, UserContract.View> {
     private RxErrorHandler mErrorHandler;
-    private RxPermissions mRxPermissions;
     private AppManager mAppManager;
     private Application mApplication;
     private List<User> mUsers = new ArrayList<>();
@@ -42,11 +40,10 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
 
     @Inject
     public UserPresenter(UserContract.Model model, UserContract.View rootView, RxErrorHandler handler
-            , RxPermissions rxPermissions, AppManager appManager, Application application) {
+            , AppManager appManager, Application application) {
         super(model, rootView);
         this.mApplication = application;
         this.mErrorHandler = handler;
-        this.mRxPermissions = rxPermissions;
         this.mAppManager = appManager;
         mAdapter = new UserAdapter(mUsers);
         mRootView.setAdapter(mAdapter);//设置Adapter
@@ -59,7 +56,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
             public void onRequestPermissionSuccess() {
                 //request permission success, do something.
             }
-        }, mRxPermissions, mRootView, mErrorHandler);
+        }, mRootView.getRxPermissions(), mRootView, mErrorHandler);
 
 
         if (pullToRefresh) lastUserId = 1;
@@ -106,7 +103,6 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
         this.mAdapter = null;
         this.mUsers = null;
         this.mErrorHandler = null;
-        this.mRxPermissions = null;
         this.mAppManager = null;
         this.mApplication = null;
     }

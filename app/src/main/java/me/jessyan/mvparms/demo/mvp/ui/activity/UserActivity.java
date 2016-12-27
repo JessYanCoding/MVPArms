@@ -12,6 +12,7 @@ import android.view.View;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.utils.UiUtils;
 import com.paginate.Paginate;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import butterknife.BindView;
 import me.jessyan.mvparms.demo.R;
@@ -40,17 +41,17 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
 
     private Paginate mPaginate;
     private boolean isLoadingMore;
-
+    private RxPermissions mRxPermissions;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
+        this.mRxPermissions = new RxPermissions(this);
         DaggerUserComponent
                 .builder()
                 .appComponent(appComponent)
                 .userModule(new UserModule(this))
                 .build()
                 .inject(this);
-
     }
 
     @Override
@@ -150,6 +151,11 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
         isLoadingMore = false;
     }
 
+    @Override
+    public RxPermissions getRxPermissions() {
+        return mRxPermissions;
+    }
+
     /**
      * 初始化Paginate,用于加载更多
      */
@@ -177,5 +183,12 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
                     .build();
             mPaginate.setHasMoreDataToLoad(false);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.mRxPermissions = null;
+        this.mPaginate = null;
     }
 }
