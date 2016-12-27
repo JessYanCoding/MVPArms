@@ -24,6 +24,8 @@ qq群:301733278 有什么问题可以直接问我
 
 ##Notice
 
+* [更新日志](https://github.com/JessYanCoding/MVPArms/wiki/UpdateLog)
+
 * [版本更新](https://github.com/JessYanCoding/MVPArms/wiki#1.6) 
 
 * [我们为什么要把Dagger2,MVP以及Rxjava引入项目中?](http://www.jianshu.com/p/91c2bb8e6369)
