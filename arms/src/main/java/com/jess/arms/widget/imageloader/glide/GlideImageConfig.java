@@ -2,7 +2,7 @@ package com.jess.arms.widget.imageloader.glide;
 
 import android.widget.ImageView;
 
-import com.bumptech.glide.load.Transformation;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.jess.arms.widget.imageloader.ImageConfig;
 
 /**
@@ -14,7 +14,7 @@ import com.jess.arms.widget.imageloader.ImageConfig;
  */
 public class GlideImageConfig extends ImageConfig{
     private int cacheStrategy;//0对应DiskCacheStrategy.all,1对应DiskCacheStrategy.NONE,2对应DiskCacheStrategy.SOURCE,3对应DiskCacheStrategy.RESULT
-    private Transformation transformation;//glide用它来改变图形的形状
+    private BitmapTransformation transformation;//glide用它来改变图形的形状
 
     private GlideImageConfig(Buidler builder) {
         this.url = builder.url;
@@ -29,7 +29,7 @@ public class GlideImageConfig extends ImageConfig{
         return cacheStrategy;
     }
 
-    public Transformation getTransformation() {
+    public BitmapTransformation getTransformation() {
         return transformation;
     }
 
@@ -44,7 +44,7 @@ public class GlideImageConfig extends ImageConfig{
         private int placeholder;
         private int errorPic;
         private int cacheStrategy;//0对应DiskCacheStrategy.all,1对应DiskCacheStrategy.NONE,2对应DiskCacheStrategy.SOURCE,3对应DiskCacheStrategy.RESULT
-        private Transformation transformation;//glide用它来改变图形的形状
+        private BitmapTransformation transformation;//glide用它来改变图形的形状
 
         private Buidler() {
         }
@@ -74,7 +74,7 @@ public class GlideImageConfig extends ImageConfig{
             return this;
         }
 
-        public Buidler transformation(Transformation transformation) {
+        public Buidler transformation(BitmapTransformation transformation) {
             this.transformation = transformation;
             return this;
         }
