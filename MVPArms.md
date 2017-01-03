@@ -26,7 +26,7 @@ qq群:301733278 有什么问题可以直接问我
 
 * [更新日志](https://github.com/JessYanCoding/MVPArms/wiki/UpdateLog)
 
-* [常见issue](https://github.com/JessYanCoding/MVPArms/wiki/Issue)
+* [常见issues](https://github.com/JessYanCoding/MVPArms/wiki/Issues)
 
 * [版本更新](https://github.com/JessYanCoding/MVPArms/wiki#1.6) 
 
