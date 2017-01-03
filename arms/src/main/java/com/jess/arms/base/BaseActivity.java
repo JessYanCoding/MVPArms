@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.jess.arms.mvp.BasePresenter;
+import com.jess.arms.mvp.Presenter;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.AutoLinearLayout;
@@ -20,7 +20,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity {
+public abstract class BaseActivity<P extends Presenter> extends RxAppCompatActivity {
     protected final String TAG = this.getClass().getSimpleName();
     protected BaseApplication mApplication;
     private Unbinder mUnbinder;

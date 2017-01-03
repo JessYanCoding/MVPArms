@@ -5,7 +5,7 @@ import rx.Subscription;
 /**
  * Created by jess on 16/4/28.
  */
-public interface presenter {
+public interface Presenter {
     void onStart();
     void onDestroy();
     void unSubscribe(Subscription subscription);

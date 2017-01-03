@@ -1,13 +1,13 @@
 package common;
 
 import com.jess.arms.base.BaseActivity;
-import com.jess.arms.mvp.BasePresenter;
+import com.jess.arms.mvp.Presenter;
 
 /**
  * Created by jess on 8/5/16 13:13
  * contact with jess.yan.effort@gmail.com
  */
-public abstract class WEActivity<P extends BasePresenter> extends BaseActivity<P> {
+public abstract class WEActivity<P extends Presenter> extends BaseActivity<P> {
     protected WEApplication mWeApplication;
     @Override
     protected void ComponentInject() {

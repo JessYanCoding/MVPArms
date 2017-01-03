@@ -10,7 +10,7 @@ import javax.inject.Singleton;
  * contact with jess.yan.effort@gmail.com
  */
 @Singleton
-public class ImageLoader {
+public final class ImageLoader {
     private BaseImageLoaderStrategy mStrategy;
 
     @Inject
