@@ -25,7 +25,7 @@
 
 * [Update Log](https://github.com/JessYanCoding/MVPArms/wiki/UpdateLog)
 
-* [Common Issue](https://github.com/JessYanCoding/MVPArms/wiki/Issue)
+* [Common Issues](https://github.com/JessYanCoding/MVPArms/wiki/Issues)
 
 * [Version Updata](https://github.com/JessYanCoding/MVPArms/wiki#1.6)
 
