@@ -87,6 +87,7 @@ qq群:301733278 有什么问题可以直接问我
 
 ##About Me
 * **Email**: jess.yan.effort@gmail.com  
+* **Home**: http://jessyan.me
 
 ##License
 ``` 
