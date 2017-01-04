@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jess.arms.mvp.BasePresenter;
+import com.jess.arms.mvp.Presenter;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import org.simple.eventbus.EventBus;
@@ -19,7 +19,7 @@ import butterknife.Unbinder;
 /**
  * Created by jess on 2015/12/8.
  */
-public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
+public abstract class BaseFragment<P extends Presenter> extends RxFragment {
     protected BaseActivity mActivity;
     protected View mRootView;
     protected final String TAG = this.getClass().getSimpleName();
