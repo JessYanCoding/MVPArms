@@ -74,6 +74,7 @@ Thanks to all the three libraries used in this framework **Author**, and all for
 
 ##About Me
 * **Email**: jess.yan.effort@gmail.com  
+* **Home**: jessyan.me
 
 ##License
 ``` 
