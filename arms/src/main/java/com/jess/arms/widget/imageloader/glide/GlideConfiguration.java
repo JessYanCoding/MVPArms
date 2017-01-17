@@ -13,6 +13,8 @@ import com.bumptech.glide.module.GlideModule;
 import com.jess.arms.utils.DataHelper;
 import com.jess.arms.utils.UiUtils;
 
+import java.io.File;
+
 /**
  * Created by jess on 16/4/15.
  */
@@ -25,7 +27,8 @@ public class GlideConfiguration implements GlideModule {
             @Override
             public DiskCache build() {
                 // Careful: the external cache directory doesn't enforce permissions
-                return DiskLruCacheWrapper.get(DataHelper.getCacheFile(UiUtils.getContext()), IMAGE_DISK_CACHE_MAX_SIZE);
+                File cacheDirectory = new File(DataHelper.getCacheFile(UiUtils.getContext()), "Glide");
+                return DiskLruCacheWrapper.get(DataHelper.makeDirs(cacheDirectory), IMAGE_DISK_CACHE_MAX_SIZE);
             }
         });
 

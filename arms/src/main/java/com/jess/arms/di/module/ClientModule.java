@@ -4,11 +4,13 @@ import android.app.Application;
 
 import com.jess.arms.base.AppManager;
 import com.jess.arms.http.RequestIntercept;
+import com.jess.arms.utils.DataHelper;
 
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -17,7 +19,6 @@ import io.rx_cache.internal.RxCache;
 import io.victoralbertos.jolyglot.GsonSpeaker;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
-import okhttp3.Cache;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -31,7 +32,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class ClientModule {
     private static final int TIME_OUT = 10;
-    public static final int HTTP_RESPONSE_DISK_CACHE_MAX_SIZE = 10 * 1024 * 1024;//缓存文件最大值为10Mb
     private AppManager mAppManager;
 
 
@@ -67,12 +67,11 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    OkHttpClient provideClient(OkHttpClient.Builder okHttpClient, Cache cache, Interceptor intercept
+    OkHttpClient provideClient(OkHttpClient.Builder okHttpClient, Interceptor intercept
             , List<Interceptor> interceptors) {
         OkHttpClient.Builder builder = okHttpClient
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
-                .cache(cache)//设置缓存
                 .addNetworkInterceptor(intercept);
         if (interceptors != null && interceptors.size() > 0) {//如果外部提供了interceptor的数组则遍历添加
             for (Interceptor interceptor : interceptors) {
@@ -98,11 +97,6 @@ public class ClientModule {
     }
 
 
-    @Singleton
-    @Provides
-    Cache provideCache(File cacheFile) {
-        return new Cache(cacheFile, HTTP_RESPONSE_DISK_CACHE_MAX_SIZE);//设置缓存路径和大小
-    }
 
 
     @Singleton
@@ -115,17 +109,29 @@ public class ClientModule {
     /**
      * 提供RXCache客户端
      *
-     * @param cacheDir 缓存路径
+     * @param cacheDirectory RxCache缓存路径
      * @return
      */
     @Singleton
     @Provides
-    RxCache provideRxCache(File cacheDir) {
+    RxCache provideRxCache(@Named("RxCacheDirectory") File cacheDirectory) {
         return new RxCache
                 .Builder()
-                .persistence(cacheDir, new GsonSpeaker());
+                .persistence(cacheDirectory, new GsonSpeaker());
     }
 
+
+    /**
+     * 需要单独给RxCache提供缓存路径
+     * 提供RxCache缓存地址
+     */
+    @Singleton
+    @Provides
+    @Named("RxCacheDirectory")
+    File provideRxCacheDirectory(File cacheDir) {
+        File cacheDirectory = new File(cacheDir, "RxCache");
+        return DataHelper.makeDirs(cacheDirectory);
+    }
 
     /**
      * 提供处理Rxjava错误的管理器
@@ -141,7 +147,6 @@ public class ClientModule {
                 .responseErroListener(listener)
                 .build();
     }
-
 
 
     /**

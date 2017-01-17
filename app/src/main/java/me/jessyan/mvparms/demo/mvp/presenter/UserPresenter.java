@@ -36,6 +36,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
     private List<User> mUsers = new ArrayList<>();
     private DefaultAdapter mAdapter;
     private int lastUserId = 1;
+    private boolean isFirst = true;
 
 
     @Inject
@@ -59,9 +60,18 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
         }, mRootView.getRxPermissions(), mRootView, mErrorHandler);
 
 
-        if (pullToRefresh) lastUserId = 1;
+        if (pullToRefresh) lastUserId = 1;//上拉刷新默认只请求第一页
 
-        mModel.getUsers(lastUserId, pullToRefresh)
+        //关于RxCache缓存库的使用请参考 http://www.jianshu.com/p/b58ef6b0624b
+
+        boolean isEvictCache = pullToRefresh;//是否驱逐缓存,为ture即不使用缓存,每次上拉刷新即需要最新数据,则不使用缓存
+
+        if (pullToRefresh && isFirst){//默认在第一次上拉刷新时使用缓存
+            isFirst = false;
+            isEvictCache = false;
+        }
+
+        mModel.getUsers(lastUserId, isEvictCache)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .doOnSubscribe(new Action0() {
@@ -70,7 +80,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
                         if (pullToRefresh)
                             mRootView.showLoading();//显示上拉刷新的进度条
                         else
-                            mRootView.startLoadMore();
+                            mRootView.startLoadMore();//显示下拉加载更多的进度条
                     }
                 }).subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -80,7 +90,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
                         if (pullToRefresh)
                             mRootView.hideLoading();//隐藏上拉刷新的进度条
                         else
-                            mRootView.endLoadMore();
+                            mRootView.endLoadMore();//隐藏下拉加载更多的进度条
                     }
                 })
                 .compose(RxUtils.<List<User>>bindToLifecycle(mRootView))//使用RXlifecycle,使subscription和activity一起销毁
@@ -88,7 +98,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
                     @Override
                     public void onNext(List<User> users) {
                         lastUserId = users.get(users.size() - 1).getId();//记录最后一个id,用于下一次请求
-                        if (pullToRefresh) mUsers.clear();//如果是上拉刷新则晴空列表
+                        if (pullToRefresh) mUsers.clear();//如果是上拉刷新则清空列表
                         for (User user : users) {
                             mUsers.add(user);
                         }
