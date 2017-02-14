@@ -23,6 +23,8 @@
 
 ##Notice
 
+* [Collection Box](https://github.com/JessYanCoding/MVPArms/issues/40)
+
 * [Update Log](https://github.com/JessYanCoding/MVPArms/wiki/UpdateLog)
 
 * [Common Issues](https://github.com/JessYanCoding/MVPArms/wiki/Issues)
