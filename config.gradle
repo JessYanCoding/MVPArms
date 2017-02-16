@@ -8,8 +8,8 @@ ext {
                versionName             : "1.2.2",
                androidSupportSdkVersion: "25.1.1",
                retrofitSdkVersion      : "2.1.0",
-               dagger2SdkVersion       : "2.6",
-               rxlifecycleSdkVersion   : "0.6.1",
+               dagger2SdkVersion       : "2.8",
+               rxlifecycleSdkVersion   : "1.0",
                espressoSdkVersion      : "2.2.2"
     ]
     dependencies = [
@@ -27,7 +27,7 @@ ext {
             "retrofit-adapter-rxjava"  : "com.squareup.retrofit2:adapter-rxjava:${android["retrofitSdkVersion"]}",
             "junit"                    : "junit:junit:4.12",
             "okhttp3"                  : "com.squareup.okhttp3:okhttp:3.6.0",
-            "gson"                     : "com.google.code.gson:gson:2.6.2",
+            "gson"                     : "com.google.code.gson:gson:2.7",
             "autolayout"               : "com.zhy:autolayout:1.4.5",
             "butterknife"              : "com.jakewharton:butterknife:8.5.1",
             "butterknife-apt"          : "com.jakewharton:butterknife-compiler:8.5.1",
@@ -36,7 +36,7 @@ ext {
             "rxandroid"                : "io.reactivex:rxandroid:1.2.1",
             "rxjava"                   : "io.reactivex:rxjava:1.2.6",
             "rxlifecycle"              : "com.trello:rxlifecycle:${android["rxlifecycleSdkVersion"]}",
-            "rxlifecycle-components"   : "com.trello:rxlifecycle-components:${android["rxlifecycleSdkVersion"]}",
+            "rxlifecycle-components"   : "com.trello:rxlifecycle-components:1.0",
             "rxcache"                  : "com.github.VictorAlbertos.RxCache:runtime:1.7.0-1.x",
             "rxcache-jolyglot-gson"    : "com.github.VictorAlbertos.Jolyglot:gson:0.0.3",
             "dagger2"                  : "com.google.dagger:dagger:${android["dagger2SdkVersion"]}",
