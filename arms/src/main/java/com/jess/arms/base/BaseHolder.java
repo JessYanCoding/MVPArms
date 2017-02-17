@@ -29,6 +29,14 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
      */
     public abstract void setData(T data);
 
+
+    /**
+     * 释放资源
+     */
+    protected void onRelease(){
+
+    }
+
     @Override
     public void onClick(View view) {
         if (mOnViewClickListener != null) {
