@@ -21,12 +21,12 @@ public class UserAdapter extends DefaultAdapter<User> {
     }
 
     @Override
-    public BaseHolder<User> getHolder(View v) {
+    public BaseHolder<User> getHolder(View v, int viewType) {
         return new UserItemHolder(v);
     }
 
     @Override
-    public int getLayoutId() {
+    public int getLayoutId(int viewType) {
         return R.layout.recycle_list;
     }
 }

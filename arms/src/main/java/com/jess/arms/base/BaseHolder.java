@@ -26,8 +26,9 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
      * 刷新界面
      *
      * @param
+     * @param position
      */
-    public abstract void setData(T data);
+    public abstract void setData(T data, int position);
 
 
     /**

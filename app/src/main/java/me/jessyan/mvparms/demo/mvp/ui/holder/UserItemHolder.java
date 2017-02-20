@@ -39,7 +39,7 @@ public class UserItemHolder extends BaseHolder<User> {
     }
 
     @Override
-    public void setData(User data) {
+    public void setData(User data, int position) {
         Observable.just(data.getLogin())
                 .subscribe(RxTextView.text(mName));
 
