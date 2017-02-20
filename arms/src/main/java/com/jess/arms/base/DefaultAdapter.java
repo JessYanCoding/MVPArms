@@ -97,24 +97,21 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
     public abstract int getLayoutId(int viewType);
 
 
-
-
-
-
     /**
-     * 在item不可见时会调用此方法,可以在这个地方释放一些holder需要释放的资源
+     * 遍历所有hodler,释放他们需要释放的资源
      *
-     * @param holder
+     * @param recyclerView
      */
-    @Override
-    public void onViewDetachedFromWindow(BaseHolder<T> holder) {
-        holder.onRelease();
+    public static void releaseAllHolder(RecyclerView recyclerView) {
+        for (int i = recyclerView.getChildCount() - 1; i >= 0; i--) {
+            final View view = recyclerView.getChildAt(i);
+            RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
+            if (viewHolder != null && viewHolder instanceof BaseHolder) {
+                ((BaseHolder) viewHolder).onRelease();
+            }
+        }
     }
 
-    @Override
-    public void onViewRecycled(BaseHolder<T> holder) {
-
-    }
 
     public interface OnRecyclerViewItemClickListener<T> {
         void onItemClick(View view, int viewType, T data, int position);

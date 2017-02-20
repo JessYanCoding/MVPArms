@@ -188,6 +188,7 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        DefaultAdapter.releaseAllHolder(mRecyclerView);
         this.mRxPermissions = null;
         this.mPaginate = null;
     }
