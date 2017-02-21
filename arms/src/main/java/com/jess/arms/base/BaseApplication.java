@@ -30,6 +30,8 @@ public abstract class BaseApplication extends Application {
     private GlobeConfigModule mGlobeConfigModule;
     @Inject
     protected AppManager mAppManager;
+    @Inject
+    protected ActivityLifecycle mActivityLifecycle;
     protected final String TAG = this.getClass().getSimpleName();
 
 
@@ -46,7 +48,7 @@ public abstract class BaseApplication extends Application {
         this.mImagerModule = new ImageModule();//图片加载框架默认使用glide
         this.mClientModule = new ClientModule(mAppManager);//用于提供okhttp和retrofit的单例
         this.mGlobeConfigModule = checkNotNull(getGlobeConfigModule(), "lobeConfigModule is required");
-
+        registerActivityLifecycleCallbacks(mActivityLifecycle);
     }
 
     /**
@@ -61,6 +63,9 @@ public abstract class BaseApplication extends Application {
             this.mAppModule = null;
         if (mImagerModule != null)
             this.mImagerModule = null;
+        if (mActivityLifecycle != null) {
+            unregisterActivityLifecycleCallbacks(mActivityLifecycle);
+        }
         if (mAppManager != null) {//释放资源
             this.mAppManager.release();
             this.mAppManager = null;
