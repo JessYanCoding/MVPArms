@@ -32,7 +32,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             isNotAdd = activity.getIntent().getBooleanExtra(IS_NOT_ADD_ACTIVITY_LIST, false);
 
         if (!isNotAdd)
-            mAppManager.addActivity((BaseActivity) activity);
+            mAppManager.addActivity(activity);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityResumed(Activity activity) {
-        mAppManager.setCurrentActivity((BaseActivity) activity);
+        mAppManager.setCurrentActivity(activity);
     }
 
     @Override
@@ -64,6 +64,6 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        mAppManager.removeActivity((BaseActivity) activity);
+        mAppManager.removeActivity(activity);
     }
 }

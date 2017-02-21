@@ -3,7 +3,6 @@ package me.jessyan.mvparms.demo.mvp.ui.activity;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,13 +14,13 @@ import com.paginate.Paginate;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import butterknife.BindView;
-import me.jessyan.mvparms.demo.R;
 import common.AppComponent;
+import common.WEActivity;
+import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.di.component.DaggerUserComponent;
 import me.jessyan.mvparms.demo.di.module.UserModule;
 import me.jessyan.mvparms.demo.mvp.contract.UserContract;
 import me.jessyan.mvparms.demo.mvp.presenter.UserPresenter;
-import common.WEActivity;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -74,23 +73,7 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
      */
     private void initRecycleView() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        configRecycleView(mRecyclerView, new GridLayoutManager(this, 2));
-    }
-
-
-    /**
-     * 配置recycleview
-     *
-     * @param recyclerView
-     * @param layoutManager
-     */
-    private void configRecycleView(RecyclerView recyclerView
-            , RecyclerView.LayoutManager layoutManager
-    ) {
-        recyclerView.setLayoutManager(layoutManager);
-        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        UiUtils.configRecycleView(mRecyclerView, new GridLayoutManager(this, 2));
     }
 
 
