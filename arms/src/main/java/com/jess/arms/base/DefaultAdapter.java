@@ -103,6 +103,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
      * @param recyclerView
      */
     public static void releaseAllHolder(RecyclerView recyclerView) {
+        if (recyclerView == null) return;
         for (int i = recyclerView.getChildCount() - 1; i >= 0; i--) {
             final View view = recyclerView.getChildAt(i);
             RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
