@@ -74,11 +74,5 @@ public class BasePresenter<M extends IModel, V extends BaseView> implements Pres
         }
     }
 
-    @Override
-    public void unSubscribe(Subscription subscription) {
-        if (subscription != null && !subscription.isUnsubscribed()) {
-            subscription.unsubscribe();//保证activity结束时取消所有正在执行的订阅
-        }
-    }
 
 }
