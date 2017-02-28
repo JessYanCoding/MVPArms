@@ -210,8 +210,8 @@ public class ${NAME}Fragment extends WEFragment<${NAME}Presenter> implements ${N
     }
 
     @Override
-    protected View initView() {
-        return LayoutInflater.from(getActivity()).inflate(layout_id, null, false);
+    protected View initView(LayoutInflater inflater, ViewGroup container) {
+        return inflater.inflate(layout_id, container, false);
     }
 
     @Override

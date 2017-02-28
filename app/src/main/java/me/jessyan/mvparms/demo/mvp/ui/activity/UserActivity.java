@@ -26,8 +26,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import timber.log.Timber;
 
-import static me.jessyan.mvparms.demo.R.id.SwipeRefreshLayout;
-
 
 public class UserActivity extends WEActivity<UserPresenter> implements UserContract.View, SwipeRefreshLayout.OnRefreshListener {
 
@@ -35,7 +33,7 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @Nullable
-    @BindView(SwipeRefreshLayout)
+    @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     private Paginate mPaginate;
@@ -127,7 +125,7 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
     }
 
     /**
-     * 介绍加载更多
+     * 结束加载更多
      */
     @Override
     public void endLoadMore() {

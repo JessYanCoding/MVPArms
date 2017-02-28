@@ -30,7 +30,7 @@ public abstract class BaseFragment<P extends Presenter> extends RxFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = initView();
+        mRootView = initView(inflater,container);
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(this, mRootView);
         return mRootView;
@@ -80,7 +80,7 @@ public abstract class BaseFragment<P extends Presenter> extends RxFragment {
     }
 
 
-    protected abstract View initView();
+    protected abstract View initView(LayoutInflater inflater, ViewGroup container);
 
     protected abstract void initData();
 
