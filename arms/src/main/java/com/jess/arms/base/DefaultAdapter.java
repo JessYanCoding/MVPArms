@@ -34,7 +34,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
         mHolder.setOnItemClickListener(new BaseHolder.OnViewClickListener() {//设置Item点击事件
             @Override
             public void onViewClick(View view, int position) {
-                if (mOnItemClickListener != null) {
+                if (mOnItemClickListener != null && mInfos.size() > 0) {
                     mOnItemClickListener.onItemClick(view, viewType, mInfos.get(position), position);
                 }
             }
