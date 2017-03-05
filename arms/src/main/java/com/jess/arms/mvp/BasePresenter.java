@@ -61,7 +61,7 @@ public class BasePresenter<M extends IModel, V extends BaseView> implements Pres
     }
 
 
-    protected void addSubscrebe(Subscription subscription) {
+    protected void addSubscribe(Subscription subscription) {
         if (mCompositeSubscription == null) {
             mCompositeSubscription = new CompositeSubscription();
         }
