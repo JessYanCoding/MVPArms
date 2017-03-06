@@ -17,7 +17,7 @@ public class BaseModel<S extends BaseServiceManager, C extends BaseCacheManager>
     }
 
     @Override
-    public void onDestory() {
+    public void onDestroy() {
         if (mServiceManager != null) {
             mServiceManager = null;
         }

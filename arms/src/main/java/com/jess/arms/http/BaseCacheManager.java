@@ -5,5 +5,5 @@ package com.jess.arms.http;
  * Contact with jess.yan.effort@gmail.com
  */
 public interface BaseCacheManager {
-    void onDestory();
+    void onDestroy();
 }

@@ -305,8 +305,8 @@ public class ${NAME}Model extends BaseModel<ServiceManager,CacheManager> impleme
     }
 
     @Override
-    public void onDestory() {
-        super.onDestory();
+    public void onDestroy() {
+        super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
     }

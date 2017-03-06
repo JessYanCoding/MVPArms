@@ -5,6 +5,6 @@ package com.jess.arms.http;
  * Contact with jess.yan.effort@gmail.com
  */
 public interface BaseServiceManager {
-    void onDestory();
+    void onDestroy();
 
 }

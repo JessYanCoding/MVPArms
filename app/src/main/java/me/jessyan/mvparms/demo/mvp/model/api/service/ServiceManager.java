@@ -36,7 +36,7 @@ public class ServiceManager implements BaseServiceManager {
      * 这里可以释放一些资源(注意这里是单例，即不需要在activity的生命周期调用)
      */
     @Override
-    public void onDestory() {
+    public void onDestroy() {
 
     }
 }

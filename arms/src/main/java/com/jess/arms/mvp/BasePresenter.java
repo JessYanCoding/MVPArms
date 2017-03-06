@@ -44,7 +44,7 @@ public class BasePresenter<M extends IModel, V extends BaseView> implements Pres
             EventBus.getDefault().unregister(this);//解除注册eventbus
         unSubscribe();//解除订阅
         if (mModel != null) {
-            mModel.onDestory();
+            mModel.onDestroy();
             this.mModel = null;
         }
         this.mRootView = null;
