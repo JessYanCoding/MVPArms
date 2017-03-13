@@ -1,16 +1,16 @@
 package com.jess.arms.di.module;
 
 import android.app.Application;
-import android.text.TextUtils;
 
-import com.jess.arms.http.GlobeHttpHandler;
+import com.jess.arms.base.AppManager;
 import com.jess.arms.http.RequestIntercept;
 import com.jess.arms.utils.DataHelper;
-import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -19,7 +19,6 @@ import io.rx_cache.internal.RxCache;
 import io.victoralbertos.jolyglot.GsonSpeaker;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
-import okhttp3.Cache;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -32,130 +31,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module
 public class ClientModule {
-    private static final int TOME_OUT = 10;
-    public static final int HTTP_RESPONSE_DISK_CACHE_MAX_SIZE = 10 * 1024 * 1024;//缓存文件最大值为10Mb
-    private HttpUrl mApiUrl;
-    private GlobeHttpHandler mHandler;
-    private Interceptor[] mInterceptors;
-    private ResponseErroListener mErroListener;
+    private static final int TIME_OUT = 10;
+    private AppManager mAppManager;
 
-    /**
-     * @author: jess
-     * @date 8/5/16 11:03 AM
-     * @description: 设置baseurl
-     */
-    private ClientModule(Buidler buidler) {
-        this.mApiUrl = buidler.apiUrl;
-        this.mHandler = buidler.handler;
-        this.mInterceptors = buidler.interceptors;
-        this.mErroListener = buidler.responseErroListener;
+
+    public ClientModule(AppManager appManager) {
+        this.mAppManager = appManager;
     }
-
-    public static Buidler buidler() {
-        return new Buidler();
-    }
-
-    /**
-     * @param cache     缓存
-     * @param intercept 拦截器
-     * @return
-     * @author: jess
-     * @date 8/30/16 1:12 PM
-     * @description:提供OkhttpClient
-     */
-    @Singleton
-    @Provides
-    OkHttpClient provideClient(Cache cache, Interceptor intercept) {
-        final OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
-        return configureClient(okHttpClient, cache, intercept);
-    }
-
-    /**
-     * @param client
-     * @param httpUrl
-     * @return
-     * @author: jess
-     * @date 8/30/16 1:13 PM
-     * @description: 提供retrofit
-     */
-    @Singleton
-    @Provides
-    Retrofit provideRetrofit(OkHttpClient client, HttpUrl httpUrl) {
-        final Retrofit.Builder builder = new Retrofit.Builder();
-        return configureRetrofit(builder, client, httpUrl);
-    }
-
-    @Singleton
-    @Provides
-    HttpUrl provideBaseUrl() {
-        return mApiUrl;
-    }
-
-    @Singleton
-    @Provides
-    Cache provideCache(File cacheFile) {
-        return new Cache(cacheFile, HTTP_RESPONSE_DISK_CACHE_MAX_SIZE);//设置缓存路径和大小
-    }
-
-
-    @Singleton
-    @Provides
-    Interceptor provideIntercept() {
-        return new RequestIntercept(mHandler);//打印请求信息的拦截器
-    }
-
-
-    /**
-     * 提供缓存地址
-     */
-
-    @Singleton
-    @Provides
-    File provideCacheFile(Application application) {
-        return DataHelper.getCacheFile(application);
-    }
-
-    /**
-     * 提供RXCache客户端
-     *
-     * @param cacheDir 缓存路径
-     * @return
-     */
-    @Singleton
-    @Provides
-    RxCache provideRxCache(File cacheDir) {
-        return new RxCache
-                .Builder()
-                .persistence(cacheDir, new GsonSpeaker());
-    }
-
-
-    /**
-     * 提供处理Rxjava错误的管理器
-     *
-     * @return
-     */
-    @Singleton
-    @Provides
-    RxErrorHandler proRxErrorHandler(Application application) {
-        return RxErrorHandler
-                .builder()
-                .with(application)
-                .responseErroListener(mErroListener)
-                .build();
-    }
-
-    /**
-     * 提供权限管理类,用于请求权限,适配6.0的权限管理
-     * @param application
-     * @return
-     */
-    @Singleton
-    @Provides
-    RxPermissions provideRxPermissions(Application application) {
-        return RxPermissions.getInstance(application);
-    }
-
 
     /**
      * @param builder
@@ -164,9 +46,11 @@ public class ClientModule {
      * @return
      * @author: jess
      * @date 8/30/16 1:15 PM
-     * @description:配置retrofit
+     * @description:提供retrofit
      */
-    private Retrofit configureRetrofit(Retrofit.Builder builder, OkHttpClient client, HttpUrl httpUrl) {
+    @Singleton
+    @Provides
+    Retrofit provideRetrofit(Retrofit.Builder builder, OkHttpClient client, HttpUrl httpUrl) {
         return builder
                 .baseUrl(httpUrl)//域名
                 .client(client)//设置okhttp
@@ -176,21 +60,21 @@ public class ClientModule {
     }
 
     /**
-     * 配置okhttpclient
+     * 提供OkhttpClient
      *
      * @param okHttpClient
      * @return
      */
-    private OkHttpClient configureClient(OkHttpClient.Builder okHttpClient, Cache cache, Interceptor intercept) {
-
-
+    @Singleton
+    @Provides
+    OkHttpClient provideClient(OkHttpClient.Builder okHttpClient, Interceptor intercept
+            , List<Interceptor> interceptors) {
         OkHttpClient.Builder builder = okHttpClient
-                .connectTimeout(TOME_OUT, TimeUnit.SECONDS)
-                .readTimeout(TOME_OUT, TimeUnit.SECONDS)
-                .cache(cache)//设置缓存
+                .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
+                .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .addNetworkInterceptor(intercept);
-        if (mInterceptors != null && mInterceptors.length > 0) {//如果外部提供了interceptor的数组则遍历添加
-            for (Interceptor interceptor : mInterceptors) {
+        if (interceptors != null && interceptors.size() > 0) {//如果外部提供了interceptor的数组则遍历添加
+            for (Interceptor interceptor : interceptors) {
                 builder.addInterceptor(interceptor);
             }
         }
@@ -199,48 +83,83 @@ public class ClientModule {
     }
 
 
-    public static final class Buidler {
-        private HttpUrl apiUrl = HttpUrl.parse("https://api.github.com/");
-        private GlobeHttpHandler handler;
-        private Interceptor[] interceptors;
-        private ResponseErroListener responseErroListener;
-
-        private Buidler() {
-        }
-
-        public Buidler baseurl(String baseurl) {//基础url
-            if (TextUtils.isEmpty(baseurl)) {
-                throw new IllegalArgumentException("baseurl can not be empty");
-            }
-            this.apiUrl = HttpUrl.parse(baseurl);
-            return this;
-        }
-
-        public Buidler globeHttpHandler(GlobeHttpHandler handler) {//用来处理http响应结果
-            this.handler = handler;
-            return this;
-        }
-
-        public Buidler interceptors(Interceptor[] interceptors) {//动态添加任意个interceptor
-            this.interceptors = interceptors;
-            return this;
-        }
-
-        public Buidler responseErroListener(ResponseErroListener listener) {//处理所有Rxjava的onError逻辑
-            this.responseErroListener = listener;
-            return this;
-        }
-
-
-        public ClientModule build() {
-            if (apiUrl == null) {
-                throw new IllegalStateException("baseurl is required");
-            }
-            return new ClientModule(this);
-        }
-
-
+    @Singleton
+    @Provides
+    Retrofit.Builder provideRetrofitBuilder() {
+        return new Retrofit.Builder();
     }
+
+
+    @Singleton
+    @Provides
+    OkHttpClient.Builder provideClientBuilder() {
+        return new OkHttpClient.Builder();
+    }
+
+
+
+
+    @Singleton
+    @Provides
+    Interceptor provideIntercept(RequestIntercept intercept) {
+        return intercept;//打印请求信息的拦截器
+    }
+
+
+    /**
+     * 提供RXCache客户端
+     *
+     * @param cacheDirectory RxCache缓存路径
+     * @return
+     */
+    @Singleton
+    @Provides
+    RxCache provideRxCache(@Named("RxCacheDirectory") File cacheDirectory) {
+        return new RxCache
+                .Builder()
+                .persistence(cacheDirectory, new GsonSpeaker());
+    }
+
+
+    /**
+     * 需要单独给RxCache提供缓存路径
+     * 提供RxCache缓存地址
+     */
+    @Singleton
+    @Provides
+    @Named("RxCacheDirectory")
+    File provideRxCacheDirectory(File cacheDir) {
+        File cacheDirectory = new File(cacheDir, "RxCache");
+        return DataHelper.makeDirs(cacheDirectory);
+    }
+
+    /**
+     * 提供处理Rxjava错误的管理器
+     *
+     * @return
+     */
+    @Singleton
+    @Provides
+    RxErrorHandler proRxErrorHandler(Application application, ResponseErroListener listener) {
+        return RxErrorHandler
+                .builder()
+                .with(application)
+                .responseErroListener(listener)
+                .build();
+    }
+
+
+    /**
+     * 提供管理所有activity的管理类
+     *
+     * @return
+     */
+    @Singleton
+    @Provides
+    AppManager provideAppManager() {
+        return mAppManager;
+    }
+
 
 //    .addNetworkInterceptor(new Interceptor() {
 //        @Override

@@ -8,4 +8,11 @@ import android.content.Context;
  */
 public interface ResponseErroListener {
     void handleResponseError(Context context,Exception e);
+
+    ResponseErroListener EMPTY = new ResponseErroListener() {
+        @Override
+        public void handleResponseError(Context context, Exception e) {
+
+        }
+    };
 }

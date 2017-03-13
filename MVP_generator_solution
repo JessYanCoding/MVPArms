@@ -84,7 +84,7 @@ public class ${NAME}Activity extends WEActivity<${NAME}Presenter> implements ${N
     @Override
     public void launchActivity(@NonNull Intent intent) {
         checkNotNull(intent);
-        UiUtils.startActivity(this, intent);
+        UiUtils.startActivity(intent);
     }
 
     @Override
@@ -136,6 +136,7 @@ Name: Contract
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 
 import com.jess.arms.mvp.BaseView;
+import com.jess.arms.mvp.IModel;
 
 /**
   * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同
@@ -154,7 +155,7 @@ public interface ${NAME}Contract {
 
     }
     //Model层定义接口,外部只需关心model返回的数据,无需关心内部细节,及是否使用缓存
-    interface Model {
+    interface Model extends IModel{
 
     }
 }
@@ -209,8 +210,8 @@ public class ${NAME}Fragment extends WEFragment<${NAME}Presenter> implements ${N
     }
 
     @Override
-    protected View initView() {
-        return LayoutInflater.from(getActivity()).inflate(layout_id, null, false);
+    protected View initView(LayoutInflater inflater, ViewGroup container) {
+        return inflater.inflate(layout_id, container, false);
     }
 
     @Override
@@ -256,7 +257,7 @@ public class ${NAME}Fragment extends WEFragment<${NAME}Presenter> implements ${N
     @Override
     public void launchActivity(@NonNull Intent intent) {
         checkNotNull(intent);
-        UiUtils.startActivity(getActivity(), intent);
+        UiUtils.startActivity(intent);
     }
 
     @Override
@@ -291,16 +292,24 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 #parse("File Header.java")
 
+@ActivityScope
 public class ${NAME}Model extends BaseModel<ServiceManager,CacheManager> implements ${NAME}Contract.Model{
     private Gson mGson;
     private Application mApplication;
 
+    @Inject
     public ${NAME}Model(ServiceManager serviceManager, CacheManager cacheManager, Gson gson, Application application) {
         super(serviceManager, cacheManager);
         this.mGson = gson;
         this.mApplication = application;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.mGson = null;
+        this.mApplication = null;
+    }
 
 }
 
@@ -349,9 +358,8 @@ public class ${NAME}Module {
 
     @ActivityScope
     @Provides
-    ${NAME}Contract.Model provide${NAME}Model(ServiceManager serviceManager, CacheManager cacheManager
-    ,Gson gson,Application application){
-        return new ${NAME}Model(serviceManager,cacheManager,gson,application);
+    ${NAME}Contract.Model provide${NAME}Model(${NAME}Model model){
+        return model;
     }
 }
 --------------------------------------------------------------------------------------
@@ -363,11 +371,13 @@ Name: Presenter
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 
 import android.app.Application;
-
+import com.jess.arms.base.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.widget.imageloader.ImageLoader;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import javax.inject.Inject;
+
 
 /**
   * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同
@@ -378,9 +388,7 @@ import com.tbruyelle.rxpermissions.RxPermissions;
   * 如果想生成Fragment的相关文件,则将上面构建顺序中的Activity换为Fragment,并将Component中inject方法的参数改为此Fragment
   */
 
-import javax.inject.Inject;
 
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 
 #parse("File Header.java")
 
@@ -388,23 +396,124 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 public class ${NAME}Presenter extends BasePresenter<${NAME}Contract.Model, ${NAME}Contract.View> {
     private RxErrorHandler mErrorHandler;
     private Application mApplication;
-    private RxPermissions mRxPermissions;
     private ImageLoader mImageLoader;
+    private AppManager mAppManager;
 
     @Inject
     public ${NAME}Presenter (${NAME}Contract.Model model, ${NAME}Contract.View rootView
-            , RxErrorHandler handler, Application application, RxPermissions rxPermissions
-            , ImageLoader imageLoader) {
+            , RxErrorHandler handler, Application application
+            , ImageLoader imageLoader, AppManager appManager) {
         super(model, rootView);
         this.mErrorHandler = handler;
         this.mApplication = application;
-        this.mRxPermissions = rxPermissions;
         this.mImageLoader = imageLoader;
+        this.mAppManager = appManager;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.mErrorHandler = null;
+        this.mAppManager = null;
+        this.mImageLoader = null;
+        this.mApplication = null;
+    }
 
 }
 
 --------------------------------------------------------------------------------------
 
+
+Name: AutoView
+--------------------------------------------------------------------------------------
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+
+import android.content.Context;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
+import android.view.ViewGroup;
+
+import com.zhy.autolayout.AutoLayoutInfo;
+import com.zhy.autolayout.utils.AutoLayoutHelper;
+
+/**
+ * 此Template用于生成AutoLayout需要的的Auto系列View,如需要使ScrollView适配,使用此Template输入ScrollView,即可生成
+ * AutoScrollView,使用此View即可自适应
+ * Created by jess on 16/4/14.
+ */
+public class Auto${NAME} extends ${NAME} {
+    private AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
+
+    public Auto${NAME}(Context context) {
+        super(context);
+    }
+
+    public Auto${NAME}(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public Auto${NAME}(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
+    {
+        if (!isInEditMode())
+            mHelper.adjustChildren();
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b)
+    {
+        super.onLayout(changed, l, t, r, b);
+    }
+
+
+    @Override
+    public LayoutParams generateLayoutParams(AttributeSet attrs) {
+        return new LayoutParams(getContext(), attrs);
+    }
+
+
+    public static class LayoutParams extends ${NAME}.LayoutParams
+            implements AutoLayoutHelper.AutoLayoutParams
+    {
+        private AutoLayoutInfo mAutoLayoutInfo;
+
+        public LayoutParams(Context c, AttributeSet attrs)
+        {
+            super(c, attrs);
+            mAutoLayoutInfo = AutoLayoutHelper.getAutoLayoutInfo(c, attrs);
+        }
+
+        @Override
+        public AutoLayoutInfo getAutoLayoutInfo()
+        {
+            return mAutoLayoutInfo;
+        }
+
+
+        public LayoutParams(int width, int height)
+        {
+            super(width, height);
+        }
+
+
+        public LayoutParams(ViewGroup.LayoutParams source)
+        {
+            super(source);
+        }
+
+        public LayoutParams(MarginLayoutParams source)
+        {
+            super(source);
+        }
+
+    }
+}
+
+--------------------------------------------------------------------------------------
 

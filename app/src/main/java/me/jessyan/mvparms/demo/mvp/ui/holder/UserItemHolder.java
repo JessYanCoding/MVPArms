@@ -11,8 +11,8 @@ import com.jess.arms.widget.imageloader.ImageLoader;
 import com.jess.arms.widget.imageloader.glide.GlideImageConfig;
 
 import butterknife.BindView;
+import common.WEApplication;
 import me.jessyan.mvparms.demo.R;
-import me.jessyan.mvparms.demo.app.WEApplication;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
 import rx.Observable;
 
@@ -39,14 +39,22 @@ public class UserItemHolder extends BaseHolder<User> {
     }
 
     @Override
-    public void setData(User data) {
+    public void setData(User data, int position) {
         Observable.just(data.getLogin())
                 .subscribe(RxTextView.text(mName));
 
         mImageLoader.loadImage(mApplication, GlideImageConfig
                 .builder()
                 .url(data.getAvatarUrl())
-                .imagerView(mAvater)
+                .imageView(mAvater)
+                .build());
+    }
+
+
+    @Override
+    protected void onRelease() {
+        mImageLoader.clear(mApplication,GlideImageConfig.builder()
+                .imageViews(mAvater)
                 .build());
     }
 }

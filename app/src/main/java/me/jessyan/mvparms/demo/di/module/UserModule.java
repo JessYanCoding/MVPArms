@@ -6,8 +6,6 @@ import dagger.Module;
 import dagger.Provides;
 import me.jessyan.mvparms.demo.mvp.contract.UserContract;
 import me.jessyan.mvparms.demo.mvp.model.UserModel;
-import me.jessyan.mvparms.demo.mvp.model.api.cache.CacheManager;
-import me.jessyan.mvparms.demo.mvp.model.api.service.ServiceManager;
 
 /**
  * Created by jess on 9/4/16 11:10
@@ -33,7 +31,7 @@ public class UserModule {
 
     @ActivityScope
     @Provides
-    UserContract.Model provideUserModel(ServiceManager serviceManager, CacheManager cacheManager){
-        return new UserModel(serviceManager,cacheManager);
+    UserContract.Model provideUserModel(UserModel model){
+        return model;
     }
 }

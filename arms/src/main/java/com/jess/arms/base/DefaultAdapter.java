@@ -28,14 +28,14 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
      * @return
      */
     @Override
-    public BaseHolder<T> onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(getLayoutId(), parent, false);
-        mHolder = getHolder(view);
+    public BaseHolder<T> onCreateViewHolder(ViewGroup parent, final int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(getLayoutId(viewType), parent, false);
+        mHolder = getHolder(view, viewType);
         mHolder.setOnItemClickListener(new BaseHolder.OnViewClickListener() {//设置Item点击事件
             @Override
             public void onViewClick(View view, int position) {
-                if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(view, mInfos.get(position), position);
+                if (mOnItemClickListener != null && mInfos.size() > 0) {
+                    mOnItemClickListener.onItemClick(view, viewType, mInfos.get(position), position);
                 }
             }
         });
@@ -50,8 +50,9 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
      */
     @Override
     public void onBindViewHolder(BaseHolder<T> holder, int position) {
-        holder.setData(mInfos.get(position));
+        holder.setData(mInfos.get(position), position);
     }
+
 
     /**
      * 数据的个数
@@ -82,20 +83,39 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
      * 子类实现提供holder
      *
      * @param v
+     * @param viewType
      * @return
      */
-    public abstract BaseHolder<T> getHolder(View v);
+    public abstract BaseHolder<T> getHolder(View v, int viewType);
 
     /**
      * 提供Item的布局
      *
+     * @param viewType
      * @return
      */
-    public abstract int getLayoutId();
+    public abstract int getLayoutId(int viewType);
+
+
+    /**
+     * 遍历所有hodler,释放他们需要释放的资源
+     *
+     * @param recyclerView
+     */
+    public static void releaseAllHolder(RecyclerView recyclerView) {
+        if (recyclerView == null) return;
+        for (int i = recyclerView.getChildCount() - 1; i >= 0; i--) {
+            final View view = recyclerView.getChildAt(i);
+            RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
+            if (viewHolder != null && viewHolder instanceof BaseHolder) {
+                ((BaseHolder) viewHolder).onRelease();
+            }
+        }
+    }
 
 
     public interface OnRecyclerViewItemClickListener<T> {
-        void onItemClick(View view, T data, int position);
+        void onItemClick(View view, int viewType, T data, int position);
     }
 
     public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {

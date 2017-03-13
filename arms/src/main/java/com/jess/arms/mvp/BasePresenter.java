@@ -8,7 +8,7 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by jess on 16/4/28.
  */
-public class BasePresenter<M, V extends BaseView> implements presenter {
+public class BasePresenter<M extends IModel, V extends BaseView> implements Presenter {
     protected final String TAG = this.getClass().getSimpleName();
     protected CompositeSubscription mCompositeSubscription;
 
@@ -43,12 +43,12 @@ public class BasePresenter<M, V extends BaseView> implements presenter {
         if (useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().unregister(this);//解除注册eventbus
         unSubscribe();//解除订阅
-        this.mModel = null;
+        if (mModel != null) {
+            mModel.onDestroy();
+            this.mModel = null;
+        }
         this.mRootView = null;
-    }
-
-    protected void handleError(Throwable throwable) {
-
+        this.mCompositeSubscription = null;
     }
 
     /**
@@ -57,11 +57,11 @@ public class BasePresenter<M, V extends BaseView> implements presenter {
      * @return
      */
     protected boolean useEventBus() {
-        return false;
+        return true;
     }
 
 
-    protected void addSubscrebe(Subscription subscription) {
+    protected void addSubscribe(Subscription subscription) {
         if (mCompositeSubscription == null) {
             mCompositeSubscription = new CompositeSubscription();
         }
@@ -74,11 +74,5 @@ public class BasePresenter<M, V extends BaseView> implements presenter {
         }
     }
 
-    @Override
-    public void unSubscribe(Subscription subscription) {
-        if (subscription != null && !subscription.isUnsubscribed()) {
-            subscription.unsubscribe();//保证activity结束时取消所有正在执行的订阅
-        }
-    }
 
 }

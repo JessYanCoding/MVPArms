@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jess.arms.mvp.BasePresenter;
+import com.jess.arms.mvp.Presenter;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import org.simple.eventbus.EventBus;
@@ -19,7 +19,7 @@ import butterknife.Unbinder;
 /**
  * Created by jess on 2015/12/8.
  */
-public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
+public abstract class BaseFragment<P extends Presenter> extends RxFragment {
     protected BaseActivity mActivity;
     protected View mRootView;
     protected final String TAG = this.getClass().getSimpleName();
@@ -30,7 +30,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = initView();
+        mRootView = initView(inflater,container);
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(this, mRootView);
         return mRootView;
@@ -64,6 +64,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
         if (mPresenter != null) mPresenter.onDestroy();//释放资源
         if (useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().unregister(this);
+        this.mPresenter = null;
+        this.mActivity = null;
+        this.mRootView = null;
+        this.mUnbinder = null;
     }
 
     /**
@@ -72,11 +76,11 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
      * @return
      */
     protected boolean useEventBus() {
-        return false;
+        return true;
     }
 
 
-    protected abstract View initView();
+    protected abstract View initView(LayoutInflater inflater, ViewGroup container);
 
     protected abstract void initData();
 

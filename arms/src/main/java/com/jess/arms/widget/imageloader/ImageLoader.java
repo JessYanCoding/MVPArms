@@ -2,30 +2,29 @@ package com.jess.arms.widget.imageloader;
 
 import android.content.Context;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Created by jess on 8/5/16 15:57
  * contact with jess.yan.effort@gmail.com
  */
-public class ImageLoader {
-    //    private volatile static ImageLoader mImageLoader;
+@Singleton
+public final class ImageLoader {
     private BaseImageLoaderStrategy mStrategy;
 
+    @Inject
     public ImageLoader(BaseImageLoaderStrategy strategy) {
         setLoadImgStrategy(strategy);
     }
 
-//    public static ImageLoader getInstance() {
-//        if (mImageLoader == null) {
-//            synchronized (ImageLoader.class) {
-//                if (mImageLoader == null)
-//                    mImageLoader = new ImageLoader();
-//            }
-//        }
-//        return mImageLoader;
-//    }
 
     public <T extends ImageConfig> void loadImage(Context context, T config) {
         this.mStrategy.loadImage(context, config);
+    }
+
+    public <T extends ImageConfig> void clear(Context context, T config) {
+        this.mStrategy.clear(context, config);
     }
 
 

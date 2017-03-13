@@ -3,7 +3,6 @@ package me.jessyan.mvparms.demo.mvp.ui.activity;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,21 +11,20 @@ import android.view.View;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.utils.UiUtils;
 import com.paginate.Paginate;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import butterknife.BindView;
+import common.AppComponent;
+import common.WEActivity;
 import me.jessyan.mvparms.demo.R;
-import me.jessyan.mvparms.demo.di.component.AppComponent;
 import me.jessyan.mvparms.demo.di.component.DaggerUserComponent;
 import me.jessyan.mvparms.demo.di.module.UserModule;
 import me.jessyan.mvparms.demo.mvp.contract.UserContract;
 import me.jessyan.mvparms.demo.mvp.presenter.UserPresenter;
-import me.jessyan.mvparms.demo.mvp.ui.common.WEActivity;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import timber.log.Timber;
-
-import static me.jessyan.mvparms.demo.R.id.SwipeRefreshLayout;
 
 
 public class UserActivity extends WEActivity<UserPresenter> implements UserContract.View, SwipeRefreshLayout.OnRefreshListener {
@@ -35,22 +33,22 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @Nullable
-    @BindView(SwipeRefreshLayout)
+    @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     private Paginate mPaginate;
     private boolean isLoadingMore;
-
+    private RxPermissions mRxPermissions;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
+        this.mRxPermissions = new RxPermissions(this);
         DaggerUserComponent
                 .builder()
                 .appComponent(appComponent)
                 .userModule(new UserModule(this))
                 .build()
                 .inject(this);
-
     }
 
     @Override
@@ -73,23 +71,7 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
      */
     private void initRecycleView() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        configRecycleView(mRecyclerView, new GridLayoutManager(this, 2));
-    }
-
-
-    /**
-     * 配置recycleview
-     *
-     * @param recyclerView
-     * @param layoutManager
-     */
-    private void configRecycleView(RecyclerView recyclerView
-            , RecyclerView.LayoutManager layoutManager
-    ) {
-        recyclerView.setLayoutManager(layoutManager);
-        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        UiUtils.configRecycleView(mRecyclerView, new GridLayoutManager(this, 2));
     }
 
 
@@ -119,12 +101,12 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
 
     @Override
     public void launchActivity(Intent intent) {
-
+        UiUtils.startActivity(intent);
     }
 
     @Override
     public void killMyself() {
-
+        finish();
     }
 
     @Override
@@ -143,11 +125,16 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
     }
 
     /**
-     * 介绍加载更多
+     * 结束加载更多
      */
     @Override
     public void endLoadMore() {
         isLoadingMore = false;
+    }
+
+    @Override
+    public RxPermissions getRxPermissions() {
+        return mRxPermissions;
     }
 
     /**
@@ -177,5 +164,13 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
                     .build();
             mPaginate.setHasMoreDataToLoad(false);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        DefaultAdapter.releaseAllHolder(mRecyclerView);//super.onDestroy()之后会unbind,所有view被置为null,所以必须在之前调用
+        super.onDestroy();
+        this.mRxPermissions = null;
+        this.mPaginate = null;
     }
 }

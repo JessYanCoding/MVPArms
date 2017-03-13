@@ -1,4 +1,5 @@
 # MVPArms 
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/nimelepbpejjlbmoobocpfnjhihnpked.svg)]()
 [![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](http://www.apache.org/licenses/LICENSE-2.0)
 [![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square)](https://developer.android.com/about/versions/android-4.0.3.html)
 
@@ -6,9 +7,12 @@
 
 [中文说明](MVPArms.md)
 
+##Architectural
+<img src="https://github.com/JessYanCoding/MVPArms/raw/master/image/Architecture.png" width="80%" height="80%">
+
 ##Usage
 > New Project
->> If you are building a new project, directly to the entire project **clone** (or download), as **Demo** as the main module, then the package name into their own package name , **Demo** contains the package structure can be used directly, a mainstream `MVP` +` Dagger2` + `Retrofit` +` Rxjava` framework so easy to build successful, and now you refer **Demo Mvp** Package under the **UserActivity** format,[Use Template to automatically generate MVP, Dagger2 related classes under the corresponding package](https://github.com/JessYanCoding/MVPArms/blob/master/MVP_generator_solution),With access to [Wiki documents] (https://github.com/JessYanCoding/MVPArms/wiki) slowly grasp the framework to see more articles as soon as possible in the project to use it, in practice, learning is the fastest
+>> If you are building a new project, directly to the entire project **clone** (or download), as **Demo** as the main module, then the package name into their own package name , **Demo** contains the package structure can be used directly, a mainstream `MVP` +` Dagger2` + `Retrofit` +` Rxjava` framework so easy to build successful, and now you refer **Demo Mvp** Package under the **UserActivity** format,[Use Template to automatically generate MVP, Dagger2 related classes under the corresponding package](http://www.jianshu.com/p/56cf17ab896d),With access to [Wiki documents] (https://github.com/JessYanCoding/MVPArms/wiki) slowly grasp the framework to see more articles as soon as possible in the project to use it, in practice, learning is the fastest
 
 > Old Project
 >> [Old projects would like to introduce this framework, you can refer to the Wiki documentation, written in great detail](https://github.com/JessYanCoding/MVPArms/wiki)
@@ -16,19 +20,24 @@
 ##Wiki
 [Detailed usage reference Wiki](https://github.com/JessYanCoding/MVPArms/wiki)
 
+
 ##Notice
 
-* The use of these technologies for the latter part of the project maintenance and iterative, especially large projects is very helpful, but is to develop a pre-write a page to write a lot of `MVP`,` Dagger2` class and interface, which is indeed a headache for the development of pre- Now the author has been able to [mvp_generator_solution](https://github.com/JessYanCoding/MVPArms/blob/master/MVP_generator_solution) automatically generate some `MVP`,` Dagger2` template code, and now we can very easily use the framework.
+* [Collection Box](https://github.com/JessYanCoding/MVPArms/issues/40)
 
-* First run **Demo**, the cold start will be a long time, this is not because of this framework, because the `Instant run` in **Debug** mode will start the first deployment of some resources, if the signature to play **Release** package is not There will be a cold start is very slow, so do not worry about affecting the user experience
+* [Update Log](https://github.com/JessYanCoding/MVPArms/wiki/UpdateLog)
 
-* AppComponent is a management of all single-instance object class, the use of dagger2 management, DaggerAppComponent for Dagger2 automatically generated using apt if missing, the first part of the error comment out, and then compile the project, DaggerAppComponent automatically generated, this time to open the Notes on Can, the specific use of dagger2 please refer to the document.
+* [Common Issues](https://github.com/JessYanCoding/MVPArms/wiki/Issues)
 
-* Use this frame comes with automatic adaptation function, please refer to [AndroidAutoLayout](https://github.com/hongyangAndroid/AndroidAutoLayout)
+* [Version Updata](https://github.com/JessYanCoding/MVPArms/wiki#1.6)
+
+* The use of these technologies for the latter part of the project maintenance and iterative, especially large projects is very helpful, but is to develop a pre-write a page to write a lot of `MVP`,` Dagger2` class and interface, which is indeed a headache for the development of pre- Now the framework has been able to [mvp_generator_solution](https://github.com/JessYanCoding/MVPArms/blob/master/MVP_generator_solution) automatically generate some `MVP`,` Dagger2` template code, and now we can very easily use the framework.
+
+* Use this frame comes with automatic adaptation function, please refer to [AndroidAutoLayout](https://github.com/hongyangAndroid/AndroidAutoLayout).
 
 * This framework uses `RxPermissions` for rights management (adaptation android6.0), and provides a PermissionUtil tool class line of code to implement the permission request.
 
-* This framework does not provide any third-party libraries associated with the **UI**
+* This framework does not provide any third-party libraries associated with the **UI**(except for the [`AndroidAutoLayout`](https://github.com/hongyangAndroid/AndroidAutoLayout) screen adaptation scheme).
 
 
 ##Functionality & Libraries
@@ -49,12 +58,27 @@
 15. [`Glide`](https://github.com/bumptech/glide)
 16. [`LeakCanary`](https://github.com/square/leakcanary)
 17. [`RxErroHandler`](https://github.com/JessYanCoding/RxErrorHandler)
- 
+
+
+##Update
+* Thursday, 15 December 2016: [**AppManager**](https://github.com/JessYanCoding/MVPArms/wiki#3.11)
+* Sunday, 25 December 2016: [**GlobeConfigModule**](https://github.com/JessYanCoding/MVPArms/wiki#3.1)
+* Monday, 26 December 2016: [**Version Update**](https://github.com/JessYanCoding/MVPArms/wiki#1.6)
+
+
+##TODO
+* Improve RxErrorHandler
+* Improve RequestIntercept
+
+
 ##Acknowledgements 
 Thanks to all the three libraries used in this framework **Author**, and all for the 'Open Sourece' selfless contributions **Developer** and **Organizations**, so that we can better work and study, I will also spare time return to the open source community
 
 ##About Me
-* **Email**: jess.yan.effort@gmail.com  
+* **Email**: <jess.yan.effort@gmail.com>  
+* **Home**: <http://jessyan.me>
+* **掘金**: <https://gold.xitu.io/user/57a9dbd9165abd0061714613>
+* **简书**: <http://www.jianshu.com/u/1d0c0bc634db>
 
 ##License
 ``` 

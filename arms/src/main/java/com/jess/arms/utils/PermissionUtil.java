@@ -2,11 +2,8 @@ package com.jess.arms.utils;
 
 import android.Manifest;
 
-import com.jess.arms.base.BaseActivity;
-import com.jess.arms.base.BaseFragment;
 import com.jess.arms.mvp.BaseView;
 import com.tbruyelle.rxpermissions.RxPermissions;
-import com.trello.rxlifecycle.LifecycleTransformer;
 
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -25,16 +22,6 @@ public class PermissionUtil {
         void onRequestPermissionSuccess();
     }
 
-    public static <T> LifecycleTransformer<T> bindToLifecycle(BaseView view) {
-        if (view instanceof BaseActivity) {
-            return ((BaseActivity) view).<T>bindToLifecycle();
-        } else if (view instanceof BaseFragment) {
-            return ((BaseFragment) view).<T>bindToLifecycle();
-        } else {
-            throw new IllegalArgumentException("view isn't activity or fragment");
-        }
-
-    }
 
 
     /**
@@ -54,7 +41,6 @@ public class PermissionUtil {
             rxPermissions
                     .request(Manifest.permission.WRITE_EXTERNAL_STORAGE
                             , Manifest.permission.CAMERA)
-                    .compose(PermissionUtil.<Boolean>bindToLifecycle(view))//使用RXlifecycle,使subscription和activity一起销毁
                     .subscribe(new ErrorHandleSubscriber<Boolean>(errorHandler) {
                         @Override
                         public void onNext(Boolean granted) {
@@ -85,7 +71,6 @@ public class PermissionUtil {
         } else {//没有申请过，则申请
             rxPermissions
                     .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    .compose(PermissionUtil.<Boolean>bindToLifecycle(view))//使用RXlifecycle,使subscription和activity一起销毁
                     .subscribe(new ErrorHandleSubscriber<Boolean>(errorHandler) {
                         @Override
                         public void onNext(Boolean granted) {
@@ -116,7 +101,6 @@ public class PermissionUtil {
         } else {//没有申请过，则申请
             rxPermissions
                     .request(Manifest.permission.SEND_SMS)
-                    .compose(PermissionUtil.<Boolean>bindToLifecycle(view))//使用RXlifecycle,使subscription和activity一起销毁
                     .subscribe(new ErrorHandleSubscriber<Boolean>(errorHandler) {
                         @Override
                         public void onNext(Boolean granted) {
@@ -146,7 +130,6 @@ public class PermissionUtil {
         } else {//没有申请过，则申请
             rxPermissions
                     .request(Manifest.permission.CALL_PHONE)
-                    .compose(PermissionUtil.<Boolean>bindToLifecycle(view))//使用RXlifecycle,使subscription和activity一起销毁
                     .subscribe(new ErrorHandleSubscriber<Boolean>(errorHandler) {
                         @Override
                         public void onNext(Boolean granted) {

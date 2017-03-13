@@ -1,13 +1,16 @@
 # MVPArms 
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/nimelepbpejjlbmoobocpfnjhihnpked.svg)]()
 [![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](http://www.apache.org/licenses/LICENSE-2.0)
 [![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square)](https://developer.android.com/about/versions/android-4.0.3.html)
 
 ##a common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects( like Dagger2,Rxjava,Retrofit... ),to make your developing quicker and easier. 
 一个整合了大量主流开源项目的Android Mvp快速搭建框架
 
+qq群:301733278 有什么问题可以直接问我
+
 ##Usage
 > New Project
->> 如果你是构建一个全新的项目,直接将整个项目**clone**(或者下载)下来,直接将**Demo**当成主**Module**,再将项目包名改成自己的包名,**Demo**包含可以直接使用的包结构,一个主流的`MVP`+`Dagger2`+`Retrofit`+`Rxjava`框架就这样轻松的构建成功了,现在你参考**Demo Mvp**包下的**UserActivity**的格式,[使用Template在对应包下自动生成MVP,Dagger2相关类](https://github.com/JessYanCoding/MVPArms/blob/master/MVP_generator_solution),配合查阅[Wiki文档](https://github.com/JessYanCoding/MVPArms/wiki)慢慢掌握本框架,看再多文章不如早点在项目中使用它,在实践中学习是最快的
+>> 如果你是构建一个全新的项目,直接将整个项目**clone**(或者下载)下来,直接将**Demo**当成主**Module**,再将项目包名改成自己的包名,**Demo**包含可以直接使用的包结构,一个主流的`MVP`+`Dagger2`+`Retrofit`+`Rxjava`框架就这样轻松的构建成功了,现在你参考**Demo Mvp**包下的**UserActivity**的格式,[使用Template在对应包下自动生成MVP,Dagger2相关类](http://www.jianshu.com/p/56cf17ab896d),配合查阅[Wiki文档](https://github.com/JessYanCoding/MVPArms/wiki)慢慢掌握本框架,看再多文章不如早点在项目中使用它,在实践中学习总是最快的
  
 > Old Project
 >> [老项目想引入此框架,可以参考Wiki文档,写的非常详细](https://github.com/JessYanCoding/MVPArms/wiki)
@@ -21,19 +24,23 @@
 
 ##Notice
 
+* [意见收集](https://github.com/JessYanCoding/MVPArms/issues/40)
+
+* [更新日志](https://github.com/JessYanCoding/MVPArms/wiki/UpdateLog)
+
+* [常见issues](https://github.com/JessYanCoding/MVPArms/wiki/Issues)
+
+* [版本更新](https://github.com/JessYanCoding/MVPArms/wiki#1.6) 
+
 * [我们为什么要把Dagger2,MVP以及Rxjava引入项目中?](http://www.jianshu.com/p/91c2bb8e6369)
 
-* 看了上面的文章,对为什么使用这些技术应该比较了解了,使用这些技术对项目后期的维护和迭代特别是大型项目非常有帮助,但是就是开发前期每写一个页面要多写很多`MVP`,`Dagger2`的类和接口,这对于开发前期确实比较头疼,现在作者已经可以通过[mvp_generator_solution](https://github.com/JessYanCoding/MVPArms/blob/master/MVP_generator_solution)自动生成一些`MVP`,`Dagger2`的模版代码,现在大家可以非常轻松的使用本框架.
-
-* 第一次运行**Demo**时,冷启动会白屏很久,这并不是因为本框架导致的,是因为`Instant run`在**Debug**模式下会在第一次启动时部署一些资源,如果签名打**Release**安装包则不会出现冷启动很慢的情况,所以不用担心影响用户体验
-
-* AppComponent是一个管理所有单例对象的类,使用dagger2管理, DaggerAppComponent为Dagger2使用apt自动生成如果缺少的话，先把报错的部分注释掉，然后编译下项目, DaggerAppComponent就自动生成了，这个时候打开注释就可以了,具体用法请参照dagger2的文档.
+* 看了上面的文章,对为什么使用这些技术应该比较了解了,使用这些技术对项目后期的维护和迭代特别是大型项目非常有帮助,但是就是开发前期每写一个页面要多写很多`MVP`,`Dagger2`的类和接口,这对于开发前期确实比较头疼,现在本框架已经可以通过[Template](http://www.jianshu.com/p/56cf17ab896d)自动生成一些`MVP`,`Dagger2`的模版代码,现在大家可以非常轻松的使用本框架.
 
 * 使用此框架自带自动适配功能，请参考 [AutoLayout使用方法](https://github.com/hongyangAndroid/AndroidAutoLayout).
 
 * 此框架使用`RxPermissions`用于权限管理(适配android6.0),并提供PermissionUtil工具类一行代码实现权限请求. 
 
-* 本框架不提供与**UI**有关的任何第三方库(除了`AutoLayout`屏幕适配方案).
+* 作为通用框架,本框架不提供与**UI**有关的任何第三方库(除了`AutoLayout`屏幕适配方案).
 
 
 ##Feature
@@ -62,14 +69,29 @@
 15. [`Glide`此库为本框架默认封装图片加载库，可参照着例子更改为其他的库，Api和`Picasso`差不多,缓存机制比`Picasso`复杂,速度快，适合处理大型图片流，支持gfit，`Fresco`太大了！，在5.0一下优势很大，5.0以上系统默认使用的内存管理和`Fresco`类似.](https://github.com/bumptech/glide)
 16. [`Realm`速度和跨平台性使它成为如今最火的数据库,美中不足的就是so库太大](https://realm.io/docs/java/latest/#getting-started)
 17. [`LeakCanary`Square出品的专门用来检测`Android`和`Java`的内存泄漏,通过通知栏提示内存泄漏信息](https://github.com/square/leakcanary)
-18. [`RxErroHandler``Rxjava`错误处理库,可出现错误后重试](https://github.com/JessYanCoding/RxErrorHandler)
+18. [`RxErroHandler``Rxjava`错误处理库,可在出现错误后重试](https://github.com/JessYanCoding/RxErrorHandler)
+ 
+ 
+##Update
+* Thursday, 15 December 2016: [**AppManager**](https://github.com/JessYanCoding/MVPArms/wiki#3.11)
+* Sunday, 25 December 2016: [**GlobeConfigModule**](https://github.com/JessYanCoding/MVPArms/wiki#3.1)
+* Monday, 26 December 2016: [**Version Update**](https://github.com/JessYanCoding/MVPArms/wiki#1.6)
+
+
+##TODO
+* Improve RxErrorHandler
+* Improve RequestIntercept
+
  
 ##Acknowledgements 
 感谢本框架所使用到的所有三方库的**Author**,以及所有为`Open Sourece`做无私贡献的**Developer**和**Organizations**,使我们能更好的工作和学习,本人也会将业余时间回报给开源社区
 
 
 ##About Me
-* **Email**: jess.yan.effort@gmail.com  
+* **Email**: <jess.yan.effort@gmail.com>  
+* **Home**: <http://jessyan.me>
+* **掘金**: <https://gold.xitu.io/user/57a9dbd9165abd0061714613>
+* **简书**: <http://www.jianshu.com/u/1d0c0bc634db>
 
 ##License
 ``` 

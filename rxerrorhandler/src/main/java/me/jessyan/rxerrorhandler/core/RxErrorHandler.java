@@ -5,6 +5,8 @@ import android.content.Context;
 import me.jessyan.rxerrorhandler.handler.ErrorHandlerFactory;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 
+import static me.jessyan.rxerrorhandler.utils.Preconditions.checkNotNull;
+
 /**
  * Created by jess on 9/2/16 13:27
  * Contact with jess.yan.effort@gmail.com
@@ -44,11 +46,9 @@ public class RxErrorHandler {
         }
 
         public RxErrorHandler build() {
-            if (context == null)
-                throw new IllegalStateException("context is required");
+            checkNotNull(context,"context is required");
+            checkNotNull(responseErroListener,"responseErroListener is required");
 
-            if (responseErroListener == null)
-                throw new IllegalStateException("responseErroListener is required");
 
             this.errorHandlerFactory = new ErrorHandlerFactory(context, responseErroListener);
 

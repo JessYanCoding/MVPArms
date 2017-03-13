@@ -2,12 +2,10 @@ package com.jess.arms.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.os.Message;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -21,10 +19,17 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.BaseApplication;
 
+import org.simple.eventbus.EventBus;
+
 import java.security.MessageDigest;
+
+import static com.jess.arms.base.AppManager.APPMANAGER_MESSAGE;
+import static com.jess.arms.base.AppManager.APP_EXIT;
+import static com.jess.arms.base.AppManager.KILL_ALL;
+import static com.jess.arms.base.AppManager.SHOW_SNACKBAR;
+import static com.jess.arms.base.AppManager.START_ACTIVITY;
 
 /**
  * Created by jess on 2015/11/23.
@@ -206,11 +211,11 @@ public class UiUtils {
      * @param text
      */
     public static void SnackbarText(String text) {
-        Intent intent = new Intent(BaseActivity.ACTION_RECEIVER_ACTIVITY);
-        intent.putExtra("type", "showSnackbar");
-        intent.putExtra("content", text);
-        intent.putExtra("long", false);
-        getContext().sendBroadcast(intent);
+        Message message = new Message();
+        message.what = SHOW_SNACKBAR;
+        message.obj = text;
+        message.arg1 = 0;
+        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
     }
 
     /**
@@ -219,11 +224,11 @@ public class UiUtils {
      * @param text
      */
     public static void SnackbarTextWithLong(String text) {
-        Intent intent = new Intent(BaseActivity.ACTION_RECEIVER_ACTIVITY);
-        intent.putExtra("type", "showSnackbar");
-        intent.putExtra("content", text);
-        intent.putExtra("long", true);
-        getContext().sendBroadcast(intent);
+        Message message = new Message();
+        message.what = SHOW_SNACKBAR;
+        message.obj = text;
+        message.arg1 = 1;
+        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
     }
 
 
@@ -255,8 +260,10 @@ public class UiUtils {
      * @param homeActivityClass
      */
     public static void startActivity(Class homeActivityClass) {
-        Intent intent = new Intent(getContext(), homeActivityClass);
-        startActivity(intent);
+        Message message = new Message();
+        message.what = START_ACTIVITY;
+        message.obj = homeActivityClass;
+        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
     }
 
     /**
@@ -265,12 +272,10 @@ public class UiUtils {
      * @param
      */
     public static void startActivity(Intent content) {
-        Intent intent = new Intent(BaseActivity.ACTION_RECEIVER_ACTIVITY);
-        intent.putExtra("type", "startActivity");
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("content", content);
-        intent.putExtras(bundle);
-        getContext().sendBroadcast(intent);
+        Message message = new Message();
+        message.what = START_ACTIVITY;
+        message.obj = content;
+        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
     }
 
     /**
@@ -306,34 +311,6 @@ public class UiUtils {
 
 
     /**
-     * 显示对话框提示
-     *
-     * @param text
-     */
-
-    public static void showDialog(String text, Activity activity) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle("提示");
-        builder.setNegativeButton("确定", null);
-        builder.setMessage(text);
-        builder.show();
-    }
-
-    /**
-     * 显示对话框提示
-     *
-     * @param text
-     */
-
-    public static void showDialogWithMethod(String text, Activity activity, DialogInterface.OnClickListener listener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle("提示");
-        builder.setNegativeButton("确定", listener);
-        builder.setMessage(text);
-        builder.show();
-    }
-
-    /**
      * 获得颜色
      */
     public static int getColor(int rid) {
@@ -366,8 +343,6 @@ public class UiUtils {
         }
         return false;
     }
-
-    private static int mCount;
 
 
     /**
@@ -422,6 +397,19 @@ public class UiUtils {
         //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+    }
+
+
+    public static void killAll(){
+        Message message = new Message();
+        message.what = KILL_ALL;
+        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+    }
+
+    public static void exitApp(){
+        Message message = new Message();
+        message.what = APP_EXIT;
+        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
     }
 
 }
