@@ -15,3 +15,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+
+ #实体类不参与混淆
+-keep class me.jessyan.mvparms.demo.mvp.model.entity.** {*;}
