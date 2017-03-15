@@ -3,26 +3,26 @@
 [![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](http://www.apache.org/licenses/LICENSE-2.0)
 [![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square)](https://developer.android.com/about/versions/android-4.0.3.html)
 
-##a common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects( like Dagger2,Rxjava,Retrofit... ),to make your developing quicker and easier. 
+## a common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects( like Dagger2,Rxjava,Retrofit... ),to make your developing quicker and easier. 
 一个整合了大量主流开源项目的Android Mvp快速搭建框架
 
 qq群:301733278 有什么问题可以直接问我
 
-##Usage
+## Usage
 > New Project
 >> 如果你是构建一个全新的项目,直接将整个项目**clone**(或者下载)下来,直接将**Demo**当成主**Module**,再将项目包名改成自己的包名,**Demo**包含可以直接使用的包结构,一个主流的`MVP`+`Dagger2`+`Retrofit`+`Rxjava`框架就这样轻松的构建成功了,现在你参考**Demo Mvp**包下的**UserActivity**的格式,[使用Template在对应包下自动生成MVP,Dagger2相关类](http://www.jianshu.com/p/56cf17ab896d),配合查阅[Wiki文档](https://github.com/JessYanCoding/MVPArms/wiki)慢慢掌握本框架,看再多文章不如早点在项目中使用它,在实践中学习总是最快的
  
 > Old Project
 >> [老项目想引入此框架,可以参考Wiki文档,写的非常详细](https://github.com/JessYanCoding/MVPArms/wiki)
 
-##Wiki
+## Wiki
 [Detailed usage reference Wiki(详细使用方法及扩展功能,请参照Wiki)](https://github.com/JessYanCoding/MVPArms/wiki)
 
 <!--##The project used [In Progress]
 [Inspired by eyepetizer（灵感来源于开眼视频,开发中...）](https://github.com/JessYanCoding/WideEyes) -->
 
 
-##Notice
+## Notice
 
 * [意见收集](https://github.com/JessYanCoding/MVPArms/issues/40)
 
@@ -43,7 +43,7 @@ qq群:301733278 有什么问题可以直接问我
 * 作为通用框架,本框架不提供与**UI**有关的任何第三方库(除了`AutoLayout`屏幕适配方案).
 
 
-##Feature
+## Feature
 
 * **网络请求层**: 默认使用Retrofit，如今主流的网络请求框架有`Volley`,`Okhttp`,`Retrofit`(`Android-async-http`停止维护了)，因为这个是库基于Rxjava， Retrofit支持Rxjava，默认使用Okhttp请求(Okhttp使用Okio，Okio基于IO和NIO所以性能优于Volley,Volley内部封装有Imageloader,支持扩展Okhttp，封装和扩展比Okhttp好，但是比较适合频繁，数据量小得网络请求)，所以此库默认直接通过Dagger注入Retrofit实例给开发者.
 
@@ -51,7 +51,7 @@ qq群:301733278 有什么问题可以直接问我
 
 * **Model层** 优秀的数据库太多，`GreenDao`,`Realm`,`SqlBrite`（Square公司出品，对SQLiteOpenHelper封装，提供响应式api访问数据库）,`SqlDelight`,`Storio`,`DBFlow`，每个框架的使用方法都不一样，本框架只提供一个管理类CacheManager里面默认封装了RxCache(此库根据`Retrofit`Api实现了缓存逻辑,并提供响应式接口)，有其他需求的可以自己使用数据库实现缓存逻辑并替换，通过Dagger2向Model层提供ServiceManager（网络请求，Retrofit Api）和CacheManager（数据持久层）,来提供给开发者，这样的好处的是上层（activity/fragment/presenter）不需要知道数据源的细节（来自于网络、数据库，亦或是内存等等），底层可以根据需求修改（缓存的实现细节）上下两层分离互不影响.
 
-##Functionality & Libraries
+## Functionality & Libraries
 1. [`Mvp`Google官方出品的`Mvp`架构项目，含有多个不同的架构分支(此为Dagger分支).](https://github.com/googlesamples/android-architecture/tree/todo-mvp-dagger/)
 2. [`Dagger2`Google根据Square的Dagger1出品的依赖注入框架，通过apt动态生成代码，性能优于用反射技术依赖注入的框架.](https://github.com/google/dagger)
 3. [`Rxjava`提供优雅的响应式Api解决异步请求.](https://github.com/ReactiveX/RxJava)
@@ -72,28 +72,28 @@ qq群:301733278 有什么问题可以直接问我
 18. [`RxErroHandler``Rxjava`错误处理库,可在出现错误后重试](https://github.com/JessYanCoding/RxErrorHandler)
  
  
-##Update
+## Update
 * Thursday, 15 December 2016: [**AppManager**](https://github.com/JessYanCoding/MVPArms/wiki#3.11)
 * Sunday, 25 December 2016: [**GlobeConfigModule**](https://github.com/JessYanCoding/MVPArms/wiki#3.1)
 * Monday, 26 December 2016: [**Version Update**](https://github.com/JessYanCoding/MVPArms/wiki#1.6)
 
 
-##TODO
+## TODO
 * Improve RxErrorHandler
 * Improve RequestIntercept
 
  
-##Acknowledgements 
+## Acknowledgements 
 感谢本框架所使用到的所有三方库的**Author**,以及所有为`Open Sourece`做无私贡献的**Developer**和**Organizations**,使我们能更好的工作和学习,本人也会将业余时间回报给开源社区
 
 
-##About Me
+## About Me
 * **Email**: <jess.yan.effort@gmail.com>  
 * **Home**: <http://jessyan.me>
 * **掘金**: <https://gold.xitu.io/user/57a9dbd9165abd0061714613>
 * **简书**: <http://www.jianshu.com/u/1d0c0bc634db>
 
-##License
+## License
 ``` 
  Copyright 2016, jessyan       
   
