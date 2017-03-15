@@ -82,8 +82,7 @@ public class WEApplication extends BaseApplication {
 
 
     /**
-     * 将AppComponent返回出去,供其它地方使用, AppComponent接口中声明的方法返回的实例, 在getAppComponent()拿到对象后都可以直接使用
-     *
+     * 将AppComponent返回出去,供其它地方使用, AppComponent接口中声明的方法返回的实例,在getAppComponent()拿到对象后都可以直接使用
      * @return
      */
     public AppComponent getAppComponent() {
@@ -93,6 +92,8 @@ public class WEApplication extends BaseApplication {
 
     /**
      * app的全局配置信息封装进module(使用Dagger注入到需要配置信息的地方)
+     * GlobeHttpHandler是在NetworkInterceptor中拦截数据
+     * 如果想将请求参数加密,则必须在Interceptor中对参数进行处理,GlobeConfigModule.addInterceptor可以添加Interceptor
      * @return
      */
     @Override

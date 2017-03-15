@@ -16,12 +16,12 @@ public interface GlobeHttpHandler {
     GlobeHttpHandler EMPTY = new GlobeHttpHandler() {
         @Override
         public Response onHttpResultResponse(String httpResult, Interceptor.Chain chain, Response response) {
-            return null;
+            return response;
         }
 
         @Override
         public Request onHttpRequestBefore(Interceptor.Chain chain, Request request) {
-            return null;
+            return request;
         }
     };
 
