@@ -129,7 +129,6 @@ public class WEApplication extends BaseApplication {
 //                            .build();
 
 //                    // retry the request
-//
 //                    response.body().close();
                         //如果使用okhttp将新的请求,请求成功后,将返回的response  return出去即可
 
