@@ -68,7 +68,6 @@ dependencies {
         exclude module: 'rxjava'
         exclude module: 'rxandroid'
     }
-    provided rootProject.ext.dependencies["rxbinding-recyclerview-v7"]
     compile (rootProject.ext.dependencies["rxcache"]){
         exclude module: 'rxjava'
         exclude module: 'dagger'
