@@ -92,7 +92,7 @@ dependencies {
     compile rootProject.ext.dependencies["timber"]
     compile rootProject.ext.dependencies["glide"]
     apt rootProject.ext.dependencies["dagger2-apt-compiler"]
-    compile (project(':rxerrorhandler')){
+    compile (rootProject.ext.dependencies["rxerrorhandler"]){
         exclude module: 'rxjava'
     }
 }
