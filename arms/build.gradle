@@ -96,3 +96,6 @@ dependencies {
         exclude module: 'rxjava'
     }
 }
+
+
+apply from: 'bintray.gradle'
