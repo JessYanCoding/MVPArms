@@ -1,7 +1,8 @@
 # MVPArms 
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/nimelepbpejjlbmoobocpfnjhihnpked.svg)]()
-[![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](http://www.apache.org/licenses/LICENSE-2.0)
-[![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square)](https://developer.android.com/about/versions/android-4.0.3.html)
+[ ![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/nimelepbpejjlbmoobocpfnjhihnpked.svg) ]()
+[ ![Bintray](https://img.shields.io/badge/bintray-v1.2.4-brightgreen.svg) ](https://bintray.com/jessyancoding/maven/MVPArms/1.2.4/link)
+[ ![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square) ](http://www.apache.org/licenses/LICENSE-2.0)
+[ ![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square) ](https://developer.android.com/about/versions/android-4.0.3.html)
 
 ## 一个整合了大量主流开源项目的Android Mvp快速搭建框架
 
@@ -15,7 +16,7 @@ qq群:301733278 有什么问题可以直接问我
 >> [老项目想引入此框架,可以参考Wiki文档,写的非常详细](https://github.com/JessYanCoding/MVPArms/wiki)
 
 ## Wiki
-[Detailed usage reference Wiki(详细使用方法及扩展功能,请参照Wiki)](https://github.com/JessYanCoding/MVPArms/wiki)
+[详细使用方法及扩展功能,请参照Wiki](https://github.com/JessYanCoding/MVPArms/wiki)
 
 <!--##The project used [In Progress]
 [Inspired by eyepetizer（灵感来源于开眼视频,开发中...）](https://github.com/JessYanCoding/WideEyes) -->
