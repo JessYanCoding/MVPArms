@@ -1,5 +1,4 @@
 # MVPArms 
-[ ![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/nimelepbpejjlbmoobocpfnjhihnpked.svg) ]()
 [ ![Bintray](https://img.shields.io/badge/bintray-v1.2.4-brightgreen.svg) ](https://bintray.com/jessyancoding/maven/MVPArms/1.2.4/link)
 [ ![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square) ](http://www.apache.org/licenses/LICENSE-2.0)
 [ ![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square) ](https://developer.android.com/about/versions/android-4.0.3.html)
