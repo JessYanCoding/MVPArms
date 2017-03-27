@@ -15,3 +15,5 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+# 混淆规则在 arms moudule下的proguard-rules.pro中,混淆前先参阅https://github.com/JessYanCoding/MVPArms/wiki#1.5
