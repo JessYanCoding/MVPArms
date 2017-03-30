@@ -3,7 +3,7 @@
 [ ![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square) ](https://developer.android.com/about/versions/android-4.0.3.html)
 [ ![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square) ](http://www.apache.org/licenses/LICENSE-2.0)
 
-「**引用请注明出处**」## 一个整合了大量主流开源项目的Android Mvp快速搭建框架
+## 「**引用请注明出处**」一个整合了大量主流开源项目的Android Mvp快速搭建框架
 
 qq群:301733278 有什么问题可以直接问我
 
