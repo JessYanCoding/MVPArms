@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.neenbedankt.android-apt'
+
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
@@ -32,70 +32,101 @@ buildscript {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile rootProject.ext.dependencies["junit"]
-    compile (rootProject.ext.dependencies["support-v4"]){
+
+    //android
+    compile(rootProject.ext.dependencies["support-v4"]) {
         exclude module: 'support-annotations'
     }
-    compile rootProject.ext.dependencies["gson"]
-    compile (rootProject.ext.dependencies["appcompat-v7"]){
+    compile(rootProject.ext.dependencies["appcompat-v7"]) {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
-    compile (rootProject.ext.dependencies["cardview-v7"]){
+    compile(rootProject.ext.dependencies["design"]) {
         exclude module: 'support-annotations'
     }
-    compile (rootProject.ext.dependencies["autolayout"]) {
+    compile(rootProject.ext.dependencies["recyclerview-v7"]) {
+        exclude module: 'support-annotations'
+    }
+    compile(rootProject.ext.dependencies["cardview-v7"]) {
+        exclude module: 'support-annotations'
+    }
+    compile rootProject.ext.dependencies["annotations"]
+
+    //view
+    compile(rootProject.ext.dependencies["butterknife"]) {
+        exclude module: 'support-annotations'
+    }
+    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
+    compile rootProject.ext.dependencies["material"]
+    compile rootProject.ext.dependencies["material-dialogs"]
+    compile(rootProject.ext.dependencies["autolayout"]) {
         exclude group: 'com.android.support'
     }
-    compile (rootProject.ext.dependencies["butterknife"]){
-        exclude module: 'support-annotations'
-    }
     compile rootProject.ext.dependencies["androideventbus"]
-    compile (rootProject.ext.dependencies["design"]){
-        exclude module: 'support-annotations'
-    }
-    compile rootProject.ext.dependencies["rxjava"]
-    compile (rootProject.ext.dependencies["rxandroid"]){
+    compile rootProject.ext.dependencies["glide"]
+
+    //rx
+    compile rootProject.ext.dependencies["rxjava2"]
+    compile(rootProject.ext.dependencies["rxandroid2"]) {
         exclude module: 'rxjava'
     }
-    compile (rootProject.ext.dependencies["rxlifecycle"]){
+    compile rootProject.ext.dependencies["rxpermissions2"]
+    compile rootProject.ext.dependencies["rxbinding2"]
+    compile rootProject.ext.dependencies["rxbinding2-support-v4"]
+    compile rootProject.ext.dependencies["rxbinding2-appcompat-v7"]
+    compile rootProject.ext.dependencies["rxbinding2-design"]
+    compile rootProject.ext.dependencies["rxbinding2-recyclerview-v7"]
+    compile(rootProject.ext.dependencies["rxlifecycle2"]) {
         exclude module: 'rxjava'
     }
-    compile (rootProject.ext.dependencies["rxlifecycle-components"]){
+    compile(rootProject.ext.dependencies["rxlifecycle2-components"]) {
         exclude module: 'support-v4'
         exclude module: 'appcompat-v7'
         exclude module: 'support-annotations'
         exclude module: 'rxjava'
         exclude module: 'rxandroid'
     }
-    compile (rootProject.ext.dependencies["rxcache"]){
+    compile(rootProject.ext.dependencies["rxcache2"]) {
         exclude module: 'rxjava'
         exclude module: 'dagger'
     }
-    compile (rootProject.ext.dependencies["rxcache-jolyglot-gson"]){
+    compile(rootProject.ext.dependencies["rxcache2-jolyglot-gson"]) {
         exclude module: 'gson'
     }
-    compile rootProject.ext.dependencies["rxpermissions"]
-    compile (rootProject.ext.dependencies["retrofit"]){
+    compile(rootProject.ext.dependencies["Rx2ErrorHandler"]) {
+        exclude module: 'rxjava'
+    }
+
+    //network
+    compile rootProject.ext.dependencies["okhttp"]
+    compile rootProject.ext.dependencies["logging-interceptor"]
+    compile(rootProject.ext.dependencies["retrofit"]) {
         exclude module: 'okhttp'
     }
-    compile (rootProject.ext.dependencies["retrofit-converter-gson"]){
+    compile(rootProject.ext.dependencies["retrofit-converter-gson"]) {
         exclude module: 'gson'
     }
-    compile (rootProject.ext.dependencies["retrofit-adapter-rxjava"]){
+    compile(rootProject.ext.dependencies["retrofit-adapter-rxjava2"]) {
         exclude module: 'rxjava'
     }
+    compile rootProject.ext.dependencies["gson"]
+
+    //tools
     provided rootProject.ext.dependencies["javax.annotation"]
-    compile rootProject.ext.dependencies["annotations"]
-    compile rootProject.ext.dependencies["dagger2"]
-    compile rootProject.ext.dependencies["okhttp3"]
+    compile rootProject.ext.dependencies["dagger"]
+    annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
+    compile rootProject.ext.dependencies["xutils"]
+    compile rootProject.ext.dependencies["arouter-api"]
+    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
+    compile rootProject.ext.dependencies["AndroidUtilCode"]
+
+    //test
+    testCompile rootProject.ext.dependencies["junit"]
+    debugCompile rootProject.ext.dependencies["leakcanary-android"]
+    releaseCompile rootProject.ext.dependencies["leakcanary-android-no-op"]
+    testCompile rootProject.ext.dependencies["leakcanary-android-no-op"]
+    compile rootProject.ext.dependencies["logger"]
     compile rootProject.ext.dependencies["timber"]
-    compile rootProject.ext.dependencies["glide"]
-    apt rootProject.ext.dependencies["dagger2-apt-compiler"]
-    compile (rootProject.ext.dependencies["rxerrorhandler"]){
-        exclude module: 'rxjava'
-    }
+
 }
 
-
-apply from: 'bintray.gradle'

@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jess.arms">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.jess.arms">
+
+    <uses-sdk tools:overrideLibrary="com.blankj.utilcode"/>
 
     <application
         android:allowBackup="true"

@@ -1,5 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-apply from: "config.gradle"
+apply from: "rx2.gradle"
 buildscript {
     repositories {
         jcenter()
@@ -8,8 +8,6 @@ buildscript {
         classpath 'com.android.tools.build:gradle:2.3.0'
         //Gradle Android Maven plugin
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-        //Gradle Bintray Plugin
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
     }
 }
 

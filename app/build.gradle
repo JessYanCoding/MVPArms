@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
@@ -45,7 +44,6 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
 
@@ -53,13 +51,13 @@ buildscript {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile rootProject.ext.dependencies["junit"]
-    apt rootProject.ext.dependencies["dagger2-apt-compiler"]
+    annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
     provided rootProject.ext.dependencies["javax.annotation"]
-    apt rootProject.ext.dependencies["butterknife-apt"]
+    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
 //    compile project(':arms')
     compile 'me.jessyan:arms:1.2.4'
     compile rootProject.ext.dependencies["paginate"]
-    debugCompile rootProject.ext.dependencies["canary-debug"]
-    releaseCompile rootProject.ext.dependencies["canary-release"]
-    testCompile rootProject.ext.dependencies["canary-release"]
+    debugCompile rootProject.ext.dependencies["leakcanary-android"]
+    releaseCompile rootProject.ext.dependencies["leakcanary-android-no-op"]
+    testCompile rootProject.ext.dependencies["leakcanary-android-no-op"]
 }
