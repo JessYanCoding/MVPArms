@@ -22,4 +22,4 @@ android:
 
 script:
     - ./gradlew clean
-    - ./gradlew build
+    - ./gradlew assembleDebug
