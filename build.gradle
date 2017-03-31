@@ -8,6 +8,8 @@ buildscript {
         classpath 'com.android.tools.build:gradle:2.3.0'
         //Gradle Android Maven plugin
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        //java8
+        classpath 'me.tatarka:gradle-retrolambda:3.6.0'
     }
 }
 

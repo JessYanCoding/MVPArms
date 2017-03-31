@@ -5,7 +5,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.rx_cache.internal.RxCache;
+import io.rx_cache2.internal.RxCache;
 import me.jessyan.mvparms.demo.mvp.model.api.cache.CommonCache;
 
 /**

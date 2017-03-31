@@ -2,15 +2,16 @@ package com.jess.arms.mvp;
 
 import org.simple.eventbus.EventBus;
 
-import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * Created by jess on 16/4/28.
  */
 public class BasePresenter<M extends IModel, V extends BaseView> implements Presenter {
     protected final String TAG = this.getClass().getSimpleName();
-    protected CompositeSubscription mCompositeSubscription;
+    protected CompositeDisposable mCompositeDisposable;
 
     protected M mModel;
     protected V mRootView;
@@ -48,7 +49,7 @@ public class BasePresenter<M extends IModel, V extends BaseView> implements Pres
             this.mModel = null;
         }
         this.mRootView = null;
-        this.mCompositeSubscription = null;
+        this.mCompositeDisposable = null;
     }
 
     /**
@@ -61,16 +62,16 @@ public class BasePresenter<M extends IModel, V extends BaseView> implements Pres
     }
 
 
-    protected void addSubscribe(Subscription subscription) {
-        if (mCompositeSubscription == null) {
-            mCompositeSubscription = new CompositeSubscription();
+    protected void addSubscribe(Disposable disposable) {
+        if (mCompositeDisposable == null) {
+            mCompositeDisposable = new CompositeDisposable();
         }
-        mCompositeSubscription.add(subscription);//将所有subscription放入,集中处理
+        mCompositeDisposable.add(disposable);//将所有subscription放入,集中处理
     }
 
     protected void unSubscribe() {
-        if (mCompositeSubscription != null) {
-            mCompositeSubscription.unsubscribe();//保证activity结束时取消所有正在执行的订阅
+        if (mCompositeDisposable != null) {
+            mCompositeDisposable.dispose();//保证activity结束时取消所有正在执行的订阅
         }
     }
 

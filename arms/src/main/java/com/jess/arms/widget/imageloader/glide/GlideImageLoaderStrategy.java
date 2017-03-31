@@ -14,9 +14,9 @@ import com.jess.arms.widget.imageloader.BaseImageLoaderStrategy;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import rx.Observable;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by jess on 8/5/16 16:28
@@ -31,10 +31,14 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideIm
 
     @Override
     public void loadImage(Context ctx, GlideImageConfig config) {
-        if (ctx == null) throw new IllegalStateException("Context is required");
-        if (config == null) throw new IllegalStateException("GlideImageConfig is required");
-        if (TextUtils.isEmpty(config.getUrl())) throw new IllegalStateException("url is required");
-        if (config.getImageView() == null) throw new IllegalStateException("imageview is required");
+        if (ctx == null)
+            throw new IllegalStateException("Context is required");
+        if (config == null)
+            throw new IllegalStateException("GlideImageConfig is required");
+        if (TextUtils.isEmpty(config.getUrl()))
+            throw new IllegalStateException("url is required");
+        if (config.getImageView() == null)
+            throw new IllegalStateException("imageview is required");
 
 
         RequestManager manager;
@@ -77,8 +81,10 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideIm
 
     @Override
     public void clear(final Context ctx, GlideImageConfig config) {
-        if (ctx == null) throw new IllegalStateException("Context is required");
-        if (config == null) throw new IllegalStateException("GlideImageConfig is required");
+        if (ctx == null)
+            throw new IllegalStateException("Context is required");
+        if (config == null)
+            throw new IllegalStateException("GlideImageConfig is required");
 
         if (config.getImageViews() != null && config.getImageViews().length > 0) {//取消在执行的任务并且释放资源
             for (ImageView imageView : config.getImageViews()) {
@@ -95,12 +101,9 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideIm
         if (config.isClearDiskCache()) {//清除本地缓存
             Observable.just(0)
                     .observeOn(Schedulers.io())
-                    .subscribe(new Action1<Integer>() {
-                        @Override
-                        public void call(Integer integer) {
-                            Glide.get(ctx).clearDiskCache();
-                        }
-                    });
+                    .subscribe(integer ->
+                            Glide.get(ctx).clearDiskCache()
+                    );
         }
 
         if (config.isClearMemory()) {//清除内存缓存

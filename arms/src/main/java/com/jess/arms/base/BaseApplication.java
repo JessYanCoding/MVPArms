@@ -3,7 +3,7 @@ package com.jess.arms.base;
 import android.app.Application;
 import android.content.Context;
 
-import com.jess.arms.di.component.DaggerBaseComponent;
+//import com.jess.arms.di.component.DaggerBaseComponent;
 import com.jess.arms.di.module.AppModule;
 import com.jess.arms.di.module.ClientModule;
 import com.jess.arms.di.module.GlobeConfigModule;
@@ -18,7 +18,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * mvp
  * +dagger2
  * +retrofit
- * +rxjava
+ * +rxjava2
  * +androideventbus
  * +butterknife组成
  */
@@ -26,7 +26,7 @@ public abstract class BaseApplication extends Application {
     static private BaseApplication mApplication;
     private ClientModule mClientModule;
     private AppModule mAppModule;
-    private ImageModule mImagerModule;
+    private ImageModule mImageModule;
     private GlobeConfigModule mGlobeConfigModule;
     @Inject
     protected AppManager mAppManager;
@@ -45,7 +45,7 @@ public abstract class BaseApplication extends Application {
                 .appModule(mAppModule)
                 .build()
                 .inject(this);
-        this.mImagerModule = new ImageModule();//图片加载框架默认使用glide
+        this.mImageModule = new ImageModule();//图片加载框架默认使用glide
         this.mClientModule = new ClientModule(mAppManager);//用于提供okhttp和retrofit的单例
         this.mGlobeConfigModule = checkNotNull(getGlobeConfigModule(), "lobeConfigModule is required");
         registerActivityLifecycleCallbacks(mActivityLifecycle);
@@ -61,8 +61,8 @@ public abstract class BaseApplication extends Application {
             this.mClientModule = null;
         if (mAppModule != null)
             this.mAppModule = null;
-        if (mImagerModule != null)
-            this.mImagerModule = null;
+        if (mImageModule != null)
+            this.mImageModule = null;
         if (mActivityLifecycle != null) {
             unregisterActivityLifecycleCallbacks(mActivityLifecycle);
         }
@@ -92,7 +92,7 @@ public abstract class BaseApplication extends Application {
     }
 
     public ImageModule getImageModule() {
-        return mImagerModule;
+        return mImageModule;
     }
 
 

@@ -18,7 +18,7 @@ import me.jessyan.mvparms.demo.BuildConfig;
 import me.jessyan.mvparms.demo.di.module.CacheModule;
 import me.jessyan.mvparms.demo.di.module.ServiceModule;
 import me.jessyan.mvparms.demo.mvp.model.api.Api;
-import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
+import me.xiaobailong24.rx2errorhandler.handler.listener.ResponseErrorListener;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -99,7 +99,7 @@ public class WEApplication extends BaseApplication {
     @Override
     protected GlobeConfigModule getGlobeConfigModule() {
         return GlobeConfigModule
-                .buidler()
+                .builder()
                 .baseurl(Api.APP_DOMAIN)
                 .globeHttpHandler(new GlobeHttpHandler() {// 这里可以提供一个全局处理http响应结果的处理类,
                     // 这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
@@ -146,7 +146,7 @@ public class WEApplication extends BaseApplication {
                         return request;
                     }
                 })
-                .responseErroListener(new ResponseErroListener() {
+                .responseErroListener(new ResponseErrorListener() {
                     //     用来提供处理所有错误的监听
                     //     rxjava必要要使用ErrorHandleSubscriber(默认实现Subscriber的onError方法),此监听才生效
                     @Override

@@ -1,9 +1,15 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
     useLibrary 'org.apache.http.legacy'
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
 
     defaultConfig {
         applicationId "me.jessyan.mvparms.demo"
@@ -50,14 +56,9 @@ buildscript {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile rootProject.ext.dependencies["junit"]
-    annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
-    provided rootProject.ext.dependencies["javax.annotation"]
-    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
-//    compile project(':arms')
-    compile 'me.jessyan:arms:1.2.4'
+    compile project(':arms')
     compile rootProject.ext.dependencies["paginate"]
-    debugCompile rootProject.ext.dependencies["leakcanary-android"]
-    releaseCompile rootProject.ext.dependencies["leakcanary-android-no-op"]
-    testCompile rootProject.ext.dependencies["leakcanary-android-no-op"]
+    provided rootProject.ext.dependencies["javax.annotation"]
+    compile "com.google.dagger:dagger:2.10"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.10"
 }
