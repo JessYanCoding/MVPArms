@@ -20,4 +20,4 @@ android:
   licenses:
     - '.+'
 
-script: "./gradlew build"
+script: "./gradlew build -x lint"
