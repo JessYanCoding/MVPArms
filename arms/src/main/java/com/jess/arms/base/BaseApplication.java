@@ -3,7 +3,7 @@ package com.jess.arms.base;
 import android.app.Application;
 import android.content.Context;
 
-//import com.jess.arms.di.component.DaggerBaseComponent;
+import com.jess.arms.di.component.DaggerBaseComponent;
 import com.jess.arms.di.module.AppModule;
 import com.jess.arms.di.module.ClientModule;
 import com.jess.arms.di.module.GlobeConfigModule;

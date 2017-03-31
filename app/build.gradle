@@ -59,6 +59,6 @@ dependencies {
     compile project(':arms')
     compile rootProject.ext.dependencies["paginate"]
     provided rootProject.ext.dependencies["javax.annotation"]
-    compile "com.google.dagger:dagger:2.10"
-    annotationProcessor "com.google.dagger:dagger-compiler:2.10"
+    compile rootProject.ext.dependencies["dagger"]
+    annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
 }
