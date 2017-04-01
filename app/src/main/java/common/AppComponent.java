@@ -17,7 +17,6 @@ import me.jessyan.mvparms.demo.di.module.CacheModule;
 import me.jessyan.mvparms.demo.di.module.ServiceModule;
 import me.jessyan.mvparms.demo.mvp.model.api.cache.CacheManager;
 import me.jessyan.mvparms.demo.mvp.model.api.service.ServiceManager;
-import me.xiaobailong24.rx2errorhandler.core.Rx2ErrorHandler;
 import okhttp3.OkHttpClient;
 
 /**
@@ -36,7 +35,7 @@ public interface AppComponent {
     CacheManager cacheManager();
 
     //Rxjava错误处理管理类
-    Rx2ErrorHandler rxErrorHandler();
+//    Rx2ErrorHandler rxErrorHandler();
 
 
     OkHttpClient okHttpClient();

@@ -18,6 +18,14 @@ android {
         versionCode rootProject.ext.android["versionCode"]
         versionName rootProject.ext.android["versionName"]
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
+        // dex突破65535的限制
+        multiDexEnabled true
+        //alibaba ARouter
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
     }
     buildTypes {
 
@@ -56,14 +64,19 @@ buildscript {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    //arms
     compile project(':arms')
-    compile(rootProject.ext.dependencies["butterknife"]) {
-        exclude module: 'support-annotations'
-    }
+    //view
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     compile rootProject.ext.dependencies["paginate"]
+    //tools
     provided rootProject.ext.dependencies["javax.annotation"]
-    compile rootProject.ext.dependencies["dagger"]
     annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
+    compile rootProject.ext.dependencies["arouter-api"]
+    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
+    //test
+    debugCompile rootProject.ext.dependencies["leakcanary-android"]
+    releaseCompile rootProject.ext.dependencies["leakcanary-android-no-op"]
+    testCompile rootProject.ext.dependencies["leakcanary-android-no-op"]
     testCompile rootProject.ext.dependencies["junit"]
 }

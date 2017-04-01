@@ -14,7 +14,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import me.xiaobailong24.rx2errorhandler.handler.listener.ResponseErrorListener;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 
@@ -22,13 +21,13 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 /**
  * Created by jessyan on 2016/3/14.
+ * 全局配置
  */
 @Module
 public class GlobeConfigModule {
     private HttpUrl mApiUrl;
     private GlobeHttpHandler mHandler;
     private List<Interceptor> mInterceptors;
-    private ResponseErrorListener mErrorListener;
     private File mCacheFile;
 
     /**
@@ -40,7 +39,6 @@ public class GlobeConfigModule {
         this.mApiUrl = builder.apiUrl;
         this.mHandler = builder.handler;
         this.mInterceptors = builder.interceptors;
-        this.mErrorListener = builder.responseErroListener;
         this.mCacheFile = builder.cacheFile;
     }
 
@@ -81,33 +79,20 @@ public class GlobeConfigModule {
     }
 
 
-    /**
-     * 提供处理Rxjava错误的管理器的回调
-     *
-     * @return
-     */
-    @Singleton
-    @Provides
-    ResponseErrorListener provideResponseErrorListener() {
-        return mErrorListener == null ? ResponseErrorListener.EMPTY : mErrorListener;
-    }
-
-
     public static final class Builder {
         private HttpUrl apiUrl = HttpUrl.parse("https://api.github.com/");
         private GlobeHttpHandler handler;
         private List<Interceptor> interceptors = new ArrayList<>();
-        private ResponseErrorListener responseErroListener;
         private File cacheFile;
 
         private Builder() {
         }
 
-        public Builder baseurl(String baseurl) {//基础url
-            if (TextUtils.isEmpty(baseurl)) {
-                throw new IllegalArgumentException("baseurl can not be empty");
+        public Builder baseUrl(String baseUrl) {//基础url
+            if (TextUtils.isEmpty(baseUrl)) {
+                throw new IllegalArgumentException("baseUrl can not be empty");
             }
-            this.apiUrl = HttpUrl.parse(baseurl);
+            this.apiUrl = HttpUrl.parse(baseUrl);
             return this;
         }
 
@@ -121,13 +106,6 @@ public class GlobeConfigModule {
             return this;
         }
 
-
-        public Builder responseErroListener(ResponseErrorListener listener) {//处理所有Rxjava的onError逻辑
-            this.responseErroListener = listener;
-            return this;
-        }
-
-
         public Builder cacheFile(File cacheFile) {
             this.cacheFile = cacheFile;
             return this;
@@ -135,12 +113,10 @@ public class GlobeConfigModule {
 
 
         public GlobeConfigModule build() {
-            checkNotNull(apiUrl, "baseurl is required");
+            checkNotNull(apiUrl, "baseUrl is required");
             return new GlobeConfigModule(this);
         }
 
-
     }
-
 
 }

@@ -1,7 +1,5 @@
 package com.jess.arms.di.module;
 
-import android.app.Application;
-
 import com.jess.arms.base.AppManager;
 import com.jess.arms.http.RequestIntercept;
 import com.jess.arms.utils.DataHelper;
@@ -17,8 +15,6 @@ import dagger.Module;
 import dagger.Provides;
 import io.rx_cache2.internal.RxCache;
 import io.victoralbertos.jolyglot.GsonSpeaker;
-import me.xiaobailong24.rx2errorhandler.core.Rx2ErrorHandler;
-import me.xiaobailong24.rx2errorhandler.handler.listener.ResponseErrorListener;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -54,7 +50,7 @@ public class ClientModule {
         return builder
                 .baseUrl(httpUrl)//域名
                 .client(client)//设置okhttp
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用rxjava
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用rxjava2
                 .addConverterFactory(GsonConverterFactory.create())//使用Gson
                 .build();
     }
@@ -74,9 +70,7 @@ public class ClientModule {
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .addNetworkInterceptor(intercept);
         if (interceptors != null && interceptors.size() > 0) {//如果外部提供了interceptor的数组则遍历添加
-            for (Interceptor interceptor : interceptors) {
-                builder.addInterceptor(interceptor);
-            }
+            interceptors.forEach(builder::addInterceptor);
         }
         return builder
                 .build();
@@ -138,15 +132,15 @@ public class ClientModule {
      *
      * @return
      */
-    @Singleton
-    @Provides
-    Rx2ErrorHandler proRxErrorHandler(Application application, ResponseErrorListener listener) {
-        return Rx2ErrorHandler
-                .builder()
-                .with(application)
-                .responseErrorListener(listener)
-                .build();
-    }
+//    @Singleton
+//    @Provides
+//    Rx2ErrorHandler proRxErrorHandler(Application application, ResponseErrorListener listener) {
+//        return Rx2ErrorHandler
+//                .builder()
+//                .with(application)
+//                .responseErrorListener(listener)
+//                .build();
+//    }
 
 
     /**

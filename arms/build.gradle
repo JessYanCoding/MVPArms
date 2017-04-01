@@ -18,12 +18,6 @@ android {
         versionName rootProject.ext.android["versionName"]
         // dex突破65535的限制
         multiDexEnabled true
-        //alibaba ARouter
-//        javaCompileOptions {
-//            annotationProcessorOptions {
-//                arguments = [moduleName: project.getName()]
-//            }
-//        }
     }
     buildTypes {
         release {
@@ -130,8 +124,6 @@ dependencies {
     compile rootProject.ext.dependencies["dagger"]
     annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
     compile rootProject.ext.dependencies["xutils"]
-//    compile rootProject.ext.dependencies["arouter-api"]
-//    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
     compile rootProject.ext.dependencies["AndroidUtilCode"]
 
     //test
