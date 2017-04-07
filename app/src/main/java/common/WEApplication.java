@@ -18,7 +18,6 @@ import me.jessyan.mvparms.demo.BuildConfig;
 import me.jessyan.mvparms.demo.di.module.CacheModule;
 import me.jessyan.mvparms.demo.di.module.ServiceModule;
 import me.jessyan.mvparms.demo.mvp.model.api.Api;
-import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -146,14 +145,9 @@ public class WEApplication extends BaseApplication {
                         return request;
                     }
                 })
-                .responseErroListener(new ResponseErroListener() {
-                    //     用来提供处理所有错误的监听
-                    //     rxjava必要要使用ErrorHandleSubscriber(默认实现Subscriber的onError方法),此监听才生效
-                    @Override
-                    public void handleResponseError(Context context, Exception e) {
-                        Timber.tag(TAG).w("------------>" + e.getMessage());
-                        UiUtils.SnackbarText("net error");
-                    }
+                .responseErroListener((context, e) -> {
+                    Timber.tag(TAG).w("------------>" + e.getMessage());
+                    UiUtils.SnackbarText("net error");
                 }).build();
     }
 
