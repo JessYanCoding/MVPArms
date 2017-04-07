@@ -61,8 +61,8 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     compile rootProject.ext.dependencies["paginate"]
     //arms
-//    compile project(':arms')
-    compile 'me.jessyan:arms:1.2.4'
+    compile project(':arms')
+//    compile 'me.jessyan:arms:1.2.5'
     //test
     testCompile rootProject.ext.dependencies["junit"]
     debugCompile rootProject.ext.dependencies["canary-debug"]

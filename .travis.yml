@@ -5,6 +5,7 @@ env:
   global:
     - ANDROID_API_LEVEL=25
     - ANDROID_BUILD_TOOLS_VERSION=25.0.2
+    - TRAVIS_SECURE_ENV_VARS=true
 
 android:
   components:
@@ -22,4 +23,6 @@ android:
 
 script:
     - ./gradlew clean
+    - ./gradlew install
+    - ./gradlew bintrayUpload
     - ./gradlew assembleDebug
