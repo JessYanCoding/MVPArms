@@ -36,6 +36,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
     private DefaultAdapter mAdapter;
     private int lastUserId = 1;
     private boolean isFirst = true;
+    private int preEndIndex;
 
 
     @Inject
@@ -62,7 +63,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
 
         boolean isEvictCache = pullToRefresh;//是否驱逐缓存,为ture即不使用缓存,每次上拉刷新即需要最新数据,则不使用缓存
 
-        if (pullToRefresh && isFirst){//默认在第一次上拉刷新时使用缓存
+        if (pullToRefresh && isFirst) {//默认在第一次上拉刷新时使用缓存
             isFirst = false;
             isEvictCache = false;
         }
@@ -89,10 +90,12 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
                     public void onNext(List<User> users) {
                         lastUserId = users.get(users.size() - 1).getId();//记录最后一个id,用于下一次请求
                         if (pullToRefresh) mUsers.clear();//如果是上拉刷新则清空列表
-                        for (User user : users) {
-                            mUsers.add(user);
-                        }
-                        mAdapter.notifyDataSetChanged();//通知更新数据
+                        preEndIndex = mUsers.size();//更新之前列表总长度,用于确定加载更多的起始位置
+                        mUsers.addAll(users);
+                        if (pullToRefresh)
+                            mAdapter.notifyDataSetChanged();
+                        else
+                            mAdapter.notifyItemRangeInserted(preEndIndex, users.size());
                     }
                 });
     }
