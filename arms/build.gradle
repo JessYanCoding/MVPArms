@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.neenbedankt.android-apt'
+
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
@@ -24,19 +24,16 @@ buildscript {
     repositories {
         jcenter()
     }
-    dependencies {
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    }
 }
 
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile rootProject.ext.dependencies["junit"]
+
+    //support
     compile (rootProject.ext.dependencies["support-v4"]){
         exclude module: 'support-annotations'
     }
-    compile rootProject.ext.dependencies["gson"]
     compile (rootProject.ext.dependencies["appcompat-v7"]){
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
@@ -44,19 +41,34 @@ dependencies {
     compile (rootProject.ext.dependencies["cardview-v7"]){
         exclude module: 'support-annotations'
     }
+    compile (rootProject.ext.dependencies["design"]){
+        exclude module: 'support-annotations'
+    }
+    compile rootProject.ext.dependencies["annotations"]
+
+
+
+    //view
     compile (rootProject.ext.dependencies["autolayout"]) {
         exclude group: 'com.android.support'
     }
     compile (rootProject.ext.dependencies["butterknife"]){
         exclude module: 'support-annotations'
     }
-    compile rootProject.ext.dependencies["androideventbus"]
-    compile (rootProject.ext.dependencies["design"]){
-        exclude module: 'support-annotations'
-    }
+
+
+
+    //rx
     compile rootProject.ext.dependencies["rxjava"]
     compile (rootProject.ext.dependencies["rxandroid"]){
         exclude module: 'rxjava'
+    }
+    compile (rootProject.ext.dependencies["rxcache"]){
+        exclude module: 'rxjava'
+        exclude module: 'dagger'
+    }
+    compile (rootProject.ext.dependencies["rxcache-jolyglot-gson"]){
+        exclude module: 'gson'
     }
     compile (rootProject.ext.dependencies["rxlifecycle"]){
         exclude module: 'rxjava'
@@ -68,14 +80,13 @@ dependencies {
         exclude module: 'rxjava'
         exclude module: 'rxandroid'
     }
-    compile (rootProject.ext.dependencies["rxcache"]){
-        exclude module: 'rxjava'
-        exclude module: 'dagger'
-    }
-    compile (rootProject.ext.dependencies["rxcache-jolyglot-gson"]){
-        exclude module: 'gson'
-    }
     compile rootProject.ext.dependencies["rxpermissions"]
+    compile (rootProject.ext.dependencies['rxerrorhandler']){
+        exclude module: 'rxjava'
+    }
+
+
+    //network
     compile (rootProject.ext.dependencies["retrofit"]){
         exclude module: 'okhttp'
     }
@@ -85,16 +96,19 @@ dependencies {
     compile (rootProject.ext.dependencies["retrofit-adapter-rxjava"]){
         exclude module: 'rxjava'
     }
-    provided rootProject.ext.dependencies["javax.annotation"]
-    compile rootProject.ext.dependencies["annotations"]
-    compile rootProject.ext.dependencies["dagger2"]
     compile rootProject.ext.dependencies["okhttp3"]
-    compile rootProject.ext.dependencies["timber"]
     compile rootProject.ext.dependencies["glide"]
-    apt rootProject.ext.dependencies["dagger2-apt-compiler"]
-    compile (rootProject.ext.dependencies["rxerrorhandler"]){
-        exclude module: 'rxjava'
-    }
+
+    //tools
+    provided rootProject.ext.dependencies["javax.annotation"]
+    compile rootProject.ext.dependencies["dagger2"]
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+    compile rootProject.ext.dependencies["androideventbus"]
+    compile rootProject.ext.dependencies["gson"]
+
+    //test
+    compile rootProject.ext.dependencies["timber"]
+    testCompile rootProject.ext.dependencies["junit"]
 }
 
 
