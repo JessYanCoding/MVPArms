@@ -30,7 +30,7 @@ public class DataHelper {
         if (mSharedPreferences == null) {
             mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         }
-        mSharedPreferences.edit().putString(key, value).commit();
+        mSharedPreferences.edit().putString(key, value).apply();
     }
 
     /**
@@ -56,7 +56,7 @@ public class DataHelper {
         if (mSharedPreferences == null) {
             mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         }
-        mSharedPreferences.edit().putInt(key, value).commit();
+        mSharedPreferences.edit().putInt(key, value).apply();
     }
 
     /**
@@ -79,7 +79,7 @@ public class DataHelper {
         if (mSharedPreferences == null) {
             mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         }
-        mSharedPreferences.edit().remove(key).commit();
+        mSharedPreferences.edit().remove(key).apply();
     }
 
     /**
@@ -89,7 +89,7 @@ public class DataHelper {
         if (mSharedPreferences == null) {
             mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         }
-        mSharedPreferences.edit().clear().commit();
+        mSharedPreferences.edit().clear().apply();
     }
 
     /**
@@ -112,7 +112,7 @@ public class DataHelper {
             // 将字节流编码成base64的字符串
             String oAuth_Base64 = new String(Base64.encode(baos
                     .toByteArray(), Base64.DEFAULT));
-            mSharedPreferences.edit().putString(key, oAuth_Base64).commit();
+            mSharedPreferences.edit().putString(key, oAuth_Base64).apply();
             return true;
         } catch (Exception e) {
             e.printStackTrace();

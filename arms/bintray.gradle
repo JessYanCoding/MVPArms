@@ -16,8 +16,8 @@ group = "me.jessyan"
 
 
 bintray {
-    user = isHasFile ? properties.getProperty("bintray.user") : System.getenv("bintray.user")
-    key = isHasFile ? properties.getProperty("bintray.apikey") : System.getenv("bintray.apikey")
+    user = isHasFile ? properties.getProperty("bintray.user") : System.getenv("bintray_user")
+    key = isHasFile ? properties.getProperty("bintray.apikey") : System.getenv("bintray_apikey")
 
     pkg {
         repo = 'maven'
