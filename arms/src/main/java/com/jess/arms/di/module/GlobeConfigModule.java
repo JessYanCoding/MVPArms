@@ -71,9 +71,8 @@ public class GlobeConfigModule {
 
 
     /**
-     * 提供缓存地址
+     * 提供缓存文件
      */
-
     @Singleton
     @Provides
     File provideCacheFile(Application application) {

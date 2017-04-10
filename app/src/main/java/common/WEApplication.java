@@ -112,7 +112,7 @@ public class WEApplication extends BaseApplication {
                                 JSONObject object = (JSONObject) array.get(0);
                                 String login = object.getString("login");
                                 String avatar_url = object.getString("avatar_url");
-                                Timber.tag(TAG).w("result ------>" + login + "    ||   avatar_url------>" + avatar_url);
+                                Timber.tag(TAG).w("Result ------> " + login + "    ||   Avatar_url------> " + avatar_url);
                             }
 
                         } catch (JSONException e) {
@@ -135,10 +135,10 @@ public class WEApplication extends BaseApplication {
                         return response;
                     }
 
-                    // 这里可以在请求服务器之前可以拿到request,做一些操作比如给request统一添加token或者header
+                    // 这里可以在请求服务器之前可以拿到request,做一些操作比如给request统一添加token或者header以及数据加密等操作
                     @Override
                     public Request onHttpRequestBefore(Interceptor.Chain chain, Request request) {
-                        //如果需要再请求服务器之前做一些操作,则重新返回一个做过操作的的requeat如增加header,不做操作则返回request
+                        //如果需要再请求服务器之前做一些操作,则重新返回一个做过操作的的requeat如增加header,不做操作则直接返回request参数
 
                         //return chain.request().newBuilder().header("token", tokenId)
 //                .build();

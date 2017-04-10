@@ -3,7 +3,8 @@ package com.jess.arms.di.module;
 import android.app.Application;
 
 import com.jess.arms.base.AppManager;
-import com.jess.arms.http.RequestIntercept;
+import com.jess.arms.http.GlobeHttpHandler;
+import com.jess.arms.http.RequestInterceptor;
 import com.jess.arms.utils.DataHelper;
 
 import java.io.File;
@@ -68,15 +69,14 @@ public class ClientModule {
     @Singleton
     @Provides
     OkHttpClient provideClient(OkHttpClient.Builder okHttpClient, Interceptor intercept
-            , List<Interceptor> interceptors) {
+            , List<Interceptor> interceptors, GlobeHttpHandler handler) {
         OkHttpClient.Builder builder = okHttpClient
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
+                .addInterceptor(chain -> chain.proceed(handler.onHttpRequestBefore(chain, chain.request())))
                 .addNetworkInterceptor(intercept);
         if (interceptors != null && interceptors.size() > 0) {//如果外部提供了interceptor的数组则遍历添加
-            for (Interceptor interceptor : interceptors) {
-                builder.addInterceptor(interceptor);
-            }
+            interceptors.forEach(builder::addInterceptor);
         }
         return builder
                 .build();
@@ -97,11 +97,9 @@ public class ClientModule {
     }
 
 
-
-
     @Singleton
     @Provides
-    Interceptor provideIntercept(RequestIntercept intercept) {
+    Interceptor provideInterceptor(RequestInterceptor intercept) {
         return intercept;//打印请求信息的拦截器
     }
 
