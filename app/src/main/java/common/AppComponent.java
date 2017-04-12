@@ -3,7 +3,7 @@ package common;
 import android.app.Application;
 
 import com.google.gson.Gson;
-import com.jess.arms.base.AppManager;
+import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.module.AppModule;
 import com.jess.arms.di.module.ClientModule;
 import com.jess.arms.di.module.GlobeConfigModule;

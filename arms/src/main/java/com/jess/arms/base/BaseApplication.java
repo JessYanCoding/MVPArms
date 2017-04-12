@@ -8,6 +8,8 @@ import com.jess.arms.di.module.AppModule;
 import com.jess.arms.di.module.ClientModule;
 import com.jess.arms.di.module.GlobeConfigModule;
 import com.jess.arms.di.module.ImageModule;
+import com.jess.arms.integration.ActivityLifecycle;
+import com.jess.arms.integration.AppManager;
 
 import javax.inject.Inject;
 

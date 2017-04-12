@@ -2,7 +2,7 @@ package com.jess.arms.di.module;
 
 import android.app.Application;
 
-import com.jess.arms.base.AppManager;
+import com.jess.arms.integration.AppManager;
 import com.jess.arms.http.GlobeHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
 import com.jess.arms.utils.DataHelper;

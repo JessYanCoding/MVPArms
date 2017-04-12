@@ -1,12 +1,10 @@
 package com.jess.arms.http;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.jess.arms.utils.CharactorHandler;
 import com.jess.arms.utils.ZipHelper;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -150,9 +148,9 @@ public class RequestInterceptor implements Interceptor {
         }
     }
 
-    @NonNull
     public static String parseParams(RequestBody body, Buffer requestbuffer) throws UnsupportedEncodingException {
-        if (isPlaintext(requestbuffer)) {
+        if (body.contentType() == null) return "Unknown";
+        if (!body.contentType().toString().contains("multipart")) {
             Charset charset = Charset.forName("UTF-8");
             MediaType contentType = body.contentType();
             if (contentType != null) {
@@ -170,30 +168,5 @@ public class RequestInterceptor implements Interceptor {
 
     public static boolean isJson(ResponseBody responseBody) {
         return responseBody.contentType().toString().contains("json");
-    }
-
-
-    /**
-     * Returns true if the body in question probably contains human readable text. Uses a small sample
-     * of code points to detect unicode control characters commonly used in binary file signatures.
-     */
-    static boolean isPlaintext(Buffer buffer) {
-        try {
-            Buffer prefix = new Buffer();
-            long byteCount = buffer.size() < 64 ? buffer.size() : 64;
-            buffer.copyTo(prefix, 0, byteCount);
-            for (int i = 0; i < 16; i++) {
-                if (prefix.exhausted()) {
-                    break;
-                }
-                int codePoint = prefix.readUtf8CodePoint();
-                if (Character.isISOControl(codePoint) && !Character.isWhitespace(codePoint)) {
-                    return false;
-                }
-            }
-            return true;
-        } catch (EOFException e) {
-            return false; // Truncated UTF-8 sequence.
-        }
     }
 }

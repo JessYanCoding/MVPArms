@@ -25,11 +25,11 @@ import org.simple.eventbus.EventBus;
 
 import java.security.MessageDigest;
 
-import static com.jess.arms.base.AppManager.APPMANAGER_MESSAGE;
-import static com.jess.arms.base.AppManager.APP_EXIT;
-import static com.jess.arms.base.AppManager.KILL_ALL;
-import static com.jess.arms.base.AppManager.SHOW_SNACKBAR;
-import static com.jess.arms.base.AppManager.START_ACTIVITY;
+import static com.jess.arms.integration.AppManager.APPMANAGER_MESSAGE;
+import static com.jess.arms.integration.AppManager.APP_EXIT;
+import static com.jess.arms.integration.AppManager.KILL_ALL;
+import static com.jess.arms.integration.AppManager.SHOW_SNACKBAR;
+import static com.jess.arms.integration.AppManager.START_ACTIVITY;
 
 /**
  * Created by jess on 2015/11/23.

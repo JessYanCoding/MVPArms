@@ -371,7 +371,7 @@ Name: Presenter
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 
 import android.app.Application;
-import com.jess.arms.base.AppManager;
+import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.widget.imageloader.ImageLoader;

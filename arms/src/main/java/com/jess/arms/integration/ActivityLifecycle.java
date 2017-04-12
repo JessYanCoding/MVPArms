@@ -1,4 +1,4 @@
-package com.jess.arms.base;
+package com.jess.arms.integration;
 
 import android.app.Activity;
 import android.app.Application;
