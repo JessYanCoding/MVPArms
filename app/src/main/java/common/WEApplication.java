@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.jess.arms.base.BaseApplication;
 import com.jess.arms.di.module.GlobeConfigModule;
 import com.jess.arms.http.GlobeHttpHandler;
+import com.jess.arms.http.RequestInterceptor;
 import com.jess.arms.utils.UiUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -82,6 +83,7 @@ public class WEApplication extends BaseApplication {
 
     /**
      * 将AppComponent返回出去,供其它地方使用, AppComponent接口中声明的方法返回的实例,在getAppComponent()拿到对象后都可以直接使用
+     *
      * @return
      */
     public AppComponent getAppComponent() {
@@ -93,6 +95,7 @@ public class WEApplication extends BaseApplication {
      * app的全局配置信息封装进module(使用Dagger注入到需要配置信息的地方)
      * GlobeHttpHandler是在NetworkInterceptor中拦截数据
      * 如果想将请求参数加密,则必须在Interceptor中对参数进行处理,GlobeConfigModule.addInterceptor可以添加Interceptor
+     *
      * @return
      */
     @Override
@@ -107,7 +110,7 @@ public class WEApplication extends BaseApplication {
                         //这里可以先客户端一步拿到每一次http请求的结果,可以解析成json,做一些操作,如检测到token过期后
                         //重新请求token,并重新执行请求
                         try {
-                            if (!TextUtils.isEmpty(httpResult)) {
+                            if (!TextUtils.isEmpty(httpResult) && RequestInterceptor.isJson(response.body())) {
                                 JSONArray array = new JSONArray(httpResult);
                                 JSONObject object = (JSONObject) array.get(0);
                                 String login = object.getString("login");
@@ -141,7 +144,7 @@ public class WEApplication extends BaseApplication {
                         //如果需要再请求服务器之前做一些操作,则重新返回一个做过操作的的requeat如增加header,不做操作则直接返回request参数
 
                         //return chain.request().newBuilder().header("token", tokenId)
-//                .build();
+//                               .build();
                         return request;
                     }
                 })
