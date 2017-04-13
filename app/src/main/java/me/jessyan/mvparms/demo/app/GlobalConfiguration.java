@@ -7,6 +7,7 @@ import com.jess.arms.di.module.GlobeConfigModule;
 import com.jess.arms.http.GlobeHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
 import com.jess.arms.integration.ConfigModule;
+import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.utils.UiUtils;
 
 import org.json.JSONArray;
@@ -14,6 +15,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import me.jessyan.mvparms.demo.mvp.model.api.Api;
+import me.jessyan.mvparms.demo.mvp.model.api.cache.CommonCache;
+import me.jessyan.mvparms.demo.mvp.model.api.service.CommonService;
+import me.jessyan.mvparms.demo.mvp.model.api.service.UserService;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -81,5 +85,11 @@ public class GlobalConfiguration implements ConfigModule {
                     Timber.w("------------>" + e.getMessage());
                     UiUtils.SnackbarText("net error");
                 });
+    }
+
+    @Override
+    public void registerComponents(Context context, IRepositoryManager repositoryManager) {
+        repositoryManager.injectRetrofitService(CommonService.class, UserService.class);
+        repositoryManager.injectCacheService(CommonCache.class);
     }
 }

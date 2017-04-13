@@ -1,5 +1,7 @@
 package com.jess.arms.integration;
 
+import android.content.Context;
+
 import com.jess.arms.utils.Preconditions;
 
 import java.util.LinkedHashMap;
@@ -13,7 +15,7 @@ import retrofit2.Retrofit;
 
 /**
  * 用来管理网络请求层,以及数据缓存层,以后可以添加数据库请求层
- * 需要在{link ConfigModule}中先inject需要的服务
+ * 需要在{@link ConfigModule}的实现类中先inject需要的服务
  * Created by jess on 13/04/2017 09:52
  * Contact with jess.yan.effort@gmail.com
  */
@@ -30,6 +32,10 @@ public class RepositoryManager implements IRepositoryManager {
         this.mRxCache = rxCache;
     }
 
+    /**
+     * 注入RetrofitService,在{@link ConfigModule#registerComponents(Context, IRepositoryManager)}中进行注入
+     * @param services
+     */
     @Override
     public void injectRetrofitService(Class<?>... services) {
         for (Class<?> service : services) {
@@ -39,6 +45,10 @@ public class RepositoryManager implements IRepositoryManager {
 
     }
 
+    /**
+     * 注入CacheService,在{@link ConfigModule#registerComponents(Context, IRepositoryManager)}中进行注入
+     * @param services
+     */
     @Override
     public void injectCacheService(Class<?>... services) {
         for (Class<?> service : services) {
@@ -47,6 +57,13 @@ public class RepositoryManager implements IRepositoryManager {
         }
     }
 
+    /**
+     * 根据传入的Class获取对应的Retrift service
+     *
+     * @param service
+     * @param <T>
+     * @return
+     */
     @Override
     public <T> T obtainRetrofitService(Class<T> service) {
         Preconditions.checkState(mRetrofitServiceCache.containsKey(service.getName())
@@ -54,6 +71,13 @@ public class RepositoryManager implements IRepositoryManager {
         return (T) mRetrofitServiceCache.get(service.getName());
     }
 
+    /**
+     * 根据传入的Class获取对应的RxCache service
+     *
+     * @param cache
+     * @param <T>
+     * @return
+     */
     @Override
     public <T> T obtainCacheService(Class<T> cache) {
         Preconditions.checkState(mCacheServiceCache.containsKey(cache.getName())

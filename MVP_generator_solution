@@ -23,7 +23,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
-
+import com.jess.arms.base.BaseActivity;
 import com.jess.arms.utils.UiUtils;
 
 
@@ -40,7 +40,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 #parse("File Header.java")
 
-public class ${NAME}Activity extends WEActivity<${NAME}Presenter> implements ${NAME}Contract.View {
+public class ${NAME}Activity extends BaseActivity<${NAME}Presenter> implements ${NAME}Contract.View {
 
 
     @Override
@@ -151,7 +151,7 @@ import com.jess.arms.mvp.IModel;
 
 public interface ${NAME}Contract {
     //对于经常使用的关于UI的方法可以定义到BaseView中,如显示隐藏进度条,和显示文字消息
-    interface View extends BaseView {
+    interface View extends IView {
 
     }
     //Model层定义接口,外部只需关心model返回的数据,无需关心内部细节,及是否使用缓存
@@ -173,6 +173,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import com.jess.arms.base.BaseFragment
 
 import com.jess.arms.utils.UiUtils;
 
@@ -191,7 +192,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 #parse("File Header.java")
 
-public class ${NAME}Fragment extends WEFragment<${NAME}Presenter> implements ${NAME}Contract.View{
+public class ${NAME}Fragment extends BaseFragment<${NAME}Presenter> implements ${NAME}Contract.View{
 
 
     public static ${NAME}Fragment newInstance() {
@@ -276,10 +277,12 @@ Name: Model
 
 import android.app.Application;
 import com.google.gson.Gson;
+import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
-
+import com.jess.arms.di.scope.ActivityScope;
+import javax.inject.Inject;
 
 /**
   * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同
@@ -293,13 +296,13 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 #parse("File Header.java")
 
 @ActivityScope
-public class ${NAME}Model extends BaseModel<ServiceManager,CacheManager> implements ${NAME}Contract.Model{
+public class ${NAME}Model extends BaseModel implements ${NAME}Contract.Model{
     private Gson mGson;
     private Application mApplication;
 
     @Inject
-    public ${NAME}Model(ServiceManager serviceManager, CacheManager cacheManager, Gson gson, Application application) {
-        super(serviceManager, cacheManager);
+    public ${NAME}Model(IRepositoryManager repositoryManager, Gson gson, Application application) {
+        super(repositoryManager);
         this.mGson = gson;
         this.mApplication = application;
     }

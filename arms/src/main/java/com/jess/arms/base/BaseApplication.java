@@ -38,14 +38,21 @@ public abstract class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mApplication = this;
+
+        List<ConfigModule> modules = new ManifestParser(this).parse();
+
         mAppComponent = DaggerAppComponent
                 .builder()
                 .appModule(new AppModule(this))////提供application
                 .clientModule(new ClientModule())//用于提供okhttp和retrofit的单例
                 .imageModule(new ImageModule())//图片加载框架默认使用glide
-                .globeConfigModule(getGlobeConfigModule(this))//全局配置
+                .globeConfigModule(getGlobeConfigModule(this,modules))//全局配置
                 .build();
         mAppComponent.inject(this);
+
+        for (ConfigModule module : modules) {
+            module.registerComponents(this, mAppComponent.repositoryManager());
+        }
 
         registerActivityLifecycleCallbacks(mActivityLifecycle);
     }
@@ -72,8 +79,7 @@ public abstract class BaseApplication extends Application {
      *
      * @return
      */
-    private GlobeConfigModule getGlobeConfigModule(Application context) {
-        List<ConfigModule> modules = new ManifestParser(context).parse();
+    private GlobeConfigModule getGlobeConfigModule(Application context,List<ConfigModule> modules) {
 
         GlobeConfigModule.Builder builder = GlobeConfigModule
                 .builder()
