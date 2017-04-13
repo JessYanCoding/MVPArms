@@ -2,7 +2,7 @@ package me.jessyan.mvparms.demo.di.component;
 
 import com.jess.arms.di.scope.ActivityScope;
 
-import common.AppComponent;
+import com.jess.arms.di.component.AppComponent;
 import dagger.Component;
 import me.jessyan.mvparms.demo.di.module.UserModule;
 import me.jessyan.mvparms.demo.mvp.ui.activity.UserActivity;

@@ -2,7 +2,6 @@ package com.jess.arms.di.module;
 
 import android.app.Application;
 
-import com.jess.arms.integration.AppManager;
 import com.jess.arms.http.GlobeHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
 import com.jess.arms.utils.DataHelper;
@@ -33,12 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class ClientModule {
     private static final int TIME_OUT = 10;
-    private AppManager mAppManager;
 
-
-    public ClientModule(AppManager appManager) {
-        this.mAppManager = appManager;
-    }
 
     /**
      * @param builder
@@ -146,17 +140,6 @@ public class ClientModule {
                 .build();
     }
 
-
-    /**
-     * 提供管理所有activity的管理类
-     *
-     * @return
-     */
-    @Singleton
-    @Provides
-    AppManager provideAppManager() {
-        return mAppManager;
-    }
 
 
 //    .addNetworkInterceptor(new Interceptor() {

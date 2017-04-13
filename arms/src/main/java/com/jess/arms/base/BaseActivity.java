@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.mvp.IPresenter;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhy.autolayout.AutoFrameLayout;
@@ -64,14 +65,15 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
         setContentView(initView());
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(this);
-        ComponentInject();//依赖注入
+        setupActivityComponent(mApplication.getAppComponent());//依赖注入
         initData();
     }
 
     /**
-     * 依赖注入的入口
+     * 提供AppComponent(提供所有的单例对象)给子类，进行Component依赖
+     * @param appComponent
      */
-    protected abstract void ComponentInject();
+    protected abstract void setupActivityComponent(AppComponent appComponent);
 
 
     public void FullScreencall() {

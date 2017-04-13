@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.mvp.IPresenter;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
@@ -42,14 +43,17 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment {
         mActivity = (BaseActivity) getActivity();
         if (useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().register(this);//注册到事件主线
-        ComponentInject();
+        setupFragmentComponent(mActivity.mApplication.getAppComponent());
         initData();
     }
 
+
+
     /**
-     * 依赖注入的入口
+     * 提供AppComponent(提供所有的单例对象)给子类，进行Component依赖
+     * @param appComponent
      */
-    protected abstract void ComponentInject();
+    protected abstract void setupFragmentComponent(AppComponent appComponent);
 
 
     @Override

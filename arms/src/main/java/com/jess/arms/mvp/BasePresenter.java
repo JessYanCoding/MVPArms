@@ -43,10 +43,9 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
         if (useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().unregister(this);//解除注册eventbus
         unSubscribe();//解除订阅
-        if (mModel != null) {
+        if (mModel != null)
             mModel.onDestroy();
-            this.mModel = null;
-        }
+        this.mModel = null;
         this.mRootView = null;
         this.mCompositeSubscription = null;
     }

@@ -6,12 +6,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jess.arms.base.BaseApplication;
 import com.jess.arms.base.BaseHolder;
 import com.jess.arms.widget.imageloader.ImageLoader;
 import com.jess.arms.widget.imageloader.glide.GlideImageConfig;
 
 import butterknife.BindView;
-import common.WEApplication;
 import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
 import rx.Observable;
@@ -29,12 +29,12 @@ public class UserItemHolder extends BaseHolder<User> {
     @BindView(R.id.tv_name)
     TextView mName;
     private ImageLoader mImageLoader;//用于加载图片的管理类,默认使用glide,使用策略模式,可替换框架
-    private final WEApplication mApplication;
+    private final BaseApplication mApplication;
 
     public UserItemHolder(View itemView) {
         super(itemView);
         //可以在任何可以拿到Application的地方,拿到AppComponent,从而得到用Dagger管理的单例对象
-        mApplication = (WEApplication) itemView.getContext().getApplicationContext();
+        mApplication = (BaseApplication) itemView.getContext().getApplicationContext();
         mImageLoader = mApplication.getAppComponent().imageLoader();
     }
 
