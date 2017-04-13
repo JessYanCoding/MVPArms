@@ -5,7 +5,7 @@ import android.content.Intent;
 /**
  * Created by jess on 16/4/22.
  */
-public interface BaseView {
+public interface IView {
 
     /**
      * 显示加载

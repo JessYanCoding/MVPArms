@@ -1,14 +1,14 @@
 package common;
 
 import com.jess.arms.base.BaseFragment;
-import com.jess.arms.mvp.Presenter;
+import com.jess.arms.mvp.IPresenter;
 import com.squareup.leakcanary.RefWatcher;
 
 /**
  * Created by jess on 8/5/16 14:11
  * contact with jess.yan.effort@gmail.com
  */
-public abstract class WEFragment<P extends Presenter> extends BaseFragment<P> {
+public abstract class WEFragment<P extends IPresenter> extends BaseFragment<P> {
     protected WEApplication mWeApplication;
     @Override
     protected void ComponentInject() {

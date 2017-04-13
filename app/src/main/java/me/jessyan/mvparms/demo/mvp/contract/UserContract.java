@@ -1,7 +1,7 @@
 package me.jessyan.mvparms.demo.mvp.contract;
 
 import com.jess.arms.base.DefaultAdapter;
-import com.jess.arms.mvp.BaseView;
+import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
@@ -16,7 +16,7 @@ import rx.Observable;
  */
 public interface UserContract {
     //对于经常使用的关于UI的方法可以定义到BaseView中,如显示隐藏进度条,和显示文字消息
-    interface View extends BaseView {
+    interface View extends IView {
         void setAdapter(DefaultAdapter adapter);
         void startLoadMore();
         void endLoadMore();

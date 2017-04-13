@@ -2,7 +2,7 @@ package com.jess.arms.utils;
 
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.BaseFragment;
-import com.jess.arms.mvp.BaseView;
+import com.jess.arms.mvp.IView;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import rx.Observable;
@@ -17,7 +17,7 @@ import rx.schedulers.Schedulers;
 
 public class RxUtils {
 
-    public static <T> Observable.Transformer<T, T> applySchedulers(final BaseView view) {
+    public static <T> Observable.Transformer<T, T> applySchedulers(final IView view) {
         return new Observable.Transformer<T, T>() {
             @Override
             public Observable<T> call(Observable<T> observable) {
@@ -41,7 +41,7 @@ public class RxUtils {
     }
 
 
-    public static <T> LifecycleTransformer<T> bindToLifecycle(BaseView view) {
+    public static <T> LifecycleTransformer<T> bindToLifecycle(IView view) {
         if (view instanceof BaseActivity) {
             return ((BaseActivity) view).<T>bindToLifecycle();
         } else if (view instanceof BaseFragment) {

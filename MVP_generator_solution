@@ -135,7 +135,7 @@ Name: Contract
 
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 
-import com.jess.arms.mvp.BaseView;
+import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
 
 /**
