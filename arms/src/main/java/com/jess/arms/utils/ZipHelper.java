@@ -2,6 +2,7 @@ package com.jess.arms.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -23,6 +24,18 @@ public class ZipHelper {
      * @return
      */
     public static String decompressToStringForZlib(byte[] bytesToDecompress) {
+        return decompressToStringForZlib(bytesToDecompress,"UTF-8");
+    }
+
+
+    /**
+     * zlib decompress 2 String
+     *
+     * @param bytesToDecompress
+     * @param charsetName
+     * @return
+     */
+    public static String decompressToStringForZlib(byte[] bytesToDecompress, String charsetName) {
         byte[] bytesDecompressed = decompressForZlib
                 (
                         bytesToDecompress
@@ -36,13 +49,14 @@ public class ZipHelper {
                             bytesDecompressed,
                             0,
                             bytesDecompressed.length,
-                            "UTF-8"
+                            charsetName
                     );
         } catch (UnsupportedEncodingException uee) {
             uee.printStackTrace();
         }
 
         return returnValue;
+
     }
 
 
@@ -171,8 +185,8 @@ public class ZipHelper {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            okhttp3.internal.Util.closeQuietly(gos);
-            okhttp3.internal.Util.closeQuietly(os);
+            closeQuietly(gos);
+            closeQuietly(os);
         }
         return null;
     }
@@ -185,7 +199,17 @@ public class ZipHelper {
      * @throws IOException
      */
     public static String decompressForGzip(byte[] compressed) {
+        return decompressForGzip(compressed, "UTF-8");
+    }
 
+    /**
+     * gzip decompress 2 string
+     *
+     * @param compressed
+     * @param charsetName
+     * @return
+     */
+    public static String decompressForGzip(byte[] compressed, String charsetName) {
         final int BUFFER_SIZE = compressed.length;
         GZIPInputStream gis = null;
         ByteArrayInputStream is = null;
@@ -196,15 +220,26 @@ public class ZipHelper {
             byte[] data = new byte[BUFFER_SIZE];
             int bytesRead;
             while ((bytesRead = gis.read(data)) != -1) {
-                string.append(new String(data, 0, bytesRead, "UTF-8"));
+                string.append(new String(data, 0, bytesRead, charsetName));
             }
             return string.toString();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            okhttp3.internal.Util.closeQuietly(gis);
-            okhttp3.internal.Util.closeQuietly(is);
+            closeQuietly(gis);
+            closeQuietly(is);
         }
         return null;
+    }
+
+    public static void closeQuietly(Closeable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (RuntimeException rethrown) {
+                throw rethrown;
+            } catch (Exception ignored) {
+            }
+        }
     }
 }

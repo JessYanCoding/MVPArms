@@ -134,16 +134,16 @@ public class RequestInterceptor implements Interceptor {
      * @return
      */
     private String parseContent(ResponseBody responseBody, String encoding, Buffer clone) {
+        Charset charset = Charset.forName("UTF-8");
+        MediaType contentType = responseBody.contentType();
+        if (contentType != null) {
+            charset = contentType.charset(charset);
+        }
         if (encoding != null && encoding.equalsIgnoreCase("gzip")) {//content使用gzip压缩
-            return ZipHelper.decompressForGzip(clone.readByteArray());//解压
+            return ZipHelper.decompressForGzip(clone.readByteArray(),convertCharset(charset));//解压
         } else if (encoding != null && encoding.equalsIgnoreCase("zlib")) {//content使用zlib压缩
-            return ZipHelper.decompressToStringForZlib(clone.readByteArray());//解压
+            return ZipHelper.decompressToStringForZlib(clone.readByteArray(),convertCharset(charset));//解压
         } else {//content没有被压缩
-            Charset charset = Charset.forName("UTF-8");
-            MediaType contentType = responseBody.contentType();
-            if (contentType != null) {
-                charset = contentType.charset(charset);
-            }
             return clone.readString(charset);
         }
     }
@@ -156,7 +156,7 @@ public class RequestInterceptor implements Interceptor {
             if (contentType != null) {
                 charset = contentType.charset(charset);
             }
-            return URLDecoder.decode(requestbuffer.readString(charset), "UTF-8");
+            return URLDecoder.decode(requestbuffer.readString(charset), convertCharset(charset));
         }
         return "This Params isn't Text";
     }
@@ -168,5 +168,11 @@ public class RequestInterceptor implements Interceptor {
 
     public static boolean isJson(ResponseBody responseBody) {
         return responseBody.contentType().toString().contains("json");
+    }
+
+    public static String convertCharset(Charset charset) {
+        String s = charset.toString();
+        int i = s.indexOf("[");
+        return s.substring(i + 1, s.length() - 1);
     }
 }
