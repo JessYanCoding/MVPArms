@@ -1,7 +1,5 @@
 package com.jess.arms.di.module;
 
-import android.app.Application;
-
 import com.jess.arms.http.GlobeHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
 import com.jess.arms.utils.DataHelper;
@@ -15,15 +13,13 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.rx_cache.internal.RxCache;
+import io.rx_cache2.internal.RxCache;
 import io.victoralbertos.jolyglot.GsonSpeaker;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -49,7 +45,7 @@ public class ClientModule {
         return builder
                 .baseUrl(httpUrl)//域名
                 .client(client)//设置okhttp
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//使用rxjava
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用rxjava2
                 .addConverterFactory(GsonConverterFactory.create())//使用Gson
                 .build();
     }
@@ -123,21 +119,6 @@ public class ClientModule {
     File provideRxCacheDirectory(File cacheDir) {
         File cacheDirectory = new File(cacheDir, "RxCache");
         return DataHelper.makeDirs(cacheDirectory);
-    }
-
-    /**
-     * 提供处理Rxjava错误的管理器
-     *
-     * @return
-     */
-    @Singleton
-    @Provides
-    RxErrorHandler proRxErrorHandler(Application application, ResponseErroListener listener) {
-        return RxErrorHandler
-                .builder()
-                .with(application)
-                .responseErroListener(listener)
-                .build();
     }
 
 

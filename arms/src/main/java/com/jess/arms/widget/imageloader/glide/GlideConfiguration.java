@@ -5,7 +5,6 @@ import android.content.Context;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.load.engine.bitmap_recycle.LruBitmapPool;
-import com.bumptech.glide.load.engine.cache.DiskCache;
 import com.bumptech.glide.load.engine.cache.DiskLruCacheWrapper;
 import com.bumptech.glide.load.engine.cache.LruResourceCache;
 import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
@@ -27,13 +26,10 @@ public class GlideConfiguration implements GlideModule {
 
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
-        builder.setDiskCache(new DiskCache.Factory() {
-            @Override
-            public DiskCache build() {
-                // Careful: the external cache directory doesn't enforce permissions
-                AppComponent appComponent = ((BaseApplication)context.getApplicationContext()).getAppComponent();
-                return DiskLruCacheWrapper.get(DataHelper.makeDirs(new File(appComponent.cacheFile(), "Glide")), IMAGE_DISK_CACHE_MAX_SIZE);
-            }
+        builder.setDiskCache(() -> {
+            // Careful: the external cache directory doesn't enforce permissions
+            AppComponent appComponent = ((BaseApplication)context.getApplicationContext()).getAppComponent();
+            return DiskLruCacheWrapper.get(DataHelper.makeDirs(new File(appComponent.cacheFile(), "Glide")), IMAGE_DISK_CACHE_MAX_SIZE);
         });
 
         MemorySizeCalculator calculator = new MemorySizeCalculator(context);

@@ -17,7 +17,6 @@ import java.io.File;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import okhttp3.OkHttpClient;
 
 /**
@@ -30,10 +29,6 @@ public interface AppComponent {
 
     //用于管理网络请求层,以及数据缓存层
     IRepositoryManager repositoryManager();
-
-    //Rxjava错误处理管理类
-    RxErrorHandler rxErrorHandler();
-
 
     OkHttpClient okHttpClient();
 

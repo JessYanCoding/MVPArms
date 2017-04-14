@@ -3,10 +3,8 @@ package com.jess.arms.utils;
 import android.Manifest;
 
 import com.jess.arms.mvp.IView;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import timber.log.Timber;
 
 /**
@@ -23,11 +21,10 @@ public class PermissionUtil {
     }
 
 
-
     /**
      * 请求摄像头权限
      */
-    public static void launchCamera(final RequestPermission requestPermission, RxPermissions rxPermissions, final IView view, RxErrorHandler errorHandler) {
+    public static void launchCamera(final RequestPermission requestPermission, RxPermissions rxPermissions, final IView view) {
         //先确保是否已经申请过摄像头，和写入外部存储的权限
         boolean isPermissionsGranted =
                 rxPermissions
@@ -41,26 +38,22 @@ public class PermissionUtil {
             rxPermissions
                     .request(Manifest.permission.WRITE_EXTERNAL_STORAGE
                             , Manifest.permission.CAMERA)
-                    .subscribe(new ErrorHandleSubscriber<Boolean>(errorHandler) {
-                        @Override
-                        public void onNext(Boolean granted) {
-                            if (granted) {
-                                Timber.tag(TAG).d("request WRITE_EXTERNAL_STORAGE and CAMERA success");
-                                requestPermission.onRequestPermissionSuccess();
-                            } else {
-                                view.showMessage("request permissons failure");
-                            }
+                    .subscribe(granted -> {
+                        if (granted) {
+                            Timber.tag(TAG).d("request WRITE_EXTERNAL_STORAGE and CAMERA success");
+                            requestPermission.onRequestPermissionSuccess();
+                        } else {
+                            view.showMessage("request permissons failure");
                         }
                     });
         }
     }
 
 
-
     /**
      * 请求外部存储的权限
      */
-    public static void externalStorage(final RequestPermission requestPermission, RxPermissions rxPermissions, final IView view, RxErrorHandler errorHandler) {
+    public static void externalStorage(final RequestPermission requestPermission, RxPermissions rxPermissions, final IView view) {
         //先确保是否已经申请过摄像头，和写入外部存储的权限
         boolean isPermissionsGranted =
                 rxPermissions
@@ -71,27 +64,23 @@ public class PermissionUtil {
         } else {//没有申请过，则申请
             rxPermissions
                     .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    .subscribe(new ErrorHandleSubscriber<Boolean>(errorHandler) {
-                        @Override
-                        public void onNext(Boolean granted) {
-                            if (granted) {
-                                Timber.tag(TAG).d("request WRITE_EXTERNAL_STORAGE and CAMERA success");
-                                requestPermission.onRequestPermissionSuccess();
-                            } else {
-                                view.showMessage("request permissons failure");
-                            }
+                    .subscribe(granted -> {
+                        if (granted) {
+                            Timber.tag(TAG).d("request WRITE_EXTERNAL_STORAGE and CAMERA success");
+                            requestPermission.onRequestPermissionSuccess();
+                        } else {
+                            view.showMessage("request permissons failure");
                         }
                     });
         }
     }
 
 
-
     /**
      * 请求发送短信权限
      */
-    public static void sendSms(final RequestPermission requestPermission, RxPermissions rxPermissions, final IView view, RxErrorHandler errorHandler) {
-//先确保是否已经申请过权限
+    public static void sendSms(final RequestPermission requestPermission, RxPermissions rxPermissions, final IView view) {
+        //先确保是否已经申请过权限
         boolean isPermissionsGranted =
                 rxPermissions
                         .isGranted(Manifest.permission.SEND_SMS);
@@ -101,15 +90,12 @@ public class PermissionUtil {
         } else {//没有申请过，则申请
             rxPermissions
                     .request(Manifest.permission.SEND_SMS)
-                    .subscribe(new ErrorHandleSubscriber<Boolean>(errorHandler) {
-                        @Override
-                        public void onNext(Boolean granted) {
-                            if (granted) {
-                                Timber.tag(TAG).d("request SEND_SMS success");
-                                requestPermission.onRequestPermissionSuccess();
-                            } else {
-                                view.showMessage("request permissons failure");
-                            }
+                    .subscribe(granted -> {
+                        if (granted) {
+                            Timber.tag(TAG).d("request SEND_SMS success");
+                            requestPermission.onRequestPermissionSuccess();
+                        } else {
+                            view.showMessage("request permissons failure");
                         }
                     });
         }
@@ -119,8 +105,8 @@ public class PermissionUtil {
     /**
      * 请求打电话权限
      */
-    public static void callPhone(final RequestPermission requestPermission, RxPermissions rxPermissions, final IView view, RxErrorHandler errorHandler) {
-//先确保是否已经申请过权限
+    public static void callPhone(final RequestPermission requestPermission, RxPermissions rxPermissions, final IView view) {
+        //先确保是否已经申请过权限
         boolean isPermissionsGranted =
                 rxPermissions
                         .isGranted(Manifest.permission.CALL_PHONE);
@@ -130,15 +116,12 @@ public class PermissionUtil {
         } else {//没有申请过，则申请
             rxPermissions
                     .request(Manifest.permission.CALL_PHONE)
-                    .subscribe(new ErrorHandleSubscriber<Boolean>(errorHandler) {
-                        @Override
-                        public void onNext(Boolean granted) {
-                            if (granted) {
-                                Timber.tag(TAG).d("request SEND_SMS success");
-                                requestPermission.onRequestPermissionSuccess();
-                            } else {
-                                view.showMessage("request permissons failure");
-                            }
+                    .subscribe(granted ->{
+                        if (granted) {
+                            Timber.tag(TAG).d("request CALL_PHONE success");
+                            requestPermission.onRequestPermissionSuccess();
+                        } else {
+                            view.showMessage("request permissons failure");
                         }
                     });
         }
@@ -148,8 +131,8 @@ public class PermissionUtil {
     /**
      * 请求获取手机状态的权限
      */
-    public static void readPhonestate(final RequestPermission requestPermission, RxPermissions rxPermissions, RxErrorHandler errorHandler) {
-//先确保是否已经申请过权限
+    public static void readPhonestate(final RequestPermission requestPermission, RxPermissions rxPermissions) {
+        //先确保是否已经申请过权限
         boolean isPermissionsGranted =
                 rxPermissions
                         .isGranted(Manifest.permission.READ_PHONE_STATE);
@@ -159,15 +142,12 @@ public class PermissionUtil {
         } else {//没有申请过，则申请
             rxPermissions
                     .request(Manifest.permission.READ_PHONE_STATE)
-                    .subscribe(new ErrorHandleSubscriber<Boolean>(errorHandler) {
-                        @Override
-                        public void onNext(Boolean granted) {
-                            if (granted) {
-                                Timber.tag(TAG).d("request SEND_SMS success");
-                                requestPermission.onRequestPermissionSuccess();
-                            } else {
-                                Timber.tag(TAG).e("request permissons failure");
-                            }
+                    .subscribe(granted ->{
+                        if (granted) {
+                            Timber.tag(TAG).d("request READ_PHONE_STATE success");
+                            requestPermission.onRequestPermissionSuccess();
+                        } else {
+                            Timber.tag(TAG).e("request permissons failure");
                         }
                     });
         }

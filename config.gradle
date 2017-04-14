@@ -31,7 +31,7 @@ ext {
                 //network
                 "retrofit"                 : "com.squareup.retrofit2:retrofit:${version["retrofitSdkVersion"]}",
                 "retrofit-converter-gson"  : "com.squareup.retrofit2:converter-gson:${version["retrofitSdkVersion"]}",
-                "retrofit-adapter-rxjava"  : "com.squareup.retrofit2:adapter-rxjava:${version["retrofitSdkVersion"]}",
+                "retrofit-adapter-rxjava"  : "com.squareup.retrofit2:adapter-rxjava2:${version["retrofitSdkVersion"]}",
                 "okhttp3"                  : "com.squareup.okhttp3:okhttp:3.6.0",
                 "okhttp-urlconnection"     : "com.squareup.okhttp:okhttp-urlconnection:2.0.0",
                 "glide"                    : "com.github.bumptech.glide:glide:3.7.0",

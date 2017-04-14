@@ -31,12 +31,10 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
     public BaseHolder<T> onCreateViewHolder(ViewGroup parent, final int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(getLayoutId(viewType), parent, false);
         mHolder = getHolder(view, viewType);
-        mHolder.setOnItemClickListener(new BaseHolder.OnViewClickListener() {//设置Item点击事件
-            @Override
-            public void onViewClick(View view, int position) {
-                if (mOnItemClickListener != null && mInfos.size() > 0) {
-                    mOnItemClickListener.onItemClick(view, viewType, mInfos.get(position), position);
-                }
+        //设置Item点击事件
+        mHolder.setOnItemClickListener((view1, position) -> {
+            if (mOnItemClickListener != null && mInfos.size() > 0) {
+                mOnItemClickListener.onItemClick(view1, viewType, mInfos.get(position), position);
             }
         });
         return mHolder;
@@ -103,7 +101,8 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
      * @param recyclerView
      */
     public static void releaseAllHolder(RecyclerView recyclerView) {
-        if (recyclerView == null) return;
+        if (recyclerView == null)
+            return;
         for (int i = recyclerView.getChildCount() - 1; i >= 0; i--) {
             final View view = recyclerView.getChildAt(i);
             RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
