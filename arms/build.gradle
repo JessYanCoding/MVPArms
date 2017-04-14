@@ -87,9 +87,9 @@ dependencies {
         exclude module: 'rxandroid'
     }
     compile rootProject.ext.dependencies["rxpermissions"]
-    compile (rootProject.ext.dependencies['rxerrorhandler']){
-        exclude module: 'rxjava'
-    }
+//    compile (rootProject.ext.dependencies['rxerrorhandler']){
+//        exclude module: 'rxjava'
+//    }
 
 
     //network
