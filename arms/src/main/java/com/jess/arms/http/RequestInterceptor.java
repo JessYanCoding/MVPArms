@@ -173,6 +173,8 @@ public class RequestInterceptor implements Interceptor {
     public static String convertCharset(Charset charset) {
         String s = charset.toString();
         int i = s.indexOf("[");
+        if (i == -1)
+            return s;
         return s.substring(i + 1, s.length() - 1);
     }
 }
