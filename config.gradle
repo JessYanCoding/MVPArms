@@ -16,7 +16,8 @@ ext {
                    butterknifeSdkVersion   : "8.5.1",
                    rxlifecycleSdkVersion   : "2.0.1",
                    espressoSdkVersion      : "2.2.2",
-                   canarySdkVersion        : "1.5"
+                   canarySdkVersion        : "1.5",
+                   rxBindingVersion        : "2.0.0"
         ]
 
     dependencies = [
@@ -54,8 +55,12 @@ ext {
                 "rxlifecycle-components"   : "com.trello.rxlifecycle2:rxlifecycle-components:${version["rxlifecycleSdkVersion"]}",
                 "rxcache"                  : "com.github.VictorAlbertos.RxCache:runtime:1.8.0-2.x",
                 "rxcache-jolyglot-gson"    : "com.github.VictorAlbertos.Jolyglot:gson:0.0.3",
-                "rxbinding-recyclerview-v7": "com.jakewharton.rxbinding2:rxbinding:2.0.0",
                 "rxpermissions"            : "com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar",
+                "rxbinding"                : "com.jakewharton.rxbinding2:rxbinding:${version["rxBindingVersion"]}",
+                "rxbinding-support-v4"     : "com.jakewharton.rxbinding2:rxbinding-support-v4:${version["rxBindingVersion"]}",
+                "rxbinding-appcompat-v7"   : "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${version["rxBindingVersion"]}",
+                "rxbinding-design"         : "com.jakewharton.rxbinding2:rxbinding-design:${version["rxBindingVersion"]}",
+                "rxbinding-recyclerview-v7": "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:${version["rxBindingVersion"]}",
 //                "rxerrorhandler"           : "me.jessyan:rxerrorhandler:1.0.1",
 
                 //tools

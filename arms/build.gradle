@@ -87,6 +87,12 @@ dependencies {
         exclude module: 'rxandroid'
     }
     compile rootProject.ext.dependencies["rxpermissions"]
+    compile rootProject.ext.dependencies["rxbinding"]
+    compile rootProject.ext.dependencies["rxbinding-support-v4"]
+    compile rootProject.ext.dependencies["rxbinding-appcompat-v7"]
+    compile rootProject.ext.dependencies["rxbinding-design"]
+    compile rootProject.ext.dependencies["rxbinding-recyclerview-v7"]
+
 //    compile (rootProject.ext.dependencies['rxerrorhandler']){
 //        exclude module: 'rxjava'
 //    }
