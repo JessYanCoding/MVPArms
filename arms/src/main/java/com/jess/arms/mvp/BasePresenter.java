@@ -47,7 +47,6 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
             mModel.onDestroy();
         this.mModel = null;
         this.mRootView = null;
-        this.mCompositeDisposable.clear();
         this.mCompositeDisposable = null;
     }
 
