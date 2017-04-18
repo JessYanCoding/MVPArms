@@ -14,7 +14,7 @@ import io.rx_cache.internal.RxCache;
 import retrofit2.Retrofit;
 
 /**
- * 用来管理网络请求层,以及数据缓存层,以后可以添加数据库请求层
+ * 用来管理网络请求层,以及数据缓存层,以后可能添加数据库请求层
  * 需要在{@link ConfigModule}的实现类中先inject需要的服务
  * Created by jess on 13/04/2017 09:52
  * Contact with jess.yan.effort@gmail.com

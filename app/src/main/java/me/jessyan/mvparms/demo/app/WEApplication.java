@@ -11,7 +11,7 @@ import timber.log.Timber;
 
 /**
  * Created by jess on 8/5/16 11:07
- * contact with jess.yan.effort@gmail.com
+ * Contact with jess.yan.effort@gmail.com
  */
 public class WEApplication extends BaseApplication {
     private RefWatcher mRefWatcher;//leakCanary观察器
