@@ -73,16 +73,12 @@
  
  
 ## Update
+* Thursday, 13 April 2017: [**RepositoryManager**](https://github.com/JessYanCoding/MVPArms/wiki#2.3)
 * Thursday, 15 December 2016: [**AppManager**](https://github.com/JessYanCoding/MVPArms/wiki#3.11)
 * Sunday, 25 December 2016: [**GlobeConfigModule**](https://github.com/JessYanCoding/MVPArms/wiki#3.1)
 * Monday, 26 December 2016: [**Version Update**](https://github.com/JessYanCoding/MVPArms/wiki#1.6)
 
 
-## TODO
-* Improve RxErrorHandler
-* Improve RequestIntercept
-
- 
 ## Acknowledgements 
 感谢本框架所使用到的所有三方库的**Author**,以及所有为`Open Sourece`做无私贡献的**Developer**和**Organizations**,使我们能更好的工作和学习,本人也会将业余时间回报给开源社区
 
