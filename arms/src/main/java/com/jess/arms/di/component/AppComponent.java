@@ -17,7 +17,6 @@ import java.io.File;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import okhttp3.OkHttpClient;
 
 /**
@@ -26,28 +25,24 @@ import okhttp3.OkHttpClient;
 @Singleton
 @Component(modules = {AppModule.class, ClientModule.class, ImageModule.class, GlobeConfigModule.class})
 public interface AppComponent {
-    Application Application();
+    Application getApplication();
 
     //用于管理网络请求层,以及数据缓存层
-    IRepositoryManager repositoryManager();
-
-    //Rxjava错误处理管理类
-    RxErrorHandler rxErrorHandler();
-
+    IRepositoryManager getRepositoryManager();
 
     OkHttpClient okHttpClient();
 
     //图片管理器,用于加载图片的管理类,默认使用glide,使用策略模式,可替换框架
-    ImageLoader imageLoader();
+    ImageLoader getImageLoader();
 
     //gson
-    Gson gson();
+    Gson getGson();
 
     //缓存文件根目录(RxCache和Glide的的缓存都已经作为子文件夹在这个目录里),应该将所有缓存放到这个根目录里,便于管理和清理,可在GlobeConfigModule里配置
-    File cacheFile();
+    File getCacheFile();
 
     //用于管理所有activity
-    AppManager appManager();
+    AppManager getAppManager();
 
     void inject(BaseApplication application);
 }

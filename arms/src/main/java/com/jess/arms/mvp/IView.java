@@ -1,6 +1,7 @@
 package com.jess.arms.mvp;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 
 /**
  * Created by jess on 16/4/22.
@@ -20,12 +21,12 @@ public interface IView {
     /**
      * 显示信息
      */
-    void showMessage(String message);
+    void showMessage(@NonNull String message);
 
     /**
      * 跳转activity
      */
-    void launchActivity(Intent intent);
+    void launchActivity(@NonNull Intent intent);
     /**
      * 杀死自己
      */

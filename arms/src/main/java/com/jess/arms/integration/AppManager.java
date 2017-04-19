@@ -9,6 +9,8 @@ import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
+import com.apkfuns.logutils.LogUtils;
+
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
 import org.simple.eventbus.ThreadMode;
@@ -19,8 +21,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import timber.log.Timber;
 
 /**
  * 用于管理所有activity,和在前台的 activity
@@ -40,7 +40,7 @@ public class AppManager {
     private Application mApplication;
 
     //管理所有activity
-    public List<Activity> mActivityList;
+    private List<Activity> mActivityList;
     //当前在前台的activity
     private Activity mCurrentActivity;
 
@@ -49,7 +49,6 @@ public class AppManager {
         this.mApplication = application;
         EventBus.getDefault().register(this);
     }
-
 
     /**
      * 通过eventbus post事件,远程遥控执行对应方法
@@ -71,7 +70,7 @@ public class AppManager {
                 killAll();
                 break;
             case APP_EXIT:
-                AppExit();
+                appExit();
                 break;
         }
     }
@@ -93,7 +92,7 @@ public class AppManager {
      */
     public void showSnackbar(String message, boolean isLong) {
         if (getCurrentActivity() == null) {
-            Timber.tag(TAG).w("mCurrentActivity == null when showSnackbar(String,boolean)");
+            LogUtils.tag(TAG).w("mCurrentActivity == null when showSnackbar(String,boolean)");
             return;
         }
         View view = getCurrentActivity().getWindow().getDecorView().findViewById(android.R.id.content);
@@ -108,7 +107,7 @@ public class AppManager {
      */
     public void startActivity(Intent intent) {
         if (getCurrentActivity() == null) {
-            Timber.tag(TAG).w("mCurrentActivity == null when startActivity(Intent)");
+            LogUtils.tag(TAG).w("mCurrentActivity == null when startActivity(Intent)");
             //如果没有前台的activity就使用new_task模式启动activity
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mApplication.startActivity(intent);
@@ -131,8 +130,10 @@ public class AppManager {
      */
     public void release() {
         EventBus.getDefault().unregister(this);
-        mActivityList.clear();
-        mActivityList = null;
+        if (mActivityList != null) {
+            mActivityList.clear();
+            mActivityList = null;
+        }
         mCurrentActivity = null;
         mApplication = null;
     }
@@ -189,7 +190,7 @@ public class AppManager {
      */
     public void removeActivity(Activity activity) {
         if (mActivityList == null) {
-            Timber.tag(TAG).w("mActivityList == null when removeActivity(Activity)");
+            LogUtils.tag(TAG).w("mActivityList == null when removeActivity(Activity)");
             return;
         }
         synchronized (AppManager.class) {
@@ -206,7 +207,7 @@ public class AppManager {
      */
     public Activity removeActivity(int location) {
         if (mActivityList == null) {
-            Timber.tag(TAG).w("mActivityList == null when removeActivity(int)");
+            LogUtils.tag(TAG).w("mActivityList == null when removeActivity(int)");
             return null;
         }
         synchronized (AppManager.class) {
@@ -224,7 +225,7 @@ public class AppManager {
      */
     public void killActivity(Class<?> activityClass) {
         if (mActivityList == null) {
-            Timber.tag(TAG).w("mActivityList == null when killActivity");
+            LogUtils.tag(TAG).w("mActivityList == null when killActivity");
             return;
         }
         for (Activity activity : mActivityList) {
@@ -243,7 +244,7 @@ public class AppManager {
      */
     public boolean activityInstanceIsLive(Activity activity) {
         if (mActivityList == null) {
-            Timber.tag(TAG).w("mActivityList == null when activityInstanceIsLive");
+            LogUtils.tag(TAG).w("mActivityList == null when activityInstanceIsLive");
             return false;
         }
         return mActivityList.contains(activity);
@@ -258,7 +259,7 @@ public class AppManager {
      */
     public boolean activityClassIsLive(Class<?> activityClass) {
         if (mActivityList == null) {
-            Timber.tag(TAG).w("mActivityList == null when activityClassIsLive");
+            LogUtils.tag(TAG).w("mActivityList == null when activityClassIsLive");
             return false;
         }
         for (Activity activity : mActivityList) {
@@ -291,7 +292,7 @@ public class AppManager {
     /**
      * 退出应用程序
      */
-    public void AppExit() {
+    public void appExit() {
         try {
             killAll();
             if (mActivityList != null)

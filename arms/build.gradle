@@ -1,22 +1,17 @@
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
-    useLibrary 'org.apache.http.legacy'
-
-    compileOptions {
-        targetCompatibility JavaVersion.VERSION_1_8
-        sourceCompatibility JavaVersion.VERSION_1_8
-    }
 
     defaultConfig {
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode rootProject.ext.android["versionCode"]
         versionName rootProject.ext.android["versionName"]
+        multiDexEnabled true
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -35,11 +30,11 @@ buildscript {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-
     //support
     compile (rootProject.ext.dependencies["support-v4"]){
         exclude module: 'support-annotations'
     }
+
     compile (rootProject.ext.dependencies["appcompat-v7"]){
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
@@ -58,6 +53,7 @@ dependencies {
     compile (rootProject.ext.dependencies["autolayout"]) {
         exclude group: 'com.android.support'
     }
+    compile rootProject.ext.dependencies["fragmentation"]
     compile (rootProject.ext.dependencies["butterknife"]){
         exclude module: 'support-annotations'
     }
@@ -87,9 +83,7 @@ dependencies {
         exclude module: 'rxandroid'
     }
     compile rootProject.ext.dependencies["rxpermissions"]
-    compile (rootProject.ext.dependencies['rxerrorhandler']){
-        exclude module: 'rxjava'
-    }
+
 
 
     //network
@@ -104,6 +98,7 @@ dependencies {
     }
     compile rootProject.ext.dependencies["okhttp3"]
     compile rootProject.ext.dependencies["glide"]
+    compile rootProject.ext.dependencies["okhttp3-integration"]
 
     //tools
     provided rootProject.ext.dependencies["javax.annotation"]
@@ -113,9 +108,7 @@ dependencies {
     compile rootProject.ext.dependencies["gson"]
 
     //test
-    compile rootProject.ext.dependencies["timber"]
     testCompile rootProject.ext.dependencies["junit"]
+    compile rootProject.ext.dependencies["logutils-release"]
+
 }
-
-
-apply from: 'bintray.gradle'

@@ -32,11 +32,12 @@
 
 -optimizations !code/simplification/artithmetic,!field/*,!class/merging/*
 
-
+-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 
 ################common###############
- #实体类不参与混淆
 -keep class com.jess.arms.widget.** { *; } #自定义控件不参与混淆
+-keep public class * implements com.jess.arms.integration.ConfigModule
+ #实体类不参与混淆
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
 }
@@ -141,8 +142,8 @@
 -dontwarn org.junit.**
 -dontwarn org.robolectric.**
 
--keep class rx.** { *; }
--keep interface rx.** { *; }
+-keep class io.reactivex.** { *; }
+-keep interface io.reactivex.** { *; }
 
 -keepattributes Signature
 -keepattributes *Annotation*
@@ -151,7 +152,7 @@
 -keep interface com.squareup.okhttp.** { *; }
 -dontwarn com.squareup.okhttp.**
 
--dontwarn rx.**
+-dontwarn io.reactivex.**
 -dontwarn retrofit.**
 -keep class retrofit.** { *; }
 -keepclasseswithmembers class * {
@@ -162,35 +163,35 @@
 
 -dontwarn java.lang.invoke.*
 
--keep class rx.schedulers.Schedulers {
+-keep class io.reactivex.schedulers.Schedulers {
     public static <methods>;
 }
--keep class rx.schedulers.ImmediateScheduler {
+-keep class io.reactivex.schedulers.ImmediateScheduler {
     public <methods>;
 }
--keep class rx.schedulers.TestScheduler {
+-keep class io.reactivex.schedulers.TestScheduler {
     public <methods>;
 }
--keep class rx.schedulers.Schedulers {
+-keep class io.reactivex.schedulers.Schedulers {
     public static ** test();
 }
--keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+-keepclassmembers class io.reactivex.internal.util.unsafe.*ArrayQueue*Field* {
     long producerIndex;
     long consumerIndex;
 }
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+-keepclassmembers class io.reactivex.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
     long producerNode;
     long consumerNode;
 }
 
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+-keepclassmembers class io.reactivex.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode producerNode;
 }
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+-keepclassmembers class io.reactivex.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
 
--dontwarn rx.internal.util.unsafe.**
+-dontwarn io.reactivex.internal.util.unsafe.**
 
 
 
@@ -243,13 +244,12 @@
 -keep interface javassist.** { *; }
 
 ################RxLifeCycle#################
--keep class com.trello.rxlifecycle.** { *; }
--keep interface com.trello.rxlifecycle.** { *; }
+-keep class com.trello.rxlifecycle2.** { *; }
+-keep interface com.trello.rxlifecycle2.** { *; }
 
 ################RxCache#################
 -dontwarn io.rx_cache.internal.**
--keep class io.rx_cache.internal.Record { *; }
--keep class io.rx_cache.Source { *; }
+-keepclassmembers enum io.rx_cache.Source { *; }
 
 -keep class io.victoralbertos.jolyglot.** { *; }
 -keep interface io.victoralbertos.jolyglot.** { *; }

@@ -1,3 +1,32 @@
 <resources>
     <string name="app_name">arms</string>
+
+    <plurals name="fuzzydatetime__seconds_ago">
+        <item quantity="one">%d 秒前</item>
+        <item quantity="other">%d 秒前</item>
+    </plurals>
+    <plurals name="fuzzydatetime__minutes_ago">
+        <item quantity="one">%d 分钟前</item>
+        <item quantity="other">%d 分钟前</item>
+    </plurals>
+    <plurals name="fuzzydatetime__hours_ago">
+        <item quantity="one">%d 小时前</item>
+        <item quantity="other">%d 小时前</item>
+    </plurals>
+    <plurals name="fuzzydatetime__days_ago">
+        <item quantity="one">%d 天前</item>
+        <item quantity="other">%d 天前</item>
+    </plurals>
+    <plurals name="fuzzydatetime__weeks_ago">
+        <item quantity="one">%d 周前</item>
+        <item quantity="other">%d 周前</item>
+    </plurals>
+    <plurals name="fuzzydatetime__months_ago">
+        <item quantity="one">%d 月前</item>
+        <item quantity="other">%d 月前</item>
+    </plurals>
+    <plurals name="fuzzydatetime__years_ago">
+        <item quantity="one">%d 年前</item>
+        <item quantity="other">%d 年前</item>
+    </plurals>
 </resources>

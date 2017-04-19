@@ -2,11 +2,11 @@ package me.jessyan.mvparms.demo.mvp.model.api.service;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
-import rx.Observable;
 
 /**
  * 存放关于用户的一些api

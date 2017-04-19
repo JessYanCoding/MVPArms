@@ -1,15 +1,19 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
-    useLibrary 'org.apache.http.legacy'
 
-    compileOptions {
-        targetCompatibility JavaVersion.VERSION_1_8
-        sourceCompatibility JavaVersion.VERSION_1_8
+    //配置keystore签名
+    signingConfigs {
+        release {
+            keyAlias 'bealinks'
+            keyPassword 'lzxxkj99'
+            storeFile file('../bealinksStore.keystore')
+            storePassword 'lzxxkj99'
+        }
     }
+
 
     defaultConfig {
         applicationId "me.jessyan.mvparms.demo"
@@ -26,6 +30,7 @@ android {
             buildConfigField "boolean", "USE_CANARY", "true"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
 
         release {
@@ -35,6 +40,7 @@ android {
             shrinkResources true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
@@ -43,13 +49,17 @@ android {
         disable "ResourceType"
         abortOnError false
     }
+
 }
 
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
     }
 }
+
+
 
 
 dependencies {
@@ -61,11 +71,16 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     compile rootProject.ext.dependencies["paginate"]
     //arms
-    compile project(':arms')
-//    compile 'me.jessyan:arms:1.5'
+    compile(project(':arms')) {
+        exclude module: 'logutils'
+    }
     //test
     testCompile rootProject.ext.dependencies["junit"]
     debugCompile rootProject.ext.dependencies["canary-debug"]
     releaseCompile rootProject.ext.dependencies["canary-release"]
     testCompile rootProject.ext.dependencies["canary-release"]
+    debugCompile rootProject.ext.dependencies["recovery-debug"]
+    releaseCompile rootProject.ext.dependencies["recovery-release"]
+    debugCompile rootProject.ext.dependencies["logutils-debug"]
+    releaseCompile rootProject.ext.dependencies["logutils-release"]
 }
