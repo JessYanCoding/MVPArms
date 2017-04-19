@@ -1,14 +1,14 @@
 package me.jessyan.mvparms.demo.mvp.contract;
 
 import com.jess.arms.base.DefaultAdapter;
-import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.jess.arms.mvp.IView;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
-import rx.Observable;
 
 /**
  * Created by jess on 9/4/16 10:47

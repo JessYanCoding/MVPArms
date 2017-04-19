@@ -8,7 +8,6 @@ import com.jess.arms.http.GlobeHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
 import com.jess.arms.integration.ConfigModule;
 import com.jess.arms.integration.IRepositoryManager;
-import com.jess.arms.utils.UiUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,12 +77,6 @@ public class GlobalConfiguration implements ConfigModule {
                                   .build(); */
                         return request;
                     }
-                })
-                .responseErroListener((context1, e) -> {
-                    /* 用来提供处理所有错误的监听
-                       rxjava必要要使用ErrorHandleSubscriber(默认实现Subscriber的onError方法),此监听才生效 */
-                    Timber.w("------------>" + e.getMessage());
-                    UiUtils.SnackbarText("net error");
                 });
     }
 

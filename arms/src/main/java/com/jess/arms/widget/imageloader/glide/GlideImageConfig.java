@@ -21,7 +21,7 @@ public class GlideImageConfig extends ImageConfig {
     private boolean isClearMemory;//清理内存缓存
     private boolean isClearDiskCache;//清理本地缓存
 
-    private GlideImageConfig(Buidler builder) {
+    private GlideImageConfig(Builder builder) {
         this.url = builder.url;
         this.imageView = builder.imageView;
         this.placeholder = builder.placeholder;
@@ -58,12 +58,12 @@ public class GlideImageConfig extends ImageConfig {
         return isClearDiskCache;
     }
 
-    public static Buidler builder() {
-        return new Buidler();
+    public static Builder builder() {
+        return new Builder();
     }
 
 
-    public static final class Buidler {
+    public static final class Builder {
         private String url;
         private ImageView imageView;
         private int placeholder;
@@ -75,55 +75,55 @@ public class GlideImageConfig extends ImageConfig {
         private boolean isClearMemory;//清理内存缓存
         private boolean isClearDiskCache;//清理本地缓存
 
-        private Buidler() {
+        private Builder() {
         }
 
-        public Buidler url(String url) {
+        public Builder url(String url) {
             this.url = url;
             return this;
         }
 
-        public Buidler placeholder(int placeholder) {
+        public Builder placeholder(int placeholder) {
             this.placeholder = placeholder;
             return this;
         }
 
-        public Buidler errorPic(int errorPic) {
+        public Builder errorPic(int errorPic) {
             this.errorPic = errorPic;
             return this;
         }
 
-        public Buidler imageView(ImageView imageView) {
+        public Builder imageView(ImageView imageView) {
             this.imageView = imageView;
             return this;
         }
 
-        public Buidler cacheStrategy(int cacheStrategy) {
+        public Builder cacheStrategy(int cacheStrategy) {
             this.cacheStrategy = cacheStrategy;
             return this;
         }
 
-        public Buidler transformation(BitmapTransformation transformation) {
+        public Builder transformation(BitmapTransformation transformation) {
             this.transformation = transformation;
             return this;
         }
 
-        public Buidler targets(Target... targets) {
+        public Builder targets(Target... targets) {
             this.targets = targets;
             return this;
         }
 
-        public Buidler imageViews(ImageView... imageViews) {
+        public Builder imageViews(ImageView... imageViews) {
             this.imageViews = imageViews;
             return this;
         }
 
-        public Buidler isClearMemory(boolean isClearMemory) {
+        public Builder isClearMemory(boolean isClearMemory) {
             this.isClearMemory = isClearMemory;
             return this;
         }
 
-        public Buidler isClearDiskCache(boolean isClearDiskCache) {
+        public Builder isClearDiskCache(boolean isClearDiskCache) {
             this.isClearDiskCache = isClearDiskCache;
             return this;
         }
