@@ -1,12 +1,11 @@
 package com.jess.arms.di.module;
 
-import android.app.Application;
-
-import com.jess.arms.http.GlobeHttpHandler;
+import com.jess.arms.common.utils.FileUtil;
+import com.jess.arms.http.IGlobeHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
-import com.jess.arms.utils.DataHelper;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -15,15 +14,14 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.rx_cache.internal.RxCache;
+import io.rx_cache2.internal.RxCache;
 import io.victoralbertos.jolyglot.GsonSpeaker;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Response;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -32,7 +30,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class ClientModule {
     private static final int TIME_OUT = 10;
-
 
     /**
      * @param builder
@@ -49,7 +46,7 @@ public class ClientModule {
         return builder
                 .baseUrl(httpUrl)//域名
                 .client(client)//设置okhttp
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//使用rxjava
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用rxjava
                 .addConverterFactory(GsonConverterFactory.create())//使用Gson
                 .build();
     }
@@ -63,14 +60,21 @@ public class ClientModule {
     @Singleton
     @Provides
     OkHttpClient provideClient(OkHttpClient.Builder okHttpClient, Interceptor intercept
-            , List<Interceptor> interceptors, GlobeHttpHandler handler) {
+            , List<Interceptor> interceptors, final IGlobeHttpHandler handler) {
         OkHttpClient.Builder builder = okHttpClient
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
-                .addInterceptor(chain -> chain.proceed(handler.onHttpRequestBefore(chain, chain.request())))
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        return chain.proceed(handler.onHttpRequestBefore(chain,chain.request()));
+                    }
+                })
                 .addNetworkInterceptor(intercept);
         if (interceptors != null && interceptors.size() > 0) {//如果外部提供了interceptor的数组则遍历添加
-            interceptors.forEach(builder::addInterceptor);
+            for (Interceptor interceptor : interceptors) {
+                builder.addInterceptor(interceptor);
+            }
         }
         return builder
                 .build();
@@ -89,6 +93,8 @@ public class ClientModule {
     OkHttpClient.Builder provideClientBuilder() {
         return new OkHttpClient.Builder();
     }
+
+
 
 
     @Singleton
@@ -122,51 +128,9 @@ public class ClientModule {
     @Named("RxCacheDirectory")
     File provideRxCacheDirectory(File cacheDir) {
         File cacheDirectory = new File(cacheDir, "RxCache");
-        return DataHelper.makeDirs(cacheDirectory);
+        FileUtil.createDirs(cacheDirectory);
+        return cacheDirectory;
     }
 
-    /**
-     * 提供处理Rxjava错误的管理器
-     *
-     * @return
-     */
-    @Singleton
-    @Provides
-    RxErrorHandler proRxErrorHandler(Application application, ResponseErroListener listener) {
-        return RxErrorHandler
-                .builder()
-                .with(application)
-                .responseErroListener(listener)
-                .build();
-    }
-
-
-
-//    .addNetworkInterceptor(new Interceptor() {
-//        @Override
-//        public Response intercept(Interceptor.Chain chain) throws IOException {
-//            Request request = chain.request();
-//            if(!DeviceUtils.netIsConnected(UiUtils.getContext())){
-//                request = request.newBuilder()
-//                        .cacheControl(CacheControl.FORCE_CACHE)
-//                        .build();
-//                LogUtils.warnInfo("http","no network");
-//            }
-//            Response originalResponse = chain.proceed(request);
-//            if(DeviceUtils.netIsConnected(UiUtils.getContext())){
-//                //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
-//                String cacheControl = request.cacheControl().toString();
-//                return originalResponse.newBuilder()
-//                        .header("Cache-Control", cacheControl)
-//                        .removeHeader("Pragma")
-//                        .build();
-//            }else{
-//                return originalResponse.newBuilder()
-//                        .header("Cache-Control", "public, only-if-cached, max-stale=2419200")
-//                        .removeHeader("Pragma")
-//                        .build();
-//            }
-//        }
-//    })
 
 }

@@ -2,7 +2,7 @@ package com.jess.arms.integration;
 
 import android.content.Context;
 
-import com.jess.arms.utils.Preconditions;
+import com.jess.arms.common.data.DataKeeper;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -10,26 +10,51 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.rx_cache.internal.RxCache;
+import io.rx_cache2.internal.RxCache;
 import retrofit2.Retrofit;
 
 /**
- * 用来管理网络请求层,以及数据缓存层,以后可能添加数据库请求层
+ * 用来管理网络请求层,以及数据缓存层,以后可以添加数据库请求层
  * 需要在{@link ConfigModule}的实现类中先inject需要的服务
  * Created by jess on 13/04/2017 09:52
  * Contact with jess.yan.effort@gmail.com
  */
 @Singleton
 public class RepositoryManager implements IRepositoryManager {
+
+
+
     private Retrofit mRetrofit;
     private RxCache mRxCache;
-    private final Map<String, Object> mRetrofitServiceCache = new LinkedHashMap<>();
-    private final Map<String, Object> mCacheServiceCache = new LinkedHashMap<>();
+    private DataKeeper mDataKeeper;
+    private Map<String, Object> mRetrofitServiceCache = new LinkedHashMap<>();
+    private Map<String, Object> mCacheServiceCache = new LinkedHashMap<>();
 
     @Inject
-    public RepositoryManager(Retrofit retrofit, RxCache rxCache) {
+    public RepositoryManager(Retrofit retrofit, RxCache rxCache,DataKeeper dataKeeper) {
         this.mRetrofit = retrofit;
         this.mRxCache = rxCache;
+        this.mDataKeeper = dataKeeper;
+    }
+
+    @Override
+    public void release() {
+        if (mRetrofitServiceCache != null) {
+            mRetrofitServiceCache.clear();
+            mRetrofitServiceCache = null;
+        }
+        mRetrofit = null;
+
+        if (mCacheServiceCache != null) {
+            mCacheServiceCache.clear();
+            mCacheServiceCache = null;
+        }
+        mRxCache = null;
+    }
+
+    @Override
+    public DataKeeper getDataKeeper() {
+        return mDataKeeper;
     }
 
     /**
@@ -66,8 +91,9 @@ public class RepositoryManager implements IRepositoryManager {
      */
     @Override
     public <T> T obtainRetrofitService(Class<T> service) {
-        Preconditions.checkState(mRetrofitServiceCache.containsKey(service.getName())
-                ,"Unable to find %s,first call injectRetrofitService(%s) in ConfigModule",service.getName(),service.getSimpleName());
+        if (!mRetrofitServiceCache.containsKey(service.getName())) {
+            injectRetrofitService(service);
+        }
         return (T) mRetrofitServiceCache.get(service.getName());
     }
 
@@ -80,8 +106,11 @@ public class RepositoryManager implements IRepositoryManager {
      */
     @Override
     public <T> T obtainCacheService(Class<T> cache) {
-        Preconditions.checkState(mCacheServiceCache.containsKey(cache.getName())
-                ,"Unable to find %s,first call injectCacheService(%s) in ConfigModule",cache.getName(),cache.getSimpleName());
+        if (!mCacheServiceCache.containsKey(cache.getName())) {
+            injectCacheService(cache);
+        }
         return (T) mCacheServiceCache.get(cache.getName());
     }
+
+
 }

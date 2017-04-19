@@ -8,25 +8,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.apkfuns.logutils.LogUtils;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.DefaultAdapter;
+import com.jess.arms.common.utils.UiUtils;
 import com.jess.arms.di.component.AppComponent;
-import com.jess.arms.utils.UiUtils;
 import com.paginate.Paginate;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.di.component.DaggerUserComponent;
 import me.jessyan.mvparms.demo.di.module.UserModule;
 import me.jessyan.mvparms.demo.mvp.contract.UserContract;
-import me.jessyan.mvparms.demo.mvp.presenter.UserPresenter;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import timber.log.Timber;
 
 
-public class UserActivity extends BaseActivity<UserPresenter> implements UserContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class UserActivity extends BaseActivity<UserContract.Presenter> implements UserContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @Nullable
     @BindView(R.id.recyclerView)
@@ -38,6 +38,13 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     private Paginate mPaginate;
     private boolean isLoadingMore;
     private RxPermissions mRxPermissions;
+
+
+
+    @Override
+    protected View initView() {
+        return LayoutInflater.from(this).inflate(R.layout.activity_user, null, false);
+    }
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -51,17 +58,13 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     }
 
     @Override
-    protected View initView() {
-        return LayoutInflater.from(this).inflate(R.layout.activity_user, null, false);
-    }
-
-    @Override
     protected void initData() {
         mPresenter.requestUsers(true);//打开app时自动加载列表
     }
 
     @Override
     public void onRefresh() {
+//        throw new RuntimeException();
         mPresenter.requestUsers(true);
     }
 
@@ -76,15 +79,20 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
 
     @Override
     public void showLoading() {
-        Timber.tag(TAG).w("showLoading");
+        LogUtils.w("showLoading");
         Observable.just(1)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(integer -> mSwipeRefreshLayout.setRefreshing(true));
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        mSwipeRefreshLayout.setRefreshing(true);
+                    }
+                });
     }
 
     @Override
     public void hideLoading() {
-        Timber.tag(TAG).w("hideLoading");
+        LogUtils.w("hideLoading");
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

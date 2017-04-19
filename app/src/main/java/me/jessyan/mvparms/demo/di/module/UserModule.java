@@ -6,6 +6,7 @@ import dagger.Module;
 import dagger.Provides;
 import me.jessyan.mvparms.demo.mvp.contract.UserContract;
 import me.jessyan.mvparms.demo.mvp.model.UserModel;
+import me.jessyan.mvparms.demo.mvp.presenter.UserPresenter;
 
 /**
  * Created by jess on 9/4/16 11:10
@@ -27,6 +28,12 @@ public class UserModule {
     @Provides
     UserContract.View provideUserView(){
         return this.view;
+    }
+
+    @ActivityScope
+    @Provides
+    UserContract.Presenter provideUserPresenter(UserPresenter presenter){
+        return presenter;
     }
 
     @ActivityScope

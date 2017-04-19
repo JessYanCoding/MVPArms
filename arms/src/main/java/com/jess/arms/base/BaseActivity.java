@@ -1,38 +1,91 @@
 package com.jess.arms.base;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
+import android.support.annotation.CheckResult;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
+import com.jess.arms.common.utils.DensityUtil;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.mvp.IPresenter;
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.jess.arms.widget.imageloader.ImageLoader;
+import com.trello.rxlifecycle2.LifecycleProvider;
+import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.trello.rxlifecycle2.RxLifecycle;
+import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
 import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.AutoRelativeLayout;
-
-import org.simple.eventbus.EventBus;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
+import io.reactivex.subjects.BehaviorSubject;
+import me.yokeyword.fragmentation.SupportActivity;
 
-public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActivity {
-    protected final String TAG = this.getClass().getSimpleName();
-    protected BaseApplication mApplication;
-    private Unbinder mUnbinder;
-    @Inject
-    protected P mPresenter;
+public abstract class BaseActivity<P extends IPresenter> extends SupportActivity implements LifecycleProvider<ActivityEvent> {
 
     private static final String LAYOUT_LINEARLAYOUT = "LinearLayout";
     private static final String LAYOUT_FRAMELAYOUT = "FrameLayout";
     private static final String LAYOUT_RELATIVELAYOUT = "RelativeLayout";
     public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_add_activity_list";//是否加入到activity的list，管理
 
+    private final BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
+
+    protected BaseApplication mApplication;
+
+    private Unbinder mUnbinder;
+
+    @Inject
+    protected P mPresenter;
+
+    @Inject
+    protected ImageLoader mImageLoader;
+
+
+    protected abstract View initView();
+
+    /**
+     * 提供AppComponent(提供所有的单例对象)给子类，进行Component依赖
+     * @param appComponent
+     */
+    protected abstract void setupActivityComponent(AppComponent appComponent);
+
+    protected abstract void initData();
+
+
+    @Override
+    @NonNull
+    @CheckResult
+    public final Observable<ActivityEvent> lifecycle() {
+        return lifecycleSubject.hide();
+    }
+
+    @Override
+    @NonNull
+    @CheckResult
+    public final <T> LifecycleTransformer<T> bindUntilEvent(@NonNull ActivityEvent event) {
+        return RxLifecycle.bindUntilEvent(lifecycleSubject, event);
+    }
+
+    @Override
+    @NonNull
+    @CheckResult
+    public final <T> LifecycleTransformer<T> bindToLifecycle() {
+        return RxLifecycleAndroid.bindActivity(lifecycleSubject);
+    }
 
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
@@ -49,7 +102,8 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
             view = new AutoRelativeLayout(context, attrs);
         }
 
-        if (view != null) return view;
+        if (view != null)
+            return view;
 
         return super.onCreateView(name, context, attrs);
     }
@@ -59,28 +113,78 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //新版本的转场动画
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        }
         mApplication = (BaseApplication) getApplication();
-        if (useEventBus())//如果要使用eventbus请将此方法返回true
-            EventBus.getDefault().register(this);//注册到事件主线
+
+        onBeforeSetContentView();
         setContentView(initView());
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(this);
         setupActivityComponent(mApplication.getAppComponent());//依赖注入
         initData();
+
+        lifecycleSubject.onNext(ActivityEvent.CREATE);
+    }
+
+    protected void onBeforeSetContentView() {
+    }
+
+    @Override
+    @CallSuper
+    protected void onStart() {
+        super.onStart();
+        lifecycleSubject.onNext(ActivityEvent.START);
+    }
+
+    @Override
+    @CallSuper
+    protected void onResume() {
+        super.onResume();
+        lifecycleSubject.onNext(ActivityEvent.RESUME);
+    }
+
+    @Override
+    @CallSuper
+    protected void onPause() {
+        lifecycleSubject.onNext(ActivityEvent.PAUSE);
+        super.onPause();
+    }
+
+    @Override
+    @CallSuper
+    protected void onStop() {
+        lifecycleSubject.onNext(ActivityEvent.STOP);
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        lifecycleSubject.onNext(ActivityEvent.DESTROY);
+        if (mPresenter != null) {
+            mPresenter.onDestroy();//释放资源
+            this.mPresenter = null;
+        }
+
+        if (mUnbinder != Unbinder.EMPTY) {
+            mUnbinder.unbind();
+            this.mUnbinder = null;
+        }
+        this.mImageLoader = null;
+        this.mApplication = null;
+        super.onDestroy();
     }
 
     /**
-     * 提供AppComponent(提供所有的单例对象)给子类，进行Component依赖
-     * @param appComponent
+     * 设置全屏，隐藏BottomNavigationBar
      */
-    protected abstract void setupActivityComponent(AppComponent appComponent);
-
-
-    public void FullScreencall() {
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
+    public void setFullScreen() {
+        if (Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.HONEYCOMB && Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.KITKAT) { // lower api
             View v = this.getWindow().getDecorView();
             v.setSystemUiVisibility(View.GONE);
-        } else if (Build.VERSION.SDK_INT >= 19) {
+        } else if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
             //for new api versions.
             View decorView = getWindow().getDecorView();
             int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
@@ -88,37 +192,59 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
         }
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mPresenter != null) mPresenter.onDestroy();//释放资源
-        if (mUnbinder != Unbinder.EMPTY) mUnbinder.unbind();
-        if (useEventBus())//如果要使用eventbus请将此方法返回true
-            EventBus.getDefault().unregister(this);
-        this.mPresenter = null;
-        this.mUnbinder = null;
-        this.mApplication = null;
+    /**
+     * 沉浸式，必须在setContentView调用该方法
+     */
+    protected void initTranslucent() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT && android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //设置虚拟导航栏为透明
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
     }
 
     /**
-     * 是否使用eventBus,默认为使用(true)，
+     * 沉浸式
      *
-     * @return
+     * @param toolbar                 ToolBar的view
+     * @param bottomNavigationBar     自定义BottomNavigationBar的View
+     * @param translucentPrimaryColor 颜色
      */
-    protected boolean useEventBus() {
-        return true;
+    @SuppressLint("NewApi")
+    protected void setOrChangeTranslucentColor(View toolbar, View bottomNavigationBar, int translucentPrimaryColor) {
+        //判断版本,如果[4.4,5.0)就设置状态栏和导航栏为透明
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT && android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
+            if (toolbar != null) {
+                //1.先设置toolbar的高度
+                ViewGroup.LayoutParams params = toolbar.getLayoutParams();
+                int statusBarHeight = DensityUtil.getSystemComponentDimen(this, DensityUtil.STATUS_BAR_HEIGHT);
+                params.height += statusBarHeight;
+                toolbar.setLayoutParams(params);
+                //2.设置paddingTop，以达到状态栏不遮挡toolbar的内容。
+                toolbar.setPadding(toolbar.getPaddingLeft(), toolbar.getPaddingTop() + statusBarHeight, toolbar.getPaddingRight(), toolbar.getPaddingBottom());
+                //设置顶部的颜色
+                toolbar.setBackgroundColor(translucentPrimaryColor);
+            }
+            if (bottomNavigationBar != null) {
+                //解决低版本4.4+的虚拟导航栏的
+                if (DensityUtil.hasNavigationBarShow(getWindowManager())) {
+                    ViewGroup.LayoutParams p = bottomNavigationBar.getLayoutParams();
+                    p.height += DensityUtil.getSystemComponentDimen(this, DensityUtil.NAVIGATION_BAR_HEIGHT);
+                    bottomNavigationBar.setLayoutParams(p);
+                    //设置底部导航栏的颜色
+                    bottomNavigationBar.setBackgroundColor(translucentPrimaryColor);
+                } else {
+                    ViewGroup.LayoutParams p = bottomNavigationBar.getLayoutParams();
+                    p.height = 0;
+                    bottomNavigationBar.setLayoutParams(p);
+                }
+            }
+        } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setNavigationBarColor(translucentPrimaryColor);
+            getWindow().setStatusBarColor(translucentPrimaryColor);
+        }
     }
 
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-
-    protected abstract View initView();
-
-    protected abstract void initData();
 
 }

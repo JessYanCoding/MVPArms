@@ -14,9 +14,10 @@ import com.jess.arms.widget.imageloader.BaseImageLoaderStrategy;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import rx.Observable;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by jess on 8/5/16 16:28
@@ -95,9 +96,9 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideIm
         if (config.isClearDiskCache()) {//清除本地缓存
             Observable.just(0)
                     .observeOn(Schedulers.io())
-                    .subscribe(new Action1<Integer>() {
+                    .subscribe(new Consumer<Integer>() {
                         @Override
-                        public void call(Integer integer) {
+                        public void accept(Integer integer) throws Exception {
                             Glide.get(ctx).clearDiskCache();
                         }
                     });

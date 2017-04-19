@@ -24,8 +24,7 @@ public class AutoAppBarLayout extends AppBarLayout {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-    {
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (!isInEditMode())
             mHelper.adjustChildren();
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -33,8 +32,7 @@ public class AutoAppBarLayout extends AppBarLayout {
 
 
     @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b)
-    {
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
     }
 
@@ -44,37 +42,30 @@ public class AutoAppBarLayout extends AppBarLayout {
     }
 
 
-    public static class LayoutParams extends AppBarLayout.LayoutParams
-            implements AutoLayoutHelper.AutoLayoutParams
-    {
+    public static class LayoutParams extends AppBarLayout.LayoutParams implements AutoLayoutHelper.AutoLayoutParams {
         private AutoLayoutInfo mAutoLayoutInfo;
 
-        public LayoutParams(Context c, AttributeSet attrs)
-        {
+        public LayoutParams(Context c, AttributeSet attrs) {
             super(c, attrs);
             mAutoLayoutInfo = AutoLayoutHelper.getAutoLayoutInfo(c, attrs);
         }
 
         @Override
-        public AutoLayoutInfo getAutoLayoutInfo()
-        {
+        public AutoLayoutInfo getAutoLayoutInfo() {
             return mAutoLayoutInfo;
         }
 
 
-        public LayoutParams(int width, int height)
-        {
+        public LayoutParams(int width, int height) {
             super(width, height);
         }
 
 
-        public LayoutParams(ViewGroup.LayoutParams source)
-        {
+        public LayoutParams(ViewGroup.LayoutParams source) {
             super(source);
         }
 
-        public LayoutParams(MarginLayoutParams source)
-        {
+        public LayoutParams(MarginLayoutParams source) {
             super(source);
         }
 

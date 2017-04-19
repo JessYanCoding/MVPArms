@@ -1,14 +1,15 @@
 package me.jessyan.mvparms.demo.mvp.contract;
 
 import com.jess.arms.base.DefaultAdapter;
+import com.jess.arms.mvp.IPresenter;
 import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
-import rx.Observable;
 
 /**
  * Created by jess on 9/4/16 10:47
@@ -23,6 +24,12 @@ public interface UserContract {
         //申请权限
         RxPermissions getRxPermissions();
     }
+
+    //Presenter层定义接口
+    interface Presenter extends IPresenter{
+        void requestUsers(boolean pullToRefresh);
+    }
+
     //Model层定义接口,外部只需关心model返回的数据,无需关心内部细节,及是否使用缓存
     interface Model extends IModel{
         Observable<List<User>> getUsers(int lastIdQueried, boolean update);

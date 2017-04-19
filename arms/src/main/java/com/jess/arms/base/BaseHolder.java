@@ -3,7 +3,7 @@ package com.jess.arms.base;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.jess.arms.utils.KnifeUtil;
+import com.jess.arms.common.utils.KnifeUtil;
 import com.zhy.autolayout.utils.AutoUtils;
 
 /**

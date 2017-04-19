@@ -2,6 +2,8 @@ package com.jess.arms.integration;
 
 import android.content.Context;
 
+import com.jess.arms.common.data.DataKeeper;
+
 /**
  * Created by jess on 17/03/2017 11:15
  * Contact with jess.yan.effort@gmail.com
@@ -40,5 +42,15 @@ public interface IRepositoryManager {
      * @return
      */
     <T> T obtainCacheService(Class<T> cache);
+
+    /**
+     * 释放资源
+     */
+    void release();
+
+    /**
+     * 获取APP的SharedPreferences
+     */
+    DataKeeper getDataKeeper();
 
 }

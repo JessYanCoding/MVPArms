@@ -1,14 +1,21 @@
 package com.jess.arms.http;
 
+import android.app.Application;
+import android.content.Context;
+import android.os.Build;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
-import com.jess.arms.utils.CharactorHandler;
-import com.jess.arms.utils.ZipHelper;
+import com.apkfuns.logutils.LogUtils;
+import com.jess.arms.common.utils.CharactorHandler;
+import com.jess.arms.common.utils.ZipHelper;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -22,25 +29,86 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.Buffer;
 import okio.BufferedSource;
-import timber.log.Timber;
+
+import static com.apkfuns.logutils.LogUtils.w;
 
 
 /**
  * Created by jess on 7/1/16.
- * Contact with jess.yan.effort@gmail.com
  */
 @Singleton
 public class RequestInterceptor implements Interceptor {
-    private GlobeHttpHandler mHandler;
+    private IGlobeHttpHandler mHandler;
+    private String mUserAgent;
 
     @Inject
-    public RequestInterceptor(GlobeHttpHandler handler) {
+    public RequestInterceptor(Application context,IGlobeHttpHandler handler) {
         this.mHandler = handler;
+        this.mUserAgent = getUserAgent(context);
+    }
+
+    /**
+     * 获取UserAgent
+     * @param context
+     * @return
+     */
+    private String getUserAgent(Context context) {
+            String webUserAgent = null;
+            try {
+                Class<?> sysResCls = Class.forName("com.android.internal.R$string");
+                Field webUserAgentField = sysResCls.getDeclaredField("web_user_agent");
+                Integer resId = (Integer) webUserAgentField.get(null);
+                webUserAgent = context.getString(resId);
+            } catch (Exception e) {
+                // We have nothing to do
+            }
+            if (TextUtils.isEmpty(webUserAgent)) {
+                webUserAgent = "Mozilla/5.0 (Linux; U; Android %s) AppleWebKit/533.1 (KHTML, like Gecko) Version/5.0 %sSafari/533.1";
+            }
+
+            Locale locale = Locale.getDefault();
+            StringBuffer buffer = new StringBuffer();
+            // Add version
+            final String version = Build.VERSION.RELEASE;
+            if (version.length() > 0) {
+                buffer.append(version);
+            } else {
+                // default to "1.0"
+                buffer.append("1.0");
+            }
+            buffer.append("; ");
+            final String language = locale.getLanguage();
+            if (language != null) {
+                buffer.append(language.toLowerCase(locale));
+                final String country = locale.getCountry();
+                if (!TextUtils.isEmpty(country)) {
+                    buffer.append("-");
+                    buffer.append(country.toLowerCase(locale));
+                }
+            } else {
+                // default to "en"
+                buffer.append("en");
+            }
+            // add the model for the release build
+            if ("REL".equals(Build.VERSION.CODENAME)) {
+                final String model = Build.MODEL;
+                if (model.length() > 0) {
+                    buffer.append("; ");
+                    buffer.append(model);
+                }
+            }
+            final String id = Build.ID;
+            if (id.length() > 0) {
+                buffer.append(" Build/");
+                buffer.append(id);
+            }
+        return String.format(webUserAgent, buffer, "Mobile ");
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request request = chain.request();
+        //替换掉okhhtp初始的"User-Agent"
+        Request request = chain.request().newBuilder().header("User-Agent", mUserAgent).build();
 
         boolean hasRequestBody = request.body() != null;
 
@@ -51,7 +119,7 @@ public class RequestInterceptor implements Interceptor {
         }
 
         //打印请求信息
-        Timber.tag(getTag(request, "Request_Info")).w("Params : 「 %s 」%nConnection : 「 %s 」%nHeaders : %n「 %s 」"
+        LogUtils.tag("Request").w("Params : 「 %s 」%nConnection : 「 %s 」%nHeaders : %n「 %s 」"
                 , hasRequestBody ? parseParams(request.body(), requestbuffer) : "Null"
                 , chain.connection()
                 , request.headers());
@@ -62,7 +130,7 @@ public class RequestInterceptor implements Interceptor {
         try {
             originalResponse = chain.proceed(request);
         } catch (Exception e) {
-            Timber.w("Http Error: " + e);
+            w("Http Error: " + e);
             throw e;
         }
         long t2 = System.nanoTime();
@@ -70,7 +138,7 @@ public class RequestInterceptor implements Interceptor {
         String bodySize = originalResponse.body().contentLength() != -1 ? originalResponse.body().contentLength() + "-byte" : "unknown-length";
 
         //打印响应时间以及响应头
-        Timber.tag(getTag(request, "Response_Info")).w("Received response in [ %d-ms ] , [ %s ]%n%s"
+        LogUtils.tag("Response").w("Received response in [ %d-ms ] , [ %s ]%n%s"
                 , TimeUnit.NANOSECONDS.toMillis(t2 - t1), bodySize, originalResponse.headers());
 
         //打印响应结果
@@ -81,6 +149,8 @@ public class RequestInterceptor implements Interceptor {
 
         return originalResponse;
     }
+
+
 
     /**
      * 打印响应结果
@@ -110,18 +180,18 @@ public class RequestInterceptor implements Interceptor {
 
             //解析response content
             bodyString = parseContent(responseBody, encoding, clone);
-
-            Timber.tag(getTag(request, "Response_Result")).w(isJson(responseBody) ? CharactorHandler.jsonFormat(bodyString) : bodyString);
+            if (isJson(responseBody)) {
+                bodyString = CharactorHandler.jsonFormat(bodyString);
+                if (bodyString.length() > 3072) {
+                    bodyString = bodyString.substring(0,3062) +"\r\n........";
+                }
+            }
+            LogUtils.tag("Response").w(bodyString);
 
         } else {
-            Timber.tag(getTag(request, "Response_Result")).w("This result isn't parsed");
+            LogUtils.tag("Response").w("This result isn't parsed");
         }
         return bodyString;
-    }
-
-
-    private String getTag(Request request, String tag) {
-        return String.format(" [%s] 「 %s 」>>> %s", request.method(), request.url().toString(), tag);
     }
 
 
