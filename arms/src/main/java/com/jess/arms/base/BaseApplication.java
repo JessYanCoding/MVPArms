@@ -31,7 +31,6 @@ public abstract class BaseApplication extends Application {
     private AppComponent mAppComponent;
     @Inject
     protected ActivityLifecycle mActivityLifecycle;
-    protected final String TAG = this.getClass().getSimpleName();
 
 
     @Override

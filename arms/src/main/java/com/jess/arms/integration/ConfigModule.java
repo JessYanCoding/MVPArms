@@ -2,7 +2,10 @@ package com.jess.arms.integration;
 
 import android.content.Context;
 
+import com.jess.arms.base.delegate.AppDelegate;
 import com.jess.arms.di.module.GlobeConfigModule;
+
+import java.util.List;
 
 /**
  * 此接口可以给框架配置一些参数,需要实现类实现后,并在AndroidManifest中声明该实现类
@@ -24,4 +27,11 @@ public interface ConfigModule {
      * @param repositoryManager
      */
     void registerComponents(Context context,IRepositoryManager repositoryManager);
+
+
+    /**
+     * 使用{@link AppDelegate.Lifecycle}在Application的声明周期中注入一些操作
+     * @return
+     */
+    void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycles);
 }

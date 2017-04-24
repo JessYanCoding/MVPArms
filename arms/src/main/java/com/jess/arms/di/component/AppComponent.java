@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 import com.jess.arms.base.BaseApplication;
+import com.jess.arms.base.delegate.AppDelegate;
 import com.jess.arms.di.module.AppModule;
 import com.jess.arms.di.module.ClientModule;
 import com.jess.arms.di.module.GlobeConfigModule;
@@ -50,4 +51,5 @@ public interface AppComponent {
     AppManager appManager();
 
     void inject(BaseApplication application);
+    void inject(AppDelegate delegate);
 }

@@ -1,8 +1,10 @@
 package me.jessyan.mvparms.demo.app;
 
+import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.jess.arms.base.delegate.AppDelegate;
 import com.jess.arms.di.module.GlobeConfigModule;
 import com.jess.arms.http.GlobeHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
@@ -13,6 +15,8 @@ import com.jess.arms.utils.UiUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import me.jessyan.mvparms.demo.mvp.model.api.Api;
 import me.jessyan.mvparms.demo.mvp.model.api.cache.CommonCache;
@@ -92,4 +96,20 @@ public class GlobalConfiguration implements ConfigModule {
         repositoryManager.injectRetrofitService(CommonService.class, UserService.class);
         repositoryManager.injectCacheService(CommonCache.class);
     }
+
+    @Override
+    public void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycles) {
+        lifecycles.add(new AppDelegate.Lifecycle() {
+            @Override
+            public void onCreate(Application application) {
+
+            }
+
+            @Override
+            public void onTerminate(Application application) {
+
+            }
+        });
+    }
+
 }
