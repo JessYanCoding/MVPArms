@@ -102,6 +102,7 @@ public class GlobalConfiguration implements ConfigModule {
 
     @Override
     public void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycles) {
+        // AppDelegate.Lifecycle 的所有方法都会在BaseApplication对应的生命周期中被调用,所以在对应的方法中可以扩展一些自己需要的逻辑
         lifecycles.add(new AppDelegate.Lifecycle() {
             private RefWatcher mRefWatcher;//leakCanary观察器
 
