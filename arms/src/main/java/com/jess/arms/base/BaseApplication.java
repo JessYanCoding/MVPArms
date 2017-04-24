@@ -14,7 +14,7 @@ import com.jess.arms.di.component.AppComponent;
  * +androideventbus
  * +butterknife组成
  */
-public abstract class BaseApplication extends Application {
+public  class BaseApplication extends Application {
     private AppDelegate mAppDelegate;
 
 
@@ -33,7 +33,6 @@ public abstract class BaseApplication extends Application {
         super.onTerminate();
         this.mAppDelegate.onTerminate();
     }
-
 
 
     /**

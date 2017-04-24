@@ -11,6 +11,8 @@ import com.jess.arms.http.RequestInterceptor;
 import com.jess.arms.integration.ConfigModule;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.utils.UiUtils;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,6 +20,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import me.jessyan.mvparms.demo.BuildConfig;
 import me.jessyan.mvparms.demo.mvp.model.api.Api;
 import me.jessyan.mvparms.demo.mvp.model.api.cache.CommonCache;
 import me.jessyan.mvparms.demo.mvp.model.api.service.CommonService;
@@ -100,14 +103,20 @@ public class GlobalConfiguration implements ConfigModule {
     @Override
     public void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycles) {
         lifecycles.add(new AppDelegate.Lifecycle() {
+            private RefWatcher mRefWatcher;//leakCanary观察器
+
             @Override
             public void onCreate(Application application) {
-
+                if (BuildConfig.LOG_DEBUG) {//Timber日志打印
+                    Timber.plant(new Timber.DebugTree());
+                }
+                //leakCanary内存泄露检查
+                this.mRefWatcher = BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED;
             }
 
             @Override
             public void onTerminate(Application application) {
-
+                this.mRefWatcher = null;
             }
         });
     }
