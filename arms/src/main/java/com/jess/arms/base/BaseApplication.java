@@ -13,8 +13,9 @@ import com.jess.arms.di.component.AppComponent;
  * +rxjava
  * +androideventbus
  * +butterknife组成
+ * 请配合官方wiki文档https://github.com/JessYanCoding/MVPArms/wiki,学习本框架
  */
-public  class BaseApplication extends Application {
+public class BaseApplication extends Application implements App {
     private AppDelegate mAppDelegate;
 
 
@@ -40,6 +41,7 @@ public  class BaseApplication extends Application {
      *
      * @return
      */
+    @Override
     public AppComponent getAppComponent() {
         return mAppDelegate.getAppComponent();
     }

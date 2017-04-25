@@ -8,12 +8,12 @@ import okhttp3.Response;
  * Created by jess on 8/30/16 17:47
  * Contact with jess.yan.effort@gmail.com
  */
-public interface GlobeHttpHandler {
+public interface GlobalHttpHandler {
     Response onHttpResultResponse(String httpResult, Interceptor.Chain chain, Response response);
 
     Request onHttpRequestBefore(Interceptor.Chain chain, Request request);
 
-    GlobeHttpHandler EMPTY = new GlobeHttpHandler() {
+    GlobalHttpHandler EMPTY = new GlobalHttpHandler() {
         @Override
         public Response onHttpResultResponse(String httpResult, Interceptor.Chain chain, Response response) {
             //不管是否处理,都必须将response返回出去

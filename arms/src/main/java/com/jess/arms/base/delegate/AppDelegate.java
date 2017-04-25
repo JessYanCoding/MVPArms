@@ -6,7 +6,7 @@ import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.di.component.DaggerAppComponent;
 import com.jess.arms.di.module.AppModule;
 import com.jess.arms.di.module.ClientModule;
-import com.jess.arms.di.module.GlobeConfigModule;
+import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.di.module.ImageModule;
 import com.jess.arms.integration.ActivityLifecycle;
 import com.jess.arms.integration.ConfigModule;
@@ -21,7 +21,7 @@ import javax.inject.Inject;
  * AppDelegate可以代理Application的生命周期,在对应的生命周期,执行对应的逻辑,因为Java只能单继承
  * 而我的框架要求Application要继承于BaseApplication
  * 所以当遇到某些三方库需要继承于它的Application的时候,就只有自定义Application继承于三方库的Application
- * 再将BaseApplication的代码复制进去,而现在就不用在复制代码,只用在对应的生命周期调用AppDelegate对应的方法,
+ * 再将BaseApplication的代码复制进去,而现在就不用再复制代码,只用在对应的生命周期调用AppDelegate对应的方法(Application一定要实现APP接口)
  *
  * Created by jess on 24/04/2017 09:44
  * Contact with jess.yan.effort@gmail.com
@@ -50,7 +50,7 @@ public class AppDelegate {
                 .appModule(new AppModule(mApplication))////提供application
                 .clientModule(new ClientModule())//用于提供okhttp和retrofit的单例
                 .imageModule(new ImageModule())//图片加载框架默认使用glide
-                .globeConfigModule(getGlobeConfigModule(mApplication, mModules))//全局配置
+                .globalConfigModule(getGlobalConfigModule(mApplication, mModules))//全局配置
                 .build();
         mAppComponent.inject(this);
 
@@ -88,11 +88,10 @@ public class AppDelegate {
      *
      * @return
      */
-    private GlobeConfigModule getGlobeConfigModule(Application context, List<ConfigModule> modules) {
+    private GlobalConfigModule getGlobalConfigModule(Application context, List<ConfigModule> modules) {
 
-        GlobeConfigModule.Builder builder = GlobeConfigModule
-                .builder()
-                .baseurl("https://api.github.com");//为了防止用户没有通过GlobeConfigModule配置baseurl,而导致报错,所以提前配置个默认baseurl
+        GlobalConfigModule.Builder builder = GlobalConfigModule
+                .builder();
 
         for (ConfigModule module : modules) {
             module.applyOptions(context, builder);

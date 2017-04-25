@@ -43,7 +43,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment {
         mActivity = (BaseActivity) getActivity();
         if (useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().register(this);//注册到事件主线
-        setupFragmentComponent(mActivity.mApplication.getAppComponent());
+        setupFragmentComponent(mActivity.mApp.getAppComponent());
         initData();
     }
 
