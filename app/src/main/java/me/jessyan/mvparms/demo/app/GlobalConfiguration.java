@@ -1,18 +1,25 @@
 package me.jessyan.mvparms.demo.app;
 
+import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.jess.arms.di.module.GlobeConfigModule;
-import com.jess.arms.http.GlobeHttpHandler;
+import com.jess.arms.base.delegate.AppDelegate;
+import com.jess.arms.di.module.GlobalConfigModule;
+import com.jess.arms.http.GlobalHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
 import com.jess.arms.integration.ConfigModule;
 import com.jess.arms.integration.IRepositoryManager;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
+import me.jessyan.mvparms.demo.BuildConfig;
 import me.jessyan.mvparms.demo.mvp.model.api.Api;
 import me.jessyan.mvparms.demo.mvp.model.api.cache.CommonCache;
 import me.jessyan.mvparms.demo.mvp.model.api.service.CommonService;
@@ -31,9 +38,9 @@ import timber.log.Timber;
 
 public class GlobalConfiguration implements ConfigModule {
     @Override
-    public void applyOptions(Context context, GlobeConfigModule.Builder builder) {
+    public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
         builder.baseurl(Api.APP_DOMAIN)
-                .globeHttpHandler(new GlobeHttpHandler() {// 这里可以提供一个全局处理Http请求和响应结果的处理类,
+                .globalHttpHandler(new GlobalHttpHandler() {// 这里可以提供一个全局处理Http请求和响应结果的处理类,
                     // 这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
                     @Override
                     public Response onHttpResultResponse(String httpResult, Interceptor.Chain chain, Response response) {
@@ -85,4 +92,27 @@ public class GlobalConfiguration implements ConfigModule {
         repositoryManager.injectRetrofitService(CommonService.class, UserService.class);
         repositoryManager.injectCacheService(CommonCache.class);
     }
+
+    @Override
+    public void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycles) {
+        // AppDelegate.Lifecycle 的所有方法都会在基类Application对应的生命周期中被调用,所以在对应的方法中可以扩展一些自己需要的逻辑
+        lifecycles.add(new AppDelegate.Lifecycle() {
+            private RefWatcher mRefWatcher;//leakCanary观察器
+
+            @Override
+            public void onCreate(Application application) {
+                if (BuildConfig.LOG_DEBUG) {//Timber日志打印
+                    Timber.plant(new Timber.DebugTree());
+                }
+                //leakCanary内存泄露检查
+                this.mRefWatcher = BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED;
+            }
+
+            @Override
+            public void onTerminate(Application application) {
+                this.mRefWatcher = null;
+            }
+        });
+    }
+
 }

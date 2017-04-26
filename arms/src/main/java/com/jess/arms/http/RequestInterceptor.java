@@ -31,10 +31,10 @@ import timber.log.Timber;
  */
 @Singleton
 public class RequestInterceptor implements Interceptor {
-    private GlobeHttpHandler mHandler;
+    private GlobalHttpHandler mHandler;
 
     @Inject
-    public RequestInterceptor(GlobeHttpHandler handler) {
+    public RequestInterceptor(GlobalHttpHandler handler) {
         this.mHandler = handler;
     }
 
