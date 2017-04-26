@@ -1,5 +1,6 @@
 package me.jessyan.mvparms.demo.app.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -251,7 +252,7 @@ public class FastBlur {
         return (bitmap);
     }
 
-    public static void blur(Bitmap bkg, View view) {
+    public static void blur(Context context, Bitmap bkg, View view) {
         long startMs = System.currentTimeMillis();
         float radius = 15;
         float scaleFactor = 8;
@@ -267,7 +268,7 @@ public class FastBlur {
         paint.setFlags(Paint.FILTER_BITMAP_FLAG);
         canvas.drawBitmap(bkg, 0, 0, paint);
         overlay = FastBlur.doBlur(overlay, (int) radius, true);
-        view.setBackgroundDrawable(new BitmapDrawable(UiUtils.getResources(), overlay));
+        view.setBackgroundDrawable(new BitmapDrawable(UiUtils.getResources(context), overlay));
         Log.w("test", "cost " + (System.currentTimeMillis() - startMs) + "ms");
     }
 

@@ -3,7 +3,7 @@ package com.jess.arms.di.module;
 import android.app.Application;
 import android.text.TextUtils;
 
-import com.jess.arms.http.GlobeHttpHandler;
+import com.jess.arms.http.GlobalHttpHandler;
 import com.jess.arms.utils.DataHelper;
 
 import java.io.File;
@@ -24,9 +24,9 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * Created by jessyan on 2016/3/14.
  */
 @Module
-public class GlobeConfigModule {
+public class GlobalConfigModule {
     private HttpUrl mApiUrl;
-    private GlobeHttpHandler mHandler;
+    private GlobalHttpHandler mHandler;
     private List<Interceptor> mInterceptors;
     private ResponseErroListener mErroListener;
     private File mCacheFile;
@@ -36,7 +36,7 @@ public class GlobeConfigModule {
      * @date 8/5/16 11:03 AM
      * @description: 设置baseurl
      */
-    private GlobeConfigModule(Builder builder) {
+    private GlobalConfigModule(Builder builder) {
         this.mApiUrl = builder.apiUrl;
         this.mHandler = builder.handler;
         this.mInterceptors = builder.interceptors;
@@ -65,8 +65,8 @@ public class GlobeConfigModule {
 
     @Singleton
     @Provides
-    GlobeHttpHandler provideGlobeHttpHandler() {
-        return mHandler == null ? GlobeHttpHandler.EMPTY : mHandler;//打印请求信息
+    GlobalHttpHandler provideGlobalHttpHandler() {
+        return mHandler == null ? GlobalHttpHandler.EMPTY : mHandler;//打印请求信息
     }
 
 
@@ -94,7 +94,7 @@ public class GlobeConfigModule {
 
     public static final class Builder {
         private HttpUrl apiUrl = HttpUrl.parse("https://api.github.com/");
-        private GlobeHttpHandler handler;
+        private GlobalHttpHandler handler;
         private List<Interceptor> interceptors = new ArrayList<>();
         private ResponseErroListener responseErroListener;
         private File cacheFile;
@@ -110,7 +110,7 @@ public class GlobeConfigModule {
             return this;
         }
 
-        public Builder globeHttpHandler(GlobeHttpHandler handler) {//用来处理http响应结果
+        public Builder globalHttpHandler(GlobalHttpHandler handler) {//用来处理http响应结果
             this.handler = handler;
             return this;
         }
@@ -133,9 +133,9 @@ public class GlobeConfigModule {
         }
 
 
-        public GlobeConfigModule build() {
+        public GlobalConfigModule build() {
             checkNotNull(apiUrl, "baseurl is required");
-            return new GlobeConfigModule(this);
+            return new GlobalConfigModule(this);
         }
 
 

@@ -23,7 +23,7 @@ import butterknife.Unbinder;
 
 public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActivity {
     protected final String TAG = this.getClass().getSimpleName();
-    protected BaseApplication mApplication;
+    protected App mApp;
     private Unbinder mUnbinder;
     @Inject
     protected P mPresenter;
@@ -59,13 +59,13 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mApplication = (BaseApplication) getApplication();
+        mApp = (App) getApplication();
         if (useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().register(this);//注册到事件主线
         setContentView(initView());
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(this);
-        setupActivityComponent(mApplication.getAppComponent());//依赖注入
+        setupActivityComponent(mApp.getAppComponent());//依赖注入
         initData();
     }
 
@@ -98,7 +98,7 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
             EventBus.getDefault().unregister(this);
         this.mPresenter = null;
         this.mUnbinder = null;
-        this.mApplication = null;
+        this.mApp = null;
     }
 
     /**

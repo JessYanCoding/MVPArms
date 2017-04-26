@@ -2,7 +2,7 @@ package com.jess.arms.di.module;
 
 import android.app.Application;
 
-import com.jess.arms.http.GlobeHttpHandler;
+import com.jess.arms.http.GlobalHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
 import com.jess.arms.utils.DataHelper;
 
@@ -63,7 +63,7 @@ public class ClientModule {
     @Singleton
     @Provides
     OkHttpClient provideClient(OkHttpClient.Builder okHttpClient, Interceptor intercept
-            , List<Interceptor> interceptors, GlobeHttpHandler handler) {
+            , List<Interceptor> interceptors, GlobalHttpHandler handler) {
         OkHttpClient.Builder builder = okHttpClient
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
