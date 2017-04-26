@@ -2,6 +2,7 @@ package com.jess.arms.base.delegate;
 
 import android.app.Application;
 
+import com.jess.arms.base.App;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.di.component.DaggerAppComponent;
 import com.jess.arms.di.module.AppModule;
@@ -27,7 +28,7 @@ import javax.inject.Inject;
  * Contact with jess.yan.effort@gmail.com
  */
 
-public class AppDelegate {
+public class AppDelegate implements App {
     private Application mApplication;
     private AppComponent mAppComponent;
     @Inject
@@ -47,7 +48,7 @@ public class AppDelegate {
     public void onCreate() {
         mAppComponent = DaggerAppComponent
                 .builder()
-                .appModule(new AppModule(mApplication))////提供application
+                .appModule(new AppModule(mApplication))//提供application
                 .clientModule(new ClientModule())//用于提供okhttp和retrofit的单例
                 .imageModule(new ImageModule())//图片加载框架默认使用glide
                 .globalConfigModule(getGlobalConfigModule(mApplication, mModules))//全局配置
@@ -106,6 +107,7 @@ public class AppDelegate {
      *
      * @return
      */
+    @Override
     public AppComponent getAppComponent() {
         return mAppComponent;
     }

@@ -248,7 +248,7 @@ public class FastBlur {
         return (bitmap);
     }
 
-    public static void blur(Context context,Bitmap bkg, View view) {
+    public static void blur(Context context, Bitmap bkg, View view) {
         long startMs = System.currentTimeMillis();
         float radius = 15;
         float scaleFactor = 8;

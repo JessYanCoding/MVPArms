@@ -44,11 +44,13 @@ public class UserItemHolder extends BaseHolder<User> {
         Observable.just(data.getLogin())
                 .subscribe(RxTextView.text(mName));
 
-        mImageLoader.loadImage(mAppComponent.appManager().getCurrentActivity(), GlideImageConfig
-                .builder()
-                .url(data.getAvatarUrl())
-                .imageView(mAvater)
-                .build());
+        mImageLoader.loadImage(mAppComponent.appManager().getCurrentActivity() == null
+                        ? mAppComponent.Application() : mAppComponent.appManager().getCurrentActivity(),
+                GlideImageConfig
+                        .builder()
+                        .url(data.getAvatarUrl())
+                        .imageView(mAvater)
+                        .build());
     }
 
 
