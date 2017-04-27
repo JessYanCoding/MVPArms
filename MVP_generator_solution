@@ -44,7 +44,7 @@ public class ${NAME}Activity extends BaseActivity<${NAME}Presenter> implements $
 
 
     @Override
-    protected void setupActivityComponent(AppComponent appComponent) {
+    public void setupActivityComponent(AppComponent appComponent) {
         Dagger${NAME}Component
                 .builder()
                 .appComponent(appComponent)
@@ -54,15 +54,14 @@ public class ${NAME}Activity extends BaseActivity<${NAME}Presenter> implements $
     }
 
     @Override
-    protected View initView() {
-        return LayoutInflater.from(this).inflate(layout_id, null, false);
+    public int initView() {
+        return 0;
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
 
     }
-
 
 
     @Override

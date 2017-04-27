@@ -34,13 +34,15 @@ public class AppDelegate implements App {
     @Inject
     protected ActivityLifecycle mActivityLifecycle;
     private final List<ConfigModule> mModules;
-    private List<Lifecycle> mLifecycles = new ArrayList<>();
+    private List<Lifecycle> mAppLifecycles = new ArrayList<>();
+    private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();
 
     public AppDelegate(Application application) {
         this.mApplication = application;
         this.mModules = new ManifestParser(mApplication).parse();
         for (ConfigModule module : mModules) {
-            module.injectAppLifecycle(mApplication, mLifecycles);
+            module.injectAppLifecycle(mApplication, mAppLifecycles);
+            module.injectActivityLifecycle(mApplication, mActivityLifecycles);
         }
     }
 
@@ -57,12 +59,15 @@ public class AppDelegate implements App {
 
         mApplication.registerActivityLifecycleCallbacks(mActivityLifecycle);
 
+        for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles) {
+            mApplication.registerActivityLifecycleCallbacks(lifecycle);
+        }
+
         for (ConfigModule module : mModules) {
             module.registerComponents(mApplication, mAppComponent.repositoryManager());
         }
 
-
-        for (Lifecycle lifecycle : mLifecycles) {
+        for (Lifecycle lifecycle : mAppLifecycles) {
             lifecycle.onCreate(mApplication);
         }
 
@@ -73,13 +78,19 @@ public class AppDelegate implements App {
         if (mActivityLifecycle != null) {
             mApplication.unregisterActivityLifecycleCallbacks(mActivityLifecycle);
         }
-        this.mAppComponent = null;
-        this.mActivityLifecycle = null;
-        this.mApplication = null;
-
-        for (Lifecycle lifecycle : mLifecycles) {
+        if (mActivityLifecycles != null && mActivityLifecycles.size() > 0) {
+            for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles) {
+                mApplication.unregisterActivityLifecycleCallbacks(lifecycle);
+            }
+        }
+        for (Lifecycle lifecycle : mAppLifecycles) {
             lifecycle.onTerminate(mApplication);
         }
+        this.mAppComponent = null;
+        this.mActivityLifecycle = null;
+        this.mActivityLifecycles = null;
+        this.mAppLifecycles = null;
+        this.mApplication = null;
     }
 
 

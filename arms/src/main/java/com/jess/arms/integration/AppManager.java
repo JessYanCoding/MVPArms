@@ -33,6 +33,7 @@ import timber.log.Timber;
 public class AppManager {
     protected final String TAG = this.getClass().getSimpleName();
     public static final String APPMANAGER_MESSAGE = "appmanager_message";
+    public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_add_activity_list";//是否加入到activity的list，管理
     public static final int START_ACTIVITY = 0;
     public static final int SHOW_SNACKBAR = 1;
     public static final int KILL_ALL = 2;

@@ -1,9 +1,9 @@
-package com.jess.arms.utils;
+package me.jessyan.mvparms.demo.app.utils;
 
-import com.jess.arms.base.BaseActivity;
-import com.jess.arms.base.BaseFragment;
 import com.jess.arms.mvp.IView;
 import com.trello.rxlifecycle.LifecycleTransformer;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle.components.support.RxFragment;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -41,11 +41,12 @@ public class RxUtils {
     }
 
 
+
     public static <T> LifecycleTransformer<T> bindToLifecycle(IView view) {
-        if (view instanceof BaseActivity) {
-            return ((BaseActivity) view).<T>bindToLifecycle();
-        } else if (view instanceof BaseFragment) {
-            return ((BaseFragment) view).<T>bindToLifecycle();
+        if (view instanceof RxAppCompatActivity) {
+            return ((RxAppCompatActivity) view).bindToLifecycle();
+        } else if (view instanceof RxFragment) {
+            return ((RxFragment) view).bindToLifecycle();
         } else {
             throw new IllegalArgumentException("view isn't activity or fragment");
         }

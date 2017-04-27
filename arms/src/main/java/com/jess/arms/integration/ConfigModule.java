@@ -1,5 +1,6 @@
 package com.jess.arms.integration;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.jess.arms.base.delegate.AppDelegate;
@@ -34,4 +35,12 @@ public interface ConfigModule {
      * @return
      */
     void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycles);
+
+    /**
+     * 使用{@link Application.ActivityLifecycleCallbacks}在Activity的声明周期中注入一些操作
+     *
+     * @param context
+     * @param lifecycles
+     */
+    void injectActivityLifecycle(Context context, List<Application.ActivityLifecycleCallbacks> lifecycles);
 }

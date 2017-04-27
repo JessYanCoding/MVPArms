@@ -5,8 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.DefaultAdapter;
@@ -40,7 +38,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     private RxPermissions mRxPermissions;
 
     @Override
-    protected void setupActivityComponent(AppComponent appComponent) {
+    public void setupActivityComponent(AppComponent appComponent) {
         this.mRxPermissions = new RxPermissions(this);
         DaggerUserComponent
                 .builder()
@@ -51,12 +49,12 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     }
 
     @Override
-    protected View initView() {
-        return LayoutInflater.from(this).inflate(R.layout.activity_user, null, false);
+    public int initView() {
+        return R.layout.activity_user;
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         mPresenter.requestUsers(true);//打开app时自动加载列表
     }
 

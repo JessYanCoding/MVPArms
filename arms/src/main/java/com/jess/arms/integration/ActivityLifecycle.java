@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
+import com.jess.arms.base.delegate.ActivityDelegate;
+import com.jess.arms.base.delegate.IActivity;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import static com.jess.arms.base.BaseActivity.IS_NOT_ADD_ACTIVITY_LIST;
 
 /**
  * Created by jess on 21/02/2017 14:23
@@ -29,20 +31,35 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         // 默认为false,如果不需要管理(比如不需要在退出所有activity(killAll)时，退出此activity就在intent加此字段为true)
         boolean isNotAdd = false;
         if (activity.getIntent() != null)
-            isNotAdd = activity.getIntent().getBooleanExtra(IS_NOT_ADD_ACTIVITY_LIST, false);
+            isNotAdd = activity.getIntent().getBooleanExtra(AppManager.IS_NOT_ADD_ACTIVITY_LIST, false);
 
         if (!isNotAdd)
             mAppManager.addActivity(activity);
+
+
+        if (activity instanceof IActivity) {
+            ActivityDelegate activityDelegate = new ActivityDelegate(activity);
+            activity.getIntent().putExtra(ActivityDelegate.ACTIVITY_DELEGATE, activityDelegate);
+            activityDelegate.onCreate(savedInstanceState);
+        }
     }
 
     @Override
     public void onActivityStarted(Activity activity) {
-
+        ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
+        if (activityDelegate != null) {
+            activityDelegate.onStart();
+        }
     }
 
     @Override
     public void onActivityResumed(Activity activity) {
         mAppManager.setCurrentActivity(activity);
+
+        ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
+        if (activityDelegate != null) {
+            activityDelegate.onResume();
+        }
     }
 
     @Override
@@ -50,20 +67,46 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         if (mAppManager.getCurrentActivity() == activity) {
             mAppManager.setCurrentActivity(null);
         }
+
+        ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
+        if (activityDelegate != null) {
+            activityDelegate.onPause();
+        }
     }
 
     @Override
     public void onActivityStopped(Activity activity) {
-
+        ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
+        if (activityDelegate != null) {
+            activityDelegate.onStop();
+        }
     }
 
     @Override
     public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-
+        ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
+        if (activityDelegate != null) {
+            activityDelegate.onSaveInstanceState(outState);
+        }
     }
 
     @Override
     public void onActivityDestroyed(Activity activity) {
         mAppManager.removeActivity(activity);
+
+        ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
+        if (activityDelegate != null) {
+            activityDelegate.onDestroy();
+            activity.getIntent().getExtras().clear();
+        }
     }
+
+    private ActivityDelegate fetchActivityDelegate(Activity activity) {
+        ActivityDelegate activityDelegate = null;
+        if (activity instanceof IActivity) {
+            activityDelegate = (ActivityDelegate) activity.getIntent().getSerializableExtra(ActivityDelegate.ACTIVITY_DELEGATE);
+        }
+        return activityDelegate;
+    }
+
 }
