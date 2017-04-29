@@ -3,12 +3,18 @@ package me.jessyan.mvparms.demo.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
+import com.jess.arms.base.App;
 import com.jess.arms.base.delegate.AppDelegate;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.GlobalHttpHandler;
@@ -110,7 +116,6 @@ public class GlobalConfiguration implements ConfigModule {
     public void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycles) {
         // AppDelegate.Lifecycle 的所有方法都会在基类Application对应的生命周期中被调用,所以在对应的方法中可以扩展一些自己需要的逻辑
         lifecycles.add(new AppDelegate.Lifecycle() {
-            private RefWatcher mRefWatcher;//leakCanary观察器
 
             @Override
             public void onCreate(Application application) {
@@ -118,12 +123,12 @@ public class GlobalConfiguration implements ConfigModule {
                     Timber.plant(new Timber.DebugTree());
                 }
                 //leakCanary内存泄露检查
-                this.mRefWatcher = BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED;
+                ((App) application).getAppComponent().extras().put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
             }
 
             @Override
             public void onTerminate(Application application) {
-                this.mRefWatcher = null;
+
             }
         });
     }
@@ -133,10 +138,17 @@ public class GlobalConfiguration implements ConfigModule {
         lifecycles.add(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                //这里全局给Activity设置toolbar和title,退出动画,你想象力有多丰富,这里就有多强大,以前放到BaseActivity的操作都可以放到这里
-                if (activity.findViewById(R.id.toolbar) != null && activity instanceof AppCompatActivity) {
-                    ((AppCompatActivity) activity).setSupportActionBar((Toolbar) activity.findViewById(R.id.toolbar));
-                    ((AppCompatActivity) activity).getSupportActionBar().setDisplayShowTitleEnabled(false);
+                //这里全局给Activity设置toolbar和title,你想象力有多丰富,这里就有多强大,以前放到BaseActivity的操作都可以放到这里
+                if (activity.findViewById(R.id.toolbar) != null) {
+                    if (activity instanceof AppCompatActivity) {
+                        ((AppCompatActivity) activity).setSupportActionBar((Toolbar) activity.findViewById(R.id.toolbar));
+                        ((AppCompatActivity) activity).getSupportActionBar().setDisplayShowTitleEnabled(false);
+                    } else {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            activity.setActionBar((android.widget.Toolbar) activity.findViewById(R.id.toolbar));
+                            activity.getActionBar().setDisplayShowTitleEnabled(false);
+                        }
+                    }
                 }
                 if (activity.findViewById(R.id.toolbar_title) != null) {
                     ((TextView) activity.findViewById(R.id.toolbar_title)).setText(activity.getTitle());
@@ -144,14 +156,40 @@ public class GlobalConfiguration implements ConfigModule {
                 if (activity.findViewById(R.id.toolbar_back) != null) {
                     activity.findViewById(R.id.toolbar_back).setOnClickListener(v -> {
                         activity.onBackPressed();
-                        activity.overridePendingTransition(R.anim.translate_left_to_center, R.anim.translate_center_to_right);
                     });
                 }
             }
 
+
             @Override
             public void onActivityStarted(Activity activity) {
+//                ((RefWatcher)((App) activity.getApplication()).getAppComponent().extras().get(RefWatcher.class.getName())).watch(this);
+                if (!(activity instanceof FragmentActivity)) return;
+                ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(new FragmentManager.FragmentLifecycleCallbacks() {
+                    @Override
+                    public void onFragmentPreAttached(FragmentManager fm, Fragment f, Context context) {
+                    }
 
+                    @Override
+                    public void onFragmentViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
+                        super.onFragmentViewCreated(fm, f, v, savedInstanceState);
+                    }
+
+                    @Override
+                    public void onFragmentActivityCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState) {
+                        super.onFragmentActivityCreated(fm, f, savedInstanceState);
+                    }
+
+                    @Override
+                    public void onFragmentViewDestroyed(FragmentManager fm, Fragment f) {
+                        super.onFragmentViewDestroyed(fm, f);
+                    }
+
+                    @Override
+                    public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
+                        super.onFragmentDestroyed(fm, f);
+                    }
+                }, true);
             }
 
             @Override

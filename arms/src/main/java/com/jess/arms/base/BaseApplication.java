@@ -46,5 +46,4 @@ public class BaseApplication extends Application implements App {
         return mAppDelegate.getAppComponent();
     }
 
-
 }

@@ -36,6 +36,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment {
         return mRootView;
     }
 
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -70,6 +71,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment {
         this.mRootView = null;
         this.mUnbinder = null;
     }
+
 
     /**
      * 是否使用eventBus,默认为使用(true)，

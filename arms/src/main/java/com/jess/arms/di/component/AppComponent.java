@@ -13,6 +13,7 @@ import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.widget.imageloader.ImageLoader;
 
 import java.io.File;
+import java.util.Map;
 
 import javax.inject.Singleton;
 
@@ -48,6 +49,9 @@ public interface AppComponent {
 
     //用于管理所有activity
     AppManager appManager();
+
+    //用来存取一些整个App公用的数据,切勿大量存放大容量数据
+    Map<String, Object> extras();
 
     void inject(AppDelegate delegate);
 }

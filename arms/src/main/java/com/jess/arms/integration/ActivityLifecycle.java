@@ -5,6 +5,7 @@ import android.app.Application;
 import android.os.Bundle;
 
 import com.jess.arms.base.delegate.ActivityDelegate;
+import com.jess.arms.base.delegate.ActivityDelegateImpl;
 import com.jess.arms.base.delegate.IActivity;
 
 import javax.inject.Inject;
@@ -36,9 +37,8 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         if (!isNotAdd)
             mAppManager.addActivity(activity);
 
-
         if (activity instanceof IActivity) {
-            ActivityDelegate activityDelegate = new ActivityDelegate(activity);
+            ActivityDelegate activityDelegate = new ActivityDelegateImpl(activity);
             activity.getIntent().putExtra(ActivityDelegate.ACTIVITY_DELEGATE, activityDelegate);
             activityDelegate.onCreate(savedInstanceState);
         }

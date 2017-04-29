@@ -1,10 +1,13 @@
 package com.jess.arms.di.module;
 
 import android.app.Application;
+import android.support.v4.util.ArrayMap;
 
 import com.google.gson.Gson;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.integration.RepositoryManager;
+
+import java.util.Map;
 
 import javax.inject.Singleton;
 
@@ -36,5 +39,11 @@ public class AppModule {
     @Provides
     public IRepositoryManager provideRepositoryManager(RepositoryManager repositoryManager) {
         return repositoryManager;
+    }
+
+    @Singleton
+    @Provides
+    public Map<String, Object> provideExtras(){
+        return new ArrayMap<>();
     }
 }
