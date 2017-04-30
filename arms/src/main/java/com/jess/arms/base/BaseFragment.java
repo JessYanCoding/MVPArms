@@ -6,70 +6,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.base.delegate.IFragment;
 import com.jess.arms.mvp.IPresenter;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
-import org.simple.eventbus.EventBus;
-
 import javax.inject.Inject;
-
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by jess on 2015/12/8.
  */
-public abstract class BaseFragment<P extends IPresenter> extends RxFragment {
-    protected View mRootView;
+public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IFragment{
     protected final String TAG = this.getClass().getSimpleName();
     @Inject
     protected P mPresenter;
-    private Unbinder mUnbinder;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = initView(inflater, container);
         //绑定到butterknife
-        mUnbinder = ButterKnife.bind(this, mRootView);
-        return mRootView;
+        return inflater.inflate(initView(), container, false);
     }
 
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (useEventBus())//如果要使用eventbus请将此方法返回true
-            EventBus.getDefault().register(this);//注册到事件主线
-        setupFragmentComponent(((App) getActivity().getApplication()).getAppComponent());
-        initData();
-    }
-
-
-    /**
-     * 提供AppComponent(提供所有的单例对象)给子类，进行Component依赖
-     *
-     * @param appComponent
-     */
-    protected abstract void setupFragmentComponent(AppComponent appComponent);
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (mUnbinder != Unbinder.EMPTY) mUnbinder.unbind();
-    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         if (mPresenter != null) mPresenter.onDestroy();//释放资源
-        if (useEventBus())//如果要使用eventbus请将此方法返回true
-            EventBus.getDefault().unregister(this);
         this.mPresenter = null;
-        this.mRootView = null;
-        this.mUnbinder = null;
     }
 
 
@@ -78,14 +41,11 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment {
      *
      * @return
      */
-    protected boolean useEventBus() {
+    public boolean useEventBus() {
         return true;
     }
 
 
-    protected abstract View initView(LayoutInflater inflater, ViewGroup container);
-
-    protected abstract void initData();
 
 
     /**

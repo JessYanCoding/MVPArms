@@ -37,7 +37,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         if (!isNotAdd)
             mAppManager.addActivity(activity);
 
-        if (activity instanceof IActivity) {
+        if (activity instanceof IActivity && activity.getIntent() != null) {
             ActivityDelegate activityDelegate = new ActivityDelegateImpl(activity);
             activity.getIntent().putExtra(ActivityDelegate.ACTIVITY_DELEGATE, activityDelegate);
             activityDelegate.onCreate(savedInstanceState);
@@ -103,7 +103,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     private ActivityDelegate fetchActivityDelegate(Activity activity) {
         ActivityDelegate activityDelegate = null;
-        if (activity instanceof IActivity) {
+        if (activity instanceof IActivity && activity.getIntent() != null) {
             activityDelegate = (ActivityDelegate) activity.getIntent().getSerializableExtra(ActivityDelegate.ACTIVITY_DELEGATE);
         }
         return activityDelegate;

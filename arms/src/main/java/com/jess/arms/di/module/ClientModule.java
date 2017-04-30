@@ -57,14 +57,14 @@ public class ClientModule {
     /**
      * 提供OkhttpClient
      *
-     * @param okHttpClient
+     * @param builder
      * @return
      */
     @Singleton
     @Provides
-    OkHttpClient provideClient(OkHttpClient.Builder okHttpClient, Interceptor intercept
+    OkHttpClient provideClient(OkHttpClient.Builder builder, Interceptor intercept
             , List<Interceptor> interceptors, GlobalHttpHandler handler) {
-        OkHttpClient.Builder builder = okHttpClient
+                builder
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .addInterceptor(chain -> chain.proceed(handler.onHttpRequestBefore(chain, chain.request())))
@@ -139,34 +139,4 @@ public class ClientModule {
                 .responseErroListener(listener)
                 .build();
     }
-
-
-
-//    .addNetworkInterceptor(new Interceptor() {
-//        @Override
-//        public Response intercept(Interceptor.Chain chain) throws IOException {
-//            Request request = chain.request();
-//            if(!DeviceUtils.netIsConnected(UiUtils.getContext())){
-//                request = request.newBuilder()
-//                        .cacheControl(CacheControl.FORCE_CACHE)
-//                        .build();
-//                LogUtils.warnInfo("http","no network");
-//            }
-//            Response originalResponse = chain.proceed(request);
-//            if(DeviceUtils.netIsConnected(UiUtils.getContext())){
-//                //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
-//                String cacheControl = request.cacheControl().toString();
-//                return originalResponse.newBuilder()
-//                        .header("Cache-Control", cacheControl)
-//                        .removeHeader("Pragma")
-//                        .build();
-//            }else{
-//                return originalResponse.newBuilder()
-//                        .header("Cache-Control", "public, only-if-cached, max-stale=2419200")
-//                        .removeHeader("Pragma")
-//                        .build();
-//            }
-//        }
-//    })
-
 }

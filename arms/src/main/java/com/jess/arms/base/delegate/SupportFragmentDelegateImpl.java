@@ -6,6 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import com.jess.arms.base.App;
+
+import org.simple.eventbus.EventBus;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * Created by jess on 29/04/2017 16:12
  * Contact with jess.yan.effort@gmail.com
@@ -14,11 +21,14 @@ import android.view.View;
 public class SupportFragmentDelegateImpl implements FragmentDelegate {
     private android.support.v4.app.FragmentManager mFragmentManager;
     private android.support.v4.app.Fragment mFragment;
+    private IFragment iFragment;
+    private Unbinder mUnbinder;
 
 
     public SupportFragmentDelegateImpl(FragmentManager fragmentManager, Fragment fragment) {
         this.mFragmentManager = fragmentManager;
         this.mFragment = fragment;
+        this.iFragment = (IFragment) fragment;
     }
 
     @Override
@@ -33,12 +43,17 @@ public class SupportFragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onActivityCreate(Bundle savedInstanceState) {
-
+        if (iFragment.useEventBus())//如果要使用eventbus请将此方法返回true
+            EventBus.getDefault().register(mFragment);//注册到事件主线
+        iFragment.setupFragmentComponent(((App) mFragment.getActivity().getApplication()).getAppComponent());
+        iFragment.initData();
     }
 
     @Override
     public void onCreateView(View view, Bundle savedInstanceState) {
-
+        //绑定到butterknife
+        if (view != null)
+            mUnbinder = ButterKnife.bind(this, view);
     }
 
     @Override
@@ -68,12 +83,15 @@ public class SupportFragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onDestroyView() {
-
+        if (mUnbinder != null)
+            mUnbinder.unbind();
     }
 
     @Override
     public void onDestroy() {
-
+        if (iFragment.useEventBus())//如果要使用eventbus请将此方法返回true
+            EventBus.getDefault().unregister(mFragment);//注册到事件主线
+        this.mUnbinder = null;
     }
 
     @Override

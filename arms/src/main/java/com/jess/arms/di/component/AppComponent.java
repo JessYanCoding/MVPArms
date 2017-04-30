@@ -7,7 +7,6 @@ import com.jess.arms.base.delegate.AppDelegate;
 import com.jess.arms.di.module.AppModule;
 import com.jess.arms.di.module.ClientModule;
 import com.jess.arms.di.module.GlobalConfigModule;
-import com.jess.arms.di.module.ImageModule;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.widget.imageloader.ImageLoader;
@@ -25,7 +24,7 @@ import okhttp3.OkHttpClient;
  * Created by jess on 8/4/16.
  */
 @Singleton
-@Component(modules = {AppModule.class, ClientModule.class, ImageModule.class, GlobalConfigModule.class})
+@Component(modules = {AppModule.class, ClientModule.class, GlobalConfigModule.class})
 public interface AppComponent {
     Application Application();
 
