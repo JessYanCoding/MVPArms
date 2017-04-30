@@ -31,6 +31,10 @@ public class GlobalConfigModule {
     private List<Interceptor> mInterceptors;
     private ResponseErroListener mErroListener;
     private File mCacheFile;
+    private ClientModule.RetrofitConfiguration mRetrofitConfiguration;
+    private ClientModule.OkhttpConfiguration mOkhttpConfiguration;
+    private ClientModule.RxCacheConfiguration mRxCacheConfiguration;
+    private AppModule.GsonConfiguration mGsonConfiguration;
 
     /**
      * @author: jess
@@ -44,6 +48,10 @@ public class GlobalConfigModule {
         this.mInterceptors = builder.interceptors;
         this.mErroListener = builder.responseErroListener;
         this.mCacheFile = builder.cacheFile;
+        this.mRetrofitConfiguration = builder.retrofitConfiguration;
+        this.mOkhttpConfiguration = builder.okhttpConfiguration;
+        this.mRxCacheConfiguration = builder.rxCacheConfiguration;
+        this.mGsonConfiguration = builder.gsonConfiguration;
     }
 
     public static Builder builder() {
@@ -101,6 +109,31 @@ public class GlobalConfigModule {
     }
 
 
+    @Singleton
+    @Provides
+    ClientModule.RetrofitConfiguration provideRetrofitConfiguration() {
+        return mRetrofitConfiguration == null ? ClientModule.RetrofitConfiguration.EMPTY : mRetrofitConfiguration;
+    }
+
+    @Singleton
+    @Provides
+    ClientModule.OkhttpConfiguration provideOkhttpConfiguration() {
+        return mOkhttpConfiguration == null ? ClientModule.OkhttpConfiguration.EMPTY : mOkhttpConfiguration;
+    }
+
+    @Singleton
+    @Provides
+    ClientModule.RxCacheConfiguration provideRxCacheConfiguration() {
+        return mRxCacheConfiguration == null ? ClientModule.RxCacheConfiguration.EMPTY : mRxCacheConfiguration;
+    }
+
+    @Singleton
+    @Provides
+    AppModule.GsonConfiguration provideGsonConfiguration() {
+        return mGsonConfiguration == null ? AppModule.GsonConfiguration.EMPTY : mGsonConfiguration;
+    }
+
+
     public static final class Builder {
         private HttpUrl apiUrl;
         private BaseImageLoaderStrategy loaderStrategy;
@@ -108,6 +141,10 @@ public class GlobalConfigModule {
         private List<Interceptor> interceptors = new ArrayList<>();
         private ResponseErroListener responseErroListener;
         private File cacheFile;
+        private ClientModule.RetrofitConfiguration retrofitConfiguration;
+        private ClientModule.OkhttpConfiguration okhttpConfiguration;
+        private ClientModule.RxCacheConfiguration rxCacheConfiguration;
+        private AppModule.GsonConfiguration gsonConfiguration;
 
         private Builder() {
         }
@@ -144,6 +181,26 @@ public class GlobalConfigModule {
 
         public Builder cacheFile(File cacheFile) {
             this.cacheFile = cacheFile;
+            return this;
+        }
+
+        public Builder retrofitConfiguration(ClientModule.RetrofitConfiguration retrofitConfiguration) {
+            this.retrofitConfiguration = retrofitConfiguration;
+            return this;
+        }
+
+        public Builder okhttpConfiguration(ClientModule.OkhttpConfiguration okhttpConfiguration) {
+            this.okhttpConfiguration = okhttpConfiguration;
+            return this;
+        }
+
+        public Builder rxCacheConfiguration(ClientModule.RxCacheConfiguration rxCacheConfiguration) {
+            this.rxCacheConfiguration = rxCacheConfiguration;
+            return this;
+        }
+
+        public Builder gsonConfiguration(AppModule.GsonConfiguration gsonConfiguration) {
+            this.gsonConfiguration = gsonConfiguration;
             return this;
         }
 
