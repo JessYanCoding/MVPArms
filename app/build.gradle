@@ -62,7 +62,7 @@ dependencies {
     compile rootProject.ext.dependencies["paginate"]
     //arms
     compile project(':arms')
-//    compile 'me.jessyan:arms:1.5.2'
+//    compile 'me.jessyan:arms:1.6.0'
     //test
     testCompile rootProject.ext.dependencies["junit"]
     debugCompile rootProject.ext.dependencies["canary-debug"]
