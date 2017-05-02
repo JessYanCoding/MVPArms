@@ -1,7 +1,5 @@
 package com.jess.arms.base.delegate;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -19,13 +17,13 @@ import butterknife.Unbinder;
  */
 
 public class FragmentDelegateImpl implements FragmentDelegate {
-    private FragmentManager mFragmentManager;
-    private Fragment mFragment;
+    private android.support.v4.app.FragmentManager mFragmentManager;
+    private android.support.v4.app.Fragment mFragment;
     private IFragment iFragment;
     private Unbinder mUnbinder;
 
 
-    public FragmentDelegateImpl(FragmentManager fragmentManager, Fragment fragment) {
+    public FragmentDelegateImpl(android.support.v4.app.FragmentManager fragmentManager, android.support.v4.app.Fragment fragment) {
         this.mFragmentManager = fragmentManager;
         this.mFragment = fragment;
         this.iFragment = (IFragment) fragment;
@@ -42,18 +40,18 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     }
 
     @Override
+    public void onCreateView(View view, Bundle savedInstanceState) {
+        //绑定到butterknife
+        if (view != null)
+            mUnbinder = ButterKnife.bind(mFragment, view);
+    }
+
+    @Override
     public void onActivityCreate(Bundle savedInstanceState) {
         if (iFragment.useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().register(mFragment);//注册到事件主线
         iFragment.setupFragmentComponent(((App) mFragment.getActivity().getApplication()).getAppComponent());
         iFragment.initData();
-    }
-
-    @Override
-    public void onCreateView(View view, Bundle savedInstanceState) {
-        //绑定到butterknife
-        if (view != null)
-            mUnbinder = ButterKnife.bind(this, view);
     }
 
     @Override

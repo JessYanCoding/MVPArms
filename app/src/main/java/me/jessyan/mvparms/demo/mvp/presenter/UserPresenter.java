@@ -2,9 +2,9 @@ package me.jessyan.mvparms.demo.mvp.presenter;
 
 import android.app.Application;
 
-import com.jess.arms.integration.AppManager;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.scope.ActivityScope;
+import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.PermissionUtil;
 
@@ -99,6 +99,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
                     }
                 });
     }
+
 
     @Override
     public void onDestroy() {

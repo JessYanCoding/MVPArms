@@ -6,12 +6,10 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.TextView;
 
 import com.jess.arms.base.App;
@@ -177,33 +175,7 @@ public class GlobalConfiguration implements ConfigModule {
 
             @Override
             public void onActivityStarted(Activity activity) {
-//                ((RefWatcher)((App) activity.getApplication()).getAppComponent().extras().get(RefWatcher.class.getName())).watch(this);
-                if (!(activity instanceof FragmentActivity)) return;
-                ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(new FragmentManager.FragmentLifecycleCallbacks() {
-                    @Override
-                    public void onFragmentPreAttached(FragmentManager fm, Fragment f, Context context) {
-                    }
 
-                    @Override
-                    public void onFragmentViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
-                        super.onFragmentViewCreated(fm, f, v, savedInstanceState);
-                    }
-
-                    @Override
-                    public void onFragmentActivityCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState) {
-                        super.onFragmentActivityCreated(fm, f, savedInstanceState);
-                    }
-
-                    @Override
-                    public void onFragmentViewDestroyed(FragmentManager fm, Fragment f) {
-                        super.onFragmentViewDestroyed(fm, f);
-                    }
-
-                    @Override
-                    public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
-                        super.onFragmentDestroyed(fm, f);
-                    }
-                }, true);
             }
 
             @Override
@@ -231,6 +203,16 @@ public class GlobalConfiguration implements ConfigModule {
 
             }
         });
+    }
+
+    @Override
+    public void injectFragmentLifecycle(Context context, List<FragmentManager.FragmentLifecycleCallbacks> lifecycles) {
+            lifecycles.add(new FragmentManager.FragmentLifecycleCallbacks() {
+                @Override
+                public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
+                    ((RefWatcher)((App) f.getActivity().getApplication()).getAppComponent().extras().get(RefWatcher.class.getName())).watch(this);
+                }
+            });
     }
 
 }

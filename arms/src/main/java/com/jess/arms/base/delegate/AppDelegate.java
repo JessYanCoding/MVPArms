@@ -22,7 +22,7 @@ import javax.inject.Inject;
  * 而我的框架要求Application要继承于BaseApplication
  * 所以当遇到某些三方库需要继承于它的Application的时候,就只有自定义Application继承于三方库的Application
  * 再将BaseApplication的代码复制进去,而现在就不用再复制代码,只用在对应的生命周期调用AppDelegate对应的方法(Application一定要实现APP接口)
- *
+ * <p>
  * Created by jess on 24/04/2017 09:44
  * Contact with jess.yan.effort@gmail.com
  */
@@ -54,6 +54,8 @@ public class AppDelegate implements App {
                 .globalConfigModule(getGlobalConfigModule(mApplication, mModules))//全局配置
                 .build();
         mAppComponent.inject(this);
+
+        mAppComponent.extras().put(ConfigModule.class.getName(), mModules);
 
         mApplication.registerActivityLifecycleCallbacks(mActivityLifecycle);
 
