@@ -13,6 +13,7 @@ import org.simple.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import timber.log.Timber;
 
 /**
  * Created by jess on 29/04/2017 16:12
@@ -84,8 +85,15 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onDestroyView() {
-        if (mUnbinder != null && mUnbinder != mUnbinder.EMPTY)
-            mUnbinder.unbind();
+        if (mUnbinder != null && mUnbinder != mUnbinder.EMPTY) {
+            try {
+                mUnbinder.unbind();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+                //fix Bindings already cleared
+                Timber.w("onDestroyView: " + e.getMessage());
+            }
+        }
     }
 
     @Override
