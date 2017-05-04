@@ -111,7 +111,6 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     }
 
-
     @Override
     public int describeContents() {
         return 0;
