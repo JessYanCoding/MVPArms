@@ -3,7 +3,7 @@
 [ ![Build Status](https://travis-ci.org/JessYanCoding/MVPArms.svg?branch=master) ](https://travis-ci.org/JessYanCoding/MVPArms)
 [ ![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square) ](https://developer.android.com/about/versions/android-4.0.3.html)
 [ ![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square) ](http://www.apache.org/licenses/LICENSE-2.0)
-[ ![Support](https://img.shields.io/badge/Support-RxJava2-blue.svg) ](https://github.com/JessYanCoding/MVPArms/tree/rx2)
+[ ![Support](https://img.shields.io/badge/Support-RxJava2-blue.svg) ](https://github.com/JessYanCoding/MVPArms/tree/master)
 [ ![QQGroup](https://img.shields.io/badge/QQ群-301733278-ff69b4.svg) ](https://shang.qq.com/wpa/qunwpa?idkey=1a5dc5e9b2e40a780522f46877ba243eeb64405d42398643d544d3eec6624917)
 
 ## 一个整合了大量主流开源项目的Android Mvp快速搭建框架
