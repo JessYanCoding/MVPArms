@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.jess.arms.base.delegate.IActivity;
 import com.jess.arms.mvp.IPresenter;
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.AutoRelativeLayout;

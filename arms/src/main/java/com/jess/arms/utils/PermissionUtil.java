@@ -3,7 +3,7 @@ package com.jess.arms.utils;
 import android.Manifest;
 
 import com.jess.arms.mvp.IView;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;

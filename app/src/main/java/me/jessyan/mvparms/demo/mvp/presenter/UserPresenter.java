@@ -13,6 +13,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.mvparms.demo.app.utils.RxUtils;
 import me.jessyan.mvparms.demo.mvp.contract.UserContract;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
@@ -20,8 +22,6 @@ import me.jessyan.mvparms.demo.mvp.ui.adapter.UserAdapter;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by jess on 9/4/16 10:59
@@ -71,7 +71,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
         mModel.getUsers(lastUserId, isEvictCache)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
-                .doOnSubscribe(() -> {
+                .doOnSubscribe(disposable -> {
                     if (pullToRefresh)
                         mRootView.showLoading();//显示上拉刷新的进度条
                     else
