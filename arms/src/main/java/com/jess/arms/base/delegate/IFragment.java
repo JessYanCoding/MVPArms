@@ -31,8 +31,7 @@ public interface IFragment {
      *
      * 使用此方法时请注意调用时fragment的生命周期,如果调用此setData方法时onActivityCreated
      * 还没执行,setData里调用presenter的方法时,是会报空的,因为dagger注入是在onActivityCreated
-     * 方法中执行的,如果要做一些初始化操作,可以不必让外部调setData,在内部onActivityCreated中
-     * 初始化就可以了
+     * 方法中执行的,如果要做一些初始化操作,可以不必让外部调setData,在initData中初始化就可以了
      *
      * @param data
      */

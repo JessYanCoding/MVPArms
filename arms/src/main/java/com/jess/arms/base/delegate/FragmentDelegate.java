@@ -2,16 +2,15 @@ package com.jess.arms.base.delegate;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
-
-import java.io.Serializable;
 
 /**
  * Created by jess on 29/04/2017 14:30
  * Contact with jess.yan.effort@gmail.com
  */
 
-public interface FragmentDelegate extends Serializable{
+public interface FragmentDelegate extends Parcelable{
 
     String FRAGMENT_DELEGATE = "fragment_delegate";
 

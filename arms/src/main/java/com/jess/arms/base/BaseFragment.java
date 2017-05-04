@@ -30,7 +30,6 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //绑定到butterknife
         return initView(inflater,container);
     }
 
