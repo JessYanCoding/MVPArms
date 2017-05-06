@@ -35,7 +35,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onAttach(Context context) {
-
+        iFragment.setupFragmentComponent(((App) mFragment.getActivity().getApplication()).getAppComponent());
     }
 
     @Override
@@ -54,7 +54,6 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     public void onActivityCreate(Bundle savedInstanceState) {
         if (iFragment.useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().register(mFragment);//注册到事件主线
-        iFragment.setupFragmentComponent(((App) mFragment.getActivity().getApplication()).getAppComponent());
         iFragment.initData();
     }
 

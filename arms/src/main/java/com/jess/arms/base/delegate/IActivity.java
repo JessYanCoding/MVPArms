@@ -19,6 +19,11 @@ public interface IActivity {
 
     boolean useEventBus();
 
+    /**
+     * 如果initView返回0,框架则不会调用{@link android.app.Activity#setContentView(int)}
+     *
+     * @return
+     */
     int initView();
 
     void initData();
