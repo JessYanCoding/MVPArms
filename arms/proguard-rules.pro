@@ -35,6 +35,9 @@
 
 
 ################common###############
+
+-keep public class * implements com.jess.arms.integration.ConfigModule
+
  #实体类不参与混淆
 -keep class com.jess.arms.widget.** { *; } #自定义控件不参与混淆
 -keep class * implements android.os.Parcelable {
