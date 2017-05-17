@@ -110,6 +110,14 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     }
 
+    /**
+     * Return true if the fragment is currently added to its activity.
+     */
+    @Override
+    public boolean isAdded() {
+        return mFragment == null ? false : mFragment.isAdded();
+    }
+
     @Override
     public int describeContents() {
         return 0;

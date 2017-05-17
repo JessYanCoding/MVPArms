@@ -37,4 +37,9 @@ public interface FragmentDelegate extends Parcelable{
     void onDestroy();
 
     void onDetach();
+
+    /**
+     * Return true if the fragment is currently added to its activity.
+     */
+    boolean isAdded();
 }
