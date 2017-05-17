@@ -28,19 +28,26 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         setArguments(new Bundle());
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         // 在配置变化的时候将这个Fragment保存下来，在Activity由于配置变化重建是重复利用已经创建的Fragment。
         // https://developer.android.com/reference/android/app/Fragment.html?hl=zh-cn#setRetainInstance(boolean)
         setRetainInstance(true);
+    }
+
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return initView(inflater, container);
     }
 
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        super.onDestroy();
         if (mPresenter != null)
             mPresenter.onDestroy();//释放资源
         this.mPresenter = null;
