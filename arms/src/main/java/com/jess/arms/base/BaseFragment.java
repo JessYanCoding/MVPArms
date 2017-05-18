@@ -15,7 +15,6 @@ import javax.inject.Inject;
 /**
  * 因为java只能单继承,所以如果有需要继承特定Fragment的三方库,那你就需要自己自定义Fragment
  * 继承于这个特定的Fragment,然后按照将BaseFragment的格式,复制过去,记住一定要实现{@link IFragment}
- * Modified by https://github.com/xiaobailong24
  */
 public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IFragment {
     protected final String TAG = this.getClass().getSimpleName();
@@ -29,15 +28,6 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     }
 
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // 在配置变化的时候将这个Fragment保存下来，在Activity由于配置变化重建是重复利用已经创建的Fragment。
-        // https://developer.android.com/reference/android/app/Fragment.html?hl=zh-cn#setRetainInstance(boolean)
-        setRetainInstance(true);
-    }
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,8 +38,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null)
-            mPresenter.onDestroy();//释放资源
+        if (mPresenter != null) mPresenter.onDestroy();//释放资源
         this.mPresenter = null;
     }
 
