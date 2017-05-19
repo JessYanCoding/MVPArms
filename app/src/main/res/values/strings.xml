@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MVPArms</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
 </resources>

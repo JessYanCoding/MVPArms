@@ -49,6 +49,7 @@ public class UserDetailActivity extends BaseActivity {
             fm.executePendingTransactions();
             mDetailFragment.setData(username);
         } else {
+            // TODO: 2017/5/19 Always be null
             mDetailFragment = (UserDetailFragment) fm.findFragmentByTag("UserDetailFragment");
             Timber.w("initData: " + mDetailFragment);
         }
@@ -59,7 +60,7 @@ public class UserDetailActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // store the data in the fragment
-        mDetailFragment.setData(username);
+        //TODO  store the data in the fragment
+        //        mDetailFragment.setData(username);
     }
 }

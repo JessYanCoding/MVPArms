@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jess.arms.widget.autolayout.AutoCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/px200"
+    android:layout_marginBottom="@dimen/px30"
+    android:foreground="?attr/selectableItemBackground">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/content_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginLeft="@dimen/px30"
+        android:layout_marginStart="@dimen/px30"
+        android:text="@string/title"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/content_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:layout_marginEnd="@dimen/px30"
+        android:layout_marginRight="@dimen/px30"
+        android:text="@string/content"
+        android:textSize="@dimen/text_size"/>
+
+</com.jess.arms.widget.autolayout.AutoCardView>

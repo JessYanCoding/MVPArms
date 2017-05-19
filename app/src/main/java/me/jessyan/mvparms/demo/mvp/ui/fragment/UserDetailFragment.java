@@ -3,11 +3,13 @@ package me.jessyan.mvparms.demo.mvp.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.UiUtils;
@@ -28,8 +30,8 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 public class UserDetailFragment extends BaseFragment<UserDetailPresenter> implements UserDetailContract.View {
 
-    @BindView(R.id.username)
-    AppCompatTextView mUsername;
+    @BindView(R.id.recycler_user_detail)
+    RecyclerView mRecyclerUserDetail;
 
     private String username;
 
@@ -54,7 +56,7 @@ public class UserDetailFragment extends BaseFragment<UserDetailPresenter> implem
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        mUsername.setText(username);
+        mPresenter.requestUserDetail(username, true);
     }
 
 
@@ -91,4 +93,9 @@ public class UserDetailFragment extends BaseFragment<UserDetailPresenter> implem
 
     }
 
+    @Override
+    public void setAdapter(BaseQuickAdapter adapter) {
+        UiUtils.configRecycleView(mRecyclerUserDetail, new LinearLayoutManager(getContext()));
+        mRecyclerUserDetail.setAdapter(adapter);
+    }
 }

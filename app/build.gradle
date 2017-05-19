@@ -60,6 +60,7 @@ dependencies {
     //view
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     compile rootProject.ext.dependencies["paginate"]
+    compile rootProject.ext.dependencies["brvah"]
     //arms
     compile project(':arms')
 //    compile 'me.jessyan:arms:2.0.2'
@@ -68,7 +69,6 @@ dependencies {
     debugCompile rootProject.ext.dependencies["canary-debug"]
     releaseCompile rootProject.ext.dependencies["canary-release"]
     testCompile rootProject.ext.dependencies["canary-release"]
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 
 /*

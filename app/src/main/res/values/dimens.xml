@@ -2,4 +2,25 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- AutoLayout -->
+    <dimen name="px16">16px</dimen>
+    <dimen name="px30">30px</dimen>
+    <dimen name="px50">50px</dimen>
+    <dimen name="px60">60px</dimen>
+    <dimen name="px100">100px</dimen>
+    <dimen name="px120">120px</dimen>
+    <dimen name="px150">150px</dimen>
+    <dimen name="px200">200px</dimen>
+    <dimen name="px300">300px</dimen>
+    <dimen name="px400">400px</dimen>
+    <dimen name="px500">500px</dimen>
+    <dimen name="px600">600px</dimen>
+    <dimen name="px700">700px</dimen>
+    <dimen name="px800">800px</dimen>
+
+    <!--TextSize-->
+    <dimen name="title_size">100px</dimen>
+    <dimen name="text_size">64px</dimen>
+
 </resources>
