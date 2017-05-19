@@ -1,6 +1,7 @@
 package me.jessyan.mvparms.demo.mvp.ui.activity;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -42,6 +43,29 @@ public class UserDetailActivity extends BaseActivity {
         username = getIntent().getStringExtra("username");
         Timber.w("initData: username--->" + username);
 
+/*        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        if (savedInstanceState == null) {
+            mDetailFragment = UserDetailFragment.newInstance();
+            transaction.add(R.id.user_detail_frame, mDetailFragment, "UserDetailFragment").commit();
+            fm.executePendingTransactions();
+            mDetailFragment.setData(username);
+        } else {
+            // TODO: 2017/5/19 Always be null
+            mDetailFragment = (UserDetailFragment) fm.findFragmentByTag("UserDetailFragment");
+            Timber.w("initData: " + mDetailFragment);
+            transaction.replace(R.id.user_detail_frame, mDetailFragment, "UserDetailFragment").commit();
+            fm.executePendingTransactions();
+        }*/
+
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Timber.w("onCreate: savedInstanceState--->" + savedInstanceState);
+
+
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         if (savedInstanceState == null) {
@@ -53,6 +77,8 @@ public class UserDetailActivity extends BaseActivity {
             // TODO: 2017/5/19 Always be null
             mDetailFragment = (UserDetailFragment) fm.findFragmentByTag("UserDetailFragment");
             Timber.w("initData: " + mDetailFragment);
+            transaction.replace(R.id.user_detail_frame, mDetailFragment, "UserDetailFragment").commit();
+            fm.executePendingTransactions();
         }
 
     }

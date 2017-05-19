@@ -65,8 +65,8 @@ public class UserDetailPresenter extends BasePresenter<UserDetailContract.Model,
     public void requestUserDetail(String username, boolean update) {
         if (mAdapter == null) {
             mAdapter = new TextContentAdapter(mContents);
-            mRootView.setAdapter(mAdapter);
         }
+        mRootView.setAdapter(mAdapter);
         // TODO: 2017/5/19
         mModel.getUserDetail(username, update)
                 .subscribeOn(Schedulers.io())
