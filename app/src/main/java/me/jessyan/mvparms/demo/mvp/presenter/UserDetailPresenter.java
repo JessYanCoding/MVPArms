@@ -13,10 +13,17 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.schedulers.Schedulers;
+import me.jessyan.mvparms.demo.app.utils.RxUtils;
 import me.jessyan.mvparms.demo.mvp.contract.UserDetailContract;
 import me.jessyan.mvparms.demo.mvp.model.entity.TextContent;
 import me.jessyan.mvparms.demo.mvp.ui.adapter.TextContentAdapter;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 
 
 /**
@@ -61,6 +68,36 @@ public class UserDetailPresenter extends BasePresenter<UserDetailContract.Model,
             mRootView.setAdapter(mAdapter);
         }
         // TODO: 2017/5/19
+        mModel.getUserDetail(username, update)
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(3, 2))
+                .doOnSubscribe(disposable ->
+                        mRootView.showLoading())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doAfterTerminate(() ->
+                        mRootView.hideLoading())
+                .compose(RxUtils.bindToLifecycle(mRootView))
+                .flatMap(userDetail -> {
+                    mContents.clear();
+                    mContents.add(new TextContent("Username", userDetail.getLogin()));
+                    mContents.add(new TextContent("Name", userDetail.getName()));
+                    mContents.add(new TextContent("Company", userDetail.getCompany()));
+                    mContents.add(new TextContent("Location", userDetail.getLocation()));
+                    mContents.add(new TextContent("Public Repos", String.valueOf(userDetail.getPublicRepos())));
+                    mContents.add(new TextContent("Followers", String.valueOf(userDetail.getFollowers())));
+                    mContents.add(new TextContent("Following", String.valueOf(userDetail.getFollowing())));
+                    mContents.add(new TextContent("Created", userDetail.getCreatedAt()));
+                    mContents.add(new TextContent("Updated", userDetail.getUpdatedAt()));
+                    return Observable.just(mAdapter);
+                })
+                .subscribe(new ErrorHandleSubscriber<BaseQuickAdapter>(mErrorHandler) {
+                    @Override
+                    public void onNext(@NonNull BaseQuickAdapter baseQuickAdapter) {
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+
     }
 
     @Override
@@ -70,6 +107,8 @@ public class UserDetailPresenter extends BasePresenter<UserDetailContract.Model,
         this.mAppManager = null;
         this.mImageLoader = null;
         this.mApplication = null;
+        this.mContents = null;
+        this.mAdapter = null;
     }
 
 }

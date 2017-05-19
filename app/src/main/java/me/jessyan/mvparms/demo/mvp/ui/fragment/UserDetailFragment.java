@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jess.arms.base.BaseFragment;
@@ -32,6 +33,8 @@ public class UserDetailFragment extends BaseFragment<UserDetailPresenter> implem
 
     @BindView(R.id.recycler_user_detail)
     RecyclerView mRecyclerUserDetail;
+    @BindView(R.id.progress)
+    ProgressBar mProgress;
 
     private String username;
 
@@ -56,7 +59,7 @@ public class UserDetailFragment extends BaseFragment<UserDetailPresenter> implem
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        mPresenter.requestUserDetail(username, true);
+        mPresenter.requestUserDetail(username, false);
     }
 
 
@@ -68,12 +71,12 @@ public class UserDetailFragment extends BaseFragment<UserDetailPresenter> implem
 
     @Override
     public void showLoading() {
-
+        mProgress.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-
+        mProgress.setVisibility(View.GONE);
     }
 
     @Override
@@ -97,5 +100,10 @@ public class UserDetailFragment extends BaseFragment<UserDetailPresenter> implem
     public void setAdapter(BaseQuickAdapter adapter) {
         UiUtils.configRecycleView(mRecyclerUserDetail, new LinearLayoutManager(getContext()));
         mRecyclerUserDetail.setAdapter(adapter);
+    }
+
+    @Override
+    public void refresh() {
+        mPresenter.requestUserDetail(username, true);
     }
 }

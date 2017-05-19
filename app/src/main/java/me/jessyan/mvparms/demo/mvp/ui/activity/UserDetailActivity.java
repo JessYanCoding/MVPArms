@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 
+import butterknife.OnClick;
 import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.mvp.ui.fragment.UserDetailFragment;
 import timber.log.Timber;
@@ -57,10 +58,8 @@ public class UserDetailActivity extends BaseActivity {
     }
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //TODO  store the data in the fragment
-        //        mDetailFragment.setData(username);
+    @OnClick(R.id.refresh)
+    public void onViewClicked() {
+        mDetailFragment.refresh();
     }
 }

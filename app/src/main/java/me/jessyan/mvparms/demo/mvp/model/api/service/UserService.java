@@ -7,6 +7,7 @@ import me.jessyan.mvparms.demo.mvp.model.entity.User;
 import me.jessyan.mvparms.demo.mvp.model.entity.UserDetail;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -30,8 +31,8 @@ public interface UserService {
      * Add by xiaobailong24
      */
     @Headers({HEADER_API_VERSION})
-    @GET("/users")
-    Observable<UserDetail> getUserDetail(@Query("username") String username);
+    @GET("/users/{username}")
+    Observable<UserDetail> getUserDetail(@Path("username") String username);
 
 
 }
