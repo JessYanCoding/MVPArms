@@ -20,6 +20,7 @@ import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.di.component.DaggerUserComponent;
 import me.jessyan.mvparms.demo.di.module.UserModule;
 import me.jessyan.mvparms.demo.mvp.contract.UserContract;
+import me.jessyan.mvparms.demo.mvp.model.entity.User;
 import me.jessyan.mvparms.demo.mvp.presenter.UserPresenter;
 import timber.log.Timber;
 
@@ -57,7 +58,6 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     public void initData() {
         mPresenter.requestUsers(true);//打开app时自动加载列表
     }
-
 
 
     @Override
@@ -108,6 +108,13 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
         mRecyclerView.setAdapter(adapter);
         initRecycleView();
         initPaginate();
+        //启动UserDetailActivity
+        adapter.setOnItemClickListener((view, viewType, data, position) -> {
+            User user = (User) adapter.getInfos().get(position);
+            Intent intent = new Intent(this, UserDetailActivity.class);
+            intent.putExtra("username", user.getLogin());
+            launchActivity(intent);
+        });
     }
 
     /**

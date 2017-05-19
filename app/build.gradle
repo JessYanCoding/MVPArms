@@ -68,4 +68,18 @@ dependencies {
     debugCompile rootProject.ext.dependencies["canary-debug"]
     releaseCompile rootProject.ext.dependencies["canary-release"]
     testCompile rootProject.ext.dependencies["canary-release"]
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
+
+/*
+entry
+->Service->GlobalConfiguration->ServiceModule
+->Contract
+->Model(注解)
+->Presenter(注解)
+->Module(注解)
+->layout
+->Activity/Fragment
+->Component(注解)
+(->Adapter)
+*/

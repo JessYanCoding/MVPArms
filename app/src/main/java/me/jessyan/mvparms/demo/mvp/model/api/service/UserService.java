@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
+import me.jessyan.mvparms.demo.mvp.model.entity.UserDetail;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
@@ -20,6 +21,17 @@ public interface UserService {
     @Headers({HEADER_API_VERSION})
     @GET("/users")
     Observable<List<User>> getUsers(@Query("since") int lastIdQueried, @Query("per_page") int perPage);
+
+    /**
+     * Method: getUserDetail
+     * Description: Get a single user
+     * https://developer.github.com/v3/users/#get-a-single-user
+     * Date: 2017/5/17 22:44
+     * Add by xiaobailong24
+     */
+    @Headers({HEADER_API_VERSION})
+    @GET("/users")
+    Observable<UserDetail> getUserDetail(@Query("username") String username);
 
 
 }

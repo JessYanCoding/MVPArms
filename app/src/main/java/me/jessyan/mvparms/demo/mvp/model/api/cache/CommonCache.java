@@ -9,10 +9,12 @@ import io.rx_cache2.EvictProvider;
 import io.rx_cache2.LifeCache;
 import io.rx_cache2.Reply;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
+import me.jessyan.mvparms.demo.mvp.model.entity.UserDetail;
 
 /**
  * Created by jess on 8/30/16 13:53
  * Contact with jess.yan.effort@gmail.com
+ * Modified by https://github.com/xiaobailong24
  */
 public interface CommonCache {
 
@@ -20,5 +22,8 @@ public interface CommonCache {
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
     Observable<Reply<List<User>>> getUsers(Observable<List<User>> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
+
+    @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
+    Observable<Reply<UserDetail>> getUserDetail(Observable<UserDetail> userDetail, DynamicKey username, EvictProvider evictProvider);
 
 }

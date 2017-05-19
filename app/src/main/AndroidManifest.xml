@@ -44,6 +44,7 @@
             android:name="me.jessyan.mvparms.demo.app.GlobalConfiguration"
             android:value="ConfigModule"/>
 
+        <activity android:name=".mvp.ui.activity.UserDetailActivity"/>
     </application>
 
 </manifest>
