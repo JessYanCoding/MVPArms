@@ -1,5 +1,6 @@
 package com.jess.arms.base.delegate;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import com.jess.arms.di.component.AppComponent;
 /**
  * Created by jess on 29/04/2017 14:31
  * Contact with jess.yan.effort@gmail.com
+ * Modified by https://github.com/xiaobailong24
  */
 
 public interface IFragment {
@@ -22,7 +24,8 @@ public interface IFragment {
 
     View initView(LayoutInflater inflater, ViewGroup container);
 
-    void initData();
+    //用来恢复数据
+    void initData(Bundle savedInstanceState);
 
     /**
      * 此方法是让外部调用使fragment做一些操作的,比如说外部的activity想让fragment对象执行一些方法,

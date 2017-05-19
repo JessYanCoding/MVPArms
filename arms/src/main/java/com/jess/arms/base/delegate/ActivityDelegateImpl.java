@@ -40,7 +40,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         }
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(mActivity);
-        iActivity.initData();
+        iActivity.initData(savedInstanceState);
     }
 
     public void onStart() {
@@ -65,7 +65,8 @@ public class ActivityDelegateImpl implements ActivityDelegate {
 
 
     public void onDestroy() {
-        if (mUnbinder != Unbinder.EMPTY) mUnbinder.unbind();
+        if (mUnbinder != Unbinder.EMPTY)
+            mUnbinder.unbind();
         if (iActivity.useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().unregister(mActivity);
         this.mUnbinder = null;

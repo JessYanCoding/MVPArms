@@ -1,6 +1,7 @@
 package me.jessyan.mvparms.demo.mvp.ui.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
@@ -52,7 +53,7 @@ public class UserDetailFragment extends BaseFragment<UserDetailPresenter> implem
     }
 
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
         mUsername.setText(username);
     }
 
