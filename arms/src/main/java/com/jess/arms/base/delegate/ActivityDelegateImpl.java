@@ -32,7 +32,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
             EventBus.getDefault().register(mActivity);//注册到事件主线
         iActivity.setupActivityComponent(((App) mActivity.getApplication()).getAppComponent());//依赖注入
         try {
-            int layoutResID = iActivity.initView();
+            int layoutResID = iActivity.initView(savedInstanceState);
             if (layoutResID != 0)//如果initView返回0,框架则不会调用setContentView()
                 mActivity.setContentView(layoutResID);
         } catch (Exception e) {
@@ -40,7 +40,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         }
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(mActivity);
-        iActivity.initData();
+        iActivity.initData(savedInstanceState);
     }
 
     public void onStart() {

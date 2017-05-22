@@ -54,7 +54,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onActivityCreate(Bundle savedInstanceState) {
-        iFragment.initData();
+        iFragment.initData(savedInstanceState);
     }
 
     @Override

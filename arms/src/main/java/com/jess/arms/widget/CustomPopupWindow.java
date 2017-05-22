@@ -43,7 +43,7 @@ public class CustomPopupWindow extends PopupWindow {
         setFocusable(isFocus);
         setOutsideTouchable(isOutsideTouch);
         setBackgroundDrawable(mBackgroundDrawable);
-        if (mAnimationStyle != -1)//如果设置了对话则使用对话
+        if (mAnimationStyle != -1)//如果设置了动画则使用动画
             setAnimationStyle(mAnimationStyle);
         setContentView(mContentView);
     }

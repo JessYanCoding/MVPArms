@@ -1,6 +1,8 @@
 package com.jess.arms.base.delegate;
 
 
+import android.os.Bundle;
+
 import com.jess.arms.di.component.AppComponent;
 
 /**
@@ -23,10 +25,11 @@ public interface IActivity {
      * 如果initView返回0,框架则不会调用{@link android.app.Activity#setContentView(int)}
      *
      * @return
+     * @param savedInstanceState
      */
-    int initView();
+    int initView(Bundle savedInstanceState);
 
-    void initData();
+    void initData(Bundle savedInstanceState);
 
     /**
      * 这个Activity是否会使用Fragment,框架会根据这个属性判断是否注册{@link android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks}
