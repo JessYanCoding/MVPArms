@@ -54,12 +54,12 @@ public class ${NAME}Activity extends BaseActivity<${NAME}Presenter> implements $
     }
 
     @Override
-    public int initView() {
+    public int initView(Bundle savedInstanceState) {
         return 0;
     }
 
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
 
     }
 
@@ -210,12 +210,12 @@ public class ${NAME}Fragment extends BaseFragment<${NAME}Presenter> implements $
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container) {
+    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(layout_id, container, false);
     }
 
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
 
     }
 
