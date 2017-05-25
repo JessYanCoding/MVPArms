@@ -23,7 +23,7 @@
             android:layout_marginLeft="30px"
             android:layout_marginRight="30px"
             android:layout_centerVertical="true"
-            android:src="@mipmap/login_return"/>
+            android:src="@mipmap/ic_arrow_back_white_24dp"/>
 
     </com.zhy.autolayout.AutoRelativeLayout>
 
