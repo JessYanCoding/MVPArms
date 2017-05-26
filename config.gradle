@@ -43,11 +43,12 @@ ext {
                 "autolayout"               : "com.zhy:autolayout:1.4.5",
                 "butterknife"              : "com.jakewharton:butterknife:${version["butterknifeSdkVersion"]}",
                 "butterknife-compiler"     : "com.jakewharton:butterknife-compiler:${version["butterknifeSdkVersion"]}",
-                "pickerview"               : "com.bigkoo:pickerview:2.0.8",
+                "pickerview"               : "com.contrarywind:Android-PickerView:3.2.5",
                 "photoview"                : "com.github.chrisbanes.photoview:library:1.2.3",
                 "numberprogressbar"        : "com.daimajia.numberprogressbar:library:1.2@aar",
                 "nineoldandroids"          : "com.nineoldandroids:library:2.4.0",
                 "paginate"                 : "com.github.markomilos:paginate:0.5.1",
+                "vlayout"                  : "com.alibaba.android:vlayout:1.0.6@aar",
 
                 //rx1
                 "rxandroid"                : "io.reactivex:rxandroid:1.2.1",
@@ -77,6 +78,8 @@ ext {
                 "gson"                     : "com.google.code.gson:gson:2.8.0",
                 "multidex"                 : "com.android.support:multidex:1.0.1",
                 "javax.annotation"         : "javax.annotation:jsr250-api:1.0",
+                "arouter"                  : "com.alibaba:arouter-api:1.2.1.1",
+                "arouter-compiler"         : "com.alibaba:arouter-compiler:1.1.2.1",
 
                 //test
                 "junit"                    : "junit:junit:4.12",
