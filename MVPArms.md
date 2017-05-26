@@ -9,7 +9,7 @@
 
 ## Usage
 > New Project
->> 如果你是构建一个全新的项目,直接将整个项目 **clone** (或者下载) 下来,直接将 **Demo** 作为主 **Module** (建议将 arms Module 删除,并使用 **G radle** 远程依赖,便于更新),再将项目包名改成自己的包名, **Demo** 包含可以直接使用的包结构,一个主流的 `MVP`+`Dagger2`+`Retrofit`+`Rxjava` 框架就这样轻松的构建成功了,现在你再参考 **Demo Mvp** 包下的 **UserActivity** 的格式,[使用 Template 在对应包下自动生成 MVP , Dagger2 相关类](http://www.jianshu.com/p/56cf17ab896d),配合查阅 [Wiki 文档](https://github.com/JessYanCoding/MVPArms/wiki) 慢慢掌握本框架,看再多文章不如早点在项目中使用它,在实践中学习总是最快的
+>> 如果你是构建一个全新的项目,直接将整个项目 **clone** (或者下载) 下来,直接将 **Demo** 作为主 **Module** (建议将 arms Module 删除,并使用 **Gradle** 远程依赖,便于更新),再将项目包名改成自己的包名, **Demo** 包含可以直接使用的包结构,一个主流的 `MVP`+`Dagger2`+`Retrofit`+`Rxjava` 框架就这样轻松的构建成功了,现在你再参考 **Demo Mvp** 包下的 **UserActivity** 的格式,[使用 Template 在对应包下自动生成 MVP , Dagger2 相关类](http://www.jianshu.com/p/56cf17ab896d),配合查阅 [Wiki 文档](https://github.com/JessYanCoding/MVPArms/wiki) 慢慢掌握本框架,看再多文章不如早点在项目中使用它,在实践中学习总是最快的
  
 > Old Project
 >> [老项目想引入此框架,可以参考 Wiki文档 ,写的非常详细](https://github.com/JessYanCoding/MVPArms/wiki)
