@@ -37,18 +37,18 @@
 
 * 使用此框架自带自动适配功能，请参考 [AutoLayout 使用方法](https://github.com/hongyangAndroid/AndroidAutoLayout).
 
-* 此框架使用 `RxPermissions` 用于权限管理(适配 Android6.0 ),并提供 PermissionUtil 工具类一行代码实现权限请求. 
+* 此框架使用 `RxPermissions` 用于权限管理(适配 Android 6.0 ),并提供 PermissionUtil 工具类一行代码实现权限请求. 
 
 * 作为通用框架,本框架不提供与 **UI** 有关的任何第三方库(除了 `AutoLayout` 屏幕适配方案).
 
 
 ## Feature
 
-* **网络请求层**: 默认使用 Retrofit ,如今主流的网络请求框架有 `Volley`,`Okhttp`,`Retrofit` (`Android-async-http` 停止维护了) ,因为这个库是基于 `Rxjava` , `Retrofit` 支持 `Rxjava` ,默认使用 `Okhttp` 请求(`Okhttp` 使用 `Okio` , `Okio` 基于 IO 和 NIO 所以性能优于 `Volley` , `Volley` 内部封装有 Imageloader ,支持扩展 `Okhttp` ,封装比 `Okhttp` 好,但是比较适合频繁,数据量小的网络请求),所以此库默认使用 `Retrofit` 作为网络请求层.
+* **网络请求层**: 如今主流的网络请求框架有 `Volley`,`Okhttp`,`Retrofit` (`Android-async-http` 停止维护了) ,因为这个库是基于 `Rxjava` , `Retrofit` 支持 `Rxjava` ,默认使用 `Okhttp` 请求网络(`Okhttp` 使用 `Okio` , `Okio` 基于 IO 和 NIO 性能优于 `Volley` , `Volley` 内部封装有 Imageloader ,支持扩展 `Okhttp` ,封装比 `Okhttp` 好,但是比较适合频繁,数据量小的网络请求),所以此库默认使用 `Retrofit` 作为网络请求层.
 
-* **图片加载**:因为图片加载框架各有优缺点，`Fresco`,`Picasso`,`Glide` 这些都是现在比较主流得图片加载框架,所以为了扩展性本库提供一个统一的管理类 Imageloader ,使用策略者模式,使用者只用实现接口,就可以动态替换图片框架,外部提供统一接口加载图片,替换图片加载框架毫无痛点,并且为了快速实现,默认提供一个 Glide 的默认实现类,有其它需求可以参照 [**Wiki**](https://github.com/JessYanCoding/MVPArms/wiki#3.4) 替换为别的图片加载框架.
+* **图片加载**: 因为图片加载框架各有优缺点，`Fresco`,`Picasso`,`Glide` 这些都是现在比较主流得图片加载框架,所以为了扩展性本框架提供一个统一的管理类 Imageloader ,使用策略者模式,开发者只用实现接口,就可以动态替换图片框架,外部提供统一接口加载图片,替换图片加载框架毫无痛点,并且为了快速实现,默认提供一个 Glide 的默认实现类,有其它需求可以参照 [**Wiki**](https://github.com/JessYanCoding/MVPArms/wiki#3.4) 替换为别的图片加载框架.
 
-* **Model层** 优秀的数据库太多，`GreenDao`,`Realm`,`SqlBrite`（Square 公司出品，对 SQLiteOpenHelper 封装，提供响应式 Api 访问数据库）, `SqlDelight`,`Storio`,`DBFlow` ,每个框架的使用方法都不一样,本框架只提供一个管理类 RepositoryManager 里面默认封装了 `RxCache` (此库根据 `Retrofit` Api 实现了缓存逻辑,并提供响应式接口), `Retrofit` 等与数据相关的框架,以后有其他需求如需使用数据库,就可以直接封装进 RepositoryManager ,本框架通过 Dagger2 向 Model层 注入 RepositoryManager,来提供给开发者数据处理的能力,这样的好处的是上层（activity/fragment/presenter）不需要知道数据源的细节（来自于网络、数据库，亦或是内存等等）,底层可以根据需求修改（缓存的实现细节）上下两层分离互不影响.
+* **Model层**: 优秀的数据库太多, `GreenDao`,`Realm`,`SqlBrite`（Square 公司出品，对 SQLiteOpenHelper 封装，提供响应式 Api 访问数据库）, `SqlDelight`,`Storio`,`DBFlow` ,每个框架的使用方法都不一样,本框架只提供一个管理类 RepositoryManager 里面默认封装了 `RxCache` (此库根据 `Retrofit` Api 实现了缓存逻辑,并提供响应式接口), `Retrofit` 等与数据相关的框架,以后有其他需求如需使用数据库,就可以直接封装进 RepositoryManager ,本框架通过 Dagger2 向 Model 层注入 RepositoryManager,来提供给开发者数据处理的能力,这样的好处的是上层（Activity/Fragment/Presenter）不需要知道数据源的细节（来自于网络、数据库、亦或是内存等等）,下层可以根据需求修改（缓存的实现细节）上下两层分离互不影响.
 
 ## Functionality & Libraries
 1. [`Mvp`Google官方出品的`Mvp`架构项目，含有多个不同的架构分支(此为Dagger分支).](https://github.com/googlesamples/android-architecture/tree/todo-mvp-dagger/)
