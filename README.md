@@ -37,7 +37,7 @@
 
 * Use this frame comes with automatic adaptation function, please refer to [AndroidAutoLayout](https://github.com/hongyangAndroid/AndroidAutoLayout).
 
-* This framework uses `RxPermissions` for rights management (adaptation android6.0), and provides a PermissionUtil tool class line of code to implement the permission request.
+* This framework uses `RxPermissions` for rights management (adaptation Android 6.0), and provides a PermissionUtil tool class line of code to implement the permission request.
 
 * This framework does not provide any third-party libraries associated with the **UI**(except for the [`AndroidAutoLayout`](https://github.com/hongyangAndroid/AndroidAutoLayout) screen adaptation scheme).
 
