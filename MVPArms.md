@@ -48,7 +48,7 @@
 
 * **图片加载**: 因为图片加载框架各有优缺点，`Fresco`,`Picasso`,`Glide` 这些都是现在比较主流得图片加载框架,所以为了扩展性本框架提供一个统一的管理类 Imageloader ,使用策略者模式,开发者只用实现接口,就可以动态替换图片框架,外部提供统一接口加载图片,替换图片加载框架毫无痛点,并且为了快速实现,默认提供一个 Glide 的默认实现类,有其它需求可以参照 [**Wiki**](https://github.com/JessYanCoding/MVPArms/wiki#3.4) 替换为别的图片加载框架.
 
-* **Model层**: 优秀的数据库太多, `GreenDao`,`Realm`,`SqlBrite`（Square 公司出品，对 SQLiteOpenHelper 封装，提供响应式 Api 访问数据库）, `SqlDelight`,`Storio`,`DBFlow` ,每个框架的使用方法都不一样,本框架只提供一个管理类 RepositoryManager 里面默认封装了 `RxCache` (此库根据 `Retrofit` Api 实现了缓存逻辑,并提供响应式接口), `Retrofit` 等与数据相关的框架,以后有其他需求如需使用数据库,就可以直接封装进 RepositoryManager ,本框架通过 Dagger2 向 Model 层注入 RepositoryManager,来提供给开发者数据处理的能力,这样的好处的是上层（Activity/Fragment/Presenter）不需要知道数据源的细节（来自于网络、数据库、亦或是内存等等）,下层可以根据需求修改（缓存的实现细节）上下两层分离互不影响.
+* **Model层**: 优秀的数据库太多, `GreenDao`,`Realm`,`SqlBrite`（Square 公司出品，对 SQLiteOpenHelper 封装，提供响应式 Api 访问数据库）, `SqlDelight`,`Storio`,`DBFlow` ,每个框架的使用方法都不一样,本框架只提供有一个管理类 RepositoryManager 里面默认封装了 `RxCache` (此框架根据 `Retrofit` Api 实现了缓存逻辑,并提供响应式接口), `Retrofit` 等与数据相关的框架,以后有其他需求如需使用数据库,就可以直接封装进 RepositoryManager ,本框架通过 Dagger2 向 Model 层注入 RepositoryManager,来提供给开发者数据处理的能力,这样的好处的是上层（Activity/Fragment/Presenter）不需要知道数据源的细节（来自于网络、数据库、亦或是内存等等）,下层可以根据需求修改（缓存的实现细节）上下两层分离互不影响.
 
 ## Functionality & Libraries
 1. [`Mvp`Google官方出品的`Mvp`架构项目，含有多个不同的架构分支(此为Dagger分支).](https://github.com/googlesamples/android-architecture/tree/todo-mvp-dagger/)
