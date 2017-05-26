@@ -9,7 +9,7 @@
 
 ## Usage
 > New Project
->> 如果你是构建一个全新的项目,直接将整个项目 **clone** (或者下载) 下来,直接将 **Demo** 当成主 **Module** ,再将项目包名改成自己的包名, **Demo** 包含可以直接使用的包结构,一个主流的 `MVP`+`Dagger2`+`Retrofit`+`Rxjava` 框架就这样轻松的构建成功了,现在你参考 **Demo Mvp** 包下的 **UserActivity** 的格式,[使用 Template 在对应包下自动生成 MVP , Dagger2 相关类](http://www.jianshu.com/p/56cf17ab896d),配合查阅 [Wiki 文档](https://github.com/JessYanCoding/MVPArms/wiki) 慢慢掌握本框架,看再多文章不如早点在项目中使用它,在实践中学习总是最快的
+>> 如果你是构建一个全新的项目,直接将整个项目 **clone** (或者下载) 下来,直接将 **Demo** 作为主 **Module** (建议将 arms Module 删除,并使用 **G radle** 远程依赖,便于更新),再将项目包名改成自己的包名, **Demo** 包含可以直接使用的包结构,一个主流的 `MVP`+`Dagger2`+`Retrofit`+`Rxjava` 框架就这样轻松的构建成功了,现在你再参考 **Demo Mvp** 包下的 **UserActivity** 的格式,[使用 Template 在对应包下自动生成 MVP , Dagger2 相关类](http://www.jianshu.com/p/56cf17ab896d),配合查阅 [Wiki 文档](https://github.com/JessYanCoding/MVPArms/wiki) 慢慢掌握本框架,看再多文章不如早点在项目中使用它,在实践中学习总是最快的
  
 > Old Project
 >> [老项目想引入此框架,可以参考 Wiki文档 ,写的非常详细](https://github.com/JessYanCoding/MVPArms/wiki)
@@ -33,7 +33,7 @@
 
 * [我们为什么要把 Dagger2 ,MVP 以及 Rxjava 引入项目中?](http://www.jianshu.com/p/91c2bb8e6369)
 
-* 看了上面的文章,对为什么使用这些技术应该比较了解了,使用这些技术对项目后期的维护和迭代特别是大型项目非常有帮助,但是就是开发前期每写一个页面要多写很多 `MVP`,`Dagger2` 的类和接口,这对于开发前期确实比较头疼,现在本框架已经可以通过 [Template](http://www.jianshu.com/p/56cf17ab896d) 自动生成一些 `MVP`,`Dagger2` 的模版代码,现在大家可以非常轻松的使用本框架.
+* 看了上面的文章,对为什么使用这些技术应该比较了解了,使用这些技术对项目后期的维护和迭代特别是大型项目非常有帮助,但是在开发前期每写一个页面要多写很多 `MVP`,`Dagger2` 的类和接口,这对于开发前期确实比较头疼,现在本框架已经可以通过 [Template](http://www.jianshu.com/p/56cf17ab896d) 自动生成一些 `MVP`,`Dagger2` 的模版代码,现在大家可以非常轻松的使用本框架.
 
 * 使用此框架自带自动适配功能，请参考 [AutoLayout 使用方法](https://github.com/hongyangAndroid/AndroidAutoLayout).
 
