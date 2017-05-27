@@ -151,6 +151,7 @@ public class GlobalConfiguration implements ConfigModule {
         lifecycles.add(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                Timber.w(activity+" - onActivityCreated");
                 //这里全局给Activity设置toolbar和title,你想象力有多丰富,这里就有多强大,以前放到BaseActivity的操作都可以放到这里
                 if (activity.findViewById(R.id.toolbar) != null) {
                     if (activity instanceof AppCompatActivity) {
@@ -176,32 +177,32 @@ public class GlobalConfiguration implements ConfigModule {
 
             @Override
             public void onActivityStarted(Activity activity) {
-
+                Timber.w(activity+" - onActivityStarted");
             }
 
             @Override
             public void onActivityResumed(Activity activity) {
-
+                Timber.w(activity+" - onActivityResumed");
             }
 
             @Override
             public void onActivityPaused(Activity activity) {
-
+                Timber.w(activity+" - onActivityPaused");
             }
 
             @Override
             public void onActivityStopped(Activity activity) {
-
+                Timber.w(activity+" - onActivityStopped");
             }
 
             @Override
             public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-
+                Timber.w(activity+" - onActivitySaveInstanceState");
             }
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-
+                Timber.w(activity+" - onActivityDestroyed");
             }
         });
     }

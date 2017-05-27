@@ -32,7 +32,7 @@ public class UserDetailActivity extends BaseActivity {
     }
 
     @Override
-    public int initView() {
+    public int initView(Bundle savedInstanceState) {
         return R.layout.activity_user_detail;
     }
 

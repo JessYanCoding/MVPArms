@@ -53,7 +53,7 @@ public class UserDetailFragment extends BaseFragment<UserDetailPresenter> implem
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container) {
+    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_user_detail, container, false);
     }
 

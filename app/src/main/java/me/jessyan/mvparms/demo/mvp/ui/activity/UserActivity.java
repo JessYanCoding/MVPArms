@@ -51,7 +51,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     }
 
     @Override
-    public int initView() {
+    public int initView(Bundle savedInstanceState) {
         return R.layout.activity_user;
     }
 

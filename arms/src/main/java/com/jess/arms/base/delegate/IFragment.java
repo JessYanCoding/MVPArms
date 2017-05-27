@@ -22,9 +22,8 @@ public interface IFragment {
 
     boolean useEventBus();
 
-    View initView(LayoutInflater inflater, ViewGroup container);
+    View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
-    //用来恢复数据
     void initData(Bundle savedInstanceState);
 
     /**
