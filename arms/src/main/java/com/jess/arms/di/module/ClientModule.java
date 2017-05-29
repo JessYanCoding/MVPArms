@@ -19,7 +19,7 @@ import dagger.Provides;
 import io.rx_cache2.internal.RxCache;
 import io.victoralbertos.jolyglot.GsonSpeaker;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
+import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -137,11 +137,11 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    RxErrorHandler proRxErrorHandler(Application application, ResponseErroListener listener) {
+    RxErrorHandler proRxErrorHandler(Application application, ResponseErrorListener listener) {
         return RxErrorHandler
                 .builder()
                 .with(application)
-                .responseErroListener(listener)
+                .responseErrorListener(listener)
                 .build();
     }
 

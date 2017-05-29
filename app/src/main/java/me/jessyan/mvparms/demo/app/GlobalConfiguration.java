@@ -97,13 +97,13 @@ public class GlobalConfiguration implements ConfigModule {
                         return request;
                     }
                 })
-                .responseErroListener((context1, e) -> {
+                .responseErrorListener((context1, t) -> {
                     /* 用来提供处理所有错误的监听
                        rxjava必要要使用ErrorHandleSubscriber(默认实现Subscriber的onError方法),此监听才生效 */
-                    Timber.w("------------>" + e.getMessage());
+                    Timber.w("------------>" + t.getMessage());
                     UiUtils.SnackbarText("net error");
                 })
-                .gsonConfiguration((context12, gsonBuilder) -> {//这里可以自己自定义配置Gson的参数
+                .gsonConfiguration((context1, gsonBuilder) -> {//这里可以自己自定义配置Gson的参数
                     gsonBuilder
                             .serializeNulls()//支持序列化null的参数
                             .enableComplexMapKeySerialization();//支持将序列化key为object的map,默认只能序列化key为string的map
