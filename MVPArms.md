@@ -57,7 +57,7 @@
 4. [`RxAndroid`为Android提供响应式Api.](https://github.com/ReactiveX/RxAndroid)
 5. [`Rxlifecycle`在Android上使用rxjava都知道的一个坑，就是生命周期的解除订阅，这个框架通过绑定activity和fragment的生命周期完美解决.](https://github.com/trello/RxLifecycle)
 6. [`RxCache`是使用注解为Retrofit加入二级缓存(内存,磁盘)的缓存库.](https://github.com/VictorAlbertos/RxCache)
-7. [`RxErroHandler` 是`Rxjava`的错误处理库,可在出现错误后重试.](https://github.com/JessYanCoding/RxErrorHandler)
+7. [`RxErroHandler` 是 `Rxjava` 的错误处理库,可在出现错误后重试.](https://github.com/JessYanCoding/RxErrorHandler)
 8. [`RxPermissions`用于处理Android运行时权限的响应式库.](https://github.com/tbruyelle/RxPermissions)
 9. [`Retrofit`Square出品的网络请求库，极大的减少了http请求的代码和步骤.](https://github.com/square/retrofit)
 10. [`Okhttp`同样Square出品，不多介绍，做Android都应该知道.](https://github.com/square/okhttp)
