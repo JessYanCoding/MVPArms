@@ -9,7 +9,7 @@
 
 ## Usage
 > New Project
->> 如果你想构建一个全新的项目,直接将整个项目 **clone** (或者下载) 下来,直接将 **Demo** 作为主 **Module** (建议将 arms Module 删除,并使用 **Gradle** 远程依赖本框架,便于更新),再将项目包名改成自己的包名, **Demo** 包含可以直接使用的包结构,一个主流的 `MVP`+`Dagger2`+`Retrofit`+`Rxjava` 框架就这样轻松的构建成功了,现在你再参考 **Demo Mvp** 包下的 **UserActivity** 的格式,[使用 Template 在对应包下自动生成 MVP , Dagger2 相关类](http://www.jianshu.com/p/56cf17ab896d),配合查阅 [Wiki 文档](https://github.com/JessYanCoding/MVPArms/wiki) 慢慢掌握本框架,看再多文章不如早点在项目中使用它,在实践中学习总是最快的
+>> 如果你想构建一个全新的项目,直接将整个项目 **clone** (或者下载) 下来,直接将 **Demo** 作为主 **Module** (建议将 arms Module 删除,并使用 **Gradle** 远程依赖本框架,便于更新),再将项目包名改成自己的包名, **Demo** 包含可以直接使用的包结构,一个主流的 `MVP`+`Dagger2`+`Retrofit`+`Rxjava` 框架就这样轻松的构建成功了,现在你再参考 **Demo Mvp** 包下的 **UserActivity** 的格式,[使用 Template 在对应包下自动生成 MVP , Dagger2 相关类](https://github.com/JessYanCoding/MVPArmsTemplate),配合查阅 [Wiki 文档](https://github.com/JessYanCoding/MVPArms/wiki) 慢慢掌握本框架,看再多文章不如早点在项目中使用它,在实践中学习总是最快的
  
 > Old Project
 >> [老项目想引入此框架,可以参考 Wiki 文档 ,写的非常详细](https://github.com/JessYanCoding/MVPArms/wiki)
@@ -33,7 +33,7 @@
 
 * [我们为什么要把 Dagger2 ,MVP 以及 Rxjava 引入项目中?](http://www.jianshu.com/p/91c2bb8e6369)
 
-* 看了上面的文章,对为什么使用这些技术应该比较了解了,使用这些技术对项目后期的维护和迭代特别是大型项目非常有帮助,但是在开发前期每写一个页面要多写很多 `MVP`,`Dagger2` 的类和接口,这对于开发前期确实比较头疼,现在本框架已经可以通过 [Template](http://www.jianshu.com/p/56cf17ab896d) 自动生成一些 `MVP`,`Dagger2` 的模版代码,现在大家可以非常轻松的使用本框架.
+* 看了上面的文章,对为什么使用这些技术应该比较了解了,使用这些技术对项目后期的维护和迭代特别是大型项目非常有帮助,但是在开发前期每写一个页面要多写很多 `MVP`,`Dagger2` 的类和接口,这对于开发前期确实比较头疼,现在本框架已经可以通过 [Template](https://github.com/JessYanCoding/MVPArmsTemplate) 自动生成一些 `MVP`,`Dagger2` 的模版代码,现在大家可以非常轻松的使用本框架.
 
 * 使用此框架自带自动适配功能，请参考 [AutoLayout 使用方法](https://github.com/hongyangAndroid/AndroidAutoLayout).
 
@@ -57,7 +57,7 @@
 4. [`RxAndroid`为Android提供响应式Api.](https://github.com/ReactiveX/RxAndroid)
 5. [`Rxlifecycle`在Android上使用rxjava都知道的一个坑，就是生命周期的解除订阅，这个框架通过绑定activity和fragment的生命周期完美解决.](https://github.com/trello/RxLifecycle)
 6. [`RxCache`是使用注解为Retrofit加入二级缓存(内存,磁盘)的缓存库.](https://github.com/VictorAlbertos/RxCache)
-7. [`RxErroHandler``Rxjava`错误处理库,可在出现错误后重试.](https://github.com/JessYanCoding/RxErrorHandler)
+7. [`RxErroHandler` 是 `Rxjava` 的错误处理库,可在出现错误后重试.](https://github.com/JessYanCoding/RxErrorHandler)
 8. [`RxPermissions`用于处理Android运行时权限的响应式库.](https://github.com/tbruyelle/RxPermissions)
 9. [`Retrofit`Square出品的网络请求库，极大的减少了http请求的代码和步骤.](https://github.com/square/retrofit)
 10. [`Okhttp`同样Square出品，不多介绍，做Android都应该知道.](https://github.com/square/okhttp)
