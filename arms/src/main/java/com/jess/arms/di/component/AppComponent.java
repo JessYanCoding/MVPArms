@@ -26,7 +26,7 @@ import okhttp3.OkHttpClient;
 @Singleton
 @Component(modules = {AppModule.class, ClientModule.class, GlobalConfigModule.class})
 public interface AppComponent {
-    Application Application();
+    Application application();
 
     //用于管理网络请求层,以及数据缓存层
     IRepositoryManager repositoryManager();

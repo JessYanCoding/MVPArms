@@ -101,7 +101,7 @@ public class GlobalConfiguration implements ConfigModule {
                     /* 用来提供处理所有错误的监听
                        rxjava必要要使用ErrorHandleSubscriber(默认实现Subscriber的onError方法),此监听才生效 */
                     Timber.w("------------>" + t.getMessage());
-                    UiUtils.SnackbarText("net error");
+                    UiUtils.snackbarText("net error");
                 })
                 .gsonConfiguration((context1, gsonBuilder) -> {//这里可以自己自定义配置Gson的参数
                     gsonBuilder
