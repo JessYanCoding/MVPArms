@@ -4,6 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- AutoLayout -->
+    <dimen name="px1">1px</dimen>
     <dimen name="px16">16px</dimen>
     <dimen name="px30">30px</dimen>
     <dimen name="px50">50px</dimen>

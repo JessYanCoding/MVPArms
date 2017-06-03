@@ -36,7 +36,7 @@ public class UserDetailFragment extends BaseFragment<UserDetailPresenter> implem
     @BindView(R.id.progress)
     ProgressBar mProgress;
 
-    private String username;
+    private String mUsername;
 
     public static UserDetailFragment newInstance() {
         return new UserDetailFragment();
@@ -59,13 +59,13 @@ public class UserDetailFragment extends BaseFragment<UserDetailPresenter> implem
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        mPresenter.requestUserDetail(username, false);
+        mPresenter.requestUserDetail(mUsername, false);
     }
 
 
     @Override
     public void setData(Object data) {
-        username = (String) data;
+        mUsername = (String) data;
     }
 
 
@@ -82,7 +82,7 @@ public class UserDetailFragment extends BaseFragment<UserDetailPresenter> implem
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
-        UiUtils.SnackbarText(message);
+        UiUtils.snackbarText(message);
     }
 
     @Override
@@ -104,6 +104,12 @@ public class UserDetailFragment extends BaseFragment<UserDetailPresenter> implem
 
     @Override
     public void refresh() {
-        mPresenter.requestUserDetail(username, true);
+        mPresenter.requestUserDetail(mUsername, true);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.mUsername = null;
     }
 }

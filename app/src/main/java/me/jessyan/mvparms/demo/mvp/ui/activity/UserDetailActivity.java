@@ -23,7 +23,7 @@ import timber.log.Timber;
 public class UserDetailActivity extends BaseActivity {
 
     private UserDetailFragment mDetailFragment;
-    private String username;
+    private String mUsername;
 
 
     @Override
@@ -40,8 +40,8 @@ public class UserDetailActivity extends BaseActivity {
     public void initData(Bundle savedInstanceState) {
         Timber.w("initData: savedInstanceState--->" + savedInstanceState);
 
-        username = getIntent().getStringExtra("username");
-        Timber.w("initData: username--->" + username);
+        mUsername = getIntent().getStringExtra("username");
+        Timber.w("initData: mUsername--->" + mUsername);
 
 /*        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
@@ -49,7 +49,7 @@ public class UserDetailActivity extends BaseActivity {
             mDetailFragment = UserDetailFragment.newInstance();
             transaction.add(R.id.user_detail_frame, mDetailFragment, "UserDetailFragment").commit();
             fm.executePendingTransactions();
-            mDetailFragment.setData(username);
+            mDetailFragment.setData(mUsername);
         } else {
             // TODO: 2017/5/19 Always be null
             mDetailFragment = (UserDetailFragment) fm.findFragmentByTag("UserDetailFragment");
@@ -72,7 +72,7 @@ public class UserDetailActivity extends BaseActivity {
             mDetailFragment = UserDetailFragment.newInstance();
             transaction.add(R.id.user_detail_frame, mDetailFragment, "UserDetailFragment").commit();
             fm.executePendingTransactions();
-            mDetailFragment.setData(username);
+            mDetailFragment.setData(mUsername);
         } else {
             // TODO: 2017/5/19 Always be null
             mDetailFragment = (UserDetailFragment) fm.findFragmentByTag("UserDetailFragment");
@@ -87,5 +87,12 @@ public class UserDetailActivity extends BaseActivity {
     @OnClick(R.id.refresh)
     public void onViewClicked() {
         mDetailFragment.refresh();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.mDetailFragment = null;
+        this.mUsername = null;
     }
 }
