@@ -6,6 +6,9 @@ import android.util.Log;
 
 public class LogUtils {
 
+    private LogUtils() {
+    }
+
     private final static boolean isLog = true;
     public static final String DEFAULT_TAG = "Mvparms";
 

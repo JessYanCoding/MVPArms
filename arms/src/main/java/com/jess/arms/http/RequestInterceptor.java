@@ -34,7 +34,7 @@ public class RequestInterceptor implements Interceptor {
     private GlobalHttpHandler mHandler;
 
     @Inject
-    public RequestInterceptor(GlobalHttpHandler handler) {
+    public RequestInterceptor(@Nullable GlobalHttpHandler handler) {
         this.mHandler = handler;
     }
 
@@ -140,9 +140,9 @@ public class RequestInterceptor implements Interceptor {
             charset = contentType.charset(charset);
         }
         if (encoding != null && encoding.equalsIgnoreCase("gzip")) {//content使用gzip压缩
-            return ZipHelper.decompressForGzip(clone.readByteArray(),convertCharset(charset));//解压
+            return ZipHelper.decompressForGzip(clone.readByteArray(), convertCharset(charset));//解压
         } else if (encoding != null && encoding.equalsIgnoreCase("zlib")) {//content使用zlib压缩
-            return ZipHelper.decompressToStringForZlib(clone.readByteArray(),convertCharset(charset));//解压
+            return ZipHelper.decompressToStringForZlib(clone.readByteArray(), convertCharset(charset));//解压
         } else {//content没有被压缩
             return clone.readString(charset);
         }

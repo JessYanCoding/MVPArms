@@ -83,8 +83,10 @@ public class AppDelegate implements App {
                 mApplication.unregisterActivityLifecycleCallbacks(lifecycle);
             }
         }
-        for (Lifecycle lifecycle : mAppLifecycles) {
-            lifecycle.onTerminate(mApplication);
+        if (mAppLifecycles != null && mAppLifecycles.size() > 0) {
+            for (Lifecycle lifecycle : mAppLifecycles) {
+                lifecycle.onTerminate(mApplication);
+            }
         }
         this.mAppComponent = null;
         this.mActivityLifecycle = null;

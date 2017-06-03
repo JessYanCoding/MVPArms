@@ -11,6 +11,10 @@ import butterknife.Unbinder;
  * Created by zhiyicx on 2016/3/17.
  */
 public class KnifeUtil {
+
+    private KnifeUtil() {
+    }
+
     public static Unbinder bindTarget(Object target, Object source) {
         if (source instanceof Activity) {
             return ButterKnife.bind(target, (Activity) source);

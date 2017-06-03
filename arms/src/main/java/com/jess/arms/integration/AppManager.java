@@ -72,7 +72,10 @@ public class AppManager {
                 killAll();
                 break;
             case APP_EXIT:
-                AppExit();
+                appExit();
+                break;
+            default:
+                Timber.tag(TAG).w("The message.what not match");
                 break;
         }
     }
@@ -82,7 +85,6 @@ public class AppManager {
             startActivity((Intent) message.obj);
         else if (message.obj instanceof Class)
             startActivity((Class) message.obj);
-        return;
     }
 
 
@@ -292,7 +294,7 @@ public class AppManager {
     /**
      * 退出应用程序
      */
-    public void AppExit() {
+    public void appExit() {
         try {
             killAll();
             if (mActivityList != null)

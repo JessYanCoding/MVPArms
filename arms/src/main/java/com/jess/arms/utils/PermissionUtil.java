@@ -18,6 +18,9 @@ public class PermissionUtil {
     public static final String TAG = "Permission";
 
 
+    private PermissionUtil() {
+    }
+
     public interface RequestPermission {
         void onRequestPermissionSuccess();
     }

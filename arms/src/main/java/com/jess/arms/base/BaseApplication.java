@@ -27,12 +27,13 @@ public class BaseApplication extends Application implements App {
     }
 
     /**
-     * 程序终止的时候执行
+     * 在模拟环境中程序终止时会被调用
      */
     @Override
     public void onTerminate() {
         super.onTerminate();
-        this.mAppDelegate.onTerminate();
+        if (mAppDelegate != null)
+            this.mAppDelegate.onTerminate();
     }
 
 
