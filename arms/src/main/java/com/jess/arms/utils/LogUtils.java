@@ -41,7 +41,7 @@ public class LogUtils {
      * @param msg void
      */
     public static void warnInfo(String msg) {
-        warnInfo("zhibo", msg);
+        warnInfo(DEFAULT_TAG, msg);
     }
 
     /**

@@ -55,9 +55,17 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
         }
 
         //请求外部存储权限用于适配android6.0的权限管理机制
-        PermissionUtil.externalStorage(() -> {
-            //request permission success, do something.
-        }, mRootView.getRxPermissions(), mRootView, mErrorHandler);
+        PermissionUtil.externalStorage(new PermissionUtil.RequestPermission() {
+            @Override
+            public void onRequestPermissionSuccess() {
+                //request permission success, do something.
+            }
+
+            @Override
+            public void onRequestPermissionFailure() {
+                mRootView.showMessage("Request permissons failure");
+            }
+        }, mRootView.getRxPermissions(), mErrorHandler);
 
 
         if (pullToRefresh) lastUserId = 1;//上拉刷新默认只请求第一页
