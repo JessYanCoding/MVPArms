@@ -40,7 +40,6 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         }
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(mActivity);
-        iActivity.initData(savedInstanceState);
     }
 
     public void onStart() {

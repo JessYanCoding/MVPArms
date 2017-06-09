@@ -39,24 +39,16 @@ public class UserDetailActivity extends BaseActivity {
     public void initData(Bundle savedInstanceState) {
         mUsername = getIntent().getStringExtra("username");
         Timber.w("initData: mUsername--->" + mUsername);
-    }
-
-    @Override
-    public void initAfterCallback(Bundle savedInstanceState) {
-        super.initAfterCallback(savedInstanceState);
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         if (savedInstanceState == null) {
             mDetailFragment = UserDetailFragment.newInstance();
             transaction.add(R.id.user_detail_frame, mDetailFragment, "UserDetailFragment").commit();
-            fm.executePendingTransactions();
             mDetailFragment.setData(mUsername);
         } else {
             mDetailFragment = (UserDetailFragment) fm.findFragmentByTag("UserDetailFragment");
-            Timber.w("initFragments: " + mDetailFragment);
             transaction.replace(R.id.user_detail_frame, mDetailFragment, "UserDetailFragment").commit();
-            fm.executePendingTransactions();
         }
     }
 
