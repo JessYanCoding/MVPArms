@@ -254,7 +254,7 @@ public class GlobalConfiguration implements ConfigModule {
         } else if (httpException.code() == 403) {
             msg = "请求被服务器拒绝";
         } else if (httpException.code() == 307) {
-            msg = "请求被重定向其他页面";
+            msg = "请求被重定向到其他页面";
         } else {
             msg = httpException.message();
         }
