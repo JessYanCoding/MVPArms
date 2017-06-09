@@ -1,7 +1,6 @@
 package me.jessyan.mvparms.demo.mvp.ui.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -38,33 +37,13 @@ public class UserDetailActivity extends BaseActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        Timber.w("initData: savedInstanceState--->" + savedInstanceState);
-
         mUsername = getIntent().getStringExtra("username");
         Timber.w("initData: mUsername--->" + mUsername);
-
-/*        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        if (savedInstanceState == null) {
-            mDetailFragment = UserDetailFragment.newInstance();
-            transaction.add(R.id.user_detail_frame, mDetailFragment, "UserDetailFragment").commit();
-            fm.executePendingTransactions();
-            mDetailFragment.setData(mUsername);
-        } else {
-            // TODO: 2017/5/19 Always be null
-            mDetailFragment = (UserDetailFragment) fm.findFragmentByTag("UserDetailFragment");
-            Timber.w("initData: " + mDetailFragment);
-            transaction.replace(R.id.user_detail_frame, mDetailFragment, "UserDetailFragment").commit();
-            fm.executePendingTransactions();
-        }*/
-
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Timber.w("onCreate: savedInstanceState--->" + savedInstanceState);
-
+    public void initFragments(Bundle savedInstanceState) {
+        super.initFragments(savedInstanceState);
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
@@ -74,15 +53,12 @@ public class UserDetailActivity extends BaseActivity {
             fm.executePendingTransactions();
             mDetailFragment.setData(mUsername);
         } else {
-            // TODO: 2017/5/19 Always be null
             mDetailFragment = (UserDetailFragment) fm.findFragmentByTag("UserDetailFragment");
-            Timber.w("initData: " + mDetailFragment);
+            Timber.w("initFragments: " + mDetailFragment);
             transaction.replace(R.id.user_detail_frame, mDetailFragment, "UserDetailFragment").commit();
             fm.executePendingTransactions();
         }
-
     }
-
 
     @OnClick(R.id.refresh)
     public void onViewClicked() {

@@ -1,6 +1,8 @@
 package com.jess.arms.base;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -41,6 +43,12 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
         return view == null ? super.onCreateView(name, context, attrs) : view;
     }
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (useFragment())
+            initFragments(savedInstanceState);
+    }
 
     @Override
     protected void onDestroy() {
@@ -67,5 +75,18 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     @Override
     public boolean useFragment() {
         return true;
+    }
+
+    /**
+     * 如果Activity是使用Fragment，并且要想处理Activity重建时重用已经创建好的Fragment，在Activity则重写此方法。
+     * BaseActivity提供一个空实现，因为使用Fragment不是必须。
+     * 因为 {@link #initData(Bundle)} 方法是在 super.onCreate() 中调用的，
+     * 但是FragmentManager的恢复是在 onCreate() 方法返回后执行的，所以在 initData(Bundle) 中恢复Fragment会返回null。
+     *
+     * @param savedInstanceState
+     */
+    @Override
+    public void initFragments(Bundle savedInstanceState) {
+
     }
 }
