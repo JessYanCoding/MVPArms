@@ -42,8 +42,8 @@ public class UserDetailActivity extends BaseActivity {
     }
 
     @Override
-    public void initFragments(Bundle savedInstanceState) {
-        super.initFragments(savedInstanceState);
+    public void initAfterCallback(Bundle savedInstanceState) {
+        super.initAfterCallback(savedInstanceState);
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();

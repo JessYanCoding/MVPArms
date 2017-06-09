@@ -41,12 +41,15 @@ public interface IActivity {
     boolean useFragment();
 
     /**
+     * 用来初始化或恢复数据。由于{@link android.app.Application.ActivityLifecycleCallbacks} 不能完全代理Activity的生命周期。
+     * 在{@link com.jess.arms.base.BaseActivity#onCreate(Bundle)}的super.onCreate() 后执行。
+     * BaseActivity提供一个空实现,因为大多数情况下{@link #initData(Bundle)} 方法可以满足需求。
+     *
+     * 使用场景：
      * 如果Activity是使用Fragment，并且要想处理Activity重建时重用已经创建好的Fragment，在Activity则重写此方法。
-     * BaseActivity提供一个空实现，因为使用Fragment不是必须。
-     * 因为 {@link #initData(Bundle)} 方法是在 super.onCreate() 中调用的，
-     * 但是FragmentManager的恢复是在 onCreate() 方法返回后执行的，所以在 initData(Bundle) 中恢复Fragment会返回null。
+     * 由于FragmentManager的恢复是在 onCreate() 方法返回后执行的，所以在 {@link #initData(Bundle)} 中恢复Fragment会返回null。
      *
      * @param savedInstanceState
      */
-    void initFragments(Bundle savedInstanceState);
+    void initAfterCallback(Bundle savedInstanceState);
 }
