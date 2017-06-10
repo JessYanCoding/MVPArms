@@ -102,6 +102,7 @@ public class AppDelegate implements App {
         this.mAppComponent = null;
         this.mActivityLifecycle = null;
         this.mActivityLifecycles = null;
+        this.mComponentCallback = null;
         this.mAppLifecycles = null;
         this.mApplication = null;
     }
