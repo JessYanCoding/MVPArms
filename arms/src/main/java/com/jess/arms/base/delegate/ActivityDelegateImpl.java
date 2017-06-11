@@ -26,7 +26,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         this.iActivity = (IActivity) activity;
     }
 
-
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         if (iActivity.useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().register(mActivity);//注册到事件主线
@@ -40,30 +40,34 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         }
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(mActivity);
-        iActivity.initData(savedInstanceState);
     }
 
+    @Override
     public void onStart() {
 
     }
 
+    @Override
     public void onResume() {
 
     }
 
+    @Override
     public void onPause() {
 
     }
 
+    @Override
     public void onStop() {
 
     }
 
+    @Override
     public void onSaveInstanceState(Bundle outState) {
 
     }
 
-
+    @Override
     public void onDestroy() {
         if (mUnbinder != Unbinder.EMPTY) mUnbinder.unbind();
         if (iActivity.useEventBus())//如果要使用eventbus请将此方法返回true

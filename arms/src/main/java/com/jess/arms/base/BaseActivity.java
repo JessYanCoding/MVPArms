@@ -1,6 +1,8 @@
 package com.jess.arms.base;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -27,6 +29,11 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
         return view == null ? super.onCreateView(name, context, attrs) : view;
     }
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initData(savedInstanceState);
+    }
 
     @Override
     protected void onDestroy() {
