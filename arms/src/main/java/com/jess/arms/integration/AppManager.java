@@ -284,8 +284,9 @@ public class AppManager {
 
         Iterator<Activity> iterator = getActivityList().iterator();
         while (iterator.hasNext()) {
-            iterator.next().finish();
+            Activity next = iterator.next();
             iterator.remove();
+            next.finish();
         }
 
     }
