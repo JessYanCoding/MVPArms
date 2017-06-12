@@ -69,8 +69,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
 
     @Override
     public void onDestroy() {
-        if (mUnbinder != Unbinder.EMPTY)
-            mUnbinder.unbind();
+        if (mUnbinder != Unbinder.EMPTY) mUnbinder.unbind();
         if (iActivity.useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().unregister(mActivity);
         this.mUnbinder = null;

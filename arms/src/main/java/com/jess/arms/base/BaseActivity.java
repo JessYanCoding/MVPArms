@@ -38,8 +38,7 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null)
-            mPresenter.onDestroy();//释放资源
+        if (mPresenter != null) mPresenter.onDestroy();//释放资源
         this.mPresenter = null;
     }
 
@@ -63,11 +62,4 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     public boolean useFragment() {
         return true;
     }
-
-    /**
-     * 用来初始化或恢复数据。
-     *
-     * @param savedInstanceState
-     */
-    protected abstract void initData(Bundle savedInstanceState);
 }

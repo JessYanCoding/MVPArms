@@ -8,7 +8,6 @@ import com.jess.arms.di.component.AppComponent;
 /**
  * Created by jess on 26/04/2017 21:42
  * Contact with jess.yan.effort@gmail.com
- * Modified by https://github.com/xiaobailong24
  */
 
 public interface IActivity {
@@ -30,6 +29,8 @@ public interface IActivity {
      */
     int initView(Bundle savedInstanceState);
 
+    void initData(Bundle savedInstanceState);
+
     /**
      * 这个Activity是否会使用Fragment,框架会根据这个属性判断是否注册{@link android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks}
      * 如果返回false,那意味着这个Activity不需要绑定Fragment,那你再在这个Activity中绑定继承于 {@link com.jess.arms.base.BaseFragment} 的Fragment将不起任何作用
@@ -37,5 +38,4 @@ public interface IActivity {
      * @return
      */
     boolean useFragment();
-
 }
