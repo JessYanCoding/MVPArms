@@ -9,15 +9,10 @@ import android.view.View;
 import com.jess.arms.base.delegate.IActivity;
 import com.jess.arms.mvp.IPresenter;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-import com.zhy.autolayout.AutoFrameLayout;
-import com.zhy.autolayout.AutoLinearLayout;
-import com.zhy.autolayout.AutoRelativeLayout;
 
 import javax.inject.Inject;
 
-import static com.jess.arms.base.delegate.ActivityDelegate.LAYOUT_FRAMELAYOUT;
-import static com.jess.arms.base.delegate.ActivityDelegate.LAYOUT_LINEARLAYOUT;
-import static com.jess.arms.base.delegate.ActivityDelegate.LAYOUT_RELATIVELAYOUT;
+import static com.jess.arms.utils.ThirdViewUtil.convertAutoView;
 
 /**
  * 因为java只能单继承,所以如果有需要继承特定Activity的三方库,那你就需要自己自定义Activity
@@ -30,16 +25,7 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
 
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
-        View view = null;
-        if (name.equals(LAYOUT_FRAMELAYOUT)) {
-            view = new AutoFrameLayout(context, attrs);
-        }
-        if (name.equals(LAYOUT_LINEARLAYOUT)) {
-            view = new AutoLinearLayout(context, attrs);
-        }
-        if (name.equals(LAYOUT_RELATIVELAYOUT)) {
-            view = new AutoRelativeLayout(context, attrs);
-        }
+        View view = convertAutoView(name, context, attrs);
         return view == null ? super.onCreateView(name, context, attrs) : view;
     }
 

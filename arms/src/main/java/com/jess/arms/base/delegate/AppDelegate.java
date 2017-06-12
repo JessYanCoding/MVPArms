@@ -1,6 +1,8 @@
 package com.jess.arms.base.delegate;
 
 import android.app.Application;
+import android.content.ComponentCallbacks2;
+import android.content.res.Configuration;
 
 import com.jess.arms.base.App;
 import com.jess.arms.di.component.AppComponent;
@@ -11,6 +13,7 @@ import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.integration.ActivityLifecycle;
 import com.jess.arms.integration.ConfigModule;
 import com.jess.arms.integration.ManifestParser;
+import com.jess.arms.widget.imageloader.glide.GlideImageConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,7 @@ public class AppDelegate implements App {
     private final List<ConfigModule> mModules;
     private List<Lifecycle> mAppLifecycles = new ArrayList<>();
     private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();
+    private ComponentCallbacks2 mComponentCallback;
 
     public AppDelegate(Application application) {
         this.mApplication = application;
@@ -71,12 +75,19 @@ public class AppDelegate implements App {
             lifecycle.onCreate(mApplication);
         }
 
+        mComponentCallback = new AppComponentCallbacks(mApplication, mAppComponent);
+
+        mApplication.registerComponentCallbacks(mComponentCallback);
+
     }
 
 
     public void onTerminate() {
         if (mActivityLifecycle != null) {
             mApplication.unregisterActivityLifecycleCallbacks(mActivityLifecycle);
+        }
+        if (mComponentCallback != null) {
+            mApplication.unregisterComponentCallbacks(mComponentCallback);
         }
         if (mActivityLifecycles != null && mActivityLifecycles.size() > 0) {
             for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles) {
@@ -91,6 +102,7 @@ public class AppDelegate implements App {
         this.mAppComponent = null;
         this.mActivityLifecycle = null;
         this.mActivityLifecycles = null;
+        this.mComponentCallback = null;
         this.mAppLifecycles = null;
         this.mApplication = null;
     }
@@ -130,6 +142,35 @@ public class AppDelegate implements App {
         void onCreate(Application application);
 
         void onTerminate(Application application);
+    }
+
+    private static class AppComponentCallbacks implements ComponentCallbacks2 {
+        private Application mApplication;
+        private AppComponent mAppComponent;
+
+        public AppComponentCallbacks(Application application, AppComponent appComponent) {
+            this.mApplication = application;
+            this.mAppComponent = appComponent;
+        }
+
+        @Override
+        public void onTrimMemory(int level) {
+
+        }
+
+        @Override
+        public void onConfigurationChanged(Configuration newConfig) {
+
+        }
+
+        @Override
+        public void onLowMemory() {
+            //内存不足时清理图片请求框架的内存缓存
+            mAppComponent.imageLoader().clear(mApplication, GlideImageConfig
+                    .builder()
+                    .isClearMemory(true)
+                    .build());
+        }
     }
 
 }

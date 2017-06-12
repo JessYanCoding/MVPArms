@@ -257,6 +257,10 @@
 -keep class io.victoralbertos.jolyglot.** { *; }
 -keep interface io.victoralbertos.jolyglot.** { *; }
 
+################RxErrorHandler#################
+ -keep class me.jessyan.rxerrorhandler.** { *; }
+ -keep interface me.jessyan.rxerrorhandler.** { *; }
+
 ################Timber#################
 -dontwarn org.jetbrains.annotations.**
 
