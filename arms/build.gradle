@@ -44,11 +44,10 @@ dependencies {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
-    compile (rootProject.ext.dependencies["cardview-v7"]){
-        exclude module: 'support-annotations'
-    }
     compile (rootProject.ext.dependencies["design"]){
         exclude module: 'support-annotations'
+        exclude module: 'appcompat-v7'
+        exclude module: 'support-v4'
     }
     compile rootProject.ext.dependencies["annotations"]
 
@@ -86,21 +85,32 @@ dependencies {
         exclude module: 'rxjava'
         exclude module: 'rxandroid'
     }
-    compile rootProject.ext.dependencies["rxpermissions2"]
+    compile (rootProject.ext.dependencies["rxpermissions2"]){
+        exclude module: 'rxjava'
+        exclude module: 'support-annotations'
+    }
     compile (rootProject.ext.dependencies['rxerrorhandler2']){
         exclude module: 'rxjava'
+        exclude module: 'appcompat-v7'
     }
 
 
     //network
     compile (rootProject.ext.dependencies["retrofit"]){
         exclude module: 'okhttp'
+        exclude module: 'okio'
     }
     compile (rootProject.ext.dependencies["retrofit-converter-gson"]){
         exclude module: 'gson'
+        exclude module: 'okhttp'
+        exclude module: 'okio'
+        exclude module: 'retrofit'
     }
     compile (rootProject.ext.dependencies["retrofit-adapter-rxjava2"]){
         exclude module: 'rxjava'
+        exclude module: 'okhttp'
+        exclude module: 'retrofit'
+        exclude module: 'okio'
     }
     compile rootProject.ext.dependencies["okhttp3"]
     compile rootProject.ext.dependencies["glide"]

@@ -1,4 +1,4 @@
-package com.jess.arms.widget.autolayout;
+package me.jessyan.mvparms.demo.mvp.ui.widget;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
