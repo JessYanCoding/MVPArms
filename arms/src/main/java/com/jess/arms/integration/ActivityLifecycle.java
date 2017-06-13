@@ -146,18 +146,6 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     public void onActivityDestroyed(Activity activity) {
         mAppManager.removeActivity(activity);
 
-        boolean useFragment = activity instanceof IActivity ? ((IActivity) activity).useFragment() : true;
-        if (activity instanceof FragmentActivity && useFragment) {
-            if (mFragmentLifecycle != null) {
-                ((FragmentActivity) activity).getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(mFragmentLifecycle);
-            }
-            if (mFragmentLifecycles != null && mFragmentLifecycles.size() > 0) {
-                for (FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle : mFragmentLifecycles) {
-                    ((FragmentActivity) activity).getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(fragmentLifecycle);
-                }
-            }
-        }
-
         ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
         if (activityDelegate != null) {
             activityDelegate.onDestroy();
