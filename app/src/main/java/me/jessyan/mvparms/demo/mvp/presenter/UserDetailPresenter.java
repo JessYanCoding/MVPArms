@@ -14,9 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
 import me.jessyan.mvparms.demo.app.utils.RxUtils;
 import me.jessyan.mvparms.demo.mvp.contract.UserDetailContract;
 import me.jessyan.mvparms.demo.mvp.model.entity.TextContent;
@@ -67,17 +65,9 @@ public class UserDetailPresenter extends BasePresenter<UserDetailContract.Model,
             mAdapter = new TextContentAdapter(mContents);
         }
         mRootView.setAdapter(mAdapter);
-        // TODO: 2017/5/19
         mModel.getUserDetail(username, update)
-                .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(3, 2))
-                .doOnSubscribe(disposable ->
-                        mRootView.showLoading())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doAfterTerminate(() ->
-                        mRootView.hideLoading())
-                .compose(RxUtils.bindToLifecycle(mRootView))
+                .compose(RxUtils.applySchedulers(mRootView))
                 .flatMap(userDetail -> {
                     mContents.clear();
                     mContents.add(new TextContent("Username", userDetail.getLogin()));
