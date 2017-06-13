@@ -162,12 +162,26 @@ public class RequestInterceptor implements Interceptor {
     }
 
     public static boolean isParseable(ResponseBody responseBody) {
-        if (responseBody.contentLength() == 0) return false;
-        return responseBody.contentType().toString().contains("text") || isJson(responseBody);
+        if (responseBody.contentLength() == 0 || responseBody.contentType() == null) return false;
+        return responseBody.contentType().toString().toLowerCase().contains("text")
+                || isJson(responseBody) || isForm(responseBody)
+                || isHtml(responseBody) || isXml(responseBody);
     }
 
     public static boolean isJson(ResponseBody responseBody) {
-        return responseBody.contentType().toString().contains("json");
+        return responseBody.contentType().toString().toLowerCase().contains("json");
+    }
+
+    public static boolean isXml(ResponseBody responseBody) {
+        return responseBody.contentType().toString().toLowerCase().contains("xml");
+    }
+
+    public static boolean isHtml(ResponseBody responseBody) {
+        return responseBody.contentType().toString().toLowerCase().contains("html");
+    }
+
+    public static boolean isForm(ResponseBody responseBody) {
+        return responseBody.contentType().toString().toLowerCase().contains("x-www-form-urlencoded");
     }
 
     public static String convertCharset(Charset charset) {
