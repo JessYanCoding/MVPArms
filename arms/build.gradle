@@ -80,6 +80,7 @@ dependencies {
         exclude module: 'support-annotations'
         exclude module: 'rxjava'
         exclude module: 'rxandroid'
+        exclude module: 'rxlifecycle'
     }
     compile(rootProject.ext.dependencies["rxpermissions2"]) {
         exclude module: 'rxjava'
