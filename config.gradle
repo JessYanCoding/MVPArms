@@ -5,8 +5,8 @@ ext {
                buildToolsVersion       : "25.0.3",
                minSdkVersion           : 15,
                targetSdkVersion        : 25,
-               versionCode             : 103,
-               versionName             : "2.0.3"
+               versionCode             : 125,
+               versionName             : "2.1.0"
     ]
 
      version = [
@@ -81,6 +81,7 @@ ext {
                 "javax.annotation"         : "javax.annotation:jsr250-api:1.0",
                 "arouter"                  : "com.alibaba:arouter-api:1.2.1.1",
                 "arouter-compiler"         : "com.alibaba:arouter-compiler:1.1.2.1",
+                "progressmanager"          : "me.jessyan:progressmanager:1.2.5",
 
                 //test
                 "junit"                    : "junit:junit:4.12",
