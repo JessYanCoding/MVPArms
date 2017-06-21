@@ -38,9 +38,6 @@ import java.util.concurrent.TimeUnit;
 import me.jessyan.mvparms.demo.BuildConfig;
 import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.mvp.model.api.Api;
-import me.jessyan.mvparms.demo.mvp.model.api.cache.CommonCache;
-import me.jessyan.mvparms.demo.mvp.model.api.service.CommonService;
-import me.jessyan.mvparms.demo.mvp.model.api.service.UserService;
 import me.jessyan.progressmanager.ProgressManager;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -143,8 +140,8 @@ public class GlobalConfiguration implements ConfigModule {
 
     @Override
     public void registerComponents(Context context, IRepositoryManager repositoryManager) {
-        repositoryManager.injectRetrofitService(CommonService.class, UserService.class);
-        repositoryManager.injectCacheService(CommonCache.class);
+//        repositoryManager.injectRetrofitService(CommonService.class, UserService.class);
+//        repositoryManager.injectCacheService(CommonCache.class);
     }
 
     @Override

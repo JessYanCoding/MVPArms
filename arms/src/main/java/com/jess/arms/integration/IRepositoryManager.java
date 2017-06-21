@@ -13,6 +13,7 @@ public interface IRepositoryManager {
      * 注入RetrofitService,在{@link ConfigModule#registerComponents(Context, IRepositoryManager)}中进行注入
      * @param services
      */
+    @Deprecated
     void injectRetrofitService(Class<?>... services);
 
 
@@ -20,6 +21,7 @@ public interface IRepositoryManager {
      * 注入CacheService,在{@link ConfigModule#registerComponents(Context, IRepositoryManager)}中进行注入
      * @param services
      */
+    @Deprecated
     void injectCacheService(Class<?>... services);
 
 
