@@ -3,6 +3,7 @@ package me.jessyan.mvparms.demo.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.net.ParseException;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonParseException;
 import com.jess.arms.base.App;
 import com.jess.arms.base.delegate.AppDelegate;
 import com.jess.arms.di.module.GlobalConfigModule;
@@ -27,6 +30,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -36,9 +41,11 @@ import me.jessyan.mvparms.demo.mvp.model.api.Api;
 import me.jessyan.mvparms.demo.mvp.model.api.cache.CommonCache;
 import me.jessyan.mvparms.demo.mvp.model.api.service.CommonService;
 import me.jessyan.mvparms.demo.mvp.model.api.service.UserService;
+import me.jessyan.progressmanager.ProgressManager;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+import retrofit2.HttpException;
 import timber.log.Timber;
 
 /**
@@ -59,7 +66,7 @@ public class GlobalConfiguration implements ConfigModule {
                         /* 这里可以先客户端一步拿到每一次http请求的结果,可以解析成json,做一些操作,如检测到token过期后
                            重新请求token,并重新执行请求 */
                         try {
-                            if (!TextUtils.isEmpty(httpResult) && RequestInterceptor.isJson(response.body())) {
+                            if (!TextUtils.isEmpty(httpResult) && RequestInterceptor.isJson(response.body().contentType())) {
                                 JSONArray array = new JSONArray(httpResult);
                                 JSONObject object = (JSONObject) array.get(0);
                                 String login = object.getString("login");
@@ -97,13 +104,25 @@ public class GlobalConfiguration implements ConfigModule {
                         return request;
                     }
                 })
-                .responseErroListener((context1, e) -> {
+                .responseErrorListener((context1, t) -> {
                     /* 用来提供处理所有错误的监听
                        rxjava必要要使用ErrorHandleSubscriber(默认实现Subscriber的onError方法),此监听才生效 */
-                    Timber.w("------------>" + e.getMessage());
-                    UiUtils.SnackbarText("net error");
+                    Timber.tag("Catch-Error").w(t.getMessage());
+                    //这里不光是只能打印错误,还可以根据不同的错误作出不同的逻辑处理
+                    String msg = "未知错误";
+                    if (t instanceof UnknownHostException) {
+                        msg = "网络不可用";
+                    } else if (t instanceof SocketTimeoutException) {
+                        msg = "请求网络超时";
+                    } else if (t instanceof HttpException) {
+                        HttpException httpException = (HttpException) t;
+                        msg = convertStatusCode(httpException);
+                    } else if (t instanceof JsonParseException || t instanceof ParseException || t instanceof JSONException || t instanceof JsonIOException) {
+                        msg = "数据解析错误";
+                    }
+                    UiUtils.snackbarText(msg);
                 })
-                .gsonConfiguration((context12, gsonBuilder) -> {//这里可以自己自定义配置Gson的参数
+                .gsonConfiguration((context1, gsonBuilder) -> {//这里可以自己自定义配置Gson的参数
                     gsonBuilder
                             .serializeNulls()//支持序列化null的参数
                             .enableComplexMapKeySerialization();//支持将序列化key为object的map,默认只能序列化key为string的map
@@ -113,9 +132,12 @@ public class GlobalConfiguration implements ConfigModule {
                 })
                 .okhttpConfiguration((context1, okhttpBuilder) -> {//这里可以自己自定义配置Okhttp的参数
                     okhttpBuilder.writeTimeout(10, TimeUnit.SECONDS);
-                }).rxCacheConfiguration((context1, rxCacheBuilder) -> {//这里可以自己自定义配置RxCache的参数
-            rxCacheBuilder.useExpiredDataIfLoaderNotAvailable(true);
-        });
+                    //开启使用一行代码监听 Retrofit／Okhttp 上传下载进度监听,以及 Glide 加载进度监听 详细使用方法查看 https://github.com/JessYanCoding/ProgressManager
+                    ProgressManager.getInstance().with(okhttpBuilder);
+                })
+                .rxCacheConfiguration((context1, rxCacheBuilder) -> {//这里可以自己自定义配置RxCache的参数
+                    rxCacheBuilder.useExpiredDataIfLoaderNotAvailable(true);
+                });
     }
 
     @Override
@@ -150,7 +172,7 @@ public class GlobalConfiguration implements ConfigModule {
         lifecycles.add(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                Timber.w(activity+" - onActivityCreated");
+                Timber.w(activity + " - onActivityCreated");
                 //这里全局给Activity设置toolbar和title,你想象力有多丰富,这里就有多强大,以前放到BaseActivity的操作都可以放到这里
                 if (activity.findViewById(R.id.toolbar) != null) {
                     if (activity instanceof AppCompatActivity) {
@@ -176,53 +198,71 @@ public class GlobalConfiguration implements ConfigModule {
 
             @Override
             public void onActivityStarted(Activity activity) {
-                Timber.w(activity+" - onActivityStarted");
+                Timber.w(activity + " - onActivityStarted");
             }
 
             @Override
             public void onActivityResumed(Activity activity) {
-                Timber.w(activity+" - onActivityResumed");
+                Timber.w(activity + " - onActivityResumed");
             }
 
             @Override
             public void onActivityPaused(Activity activity) {
-                Timber.w(activity+" - onActivityPaused");
+                Timber.w(activity + " - onActivityPaused");
             }
 
             @Override
             public void onActivityStopped(Activity activity) {
-                Timber.w(activity+" - onActivityStopped");
+                Timber.w(activity + " - onActivityStopped");
             }
 
             @Override
             public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-                Timber.w(activity+" - onActivitySaveInstanceState");
+                Timber.w(activity + " - onActivitySaveInstanceState");
             }
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-                Timber.w(activity+" - onActivityDestroyed");
+                Timber.w(activity + " - onActivityDestroyed");
             }
         });
     }
 
     @Override
     public void injectFragmentLifecycle(Context context, List<FragmentManager.FragmentLifecycleCallbacks> lifecycles) {
-            lifecycles.add(new FragmentManager.FragmentLifecycleCallbacks() {
+        lifecycles.add(new FragmentManager.FragmentLifecycleCallbacks() {
 
-                @Override
-                public void onFragmentCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState) {
-                    // 在配置变化的时候将这个 Fragment 保存下来,在 Activity 由于配置变化重建是重复利用已经创建的Fragment。
-                    // https://developer.android.com/reference/android/app/Fragment.html?hl=zh-cn#setRetainInstance(boolean)
-                    // 在 Activity 中绑定少量的 Fragment 建议这样做,如果需要绑定较多的 Fragment 不建议设置此参数,如 ViewPager 需要展示较多 Fragment
-                    f.setRetainInstance(true);
-                }
+            @Override
+            public void onFragmentCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState) {
+                // 在配置变化的时候将这个 Fragment 保存下来,在 Activity 由于配置变化重建是重复利用已经创建的Fragment。
+                // https://developer.android.com/reference/android/app/Fragment.html?hl=zh-cn#setRetainInstance(boolean)
+                // 在 Activity 中绑定少量的 Fragment 建议这样做,如果需要绑定较多的 Fragment 不建议设置此参数,如 ViewPager 需要展示较多 Fragment
+                f.setRetainInstance(true);
+            }
 
-                @Override
-                public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
-                    ((RefWatcher)((App) f.getActivity().getApplication()).getAppComponent().extras().get(RefWatcher.class.getName())).watch(this);
-                }
-            });
+            @Override
+            public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
+                //这里应该是检测 Fragment 而不是 FragmentLifecycleCallbacks 的泄露。
+                ((RefWatcher) ((App) f.getActivity().getApplication()).getAppComponent().extras().get(RefWatcher.class.getName())).watch(f);
+            }
+        });
+    }
+
+
+    private String convertStatusCode(HttpException httpException) {
+        String msg;
+        if (httpException.code() == 500) {
+            msg = "服务器发生错误";
+        } else if (httpException.code() == 404) {
+            msg = "请求地址不存在";
+        } else if (httpException.code() == 403) {
+            msg = "请求被服务器拒绝";
+        } else if (httpException.code() == 307) {
+            msg = "请求被重定向到其他页面";
+        } else {
+            msg = httpException.message();
+        }
+        return msg;
     }
 
 }

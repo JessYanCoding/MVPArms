@@ -1,9 +1,8 @@
 package me.jessyan.mvparms.demo.app.utils;
 
 import com.jess.arms.mvp.IView;
+import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
@@ -20,6 +19,10 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class RxUtils {
+
+    private RxUtils() {
+
+    }
 
     public static <T> ObservableTransformer<T, T> applySchedulers(final IView view) {
         return new ObservableTransformer<T, T>() {
@@ -46,11 +49,9 @@ public class RxUtils {
 
 
     public static <T> LifecycleTransformer<T> bindToLifecycle(IView view) {
-        if (view instanceof RxAppCompatActivity) {
-            return ((RxAppCompatActivity) view).bindToLifecycle();
-        } else if (view instanceof RxFragment) {
-            return ((RxFragment) view).bindToLifecycle();
-        } else {
+        if (view instanceof LifecycleProvider){
+            return ((LifecycleProvider)view).bindToLifecycle();
+        }else {
             throw new IllegalArgumentException("view isn't activity or fragment");
         }
 

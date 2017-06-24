@@ -1,6 +1,7 @@
 package com.jess.arms.di.module;
 
 import android.app.Application;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.jess.arms.http.GlobalHttpHandler;
@@ -16,7 +17,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
+import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 
@@ -29,7 +30,7 @@ public class GlobalConfigModule {
     private BaseImageLoaderStrategy mLoaderStrategy;
     private GlobalHttpHandler mHandler;
     private List<Interceptor> mInterceptors;
-    private ResponseErroListener mErroListener;
+    private ResponseErrorListener mErrorListener;
     private File mCacheFile;
     private ClientModule.RetrofitConfiguration mRetrofitConfiguration;
     private ClientModule.OkhttpConfiguration mOkhttpConfiguration;
@@ -46,7 +47,7 @@ public class GlobalConfigModule {
         this.mLoaderStrategy = builder.loaderStrategy;
         this.mHandler = builder.handler;
         this.mInterceptors = builder.interceptors;
-        this.mErroListener = builder.responseErroListener;
+        this.mErrorListener = builder.responseErrorListener;
         this.mCacheFile = builder.cacheFile;
         this.mRetrofitConfiguration = builder.retrofitConfiguration;
         this.mOkhttpConfiguration = builder.okhttpConfiguration;
@@ -61,6 +62,7 @@ public class GlobalConfigModule {
 
     @Singleton
     @Provides
+    @Nullable
     List<Interceptor> provideInterceptors() {
         return mInterceptors;
     }
@@ -82,8 +84,9 @@ public class GlobalConfigModule {
 
     @Singleton
     @Provides
+    @Nullable
     GlobalHttpHandler provideGlobalHttpHandler() {
-        return mHandler == null ? GlobalHttpHandler.EMPTY : mHandler;//打印请求信息
+        return mHandler;//处理Http请求和响应结果
     }
 
 
@@ -104,33 +107,37 @@ public class GlobalConfigModule {
      */
     @Singleton
     @Provides
-    ResponseErroListener provideResponseErroListener() {
-        return mErroListener == null ? ResponseErroListener.EMPTY : mErroListener;
+    ResponseErrorListener provideResponseErrorListener() {
+        return mErrorListener == null ? ResponseErrorListener.EMPTY : mErrorListener;
     }
 
 
     @Singleton
     @Provides
+    @Nullable
     ClientModule.RetrofitConfiguration provideRetrofitConfiguration() {
-        return mRetrofitConfiguration == null ? ClientModule.RetrofitConfiguration.EMPTY : mRetrofitConfiguration;
+        return mRetrofitConfiguration;
     }
 
     @Singleton
     @Provides
+    @Nullable
     ClientModule.OkhttpConfiguration provideOkhttpConfiguration() {
-        return mOkhttpConfiguration == null ? ClientModule.OkhttpConfiguration.EMPTY : mOkhttpConfiguration;
+        return mOkhttpConfiguration;
     }
 
     @Singleton
     @Provides
+    @Nullable
     ClientModule.RxCacheConfiguration provideRxCacheConfiguration() {
-        return mRxCacheConfiguration == null ? ClientModule.RxCacheConfiguration.EMPTY : mRxCacheConfiguration;
+        return mRxCacheConfiguration;
     }
 
     @Singleton
     @Provides
+    @Nullable
     AppModule.GsonConfiguration provideGsonConfiguration() {
-        return mGsonConfiguration == null ? AppModule.GsonConfiguration.EMPTY : mGsonConfiguration;
+        return mGsonConfiguration;
     }
 
 
@@ -138,8 +145,8 @@ public class GlobalConfigModule {
         private HttpUrl apiUrl;
         private BaseImageLoaderStrategy loaderStrategy;
         private GlobalHttpHandler handler;
-        private List<Interceptor> interceptors = new ArrayList<>();
-        private ResponseErroListener responseErroListener;
+        private List<Interceptor> interceptors;
+        private ResponseErrorListener responseErrorListener;
         private File cacheFile;
         private ClientModule.RetrofitConfiguration retrofitConfiguration;
         private ClientModule.OkhttpConfiguration okhttpConfiguration;
@@ -168,13 +175,15 @@ public class GlobalConfigModule {
         }
 
         public Builder addInterceptor(Interceptor interceptor) {//动态添加任意个interceptor
+            if (interceptors == null)
+                interceptors = new ArrayList<>();
             this.interceptors.add(interceptor);
             return this;
         }
 
 
-        public Builder responseErroListener(ResponseErroListener listener) {//处理所有Rxjava的onError逻辑
-            this.responseErroListener = listener;
+        public Builder responseErrorListener(ResponseErrorListener listener) {//处理所有Rxjava的onError逻辑
+            this.responseErrorListener = listener;
             return this;
         }
 

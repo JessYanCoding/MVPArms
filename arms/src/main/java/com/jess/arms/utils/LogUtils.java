@@ -6,6 +6,9 @@ import android.util.Log;
 
 public class LogUtils {
 
+    private LogUtils() {
+    }
+
     private final static boolean isLog = true;
     public static final String DEFAULT_TAG = "Mvparms";
 
@@ -38,7 +41,7 @@ public class LogUtils {
      * @param msg void
      */
     public static void warnInfo(String msg) {
-        warnInfo("zhibo", msg);
+        warnInfo(DEFAULT_TAG, msg);
     }
 
     /**

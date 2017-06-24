@@ -30,10 +30,10 @@ import timber.log.Timber;
  * Contact with jess.yan.effort@gmail.com
  */
 @Singleton
-public class AppManager {
+public final class AppManager {
     protected final String TAG = this.getClass().getSimpleName();
     public static final String APPMANAGER_MESSAGE = "appmanager_message";
-    public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_add_activity_list";//是否加入到activity的list，管理
+    public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list";//true 为不需要加入到 Activity 容器进行统一管理,反之亦然
     public static final int START_ACTIVITY = 0;
     public static final int SHOW_SNACKBAR = 1;
     public static final int KILL_ALL = 2;
@@ -72,7 +72,10 @@ public class AppManager {
                 killAll();
                 break;
             case APP_EXIT:
-                AppExit();
+                appExit();
+                break;
+            default:
+                Timber.tag(TAG).w("The message.what not match");
                 break;
         }
     }
@@ -82,7 +85,6 @@ public class AppManager {
             startActivity((Intent) message.obj);
         else if (message.obj instanceof Class)
             startActivity((Class) message.obj);
-        return;
     }
 
 
@@ -282,8 +284,9 @@ public class AppManager {
 
         Iterator<Activity> iterator = getActivityList().iterator();
         while (iterator.hasNext()) {
-            iterator.next().finish();
+            Activity next = iterator.next();
             iterator.remove();
+            next.finish();
         }
 
     }
@@ -292,7 +295,7 @@ public class AppManager {
     /**
      * 退出应用程序
      */
-    public void AppExit() {
+    public void appExit() {
         try {
             killAll();
             if (mActivityList != null)

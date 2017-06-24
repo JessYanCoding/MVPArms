@@ -1,5 +1,5 @@
 # MVPArms 
-[ ![Bintray](https://img.shields.io/badge/bintray-v2.0.3-brightgreen.svg) ](https://bintray.com/jessyancoding/maven/MVPArms/2.0.3/link)
+[ ![Bintray](https://img.shields.io/badge/bintray-v2.1.0-brightgreen.svg) ](https://bintray.com/jessyancoding/maven/MVPArms/2.1.0/link)
 [ ![Build Status](https://travis-ci.org/JessYanCoding/MVPArms.svg?branch=master) ](https://travis-ci.org/JessYanCoding/MVPArms)
 [ ![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square) ](https://developer.android.com/about/versions/android-4.0.3.html)
 [ ![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square) ](http://www.apache.org/licenses/LICENSE-2.0)
@@ -14,7 +14,7 @@
 
 ## Usage
 > New Project
->> If you are building a new project, directly to the entire project **clone** (or download), as **Demo** as the main module (It is recommended to remove the arms Module and use **Gradle** to depend on this framework remotely for easy updates), then the package name into their own package name , **Demo** contains the package structure can be used directly, a mainstream `MVP` +` Dagger2` + `Retrofit` +` Rxjava` framework so easy to build successful, and now you refer **Demo Mvp** Package under the **UserActivity** format,[Use Template to automatically generate MVP, Dagger2 related classes under the corresponding package](http://www.jianshu.com/p/56cf17ab896d),With access to [Wiki documents](https://github.com/JessYanCoding/MVPArms/wiki) slowly grasp the framework to see more articles as soon as possible in the project to use it, in practice, learning is the fastest
+>> If you are building a new project, directly to the entire project **clone** (or download), as **app** as the main **Module** (It is recommended to remove the **arms Module** and use **Gradle** to [depend](https://github.com/JessYanCoding/MVPArms/wiki#1.1) on this framework remotely for easy updates), then the package name into their own package name , **app Module** contains the package structure can be used directly, a mainstream `MVP` +` Dagger2` + `Retrofit` +` Rxjava` framework so easy to build successful, and now you refer **Mvp** Package under the **UserActivity** format,[Use Template to automatically generate MVP, Dagger2 related classes](https://github.com/JessYanCoding/MVPArmsTemplate),With access to [Wiki documents](https://github.com/JessYanCoding/MVPArms/wiki) slowly grasp the framework to see more articles as soon as possible in the project to use it, in practice, learning is the fastest
 
 > Old Project
 >> [Old projects would like to introduce this framework, you can refer to the Wiki documentation, written in great detail](https://github.com/JessYanCoding/MVPArms/wiki)
@@ -33,7 +33,7 @@
 
 * [Version Updata](https://github.com/JessYanCoding/MVPArms/wiki#1.6)
 
-* The use of these technologies for the latter part of the project maintenance and iterative, especially large projects is very helpful, but is to develop a pre-write a page to write a lot of `MVP`,` Dagger2` class and interface, which is indeed a headache for the development of pre- Now the framework has been able to [mvp_generator_solution](https://github.com/JessYanCoding/MVPArms/blob/master/MVP_generator_solution) automatically generate some `MVP`,` Dagger2` template code, and now we can very easily use the framework.
+* The use of these technologies for the latter part of the project maintenance and iterative, especially large projects is very helpful, but is to develop a pre-write a page to write a lot of `MVP`,` Dagger2` class and interface, which is indeed a headache for the development of pre- Now the framework has been able to [Template](https://github.com/JessYanCoding/MVPArmsTemplate) automatically generate some `MVP`,` Dagger2` template code, and now we can very easily use the framework.
 
 * Use this frame comes with automatic adaptation function, please refer to [AndroidAutoLayout](https://github.com/hongyangAndroid/AndroidAutoLayout).
 
@@ -48,21 +48,24 @@
 3. [`Rxjava`](https://github.com/ReactiveX/RxJava)
 4. [`RxAndroid`](https://github.com/ReactiveX/RxAndroid)
 5. [`Rxlifecycle`](https://github.com/trello/RxLifecycle)
-6. [`Rxbinding`](https://github.com/JakeWharton/RxBinding)
-7. [`RxCache`](https://github.com/VictorAlbertos/RxCache)
-8. [`Retrofit`](https://github.com/square/retrofit)
-9. [`Okhttp`](https://github.com/square/okhttp)
-10. [`Autolayout`](https://github.com/hongyangAndroid/AndroidAutoLayout)
-11. [`Gson`](https://github.com/google/gson)
-12. [`Butterknife`](https://github.com/JakeWharton/butterknife)
-13. [`Androideventbus`](https://github.com/hehonghui/AndroidEventBus)
-14. [`Timber`](https://github.com/JakeWharton/timber)
-15. [`Glide`](https://github.com/bumptech/glide)
-16. [`LeakCanary`](https://github.com/square/leakcanary)
-17. [`RxErroHandler`](https://github.com/JessYanCoding/RxErrorHandler)
+6. [`RxCache`](https://github.com/VictorAlbertos/RxCache)
+7. [`RxPermissions`](https://github.com/tbruyelle/RxPermissions)
+8. [`RxErroHandler`](https://github.com/JessYanCoding/RxErrorHandler)
+9. [`Retrofit`](https://github.com/square/retrofit)
+10. [`Okhttp`](https://github.com/square/okhttp)
+11. [`Autolayout`](https://github.com/hongyangAndroid/AndroidAutoLayout)
+12. [`Gson`](https://github.com/google/gson)
+13. [`Butterknife`](https://github.com/JakeWharton/butterknife)
+14. [`Androideventbus`](https://github.com/hehonghui/AndroidEventBus)
+15. [`Timber`](https://github.com/JakeWharton/timber)
+16. [`Glide`](https://github.com/bumptech/glide)
+17. [`LeakCanary`](https://github.com/square/leakcanary)
+
 
 
 ## Update
+* Tuesday, 13 June 2017: [**ProgressManager**](https://github.com/JessYanCoding/ProgressManager)
+* Wednesday, 31 May 2017: [**Template**](https://github.com/JessYanCoding/MVPArmsTemplate)
 * Monday, 24 April 2017: [**AppDelegate**](https://github.com/JessYanCoding/MVPArms/wiki#3.12)
 * Thursday, 13 April 2017: [**RepositoryManager**](https://github.com/JessYanCoding/MVPArms/wiki#2.3)
 * Thursday, 15 December 2016: [**AppManager**](https://github.com/JessYanCoding/MVPArms/wiki#3.11)

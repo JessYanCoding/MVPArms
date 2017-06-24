@@ -34,7 +34,7 @@ public class RequestInterceptor implements Interceptor {
     private GlobalHttpHandler mHandler;
 
     @Inject
-    public RequestInterceptor(GlobalHttpHandler handler) {
+    public RequestInterceptor(@Nullable GlobalHttpHandler handler) {
         this.mHandler = handler;
     }
 
@@ -44,15 +44,9 @@ public class RequestInterceptor implements Interceptor {
 
         boolean hasRequestBody = request.body() != null;
 
-        Buffer requestbuffer = new Buffer();
-
-        if (hasRequestBody) {
-            request.body().writeTo(requestbuffer);
-        }
-
         //打印请求信息
         Timber.tag(getTag(request, "Request_Info")).w("Params : 「 %s 」%nConnection : 「 %s 」%nHeaders : %n「 %s 」"
-                , hasRequestBody ? parseParams(request.body(), requestbuffer) : "Null"
+                , hasRequestBody ? parseParams(request.newBuilder().build().body()) : "Null"
                 , chain.connection()
                 , request.headers());
 
@@ -95,7 +89,7 @@ public class RequestInterceptor implements Interceptor {
         //读取服务器返回的结果
         ResponseBody responseBody = originalResponse.body();
         String bodyString = null;
-        if (isParseable(responseBody)) {
+        if (isParseable(responseBody.contentType())) {
             BufferedSource source = responseBody.source();
             source.request(Long.MAX_VALUE); // Buffer the entire body.
             Buffer buffer = source.buffer();
@@ -111,7 +105,7 @@ public class RequestInterceptor implements Interceptor {
             //解析response content
             bodyString = parseContent(responseBody, encoding, clone);
 
-            Timber.tag(getTag(request, "Response_Result")).w(isJson(responseBody) ? CharactorHandler.jsonFormat(bodyString) : bodyString);
+            Timber.tag(getTag(request, "Response_Result")).w(isJson(responseBody.contentType()) ? CharactorHandler.jsonFormat(bodyString) : bodyString);
 
         } else {
             Timber.tag(getTag(request, "Response_Result")).w("This result isn't parsed");
@@ -140,34 +134,54 @@ public class RequestInterceptor implements Interceptor {
             charset = contentType.charset(charset);
         }
         if (encoding != null && encoding.equalsIgnoreCase("gzip")) {//content使用gzip压缩
-            return ZipHelper.decompressForGzip(clone.readByteArray(),convertCharset(charset));//解压
+            return ZipHelper.decompressForGzip(clone.readByteArray(), convertCharset(charset));//解压
         } else if (encoding != null && encoding.equalsIgnoreCase("zlib")) {//content使用zlib压缩
-            return ZipHelper.decompressToStringForZlib(clone.readByteArray(),convertCharset(charset));//解压
+            return ZipHelper.decompressToStringForZlib(clone.readByteArray(), convertCharset(charset));//解压
         } else {//content没有被压缩
             return clone.readString(charset);
         }
     }
 
-    public static String parseParams(RequestBody body, Buffer requestbuffer) throws UnsupportedEncodingException {
-        if (body.contentType() == null) return "Unknown";
-        if (!body.contentType().toString().contains("multipart")) {
-            Charset charset = Charset.forName("UTF-8");
-            MediaType contentType = body.contentType();
-            if (contentType != null) {
-                charset = contentType.charset(charset);
+    public static String parseParams(RequestBody body) throws UnsupportedEncodingException {
+        if (isParseable(body.contentType())) {
+            try {
+                Buffer requestbuffer = new Buffer();
+                body.writeTo(requestbuffer);
+                Charset charset = Charset.forName("UTF-8");
+                MediaType contentType = body.contentType();
+                if (contentType != null) {
+                    charset = contentType.charset(charset);
+                }
+                return URLDecoder.decode(requestbuffer.readString(charset), convertCharset(charset));
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            return URLDecoder.decode(requestbuffer.readString(charset), convertCharset(charset));
         }
-        return "This Params isn't Text";
+        return "This params isn't parsed";
     }
 
-    public static boolean isParseable(ResponseBody responseBody) {
-        if (responseBody.contentLength() == 0) return false;
-        return responseBody.contentType().toString().contains("text") || isJson(responseBody);
+    public static boolean isParseable(MediaType mediaType) {
+        if (mediaType == null) return false;
+        return mediaType.toString().toLowerCase().contains("text")
+                || isJson(mediaType) || isForm(mediaType)
+                || isHtml(mediaType) || isXml(mediaType);
     }
 
-    public static boolean isJson(ResponseBody responseBody) {
-        return responseBody.contentType().toString().contains("json");
+    public static boolean isJson(MediaType mediaType) {
+        return mediaType.toString().toLowerCase().contains("json");
+    }
+
+    public static boolean isXml(MediaType mediaType) {
+        return mediaType.toString().toLowerCase().contains("xml");
+    }
+
+    public static boolean isHtml(MediaType mediaType) {
+        return mediaType.toString().toLowerCase().contains("html");
+    }
+
+    public static boolean isForm(MediaType mediaType) {
+        return mediaType.toString().toLowerCase().contains("x-www-form-urlencoded");
     }
 
     public static String convertCharset(Charset charset) {
