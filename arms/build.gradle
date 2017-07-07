@@ -73,6 +73,7 @@ dependencies {
     }
     compile(rootProject.ext.dependencies["rxlifecycle2"]) {
         exclude module: 'rxjava'
+        exclude module: 'jsr305'
     }
     compile(rootProject.ext.dependencies["rxlifecycle2-components"]) {
         exclude module: 'support-v4'
