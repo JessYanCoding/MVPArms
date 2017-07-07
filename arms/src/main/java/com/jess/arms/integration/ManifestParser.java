@@ -1,6 +1,5 @@
 package com.jess.arms.integration;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -17,7 +16,7 @@ public final class ManifestParser {
 
     private final Context context;
 
-    public ManifestParser(Application context) {
+    public ManifestParser(Context context) {
         this.context = context;
     }
 
