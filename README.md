@@ -25,19 +25,17 @@
 
 ## Notice
 
+* [MVPArms Learning Project](https://github.com/JessYanCoding/MVPArms/blob/master/CONTRIBUTING_APP.md)
+
 * [Collection Box](https://github.com/JessYanCoding/MVPArms/issues/40)
 
 * [Update Log](https://github.com/JessYanCoding/MVPArms/wiki/UpdateLog)
 
 * [Common Issues](https://github.com/JessYanCoding/MVPArms/wiki/Issues)
 
-* [Version Updata](https://github.com/JessYanCoding/MVPArms/wiki#1.6)
-
 * The use of these technologies for the latter part of the project maintenance and iterative, especially large projects is very helpful, but is to develop a pre-write a page to write a lot of `MVP`,` Dagger2` class and interface, which is indeed a headache for the development of pre- Now the framework has been able to [Template](https://github.com/JessYanCoding/MVPArmsTemplate) automatically generate some `MVP`,` Dagger2` template code, and now we can very easily use the framework.
 
 * Use this frame comes with automatic adaptation function, please refer to [AndroidAutoLayout](https://github.com/hongyangAndroid/AndroidAutoLayout).
-
-* This framework uses `RxPermissions` for rights management (adaptation Android 6.0), and provides a PermissionUtil tool class line of code to implement the permission request.
 
 * This framework does not provide any third-party libraries associated with the **UI**(except for the [`AndroidAutoLayout`](https://github.com/hongyangAndroid/AndroidAutoLayout) screen adaptation scheme).
 
