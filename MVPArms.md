@@ -23,13 +23,13 @@
 
 ## Notice
 
+* [MVPArms 学习项目](https://github.com/JessYanCoding/MVPArms/blob/master/CONTRIBUTING_APP.md)
+
 * [意见收集](https://github.com/JessYanCoding/MVPArms/issues/40)
 
 * [更新日志](https://github.com/JessYanCoding/MVPArms/wiki/UpdateLog)
 
 * [常见 issues](https://github.com/JessYanCoding/MVPArms/wiki/Issues)
-
-* [版本更新](https://github.com/JessYanCoding/MVPArms/wiki#1.6) 
 
 * [我们为什么要把 Dagger2 ,MVP 以及 Rxjava 引入项目中?](http://www.jianshu.com/p/91c2bb8e6369)
 
