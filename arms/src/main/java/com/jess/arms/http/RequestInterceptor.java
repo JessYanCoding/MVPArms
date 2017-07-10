@@ -105,7 +105,9 @@ public class RequestInterceptor implements Interceptor {
             //解析response content
             bodyString = parseContent(responseBody, encoding, clone);
 
-            Timber.tag(getTag(request, "Response_Result")).w(isJson(responseBody.contentType()) ? CharactorHandler.jsonFormat(bodyString) : bodyString);
+            Timber.tag(getTag(request, "Response_Result")).w(isJson(responseBody.contentType()) ?
+                    CharactorHandler.jsonFormat(bodyString) : isXml(responseBody.contentType()) ?
+                    CharactorHandler.xmlFormat(bodyString) : bodyString);
 
         } else {
             Timber.tag(getTag(request, "Response_Result")).w("This result isn't parsed");
