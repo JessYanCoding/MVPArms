@@ -80,7 +80,7 @@ ext {
                 "javax.annotation"         : "javax.annotation:jsr250-api:1.0",
                 "arouter"                  : "com.alibaba:arouter-api:1.2.1.1",
                 "arouter-compiler"         : "com.alibaba:arouter-compiler:1.1.2.1",
-                "progressmanager"          : "me.jessyan:progressmanager:1.2.5",
+                "progressmanager"          : "me.jessyan:progressmanager:+",
 
                 //test
                 "junit"                    : "junit:junit:4.12",

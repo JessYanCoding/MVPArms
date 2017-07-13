@@ -21,7 +21,6 @@ import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.GlobalHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
 import com.jess.arms.integration.ConfigModule;
-import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.utils.UiUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -38,9 +37,6 @@ import java.util.concurrent.TimeUnit;
 import me.jessyan.mvparms.demo.BuildConfig;
 import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.mvp.model.api.Api;
-import me.jessyan.mvparms.demo.mvp.model.api.cache.CommonCache;
-import me.jessyan.mvparms.demo.mvp.model.api.service.CommonService;
-import me.jessyan.mvparms.demo.mvp.model.api.service.UserService;
 import me.jessyan.progressmanager.ProgressManager;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -49,12 +45,10 @@ import retrofit2.HttpException;
 import timber.log.Timber;
 
 /**
- * app的全局配置信息在此配置,需要将此实现类声明到AndroidManifest中
+ * app 的全局配置信息在此配置,需要将此实现类声明到 AndroidManifest 中
  * Created by jess on 12/04/2017 17:25
  * Contact with jess.yan.effort@gmail.com
  */
-
-
 public class GlobalConfiguration implements ConfigModule {
     @Override
     public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
@@ -137,12 +131,6 @@ public class GlobalConfiguration implements ConfigModule {
                 .rxCacheConfiguration((context1, rxCacheBuilder) -> {//这里可以自己自定义配置RxCache的参数
                     rxCacheBuilder.useExpiredDataIfLoaderNotAvailable(true);
                 });
-    }
-
-    @Override
-    public void registerComponents(Context context, IRepositoryManager repositoryManager) {
-        repositoryManager.injectRetrofitService(CommonService.class, UserService.class);
-        repositoryManager.injectCacheService(CommonCache.class);
     }
 
     @Override

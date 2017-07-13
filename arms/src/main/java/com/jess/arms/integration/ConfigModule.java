@@ -24,14 +24,6 @@ public interface ConfigModule {
     void applyOptions(Context context, GlobalConfigModule.Builder builder);
 
     /**
-     * 使用{@link IRepositoryManager}给框架注入一些网络请求和数据缓存等服务
-     * @param context
-     * @param repositoryManager
-     */
-    void registerComponents(Context context,IRepositoryManager repositoryManager);
-
-
-    /**
      * 使用{@link AppDelegate.Lifecycle}在Application的生命周期中注入一些操作
      * @return
      */

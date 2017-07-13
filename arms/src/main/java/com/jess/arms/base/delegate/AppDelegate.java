@@ -73,10 +73,6 @@ public class AppDelegate implements App {
             mApplication.registerActivityLifecycleCallbacks(lifecycle);
         }
 
-        for (ConfigModule module : mModules) {
-            module.registerComponents(mApplication, mAppComponent.repositoryManager());
-        }
-
         for (Lifecycle lifecycle : mAppLifecycles) {
             lifecycle.onCreate(mApplication);
         }
