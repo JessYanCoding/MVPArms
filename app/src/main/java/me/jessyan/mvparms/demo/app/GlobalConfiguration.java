@@ -50,9 +50,20 @@ import timber.log.Timber;
  * Contact with jess.yan.effort@gmail.com
  */
 public class GlobalConfiguration implements ConfigModule {
+//    public static String sDomain = Api.APP_DOMAIN;
+
     @Override
     public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
         builder.baseurl(Api.APP_DOMAIN)
+                //如果 BaseUrl 在 App 启动时不能确定,需要请求服务器接口动态获取,请使用以下代码
+                //并且使用 Okhttp (AppComponent中提供) 请求服务器获取到正确的 BaseUrl 后赋值给 GlobalConfiguration.sDomain
+                //切记整个过程必须在第一次调用 Retrofit 接口之前完成,如果已经调用过 Retrofit 接口,将不能动态切换 BaseUrl
+//                .baseurl(new BaseUrl() {
+//                    @Override
+//                    public HttpUrl url() {
+//                        return HttpUrl.parse(sDomain);
+//                    }
+//                })
                 .globalHttpHandler(new GlobalHttpHandler() {// 这里可以提供一个全局处理Http请求和响应结果的处理类,
                     // 这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
                     @Override

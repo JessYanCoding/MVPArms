@@ -4,6 +4,7 @@ import android.app.Application;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.jess.arms.http.BaseUrl;
 import com.jess.arms.http.GlobalHttpHandler;
 import com.jess.arms.utils.DataHelper;
 import com.jess.arms.widget.imageloader.BaseImageLoaderStrategy;
@@ -27,6 +28,7 @@ import okhttp3.Interceptor;
 @Module
 public class GlobalConfigModule {
     private HttpUrl mApiUrl;
+    private BaseUrl mBaseUrl;
     private BaseImageLoaderStrategy mLoaderStrategy;
     private GlobalHttpHandler mHandler;
     private List<Interceptor> mInterceptors;
@@ -44,6 +46,7 @@ public class GlobalConfigModule {
      */
     private GlobalConfigModule(Builder builder) {
         this.mApiUrl = builder.apiUrl;
+        this.mBaseUrl = builder.baseUrl;
         this.mLoaderStrategy = builder.loaderStrategy;
         this.mHandler = builder.handler;
         this.mInterceptors = builder.interceptors;
@@ -71,6 +74,12 @@ public class GlobalConfigModule {
     @Singleton
     @Provides
     HttpUrl provideBaseUrl() {
+        if (mBaseUrl != null) {
+            HttpUrl httpUrl = mBaseUrl.url();
+            if (httpUrl != null) {
+                return httpUrl;
+            }
+        }
         return mApiUrl == null ? HttpUrl.parse("https://api.github.com/") : mApiUrl;
     }
 
@@ -143,6 +152,7 @@ public class GlobalConfigModule {
 
     public static final class Builder {
         private HttpUrl apiUrl;
+        private BaseUrl baseUrl;
         private BaseImageLoaderStrategy loaderStrategy;
         private GlobalHttpHandler handler;
         private List<Interceptor> interceptors;
@@ -156,11 +166,19 @@ public class GlobalConfigModule {
         private Builder() {
         }
 
-        public Builder baseurl(String baseurl) {//基础url
-            if (TextUtils.isEmpty(baseurl)) {
-                throw new IllegalArgumentException("baseurl can not be empty");
+        public Builder baseurl(String baseUrl) {//基础url
+            if (TextUtils.isEmpty(baseUrl)) {
+                throw new IllegalArgumentException("BaseUrl can not be empty");
             }
-            this.apiUrl = HttpUrl.parse(baseurl);
+            this.apiUrl = HttpUrl.parse(baseUrl);
+            return this;
+        }
+
+        public Builder baseurl(BaseUrl baseUrl) {
+            if (baseUrl == null) {
+                throw new IllegalArgumentException("BaseUrl can not be null");
+            }
+            this.baseUrl = baseUrl;
             return this;
         }
 
