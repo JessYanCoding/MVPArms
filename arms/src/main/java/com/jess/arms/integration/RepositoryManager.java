@@ -68,4 +68,12 @@ public class RepositoryManager implements IRepositoryManager {
         }
         return cacheService;
     }
+
+    /**
+     * 清理所有缓存
+     */
+    @Override
+    public void clearAllCache() {
+        mRxCache.get().evictAll();
+    }
 }

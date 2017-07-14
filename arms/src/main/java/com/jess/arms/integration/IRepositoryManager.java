@@ -25,4 +25,9 @@ public interface IRepositoryManager {
      */
     <T> T obtainCacheService(Class<T> cache);
 
+    /**
+     * 清理所有缓存
+     */
+    void clearAllCache();
+
 }
