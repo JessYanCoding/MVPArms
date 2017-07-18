@@ -25,18 +25,18 @@ import javax.inject.Inject;
  * AppDelegate可以代理Application的生命周期,在对应的生命周期,执行对应的逻辑,因为Java只能单继承
  * 所以当遇到某些三方库需要继承于它的Application的时候,就只有自定义Application并继承于它的Application,这时就不能再继承BaseApplication
  * 只用在Application对应的生命周期调用AppDelegate对应的方法(Application一定要实现APP接口),框架就能照常运行
- *
+ * <p>
  * Created by jess on 24/04/2017 09:44
  * Contact with jess.yan.effort@gmail.com
  */
 
-public class AppDelegate implements App {
+public class AppDelegate implements App, AppLifecycles {
     private Application mApplication;
     private AppComponent mAppComponent;
     @Inject
     protected ActivityLifecycle mActivityLifecycle;
     private final List<ConfigModule> mModules;
-    private List<Lifecycle> mAppLifecycles = new ArrayList<>();
+    private List<AppLifecycles> mAppLifecycles = new ArrayList<>();
     private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();
     private ComponentCallbacks2 mComponentCallback;
 
@@ -48,13 +48,14 @@ public class AppDelegate implements App {
         }
     }
 
-    public void attachBaseContext(Context base){
-        for (Lifecycle lifecycle : mAppLifecycles) {
+    @Override
+    public void attachBaseContext(Context base) {
+        for (AppLifecycles lifecycle : mAppLifecycles) {
             lifecycle.attachBaseContext(base);
         }
     }
 
-
+    @Override
     public void onCreate(Application application) {
         this.mApplication = application;
         mAppComponent = DaggerAppComponent
@@ -73,7 +74,7 @@ public class AppDelegate implements App {
             mApplication.registerActivityLifecycleCallbacks(lifecycle);
         }
 
-        for (Lifecycle lifecycle : mAppLifecycles) {
+        for (AppLifecycles lifecycle : mAppLifecycles) {
             lifecycle.onCreate(mApplication);
         }
 
@@ -83,8 +84,8 @@ public class AppDelegate implements App {
 
     }
 
-
-    public void onTerminate() {
+    @Override
+    public void onTerminate(Application application) {
         if (mActivityLifecycle != null) {
             mApplication.unregisterActivityLifecycleCallbacks(mActivityLifecycle);
         }
@@ -97,7 +98,7 @@ public class AppDelegate implements App {
             }
         }
         if (mAppLifecycles != null && mAppLifecycles.size() > 0) {
-            for (Lifecycle lifecycle : mAppLifecycles) {
+            for (AppLifecycles lifecycle : mAppLifecycles) {
                 lifecycle.onTerminate(mApplication);
             }
         }
@@ -108,8 +109,6 @@ public class AppDelegate implements App {
         this.mAppLifecycles = null;
         this.mApplication = null;
     }
-
-
 
 
     /**
@@ -141,14 +140,6 @@ public class AppDelegate implements App {
         return mAppComponent;
     }
 
-
-    public interface Lifecycle {
-        void attachBaseContext(Context base);
-
-        void onCreate(Application application);
-
-        void onTerminate(Application application);
-    }
 
     private static class AppComponentCallbacks implements ComponentCallbacks2 {
         private Application mApplication;
