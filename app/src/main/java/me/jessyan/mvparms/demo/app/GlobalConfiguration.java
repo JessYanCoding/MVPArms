@@ -49,7 +49,7 @@ import timber.log.Timber;
  * Created by jess on 12/04/2017 17:25
  * Contact with jess.yan.effort@gmail.com
  */
-public class GlobalConfiguration implements ConfigModule {
+public final class GlobalConfiguration implements ConfigModule {
 //    public static String sDomain = Api.APP_DOMAIN;
 
     @Override

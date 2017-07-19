@@ -155,7 +155,9 @@ public final class AppManager {
      * @return
      */
     public Activity getCurrentActivity() {
-        return mCurrentActivity;
+        return mCurrentActivity != null ?
+                mCurrentActivity : mActivityList != null && mActivityList.size() > 0 ?
+                mActivityList.get(mActivityList.size() - 1) : null;
     }
 
     /**
