@@ -80,7 +80,7 @@ ext {
                 "javax.annotation"         : "javax.annotation:jsr250-api:1.0",
                 "arouter"                  : "com.alibaba:arouter-api:1.2.1.1",
                 "arouter-compiler"         : "com.alibaba:arouter-compiler:1.1.2.1",
-                "progressmanager"          : "me.jessyan:progressmanager:1.2.5",
+                "progressmanager"          : "me.jessyan:progressmanager:+",
 
                 //test
                 "junit"                    : "junit:junit:4.12",
@@ -91,6 +91,7 @@ ext {
                 "espresso-intents"         : "com.android.support.test.espresso:espresso-intents:${version["espressoSdkVersion"]}",
                 "mockito-core"             : "org.mockito:mockito-core:1.+",
                 "timber"                   : "com.jakewharton.timber:timber:4.5.1",
+                "logger"                   : "com.orhanobut:logger:2.1.1",
                 "canary-debug"             : "com.squareup.leakcanary:leakcanary-android:${version["canarySdkVersion"]}",
                 "canary-release"           : "com.squareup.leakcanary:leakcanary-android-no-op:${version["canarySdkVersion"]}",
                 "umeng-analytics"          : "com.umeng.analytics:analytics:6.0.1"

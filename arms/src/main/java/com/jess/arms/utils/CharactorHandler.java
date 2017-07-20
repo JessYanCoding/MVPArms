@@ -2,13 +2,24 @@ package com.jess.arms.utils;
 
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.text.TextUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 /**
  * Created by zhiyicx on 2016/3/16.
@@ -62,23 +73,54 @@ public class CharactorHandler {
 
     /**
      * json 格式化
-     * @param bodyString
+     *
+     * @param json
      * @return
      */
-    public static String jsonFormat(String bodyString) {
+    public static String jsonFormat(String json) {
+        if (TextUtils.isEmpty(json)) {
+            return "Empty/Null json content";
+        }
         String message;
         try {
-            if (bodyString.startsWith("{")) {
-                JSONObject jsonObject = new JSONObject(bodyString);
+            json = json.trim();
+            if (json.startsWith("{")) {
+                JSONObject jsonObject = new JSONObject(json);
                 message = jsonObject.toString(4);
-            } else if (bodyString.startsWith("[")) {
-                JSONArray jsonArray = new JSONArray(bodyString);
+            } else if (json.startsWith("[")) {
+                JSONArray jsonArray = new JSONArray(json);
                 message = jsonArray.toString(4);
             } else {
-                message = bodyString;
+                message = json;
             }
         } catch (JSONException e) {
-            message = bodyString;
+            message = json;
+        }
+        return message;
+    }
+
+
+    /**
+     * xml 格式化
+     *
+     * @param xml
+     * @return
+     */
+    public static String xmlFormat(String xml) {
+        if (TextUtils.isEmpty(xml)) {
+            return "Empty/Null xml content";
+        }
+        String message;
+        try {
+            Source xmlInput = new StreamSource(new StringReader(xml));
+            StreamResult xmlOutput = new StreamResult(new StringWriter());
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+            transformer.transform(xmlInput, xmlOutput);
+            message = xmlOutput.getWriter().toString().replaceFirst(">", ">\n");
+        } catch (TransformerException e) {
+            message = xml;
         }
         return message;
     }

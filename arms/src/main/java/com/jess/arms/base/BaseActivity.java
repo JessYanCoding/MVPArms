@@ -12,6 +12,9 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 import static com.jess.arms.utils.ThirdViewUtil.convertAutoView;
 
 /**
@@ -20,6 +23,7 @@ import static com.jess.arms.utils.ThirdViewUtil.convertAutoView;
  */
 public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActivity implements IActivity {
     protected final String TAG = this.getClass().getSimpleName();
+    private Unbinder mUnbinder;
     @Inject
     protected P mPresenter;
 
@@ -32,13 +36,27 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            int layoutResID = initView(savedInstanceState);
+            if (layoutResID != 0) {//如果initView返回0,框架则不会调用setContentView(),当然也不会 Bind ButterKnife
+                setContentView(layoutResID);
+                //绑定到butterknife
+                mUnbinder = ButterKnife.bind(this);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         initData(savedInstanceState);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null) mPresenter.onDestroy();//释放资源
+        if (mUnbinder != null && mUnbinder != Unbinder.EMPTY)
+            mUnbinder.unbind();
+        this.mUnbinder = null;
+        if (mPresenter != null)
+            mPresenter.onDestroy();//释放资源
         this.mPresenter = null;
     }
 

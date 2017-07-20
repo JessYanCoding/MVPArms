@@ -102,9 +102,6 @@
 # Application classes that will be serialized/deserialized over Gson
 -keep class com.sunloto.shandong.bean.** { *; }
 
-################umeng###############
--keep class com.umeng.** { *; }
--keep public class * extends com.umeng.**
 
 ################glide###############
 -keep public class * implements com.bumptech.glide.module.GlideModule
@@ -137,15 +134,13 @@
 -keep interface com.zhy.autolayout.** { *; }
 
 
-
-
 ################Rxjava and RxAndroid###############
 -dontwarn org.mockito.**
 -dontwarn org.junit.**
 -dontwarn org.robolectric.**
 
--keep class rx.** { *; }
--keep interface rx.** { *; }
+-keep class io.reactivex.** { *; }
+-keep interface io.reactivex.** { *; }
 
 -keepattributes Signature
 -keepattributes *Annotation*
@@ -154,7 +149,7 @@
 -keep interface com.squareup.okhttp.** { *; }
 -dontwarn com.squareup.okhttp.**
 
--dontwarn rx.**
+-dontwarn io.reactivex.**
 -dontwarn retrofit.**
 -keep class retrofit.** { *; }
 -keepclasseswithmembers class * {
@@ -165,94 +160,62 @@
 
 -dontwarn java.lang.invoke.*
 
--keep class rx.schedulers.Schedulers {
+-keep class io.reactivex.schedulers.Schedulers {
     public static <methods>;
 }
--keep class rx.schedulers.ImmediateScheduler {
+-keep class io.reactivex.schedulers.ImmediateScheduler {
     public <methods>;
 }
--keep class rx.schedulers.TestScheduler {
+-keep class io.reactivex.schedulers.TestScheduler {
     public <methods>;
 }
--keep class rx.schedulers.Schedulers {
+-keep class io.reactivex.schedulers.Schedulers {
     public static ** test();
 }
--keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+-keepclassmembers class io.reactivex.internal.util.unsafe.*ArrayQueue*Field* {
     long producerIndex;
     long consumerIndex;
 }
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+-keepclassmembers class io.reactivex.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
     long producerNode;
     long consumerNode;
 }
 
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
-    rx.internal.util.atomic.LinkedQueueNode producerNode;
+-keepclassmembers class io.reactivex.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    io.reactivex.internal.util.atomic.LinkedQueueNode producerNode;
 }
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
-    rx.internal.util.atomic.LinkedQueueNode consumerNode;
+-keepclassmembers class io.reactivex.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+    io.reactivex.internal.util.atomic.LinkedQueueNode consumerNode;
 }
 
--dontwarn rx.internal.util.unsafe.**
+-dontwarn io.reactivex.internal.util.unsafe.**
 
 
 
-################nineoldandroids###############
--keep class com.nineoldandroids.animation.** { *; }
--keep interface com.nineoldandroids.animation.** { *; }
--keep class com.nineoldandroids.view.** { *; }
--keep interface com.nineoldandroids.view.** { *; }
-
-
-
-################epresso###############
+################espresso###############
 -keep class android.support.test.espresso.** { *; }
 -keep interface android.support.test.espresso.** { *; }
 
 
 
-################autobahn###############
--keep class de.tavendo.autobahn.** { *; }
--keep interface de.tavendo.autobahn.** { *; }
-
-
-################shareSdk###############
--keep class cn.sharesdk.** { *; }
--keep interface cn.sharesdk.** { *; }
-
-################crop###############
--keep class com.soundcloud.android.** { *; }
--keep interface com.soundcloud.android.** { *; }
-
 ################annotation###############
 -keep class android.support.annotation.** { *; }
 -keep interface android.support.annotation.** { *; }
 
-################pickerview###############
--keep class com.bigkoo.pickerview.** { *; }
--keep interface com.bigkoo.pickerview.** { *; }
-
-
-################carousellayoutmanager###############
--keep class com.azoft.carousellayoutmanager.** { *; }
--keep interface com.azoft.carousellayoutmanager.** { *; }
-
-################messagepack###############
--keep class org.** { *; }
--keep interface org.** { *; }
-
-################javassist###############
--keep class javassist.** { *; }
--keep interface javassist.** { *; }
 
 ################RxLifeCycle#################
--keep class com.trello.rxlifecycle.** { *; }
--keep interface com.trello.rxlifecycle.** { *; }
+-keep class com.trello.rxlifecycle2.** { *; }
+-keep interface com.trello.rxlifecycle2.** { *; }
+
+
+################RxPermissions#################
+-keep class com.tbruyelle.rxpermissions2.** { *; }
+-keep interface com.tbruyelle.rxpermissions2.** { *; }
 
 ################RxCache#################
--dontwarn io.rx_cache.internal.**
--keep class io.rx_cache.internal.Record { *; }
--keep class io.rx_cache.Source { *; }
+-dontwarn io.rx_cache2.internal.**
+-keep class io.rx_cache2.internal.Record { *; }
+-keep class io.rx_cache2.Source { *; }
 
 -keep class io.victoralbertos.jolyglot.** { *; }
 -keep interface io.victoralbertos.jolyglot.** { *; }

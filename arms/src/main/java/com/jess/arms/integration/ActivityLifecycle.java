@@ -36,7 +36,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     private AppManager mAppManager;
     private Application mApplication;
     private Map<String, Object> mExtras;
-    private FragmentLifecycle mFragmentLifecycle;
+    private FragmentManager.FragmentLifecycleCallbacks mFragmentLifecycle;
     private List<FragmentManager.FragmentLifecycleCallbacks> mFragmentLifecycles;
 
     @Inject

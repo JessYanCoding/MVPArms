@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
+import com.google.gson.Gson;
 import com.jess.arms.http.GlobalHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
 import com.jess.arms.utils.DataHelper;
@@ -49,12 +50,13 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    Retrofit provideRetrofit(Application application, @Nullable RetrofitConfiguration configuration, Retrofit.Builder builder, OkHttpClient client, HttpUrl httpUrl) {
+    Retrofit provideRetrofit(Application application, @Nullable RetrofitConfiguration configuration, Retrofit.Builder builder, OkHttpClient client
+            , HttpUrl httpUrl, Gson gson) {
         builder
                 .baseUrl(httpUrl)//域名
                 .client(client)//设置okhttp
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用rxjava
-                .addConverterFactory(GsonConverterFactory.create());//使用Gson
+                .addConverterFactory(GsonConverterFactory.create(gson));//使用Gson
         if (configuration != null)
             configuration.configRetrofit(application, builder);
         return builder.build();

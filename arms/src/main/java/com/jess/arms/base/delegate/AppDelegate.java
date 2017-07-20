@@ -2,6 +2,7 @@ package com.jess.arms.base.delegate;
 
 import android.app.Application;
 import android.content.ComponentCallbacks2;
+import android.content.Context;
 import android.content.res.Configuration;
 
 import com.jess.arms.base.App;
@@ -22,35 +23,41 @@ import javax.inject.Inject;
 
 /**
  * AppDelegate可以代理Application的生命周期,在对应的生命周期,执行对应的逻辑,因为Java只能单继承
- * 而我的框架要求Application要继承于BaseApplication
- * 所以当遇到某些三方库需要继承于它的Application的时候,就只有自定义Application继承于三方库的Application
- * 再将BaseApplication的代码复制进去,而现在就不用再复制代码,只用在对应的生命周期调用AppDelegate对应的方法(Application一定要实现APP接口)
+ * 所以当遇到某些三方库需要继承于它的Application的时候,就只有自定义Application并继承于三方库的Application,这时就不用再继承BaseApplication
+ * 只用在自定义Application中对应的生命周期调用AppDelegate对应的方法(Application一定要实现APP接口),框架就能照常运行
  * <p>
  * Created by jess on 24/04/2017 09:44
  * Contact with jess.yan.effort@gmail.com
  */
 
-public class AppDelegate implements App {
+public class AppDelegate implements App, AppLifecycles {
     private Application mApplication;
     private AppComponent mAppComponent;
     @Inject
     protected ActivityLifecycle mActivityLifecycle;
     private final List<ConfigModule> mModules;
-    private List<Lifecycle> mAppLifecycles = new ArrayList<>();
+    private List<AppLifecycles> mAppLifecycles = new ArrayList<>();
     private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();
     private ComponentCallbacks2 mComponentCallback;
 
-    public AppDelegate(Application application) {
-        this.mApplication = application;
-        this.mModules = new ManifestParser(mApplication).parse();
+    public AppDelegate(Context context) {
+        this.mModules = new ManifestParser(context).parse();
         for (ConfigModule module : mModules) {
-            module.injectAppLifecycle(mApplication, mAppLifecycles);
-            module.injectActivityLifecycle(mApplication, mActivityLifecycles);
+            module.injectAppLifecycle(context, mAppLifecycles);
+            module.injectActivityLifecycle(context, mActivityLifecycles);
         }
     }
 
+    @Override
+    public void attachBaseContext(Context base) {
+        for (AppLifecycles lifecycle : mAppLifecycles) {
+            lifecycle.attachBaseContext(base);
+        }
+    }
 
-    public void onCreate() {
+    @Override
+    public void onCreate(Application application) {
+        this.mApplication = application;
         mAppComponent = DaggerAppComponent
                 .builder()
                 .appModule(new AppModule(mApplication))//提供application
@@ -67,11 +74,7 @@ public class AppDelegate implements App {
             mApplication.registerActivityLifecycleCallbacks(lifecycle);
         }
 
-        for (ConfigModule module : mModules) {
-            module.registerComponents(mApplication, mAppComponent.repositoryManager());
-        }
-
-        for (Lifecycle lifecycle : mAppLifecycles) {
+        for (AppLifecycles lifecycle : mAppLifecycles) {
             lifecycle.onCreate(mApplication);
         }
 
@@ -81,8 +84,8 @@ public class AppDelegate implements App {
 
     }
 
-
-    public void onTerminate() {
+    @Override
+    public void onTerminate(Application application) {
         if (mActivityLifecycle != null) {
             mApplication.unregisterActivityLifecycleCallbacks(mActivityLifecycle);
         }
@@ -95,7 +98,7 @@ public class AppDelegate implements App {
             }
         }
         if (mAppLifecycles != null && mAppLifecycles.size() > 0) {
-            for (Lifecycle lifecycle : mAppLifecycles) {
+            for (AppLifecycles lifecycle : mAppLifecycles) {
                 lifecycle.onTerminate(mApplication);
             }
         }
@@ -114,7 +117,7 @@ public class AppDelegate implements App {
      *
      * @return
      */
-    private GlobalConfigModule getGlobalConfigModule(Application context, List<ConfigModule> modules) {
+    private GlobalConfigModule getGlobalConfigModule(Context context, List<ConfigModule> modules) {
 
         GlobalConfigModule.Builder builder = GlobalConfigModule
                 .builder();
@@ -137,12 +140,6 @@ public class AppDelegate implements App {
         return mAppComponent;
     }
 
-
-    public interface Lifecycle {
-        void onCreate(Application application);
-
-        void onTerminate(Application application);
-    }
 
     private static class AppComponentCallbacks implements ComponentCallbacks2 {
         private Application mApplication;
