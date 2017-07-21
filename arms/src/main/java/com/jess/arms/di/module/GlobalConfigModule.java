@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.jess.arms.http.BaseUrl;
 import com.jess.arms.http.GlobalHttpHandler;
+import com.jess.arms.http.RequestInterceptor;
 import com.jess.arms.utils.DataHelper;
 import com.jess.arms.widget.imageloader.BaseImageLoaderStrategy;
 import com.jess.arms.widget.imageloader.glide.GlideImageLoaderStrategy;
@@ -38,6 +39,7 @@ public class GlobalConfigModule {
     private ClientModule.OkhttpConfiguration mOkhttpConfiguration;
     private ClientModule.RxCacheConfiguration mRxCacheConfiguration;
     private AppModule.GsonConfiguration mGsonConfiguration;
+    private RequestInterceptor.Level mPrintHttpLogLevel;
 
     /**
      * @author: jess
@@ -56,6 +58,7 @@ public class GlobalConfigModule {
         this.mOkhttpConfiguration = builder.okhttpConfiguration;
         this.mRxCacheConfiguration = builder.rxCacheConfiguration;
         this.mGsonConfiguration = builder.gsonConfiguration;
+        this.mPrintHttpLogLevel = builder.printHttpLogLevel;
     }
 
     public static Builder builder() {
@@ -149,6 +152,13 @@ public class GlobalConfigModule {
         return mGsonConfiguration;
     }
 
+    @Singleton
+    @Provides
+    @Nullable
+    RequestInterceptor.Level providePrintHttpLogLevel() {
+        return mPrintHttpLogLevel;
+    }
+
 
     public static final class Builder {
         private HttpUrl apiUrl;
@@ -162,6 +172,7 @@ public class GlobalConfigModule {
         private ClientModule.OkhttpConfiguration okhttpConfiguration;
         private ClientModule.RxCacheConfiguration rxCacheConfiguration;
         private AppModule.GsonConfiguration gsonConfiguration;
+        private RequestInterceptor.Level printHttpLogLevel;
 
         private Builder() {
         }
@@ -228,6 +239,12 @@ public class GlobalConfigModule {
 
         public Builder gsonConfiguration(AppModule.GsonConfiguration gsonConfiguration) {
             this.gsonConfiguration = gsonConfiguration;
+            return this;
+        }
+
+        public Builder printHttpLogLevel(RequestInterceptor.Level printHttpLogLevel) { //是否让框架打印 Http 的请求和响应信息
+            if (printHttpLogLevel == null) throw new IllegalArgumentException("printHttpLogLevel == null. Use RequestInterceptor.Level.NONE instead.");
+            this.printHttpLogLevel = printHttpLogLevel;
             return this;
         }
 
