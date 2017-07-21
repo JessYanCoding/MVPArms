@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 
-import com.jess.arms.base.delegate.AppDelegate;
+import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.module.GlobalConfigModule;
 
 import java.util.List;
@@ -24,18 +24,10 @@ public interface ConfigModule {
     void applyOptions(Context context, GlobalConfigModule.Builder builder);
 
     /**
-     * 使用{@link IRepositoryManager}给框架注入一些网络请求和数据缓存等服务
-     * @param context
-     * @param repositoryManager
-     */
-    void registerComponents(Context context,IRepositoryManager repositoryManager);
-
-
-    /**
-     * 使用{@link AppDelegate.Lifecycle}在Application的生命周期中注入一些操作
+     * 使用{@link AppLifecycles}在Application的生命周期中注入一些操作
      * @return
      */
-    void injectAppLifecycle(Context context, List<AppDelegate.Lifecycle> lifecycles);
+    void injectAppLifecycle(Context context, List<AppLifecycles> lifecycles);
 
     /**
      * 使用{@link Application.ActivityLifecycleCallbacks}在Activity的生命周期中注入一些操作

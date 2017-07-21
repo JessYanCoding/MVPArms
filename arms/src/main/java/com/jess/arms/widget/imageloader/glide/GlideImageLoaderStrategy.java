@@ -26,8 +26,8 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideIm
     public void loadImage(Context ctx, GlideImageConfig config) {
         if (ctx == null) throw new IllegalStateException("Context is required");
         if (config == null) throw new IllegalStateException("GlideImageConfig is required");
-        if (TextUtils.isEmpty(config.getUrl())) throw new IllegalStateException("url is required");
-        if (config.getImageView() == null) throw new IllegalStateException("imageview is required");
+        if (TextUtils.isEmpty(config.getUrl())) throw new IllegalStateException("Url is required");
+        if (config.getImageView() == null) throw new IllegalStateException("Imageview is required");
 
 
         RequestManager manager;

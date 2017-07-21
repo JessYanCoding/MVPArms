@@ -55,7 +55,7 @@ public class DeviceUtils {
         PRE_HC = Build.VERSION.SDK_INT < 11;
     }
 
-    public DeviceUtils() {
+    private DeviceUtils() {
     }
 
     /**
@@ -736,7 +736,7 @@ public class DeviceUtils {
         if (nType == ConnectivityManager.TYPE_MOBILE) {
             String extraInfo = networkInfo.getExtraInfo();
             if (extraInfo != null && !extraInfo.isEmpty()) {
-                if (extraInfo.toLowerCase().equals("cmnet")) {
+                if (extraInfo.equalsIgnoreCase("cmnet")) {
                     netType = NETTYPE_CMNET;
                 } else {
                     netType = NETTYPE_CMWAP;

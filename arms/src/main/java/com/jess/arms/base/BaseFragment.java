@@ -16,7 +16,7 @@ import javax.inject.Inject;
  * 因为java只能单继承,所以如果有需要继承特定Fragment的三方库,那你就需要自己自定义Fragment
  * 继承于这个特定的Fragment,然后按照将BaseFragment的格式,复制过去,记住一定要实现{@link IFragment}
  */
-public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IFragment{
+public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IFragment {
     protected final String TAG = this.getClass().getSimpleName();
     @Inject
     protected P mPresenter;
@@ -27,10 +27,11 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         setArguments(new Bundle());
     }
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return initView(inflater,container);
+        return initView(inflater, container, savedInstanceState);
     }
 
 

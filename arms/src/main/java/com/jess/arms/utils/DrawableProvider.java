@@ -14,6 +14,8 @@ import java.io.IOException;
  */
 public class DrawableProvider {
 
+    private DrawableProvider() {
+    }
 
     /**
      * 获得选择器

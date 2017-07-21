@@ -10,27 +10,24 @@ import android.view.ViewGroup;
 import java.util.List;
 
 public class AdapterViewPager extends FragmentStatePagerAdapter {
-    private List<BaseFragment> list;
+    private List<Fragment> mList;
     private CharSequence[] mTitles;
 
-    public AdapterViewPager(FragmentManager fragmentManager) {
+    public AdapterViewPager(FragmentManager fragmentManager, List<Fragment> list) {
         super(fragmentManager);
+        this.mList = list;
     }
 
-    public void bindData(List<BaseFragment> list) {
-        this.list = list;
-        notifyDataSetChanged();
-    }
 
-    public void bindData(List<BaseFragment> list, CharSequence[] titles) {
-        this.list = list;
+    public AdapterViewPager(FragmentManager fragmentManager, List<Fragment> list, CharSequence[] titles) {
+        super(fragmentManager);
+        this.mList = list;
         this.mTitles = titles;
-        notifyDataSetChanged();
     }
 
     @Override
     public Fragment getItem(int position) {
-        return list.get(position);
+        return mList.get(position);
     }
 
     @Override
@@ -43,7 +40,7 @@ public class AdapterViewPager extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return list.size();
+        return mList.size();
     }
 
     @Override
@@ -62,7 +59,7 @@ public class AdapterViewPager extends FragmentStatePagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        View view = list.get(position).getView();
+        View view = mList.get(position).getView();
         if (view != null)
             container.removeView(view);
     }

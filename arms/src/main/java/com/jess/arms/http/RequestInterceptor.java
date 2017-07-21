@@ -33,31 +33,42 @@ import timber.log.Timber;
 public class RequestInterceptor implements Interceptor {
     private GlobalHttpHandler mHandler;
 
+    private final Level printLevel;
+
+    public enum Level {
+        NONE,       //不打印log
+        REQUEST,    //只打印请求信息
+        RESPONSE,   //只打印响应信息
+        ALL         //所有数据全部打印
+    }
+
     @Inject
-    public RequestInterceptor(GlobalHttpHandler handler) {
+    public RequestInterceptor(@Nullable GlobalHttpHandler handler, @Nullable Level level) {
         this.mHandler = handler;
+        if (level == null)
+            printLevel = Level.ALL;
+        else
+            printLevel = level;
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
 
-        boolean hasRequestBody = request.body() != null;
+        boolean logRequest = printLevel == Level.ALL || (printLevel != Level.NONE && printLevel == Level.REQUEST);
 
-        Buffer requestbuffer = new Buffer();
-
-        if (hasRequestBody) {
-            request.body().writeTo(requestbuffer);
+        if (logRequest) {
+            boolean hasRequestBody = request.body() != null;
+            //打印请求信息
+            Timber.tag(getTag(request, "Request_Info")).w("Params : 「 %s 」%nConnection : 「 %s 」%nHeaders : %n「 %s 」"
+                    , hasRequestBody ? parseParams(request.newBuilder().build().body()) : "Null"
+                    , chain.connection()
+                    , request.headers());
         }
 
-        //打印请求信息
-        Timber.tag(getTag(request, "Request_Info")).w("Params : 「 %s 」%nConnection : 「 %s 」%nHeaders : %n「 %s 」"
-                , hasRequestBody ? parseParams(request.body(), requestbuffer) : "Null"
-                , chain.connection()
-                , request.headers());
+        boolean logResponse = printLevel == Level.ALL || (printLevel != Level.NONE && printLevel == Level.RESPONSE);
 
-        long t1 = System.nanoTime();
-
+        long t1 = logResponse ? System.nanoTime() : 0;
         Response originalResponse;
         try {
             originalResponse = chain.proceed(request);
@@ -65,16 +76,17 @@ public class RequestInterceptor implements Interceptor {
             Timber.w("Http Error: " + e);
             throw e;
         }
-        long t2 = System.nanoTime();
+        long t2 = logResponse ? System.nanoTime() : 0;
 
-        String bodySize = originalResponse.body().contentLength() != -1 ? originalResponse.body().contentLength() + "-byte" : "unknown-length";
-
-        //打印响应时间以及响应头
-        Timber.tag(getTag(request, "Response_Info")).w("Received response in [ %d-ms ] , [ %s ]%n%s"
-                , TimeUnit.NANOSECONDS.toMillis(t2 - t1), bodySize, originalResponse.headers());
+        if (logResponse) {
+            String bodySize = originalResponse.body().contentLength() != -1 ? originalResponse.body().contentLength() + "-byte" : "unknown-length";
+            //打印响应时间以及响应头
+            Timber.tag(getTag(request, "Response_Info")).w("Received response in [ %d-ms ] , [ %s ]%n%s"
+                    , TimeUnit.NANOSECONDS.toMillis(t2 - t1), bodySize, originalResponse.headers());
+        }
 
         //打印响应结果
-        String bodyString = printResult(request, originalResponse);
+        String bodyString = printResult(request, originalResponse.newBuilder().build(), logResponse);
 
         if (mHandler != null)//这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
             return mHandler.onHttpResultResponse(bodyString, chain, originalResponse);
@@ -86,35 +98,45 @@ public class RequestInterceptor implements Interceptor {
      * 打印响应结果
      *
      * @param request
-     * @param originalResponse
+     * @param response
+     * @param logResponse
      * @return
      * @throws IOException
      */
     @Nullable
-    private String printResult(Request request, Response originalResponse) throws IOException {
+    private String printResult(Request request, Response response, boolean logResponse) throws IOException {
         //读取服务器返回的结果
-        ResponseBody responseBody = originalResponse.body();
+        ResponseBody responseBody = response.body();
         String bodyString = null;
-        if (isParseable(responseBody)) {
-            BufferedSource source = responseBody.source();
-            source.request(Long.MAX_VALUE); // Buffer the entire body.
-            Buffer buffer = source.buffer();
+        if (isParseable(responseBody.contentType())) {
+            try {
+                BufferedSource source = responseBody.source();
+                source.request(Long.MAX_VALUE); // Buffer the entire body.
+                Buffer buffer = source.buffer();
 
-            //获取content的压缩类型
-            String encoding = originalResponse
-                    .headers()
-                    .get("Content-Encoding");
+                //获取content的压缩类型
+                String encoding = response
+                        .headers()
+                        .get("Content-Encoding");
 
-            Buffer clone = buffer.clone();
+                Buffer clone = buffer.clone();
 
 
-            //解析response content
-            bodyString = parseContent(responseBody, encoding, clone);
-
-            Timber.tag(getTag(request, "Response_Result")).w(isJson(responseBody) ? CharactorHandler.jsonFormat(bodyString) : bodyString);
+                //解析response content
+                bodyString = parseContent(responseBody, encoding, clone);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (logResponse) {
+                Timber.tag(getTag(request, "Response_Result")).w(isJson(responseBody.contentType()) ?
+                        CharactorHandler.jsonFormat(bodyString) : isXml(responseBody.contentType()) ?
+                        CharactorHandler.xmlFormat(bodyString) : bodyString);
+            }
 
         } else {
-            Timber.tag(getTag(request, "Response_Result")).w("This result isn't parsed");
+            if (logResponse) {
+                Timber.tag(getTag(request, "Response_Result")).w("This result isn't parsed");
+            }
         }
         return bodyString;
     }
@@ -140,34 +162,54 @@ public class RequestInterceptor implements Interceptor {
             charset = contentType.charset(charset);
         }
         if (encoding != null && encoding.equalsIgnoreCase("gzip")) {//content使用gzip压缩
-            return ZipHelper.decompressForGzip(clone.readByteArray(),convertCharset(charset));//解压
+            return ZipHelper.decompressForGzip(clone.readByteArray(), convertCharset(charset));//解压
         } else if (encoding != null && encoding.equalsIgnoreCase("zlib")) {//content使用zlib压缩
-            return ZipHelper.decompressToStringForZlib(clone.readByteArray(),convertCharset(charset));//解压
+            return ZipHelper.decompressToStringForZlib(clone.readByteArray(), convertCharset(charset));//解压
         } else {//content没有被压缩
             return clone.readString(charset);
         }
     }
 
-    public static String parseParams(RequestBody body, Buffer requestbuffer) throws UnsupportedEncodingException {
-        if (body.contentType() == null) return "Unknown";
-        if (!body.contentType().toString().contains("multipart")) {
-            Charset charset = Charset.forName("UTF-8");
-            MediaType contentType = body.contentType();
-            if (contentType != null) {
-                charset = contentType.charset(charset);
+    public static String parseParams(RequestBody body) throws UnsupportedEncodingException {
+        if (isParseable(body.contentType())) {
+            try {
+                Buffer requestbuffer = new Buffer();
+                body.writeTo(requestbuffer);
+                Charset charset = Charset.forName("UTF-8");
+                MediaType contentType = body.contentType();
+                if (contentType != null) {
+                    charset = contentType.charset(charset);
+                }
+                return URLDecoder.decode(requestbuffer.readString(charset), convertCharset(charset));
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            return URLDecoder.decode(requestbuffer.readString(charset), convertCharset(charset));
         }
-        return "This Params isn't Text";
+        return "This params isn't parsed";
     }
 
-    public static boolean isParseable(ResponseBody responseBody) {
-        if (responseBody.contentLength() == 0) return false;
-        return responseBody.contentType().toString().contains("text") || isJson(responseBody);
+    public static boolean isParseable(MediaType mediaType) {
+        if (mediaType == null) return false;
+        return mediaType.toString().toLowerCase().contains("text")
+                || isJson(mediaType) || isForm(mediaType)
+                || isHtml(mediaType) || isXml(mediaType);
     }
 
-    public static boolean isJson(ResponseBody responseBody) {
-        return responseBody.contentType().toString().contains("json");
+    public static boolean isJson(MediaType mediaType) {
+        return mediaType.toString().toLowerCase().contains("json");
+    }
+
+    public static boolean isXml(MediaType mediaType) {
+        return mediaType.toString().toLowerCase().contains("xml");
+    }
+
+    public static boolean isHtml(MediaType mediaType) {
+        return mediaType.toString().toLowerCase().contains("html");
+    }
+
+    public static boolean isForm(MediaType mediaType) {
+        return mediaType.toString().toLowerCase().contains("x-www-form-urlencoded");
     }
 
     public static String convertCharset(Charset charset) {
