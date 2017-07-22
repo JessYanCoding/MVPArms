@@ -32,7 +32,6 @@ import timber.log.Timber;
 @Singleton
 public class RequestInterceptor implements Interceptor {
     private GlobalHttpHandler mHandler;
-
     private final Level printLevel;
 
     public enum Level {

@@ -248,7 +248,6 @@ public class GlobalConfigModule {
             return this;
         }
 
-
         public GlobalConfigModule build() {
             return new GlobalConfigModule(this);
         }
