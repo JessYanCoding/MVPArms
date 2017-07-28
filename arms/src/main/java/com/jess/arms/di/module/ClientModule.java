@@ -54,11 +54,14 @@ public class ClientModule {
             , HttpUrl httpUrl, Gson gson) {
         builder
                 .baseUrl(httpUrl)//域名
-                .client(client)//设置okhttp
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用rxjava
-                .addConverterFactory(GsonConverterFactory.create(gson));//使用Gson
+                .client(client);//设置okhttp
+
         if (configuration != null)
             configuration.configRetrofit(application, builder);
+
+        builder
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用rxjava
+                .addConverterFactory(GsonConverterFactory.create(gson));//使用Gson
         return builder.build();
     }
 
