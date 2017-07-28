@@ -56,6 +56,8 @@ public class RequestInterceptor implements Interceptor {
 
         boolean logRequest = printLevel == Level.ALL || (printLevel != Level.NONE && printLevel == Level.REQUEST);
 
+        Timber.i(request.url().toString());
+
         if (logRequest) {
             boolean hasRequestBody = request.body() != null;
             //打印请求信息

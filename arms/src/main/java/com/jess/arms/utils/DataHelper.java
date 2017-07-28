@@ -77,6 +77,32 @@ public class DataHelper {
     }
 
     /**
+     * 存储重要信息到sharedPreferences；
+     *
+     * @param key
+     * @param value
+     */
+    public static void setBooleanSF(Context context, String key, boolean value) {
+        if (mSharedPreferences == null) {
+            mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+        }
+        mSharedPreferences.edit().putBoolean(key, value).apply();
+    }
+
+    /**
+     * 返回存在sharedPreferences的信息
+     *
+     * @param key
+     * @return
+     */
+    public static boolean getBooleanSF(Context context, String key) {
+        if (mSharedPreferences == null) {
+            mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+        }
+        return mSharedPreferences.getBoolean(key, false);
+    }
+
+    /**
      * 清除某个内容
      */
     public static void removeSF(Context context, String key) {
