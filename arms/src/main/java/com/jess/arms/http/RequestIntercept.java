@@ -22,7 +22,7 @@ import okio.Buffer;
 import okio.BufferedSource;
 import timber.log.Timber;
 
-import static com.jess.arms.utils.CharactorHandler.jsonFormat;
+import static com.jess.arms.utils.CharacterHandler.jsonFormat;
 
 
 /**
