@@ -16,7 +16,7 @@ public class GlideImageConfig extends ImageConfig{
     private int cacheStrategy;//0对应DiskCacheStrategy.all,1对应DiskCacheStrategy.NONE,2对应DiskCacheStrategy.SOURCE,3对应DiskCacheStrategy.RESULT
     private BitmapTransformation transformation;//glide用它来改变图形的形状
 
-    private GlideImageConfig(Buidler builder) {
+    private GlideImageConfig(Builder builder) {
         this.url = builder.url;
         this.imageView = builder.imageView;
         this.placeholder = builder.placeholder;
@@ -33,12 +33,12 @@ public class GlideImageConfig extends ImageConfig{
         return transformation;
     }
 
-    public static Buidler builder() {
-        return new Buidler();
+    public static Builder builder() {
+        return new Builder();
     }
 
 
-    public static final class Buidler {
+    public static final class Builder {
         private String url;
         private ImageView imageView;
         private int placeholder;
@@ -46,35 +46,35 @@ public class GlideImageConfig extends ImageConfig{
         private int cacheStrategy;//0对应DiskCacheStrategy.all,1对应DiskCacheStrategy.NONE,2对应DiskCacheStrategy.SOURCE,3对应DiskCacheStrategy.RESULT
         private BitmapTransformation transformation;//glide用它来改变图形的形状
 
-        private Buidler() {
+        private Builder() {
         }
 
-        public Buidler url(String url) {
+        public Builder url(String url) {
             this.url = url;
             return this;
         }
 
-        public Buidler placeholder(int placeholder) {
+        public Builder placeholder(int placeholder) {
             this.placeholder = placeholder;
             return this;
         }
 
-        public Buidler errorPic(int errorPic){
+        public Builder errorPic(int errorPic){
             this.errorPic = errorPic;
             return this;
         }
 
-        public Buidler imagerView(ImageView imageView) {
+        public Builder imagerView(ImageView imageView) {
             this.imageView = imageView;
             return this;
         }
 
-        public Buidler cacheStrategy(int cacheStrategy) {
+        public Builder cacheStrategy(int cacheStrategy) {
             this.cacheStrategy = cacheStrategy;
             return this;
         }
 
-        public Buidler transformation(BitmapTransformation transformation) {
+        public Builder transformation(BitmapTransformation transformation) {
             this.transformation = transformation;
             return this;
         }
