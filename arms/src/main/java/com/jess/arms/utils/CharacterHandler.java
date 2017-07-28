@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 /**
  * Created by zhiyicx on 2016/3/16.
  */
-public class CharactorHandler {
+public class CharacterHandler {
     public static final InputFilter emojiFilter = new InputFilter() {//emoji过滤器
 
         Pattern emoji = Pattern.compile(
