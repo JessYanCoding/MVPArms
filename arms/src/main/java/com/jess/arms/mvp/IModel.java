@@ -6,5 +6,5 @@ package com.jess.arms.mvp;
  */
 
 public interface IModel {
-    void onDestory();
+    void onDestroy();
 }
