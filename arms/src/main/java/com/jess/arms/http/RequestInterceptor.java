@@ -2,7 +2,7 @@ package com.jess.arms.http;
 
 import android.support.annotation.Nullable;
 
-import com.jess.arms.utils.CharactorHandler;
+import com.jess.arms.utils.CharacterHandler;
 import com.jess.arms.utils.ZipHelper;
 
 import java.io.IOException;
@@ -128,8 +128,8 @@ public class RequestInterceptor implements Interceptor {
             }
             if (logResponse) {
                 Timber.tag(getTag(request, "Response_Result")).w(isJson(responseBody.contentType()) ?
-                        CharactorHandler.jsonFormat(bodyString) : isXml(responseBody.contentType()) ?
-                        CharactorHandler.xmlFormat(bodyString) : bodyString);
+                        CharacterHandler.jsonFormat(bodyString) : isXml(responseBody.contentType()) ?
+                        CharacterHandler.xmlFormat(bodyString) : bodyString);
             }
 
         } else {

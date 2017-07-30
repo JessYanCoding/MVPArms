@@ -24,9 +24,9 @@ import javax.xml.transform.stream.StreamSource;
 /**
  * Created by zhiyicx on 2016/3/16.
  */
-public class CharactorHandler {
+public class CharacterHandler {
 
-    private CharactorHandler() {
+    private CharacterHandler() {
     }
 
     public static final InputFilter emojiFilter = new InputFilter() {//emoji过滤器
