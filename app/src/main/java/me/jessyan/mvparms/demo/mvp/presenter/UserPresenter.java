@@ -89,7 +89,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
                         mRootView.startLoadMore();//显示上拉加载更多的进度条
                 }).subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doAfterTerminate(() -> {
+                .doFinally(() -> {
                     if (pullToRefresh)
                         mRootView.hideLoading();//隐藏下拉刷新的进度条
                     else
