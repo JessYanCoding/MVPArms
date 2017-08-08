@@ -2,9 +2,11 @@
 apply from: "config.gradle"
 buildscript {
     repositories {
+        // gradle插件下载中心为jcenter
         jcenter()
     }
     dependencies {
+        // gralde插件的具体版本
         classpath 'com.android.tools.build:gradle:2.3.3'
         //Gradle Android Maven plugin
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
@@ -15,6 +17,7 @@ buildscript {
     }
 }
 
+// 项目中使用到的库、jar包的下载中心
 allprojects {
     repositories {
         jcenter()
@@ -23,6 +26,7 @@ allprojects {
     }
 }
 
+// 运行gradle clean时，执行此处定义的task
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

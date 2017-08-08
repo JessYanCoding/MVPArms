@@ -1,8 +1,7 @@
 package com.jess.arms.integration;
 
 /**
- * Created by jess on 17/03/2017 11:15
- * Contact with jess.yan.effort@gmail.com
+ * Created by QING on 17/03/2017 11:15
  */
 
 public interface IRepositoryManager {

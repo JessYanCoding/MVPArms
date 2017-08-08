@@ -4,6 +4,7 @@ apply plugin: 'me.tatarka.retrolambda'
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    //解决android 6.0(api 23) SDK不再支持HttpClient
     useLibrary 'org.apache.http.legacy'
 
     compileOptions {
