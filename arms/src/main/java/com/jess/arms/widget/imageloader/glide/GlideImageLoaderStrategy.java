@@ -24,10 +24,10 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideIm
 
     @Override
     public void loadImage(Context ctx, GlideImageConfig config) {
-        if (ctx == null) throw new IllegalStateException("Context is required");
-        if (config == null) throw new IllegalStateException("GlideImageConfig is required");
-        if (TextUtils.isEmpty(config.getUrl())) throw new IllegalStateException("Url is required");
-        if (config.getImageView() == null) throw new IllegalStateException("Imageview is required");
+        if (ctx == null) throw new NullPointerException("Context is required");
+        if (config == null) throw new NullPointerException("GlideImageConfig is required");
+        if (TextUtils.isEmpty(config.getUrl())) throw new NullPointerException("Url is required");
+        if (config.getImageView() == null) throw new NullPointerException("Imageview is required");
 
 
         RequestManager manager;
@@ -70,8 +70,8 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideIm
 
     @Override
     public void clear(final Context ctx, GlideImageConfig config) {
-        if (ctx == null) throw new IllegalStateException("Context is required");
-        if (config == null) throw new IllegalStateException("GlideImageConfig is required");
+        if (ctx == null) throw new NullPointerException("Context is required");
+        if (config == null) throw new NullPointerException("GlideImageConfig is required");
 
         if (config.getImageViews() != null && config.getImageViews().length > 0) {//取消在执行的任务并且释放资源
             for (ImageView imageView : config.getImageViews()) {
