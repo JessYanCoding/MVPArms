@@ -32,4 +32,7 @@ public final class ImageLoader {
         this.mStrategy = strategy;
     }
 
+    public BaseImageLoaderStrategy getLoadImgStrategy() {
+        return mStrategy;
+    }
 }

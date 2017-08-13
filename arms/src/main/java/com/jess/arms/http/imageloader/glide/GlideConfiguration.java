@@ -16,6 +16,7 @@ import com.bumptech.glide.module.AppGlideModule;
 import com.jess.arms.base.App;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.http.OkHttpUrlLoader;
+import com.jess.arms.http.imageloader.BaseImageLoaderStrategy;
 import com.jess.arms.utils.DataHelper;
 
 import java.io.File;
@@ -30,11 +31,11 @@ public class GlideConfiguration extends AppGlideModule {
 
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
+        AppComponent appComponent = ((App) context.getApplicationContext()).getAppComponent();
         builder.setDiskCache(new DiskCache.Factory() {
             @Override
             public DiskCache build() {
                 // Careful: the external cache directory doesn't enforce permissions
-                AppComponent appComponent = ((App) context.getApplicationContext()).getAppComponent();
                 return DiskLruCacheWrapper.get(DataHelper.makeDirs(new File(appComponent.cacheFile(), "Glide")), IMAGE_DISK_CACHE_MAX_SIZE);
             }
         });
@@ -49,6 +50,13 @@ public class GlideConfiguration extends AppGlideModule {
         builder.setMemoryCache(new LruResourceCache(customMemoryCacheSize));
         builder.setBitmapPool(new LruBitmapPool(customBitmapPoolSize));
 
+        //将配置 Glide 的机会转交给 GlideImageLoaderStrategy,如你觉得框架提供的 GlideImageLoaderStrategy
+        //并不能满足自己的需求,想自定义 BaseImageLoaderStrategy,那请你最好实现 GlideAppliesOptions
+        //因为只有成为 GlideAppliesOptions 的实现类,这里才能调用 applyGlideOptions(),让你具有配置 Glide 的权利
+        BaseImageLoaderStrategy loadImgStrategy = appComponent.imageLoader().getLoadImgStrategy();
+        if (loadImgStrategy instanceof GlideAppliesOptions) {
+            ((GlideAppliesOptions) loadImgStrategy).applyGlideOptions(context, builder);
+        }
     }
 
     @Override
