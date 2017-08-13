@@ -37,7 +37,7 @@
 
         <!-- glide配置 -->
         <meta-data
-            android:name="com.jess.arms.widget.imageloader.glide.GlideConfiguration"
+            android:name="com.jess.arms.http.imageloader.glide.GlideConfiguration"
             android:value="GlideModule"/>
 
         <!-- arms配置 -->

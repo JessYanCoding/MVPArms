@@ -1,4 +1,4 @@
-package com.jess.arms.widget.imageloader.glide;
+package com.jess.arms.http.imageloader.glide;
 
 import android.content.Context;
 

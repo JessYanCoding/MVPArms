@@ -14,7 +14,7 @@ import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.integration.ActivityLifecycle;
 import com.jess.arms.integration.ConfigModule;
 import com.jess.arms.integration.ManifestParser;
-import com.jess.arms.widget.imageloader.glide.ImageConfigImpl;
+import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 
 import java.util.ArrayList;
 import java.util.List;

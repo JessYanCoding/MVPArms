@@ -1,10 +1,10 @@
-package com.jess.arms.widget.imageloader.glide;
+package com.jess.arms.http.imageloader.glide;
 
 import android.widget.ImageView;
 
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.target.Target;
-import com.jess.arms.widget.imageloader.ImageConfig;
+import com.jess.arms.http.imageloader.ImageConfig;
 
 /**
  * Created by jess on 8/5/16 15:19

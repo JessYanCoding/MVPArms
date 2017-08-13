@@ -1,4 +1,4 @@
-package com.jess.arms.widget.imageloader.glide;
+package com.jess.arms.http.imageloader.glide;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.Target;
-import com.jess.arms.widget.imageloader.BaseImageLoaderStrategy;
+import com.jess.arms.http.imageloader.BaseImageLoaderStrategy;
 
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;

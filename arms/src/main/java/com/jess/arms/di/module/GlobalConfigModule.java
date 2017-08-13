@@ -8,8 +8,8 @@ import com.jess.arms.http.BaseUrl;
 import com.jess.arms.http.GlobalHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
 import com.jess.arms.utils.DataHelper;
-import com.jess.arms.widget.imageloader.BaseImageLoaderStrategy;
-import com.jess.arms.widget.imageloader.glide.GlideImageLoaderStrategy;
+import com.jess.arms.http.imageloader.BaseImageLoaderStrategy;
+import com.jess.arms.http.imageloader.glide.GlideImageLoaderStrategy;
 
 import java.io.File;
 import java.util.ArrayList;

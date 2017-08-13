@@ -1,4 +1,4 @@
-package com.jess.arms.widget.imageloader;
+package com.jess.arms.http.imageloader;
 
 import android.widget.ImageView;
 

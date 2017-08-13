@@ -9,7 +9,7 @@ import com.jess.arms.di.module.ClientModule;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.integration.IRepositoryManager;
-import com.jess.arms.widget.imageloader.ImageLoader;
+import com.jess.arms.http.imageloader.ImageLoader;
 
 import java.io.File;
 import java.util.Map;

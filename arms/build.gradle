@@ -110,7 +110,12 @@ dependencies {
         exclude module: 'okio'
     }
     compile rootProject.ext.dependencies["okhttp3"]
-    compile rootProject.ext.dependencies["glide"]
+    compile(rootProject.ext.dependencies["glide"]) {
+        exclude module: 'support-v4'
+    }
+    annotationProcessor(rootProject.ext.dependencies["glide-compiler"]) {
+        exclude module: 'jsr305'
+    }
 
     //tools
     provided rootProject.ext.dependencies["javax.annotation"]
