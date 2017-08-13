@@ -14,7 +14,7 @@ import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.integration.ActivityLifecycle;
 import com.jess.arms.integration.ConfigModule;
 import com.jess.arms.integration.ManifestParser;
-import com.jess.arms.widget.imageloader.glide.GlideImageConfig;
+import com.jess.arms.widget.imageloader.glide.ImageConfigImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -163,7 +163,7 @@ public class AppDelegate implements App, AppLifecycles {
         @Override
         public void onLowMemory() {
             //内存不足时清理图片请求框架的内存缓存
-            mAppComponent.imageLoader().clear(mApplication, GlideImageConfig
+            mAppComponent.imageLoader().clear(mApplication, ImageConfigImpl
                     .builder()
                     .isClearMemory(true)
                     .build());

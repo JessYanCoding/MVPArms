@@ -13,7 +13,7 @@ import com.jess.arms.widget.imageloader.ImageConfig;
  * 做一些操作,比如清除或则切换缓存策略,则可以定义一个int类型的变量,内部根据int做不同过的操作
  * 其他操作同理
  */
-public class GlideImageConfig extends ImageConfig {
+public class ImageConfigImpl extends ImageConfig {
     private int cacheStrategy;//0对应DiskCacheStrategy.all,1对应DiskCacheStrategy.NONE,2对应DiskCacheStrategy.SOURCE,3对应DiskCacheStrategy.RESULT
     private BitmapTransformation transformation;//glide用它来改变图形的形状
     private Target[] targets;
@@ -21,7 +21,7 @@ public class GlideImageConfig extends ImageConfig {
     private boolean isClearMemory;//清理内存缓存
     private boolean isClearDiskCache;//清理本地缓存
 
-    private GlideImageConfig(Builder builder) {
+    private ImageConfigImpl(Builder builder) {
         this.url = builder.url;
         this.imageView = builder.imageView;
         this.placeholder = builder.placeholder;
@@ -129,8 +129,8 @@ public class GlideImageConfig extends ImageConfig {
         }
 
 
-        public GlideImageConfig build() {
-            return new GlideImageConfig(this);
+        public ImageConfigImpl build() {
+            return new ImageConfigImpl(this);
         }
     }
 }

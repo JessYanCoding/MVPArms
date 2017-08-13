@@ -8,7 +8,7 @@ import com.jess.arms.base.App;
 import com.jess.arms.base.BaseHolder;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.widget.imageloader.ImageLoader;
-import com.jess.arms.widget.imageloader.glide.GlideImageConfig;
+import com.jess.arms.widget.imageloader.glide.ImageConfigImpl;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
@@ -42,7 +42,7 @@ public class UserItemHolder extends BaseHolder<User> {
 
         mImageLoader.loadImage(mAppComponent.appManager().getCurrentActivity() == null
                         ? mAppComponent.application() : mAppComponent.appManager().getCurrentActivity(),
-                GlideImageConfig
+                ImageConfigImpl
                         .builder()
                         .url(data.getAvatarUrl())
                         .imageView(mAvater)
@@ -52,7 +52,7 @@ public class UserItemHolder extends BaseHolder<User> {
 
     @Override
     protected void onRelease() {
-        mImageLoader.clear(mAppComponent.application(), GlideImageConfig.builder()
+        mImageLoader.clear(mAppComponent.application(), ImageConfigImpl.builder()
                 .imageViews(mAvater)
                 .build());
     }
