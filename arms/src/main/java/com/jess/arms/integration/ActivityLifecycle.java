@@ -80,12 +80,13 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
             ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(mFragmentLifecycle, true);
 
-            if (mFragmentLifecycles == null) {
+            if (mFragmentLifecycles == null && mExtras.containsKey(ConfigModule.class.getName())) {
                 mFragmentLifecycles = new ArrayList<>();
                 List<ConfigModule> modules = (List<ConfigModule>) mExtras.get(ConfigModule.class.getName());
                 for (ConfigModule module : modules) {
                     module.injectFragmentLifecycle(mApplication, mFragmentLifecycles);
                 }
+                mExtras.put(ConfigModule.class.getName(), null);
             }
 
             for (FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle : mFragmentLifecycles) {

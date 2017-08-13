@@ -35,7 +35,7 @@ public class AppDelegate implements App, AppLifecycles {
     private AppComponent mAppComponent;
     @Inject
     protected ActivityLifecycle mActivityLifecycle;
-    private final List<ConfigModule> mModules;
+    private List<ConfigModule> mModules;
     private List<AppLifecycles> mAppLifecycles = new ArrayList<>();
     private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();
     private ComponentCallbacks2 mComponentCallback;
@@ -68,19 +68,21 @@ public class AppDelegate implements App, AppLifecycles {
 
         mAppComponent.extras().put(ConfigModule.class.getName(), mModules);
 
+        this.mModules = null;
+
         mApplication.registerActivityLifecycleCallbacks(mActivityLifecycle);
 
         for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles) {
             mApplication.registerActivityLifecycleCallbacks(lifecycle);
         }
 
-        for (AppLifecycles lifecycle : mAppLifecycles) {
-            lifecycle.onCreate(mApplication);
-        }
-
         mComponentCallback = new AppComponentCallbacks(mApplication, mAppComponent);
 
         mApplication.registerComponentCallbacks(mComponentCallback);
+
+        for (AppLifecycles lifecycle : mAppLifecycles) {
+            lifecycle.onCreate(mApplication);
+        }
 
     }
 
