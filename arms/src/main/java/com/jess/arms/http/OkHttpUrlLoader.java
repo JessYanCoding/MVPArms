@@ -1,21 +1,15 @@
 package com.jess.arms.http;
 
-import android.content.Context;
-
-import com.bumptech.glide.load.data.DataFetcher;
-import com.bumptech.glide.load.model.GenericLoaderFactory;
+import com.bumptech.glide.load.Options;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.ModelLoader;
 import com.bumptech.glide.load.model.ModelLoaderFactory;
-
+import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 import java.io.InputStream;
-
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 
 /**
- * Created by jess on 10/04/2017 17:37
- * Contact with jess.yan.effort@gmail.com
  * A simple model loader for fetching media over http/https using OkHttp.
  */
 public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
@@ -27,8 +21,14 @@ public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
     }
 
     @Override
-    public DataFetcher<InputStream> getResourceFetcher(GlideUrl model, int width, int height) {
-        return new OkHttpStreamFetcher(client, model);
+    public boolean handles(GlideUrl url) {
+        return true;
+    }
+
+    @Override
+    public LoadData<InputStream> buildLoadData(GlideUrl model, int width, int height,
+                                               Options options) {
+        return new LoadData<>(model, new OkHttpStreamFetcher(client, model));
     }
 
     /**
@@ -37,6 +37,17 @@ public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
     public static class Factory implements ModelLoaderFactory<GlideUrl, InputStream> {
         private static volatile Call.Factory internalClient;
         private Call.Factory client;
+
+        private static Call.Factory getInternalClient() {
+            if (internalClient == null) {
+                synchronized (Factory.class) {
+                    if (internalClient == null) {
+                        internalClient = new OkHttpClient();
+                    }
+                }
+            }
+            return internalClient;
+        }
 
         /**
          * Constructor for a new Factory that runs requests using a static singleton client.
@@ -54,19 +65,8 @@ public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
             this.client = client;
         }
 
-        private static Call.Factory getInternalClient() {
-            if (internalClient == null) {
-                synchronized (Factory.class) {
-                    if (internalClient == null) {
-                        internalClient = new OkHttpClient();
-                    }
-                }
-            }
-            return internalClient;
-        }
-
         @Override
-        public ModelLoader<GlideUrl, InputStream> build(Context context, GenericLoaderFactory factories) {
+        public ModelLoader<GlideUrl, InputStream> build(MultiModelLoaderFactory multiFactory) {
             return new OkHttpUrlLoader(client);
         }
 

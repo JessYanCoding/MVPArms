@@ -1,22 +1,26 @@
 package com.jess.arms.http.imageloader.glide;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
-import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.jess.arms.http.imageloader.BaseImageLoaderStrategy;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
+ * 此类只是简单的实现了 Glide 加载的策略,方便快速使用,但大部分情况会需要应对复杂的场景
+ * 这时可自行实现 {@link BaseImageLoaderStrategy} 和 {@link ImageConfigImpl}
+ * 通过 {@link com.jess.arms.di.module.GlobalConfigModule.Builder#imageLoaderStrategy(BaseImageLoaderStrategy)}
+ * 替换现有策略
  * Created by jess on 8/5/16 16:28
  * contact with jess.yan.effort@gmail.com
  */
@@ -30,41 +34,47 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
         if (config.getImageView() == null) throw new NullPointerException("Imageview is required");
 
 
-        RequestManager manager;
+        GlideRequests requests;
 
-        manager = Glide.with(ctx);//如果context是activity则自动使用Activity的生命周期
+        requests = GlideArms.with(ctx);//如果context是activity则自动使用Activity的生命周期
 
-        DrawableRequestBuilder<String> requestBuilder = manager.load(config.getUrl())
-                .crossFade()
+        GlideRequest<Drawable> glideRequest = requests.load(config.getUrl())
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .centerCrop();
 
         switch (config.getCacheStrategy()) {//缓存策略
             case 0:
-                requestBuilder.diskCacheStrategy(DiskCacheStrategy.ALL);
+                glideRequest.diskCacheStrategy(DiskCacheStrategy.ALL);
                 break;
             case 1:
-                requestBuilder.diskCacheStrategy(DiskCacheStrategy.NONE);
+                glideRequest.diskCacheStrategy(DiskCacheStrategy.NONE);
                 break;
             case 2:
-                requestBuilder.diskCacheStrategy(DiskCacheStrategy.SOURCE);
+                glideRequest.diskCacheStrategy(DiskCacheStrategy.RESOURCE);
                 break;
             case 3:
-                requestBuilder.diskCacheStrategy(DiskCacheStrategy.RESULT);
+                glideRequest.diskCacheStrategy(DiskCacheStrategy.DATA);
+                break;
+            case 4:
+                glideRequest.diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
                 break;
         }
-
         if (config.getTransformation() != null) {//glide用它来改变图形的形状
-            requestBuilder.transform(config.getTransformation());
+            glideRequest.transform(config.getTransformation());
         }
 
 
         if (config.getPlaceholder() != 0)//设置占位符
-            requestBuilder.placeholder(config.getPlaceholder());
+            glideRequest.placeholder(config.getPlaceholder());
 
         if (config.getErrorPic() != 0)//设置错误的图片
-            requestBuilder.error(config.getErrorPic());
+            glideRequest.error(config.getErrorPic());
 
-        requestBuilder
+        if (config.getFallback() != 0)//设置请求 url 为空图片
+            glideRequest.fallback(config.getFallback());
+
+
+        glideRequest
                 .into(config.getImageView());
     }
 
@@ -75,15 +85,9 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
 
         if (config.getImageViews() != null && config.getImageViews().length > 0) {//取消在执行的任务并且释放资源
             for (ImageView imageView : config.getImageViews()) {
-                Glide.clear(imageView);
+                GlideArms.get(ctx).getRequestManagerRetriever().get(ctx).clear(imageView);
             }
         }
-
-        if (config.getTargets() != null && config.getTargets().length > 0) {//取消在执行的任务并且释放资源
-            for (Target target : config.getTargets())
-                Glide.clear(target);
-        }
-
 
         if (config.isClearDiskCache()) {//清除本地缓存
             Observable.just(0)
@@ -97,7 +101,14 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
         }
 
         if (config.isClearMemory()) {//清除内存缓存
-            Glide.get(ctx).clearMemory();
+            Observable.just(0)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<Integer>() {
+                        @Override
+                        public void accept(@NonNull Integer integer) throws Exception {
+                            Glide.get(ctx).clearMemory();
+                        }
+                    });
         }
 
 

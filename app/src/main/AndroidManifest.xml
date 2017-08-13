@@ -35,11 +35,6 @@
             android:name="design_height"
             android:value="1920"/>
 
-        <!-- glide配置 -->
-        <meta-data
-            android:name="com.jess.arms.http.imageloader.glide.GlideConfiguration"
-            android:value="GlideModule"/>
-
         <!-- arms配置 -->
         <meta-data
             android:name="me.jessyan.mvparms.demo.app.GlobalConfiguration"
