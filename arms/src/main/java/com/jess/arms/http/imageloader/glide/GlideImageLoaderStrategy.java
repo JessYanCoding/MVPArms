@@ -9,7 +9,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.imageloader.BaseImageLoaderStrategy;
+import com.jess.arms.http.imageloader.ImageConfig;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -20,10 +22,9 @@ import timber.log.Timber;
 
 /**
  * 此类只是简单的实现了 Glide 加载的策略,方便快速使用,但大部分情况会需要应对复杂的场景
- * 这时可自行实现 {@link BaseImageLoaderStrategy} (如继续使用 Glide,则推荐继承 {@link GlideImageLoaderStrategy})
- * 和 {@link ImageConfigImpl} 替换现有策略
+ * 这时可自行实现 {@link BaseImageLoaderStrategy} 和 {@link ImageConfig} 替换现有策略
  *
- * @see com.jess.arms.di.module.GlobalConfigModule.Builder#imageLoaderStrategy(BaseImageLoaderStrategy)
+ * @see GlobalConfigModule.Builder#imageLoaderStrategy(BaseImageLoaderStrategy)
  * Created by jess on 8/5/16 16:28
  * contact with jess.yan.effort@gmail.com
  */
