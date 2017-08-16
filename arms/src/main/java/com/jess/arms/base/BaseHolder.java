@@ -12,13 +12,13 @@ import com.zhy.autolayout.utils.AutoUtils;
 public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements View.OnClickListener {
     protected OnViewClickListener mOnViewClickListener = null;
     protected final String TAG = this.getClass().getSimpleName();
+
     public BaseHolder(View itemView) {
         super(itemView);
         itemView.setOnClickListener(this);//点击事件
-        AutoUtils.autoSize(itemView);//适配
+        if (ThirdViewUtil.USE_AUTOLAYOUT == 1) AutoUtils.autoSize(itemView);//适配
         ThirdViewUtil.bindTarget(this, itemView);//绑定
     }
-
 
 
     /**
@@ -34,7 +34,7 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
     /**
      * 释放资源
      */
-    protected void onRelease(){
+    protected void onRelease() {
 
     }
 

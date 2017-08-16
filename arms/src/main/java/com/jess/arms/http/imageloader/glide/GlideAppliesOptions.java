@@ -1,13 +1,12 @@
 package com.jess.arms.http.imageloader.glide;
 
 import android.content.Context;
-
 import com.bumptech.glide.GlideBuilder;
 import com.jess.arms.http.imageloader.BaseImageLoaderStrategy;
 
 /**
  * ================================================
- * 如果你想具有配置 Glide 的权利,则你实现 {@link BaseImageLoaderStrategy}
+ * 如果你想具有配置 Glide 的权利,则实现 {@link BaseImageLoaderStrategy}
  * 的实现类也必须实现 {@link GlideAppliesOptions}
  *
  * Created by JessYan on 13/08/2017 22:02

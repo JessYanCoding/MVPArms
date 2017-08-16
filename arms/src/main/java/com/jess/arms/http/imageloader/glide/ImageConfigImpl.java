@@ -1,16 +1,16 @@
 package com.jess.arms.http.imageloader.glide;
 
 import android.widget.ImageView;
-
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.jess.arms.http.imageloader.ImageConfig;
 
 /**
- * Created by jess on 8/5/16 15:19
- * contact with jess.yan.effort@gmail.com
  * 这里放Glide专属的配置信息,可以一直扩展字段,如果外部调用时想让图片加载框架
  * 做一些操作,比如清除或则切换缓存策略,则可以定义一个int类型的变量,内部根据int做不同过的操作
  * 其他操作同理
+ *
+ * Created by jess on 8/5/16 15:19
+ * Contact with jess.yan.effort@gmail.com
  */
 public class ImageConfigImpl extends ImageConfig {
     private int cacheStrategy;//0对应DiskCacheStrategy.all,1对应DiskCacheStrategy.NONE,2对应DiskCacheStrategy.SOURCE,3对应DiskCacheStrategy.RESULT
