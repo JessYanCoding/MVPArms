@@ -14,8 +14,6 @@ import com.paginate.Paginate;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.di.component.DaggerUserComponent;
 import me.jessyan.mvparms.demo.di.module.UserModule;
@@ -75,9 +73,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     @Override
     public void showLoading() {
         Timber.tag(TAG).w("showLoading");
-        Observable.just(1)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(integer -> mSwipeRefreshLayout.setRefreshing(true));
+        mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
