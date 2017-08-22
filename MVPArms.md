@@ -5,7 +5,7 @@
 [ ![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square) ](http://www.apache.org/licenses/LICENSE-2.0)
 [ ![QQGroup](https://img.shields.io/badge/QQ群-301733278-ff69b4.svg) ](https://shang.qq.com/wpa/qunwpa?idkey=1a5dc5e9b2e40a780522f46877ba243eeb64405d42398643d544d3eec6624917)
 
-## 一个整合了大量主流开源项目的 Android Mvp 快速搭建框架
+## 一个整合了大量主流开源项目的 Android MVP 快速搭建框架
 
 ## Usage
 > New Project
