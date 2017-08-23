@@ -19,6 +19,9 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jess.arms.base.App;
+import com.jess.arms.di.component.AppComponent;
+
 import org.simple.eventbus.EventBus;
 
 import java.security.MessageDigest;
@@ -403,6 +406,11 @@ public class UiUtils {
         Message message = new Message();
         message.what = APP_EXIT;
         EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+    }
+
+    public static AppComponent obtainAppComponentFromContext(Context context) {
+        Preconditions.checkState(context.getApplicationContext() instanceof App, "Application does not implements App");
+        return ((App) context.getApplicationContext()).getAppComponent();
     }
 
 }

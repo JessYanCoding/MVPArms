@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
-import com.jess.arms.base.App;
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.GlobalHttpHandler;
@@ -178,7 +177,7 @@ public final class GlobalConfiguration implements ConfigModule {
 //                    });
                 }
                 //leakCanary内存泄露检查
-                ((App) application).getAppComponent().extras().put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
+                UiUtils.obtainAppComponentFromContext(application).extras().put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
             }
 
             @Override
@@ -269,9 +268,8 @@ public final class GlobalConfiguration implements ConfigModule {
             @Override
             public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
                 //这里应该是检测 Fragment 而不是 FragmentLifecycleCallbacks 的泄露。
-                ((RefWatcher) ((App) f.getActivity()
-                        .getApplication())
-                        .getAppComponent()
+                ((RefWatcher) UiUtils
+                        .obtainAppComponentFromContext(f.getActivity())
                         .extras()
                         .get(RefWatcher.class.getName()))
                         .watch(f);

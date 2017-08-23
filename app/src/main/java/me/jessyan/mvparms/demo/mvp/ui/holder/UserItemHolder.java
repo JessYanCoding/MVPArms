@@ -4,11 +4,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jess.arms.base.App;
 import com.jess.arms.base.BaseHolder;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
+import com.jess.arms.utils.UiUtils;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
@@ -31,7 +31,7 @@ public class UserItemHolder extends BaseHolder<User> {
     public UserItemHolder(View itemView) {
         super(itemView);
         //可以在任何可以拿到Application的地方,拿到AppComponent,从而得到用Dagger管理的单例对象
-        mAppComponent = ((App) itemView.getContext().getApplicationContext()).getAppComponent();
+        mAppComponent = UiUtils.obtainAppComponentFromContext(itemView.getContext());
         mImageLoader = mAppComponent.imageLoader();
     }
 
