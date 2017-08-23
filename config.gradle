@@ -14,7 +14,7 @@ ext {
                    retrofitSdkVersion      : "2.3.0",
                    dagger2SdkVersion       : "2.11",
                    glideSdkVersion         : "4.0.0",
-                   butterknifeSdkVersion   : "8.7.0",
+                   butterknifeSdkVersion   : "8.8.1",
                    rxlifecycleSdkVersion   : "1.0",
                    rxlifecycle2SdkVersion  : "2.1.0",
                    espressoSdkVersion      : "2.2.2",
@@ -51,7 +51,7 @@ ext {
                 "numberprogressbar"        : "com.daimajia.numberprogressbar:library:1.2@aar",
                 "nineoldandroids"          : "com.nineoldandroids:library:2.4.0",
                 "paginate"                 : "com.github.markomilos:paginate:0.5.1",
-                "vlayout"                  : "com.alibaba.android:vlayout:1.0.9@aar",
+                "vlayout"                  : "com.alibaba.android:vlayout:1.1.0@aar",
 
                 //rx1
                 "rxandroid"                : "io.reactivex:rxandroid:1.2.1",
