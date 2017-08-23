@@ -1,16 +1,16 @@
 ext {
 
     android = [
-               compileSdkVersion       : 25,
-               buildToolsVersion       : "25.0.3",
+               compileSdkVersion       : 26,
+               buildToolsVersion       : "26.0.1",
                minSdkVersion           : 15,
-               targetSdkVersion        : 25,
+               targetSdkVersion        : 26,
                versionCode             : 130,
                versionName             : "2.1.5"
     ]
 
      version = [
-                   androidSupportSdkVersion: "25.4.0",
+                   androidSupportSdkVersion: "26.0.1",
                    retrofitSdkVersion      : "2.3.0",
                    dagger2SdkVersion       : "2.11",
                    glideSdkVersion         : "4.0.0",
