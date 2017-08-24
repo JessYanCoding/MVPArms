@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcel;
 
-import com.jess.arms.utils.UiUtils;
+import com.jess.arms.utils.ArmsUtils;
 
 import org.simple.eventbus.EventBus;
 
@@ -26,7 +26,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
     public void onCreate(Bundle savedInstanceState) {
         if (iActivity.useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().register(mActivity);//注册到事件主线
-        iActivity.setupActivityComponent(UiUtils.obtainAppComponentFromContext(mActivity));//依赖注入
+        iActivity.setupActivityComponent(ArmsUtils.obtainAppComponentFromContext(mActivity));//依赖注入
     }
 
     @Override

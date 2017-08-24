@@ -17,7 +17,7 @@ import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.http.OkHttpUrlLoader;
 import com.jess.arms.http.imageloader.BaseImageLoaderStrategy;
 import com.jess.arms.utils.DataHelper;
-import com.jess.arms.utils.UiUtils;
+import com.jess.arms.utils.ArmsUtils;
 
 import java.io.File;
 import java.io.InputStream;
@@ -31,7 +31,7 @@ public class GlideConfiguration extends AppGlideModule {
 
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
-        AppComponent appComponent = UiUtils.obtainAppComponentFromContext(context);
+        AppComponent appComponent = ArmsUtils.obtainAppComponentFromContext(context);
         builder.setDiskCache(new DiskCache.Factory() {
             @Override
             public DiskCache build() {
@@ -62,7 +62,7 @@ public class GlideConfiguration extends AppGlideModule {
     @Override
     public void registerComponents(Context context, Glide glide, Registry registry) {
         //Glide默认使用HttpURLConnection做网络请求,在这切换成okhttp请求
-        AppComponent appComponent = UiUtils.obtainAppComponentFromContext(context);
+        AppComponent appComponent = ArmsUtils.obtainAppComponentFromContext(context);
         registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(appComponent.okHttpClient()));
     }
 

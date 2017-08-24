@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.component.AppComponent;
-import com.jess.arms.utils.UiUtils;
+import com.jess.arms.utils.ArmsUtils;
 import com.paginate.Paginate;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -66,7 +66,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
      */
     private void initRecycleView() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        UiUtils.configRecycleView(mRecyclerView, new GridLayoutManager(this, 2));
+        ArmsUtils.configRecycleView(mRecyclerView, new GridLayoutManager(this, 2));
     }
 
 
@@ -84,12 +84,12 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
 
     @Override
     public void showMessage(String message) {
-        UiUtils.snackbarText(message);
+        ArmsUtils.snackbarText(message);
     }
 
     @Override
     public void launchActivity(Intent intent) {
-        UiUtils.startActivity(intent);
+        ArmsUtils.startActivity(intent);
     }
 
     @Override
