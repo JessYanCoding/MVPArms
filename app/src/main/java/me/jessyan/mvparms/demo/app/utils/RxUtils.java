@@ -37,7 +37,7 @@ public class RxUtils {
                         })
                         .subscribeOn(AndroidSchedulers.mainThread())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .doAfterTerminate(new Action() {
+                        .doFinally(new Action() {
                             @Override
                             public void run() {
                                 view.hideLoading();//隐藏进度条
@@ -52,7 +52,7 @@ public class RxUtils {
         if (view instanceof LifecycleProvider){
             return ((LifecycleProvider)view).bindToLifecycle();
         }else {
-            throw new IllegalArgumentException("view isn't activity or fragment");
+            throw new IllegalArgumentException("view isn't LifecycleProvider");
         }
 
     }
