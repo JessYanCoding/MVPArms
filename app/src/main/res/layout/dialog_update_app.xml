@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ll_top"
+        android:paddingLeft="30px"
+        android:paddingRight="30px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:adjustViewBounds="true"
+            android:focusable="false"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_update_app_top_bg"/>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:background="@drawable/shape_update_conent_bg"
+            android:orientation="vertical"
+            android:padding="42px">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="是否升级到4.1.1版本？"
+                android:textColor="@android:color/black"
+                android:textSize="40px"/>
+
+            <TextView
+                android:id="@+id/tv_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="新版本大小：9M"
+                android:layout_marginTop="20px"
+                android:textColor="#666"
+                android:textSize="40px"/>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1"
+                android:paddingBottom="20px"
+                android:paddingTop="20px"
+                android:scrollbars="none">
+
+                <TextView
+                    android:id="@+id/tv_update_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1，xxxxxxxx\n2，ooooooooo"
+                    android:textColor="#666"
+                    android:textSize="32px"/>
+
+            </ScrollView>
+
+            <Button
+                android:id="@+id/btn_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="80px"
+                android:text="升级"
+                android:background="#FF592E"
+                android:textColor="@android:color/white"
+                android:textSize="38px"/>
+
+            <TextView
+                android:id="@+id/tv_ignore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20px"
+                android:text="忽略此版本"
+                android:textColor="#666"
+                android:textSize="38px"
+                android:visibility="visible"/>
+
+            <me.jessyan.mvparms.demo.mvp.ui.widget.update.NumberProgressBar
+                android:id="@+id/npb"
+                style="@style/UpdateAppNumberProgressBar_Red"
+                android:paddingBottom="20px"
+                android:paddingTop="20px"
+                android:visibility="visible"/>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/ll_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="2px"
+                android:layout_height="140px"
+                android:background="#d8d8d8"
+                android:visibility="visible"/>
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="90px"
+                android:layout_height="90px"
+                android:src="@drawable/ic_update_app_close"/>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</com.zhy.autolayout.AutoLinearLayout>
