@@ -36,25 +36,26 @@
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="是否升级到4.1.1版本？"
+                android:text="是否升级到x.x.x版本？"
                 android:textColor="@android:color/black"
-                android:textSize="40px"/>
+                android:textSize="44px"/>
 
             <TextView
                 android:id="@+id/tv_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="新版本大小：9M"
+                android:text="新版本大小：0M"
                 android:layout_marginTop="20px"
                 android:textColor="#666"
-                android:textSize="40px"/>
+                android:textSize="40px"
+                android:visibility="gone"/>
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0px"
                 android:layout_weight="1"
                 android:paddingBottom="20px"
-                android:paddingTop="20px"
+                android:paddingTop="40px"
                 android:scrollbars="none">
 
                 <TextView
@@ -63,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:text="1，xxxxxxxx\n2，ooooooooo"
                     android:textColor="#666"
-                    android:textSize="32px"/>
+                    android:textSize="28px"/>
 
             </ScrollView>
 
@@ -87,14 +88,14 @@
                 android:text="忽略此版本"
                 android:textColor="#666"
                 android:textSize="38px"
-                android:visibility="visible"/>
+                android:visibility="gone"/>
 
             <me.jessyan.mvparms.demo.mvp.ui.widget.update.NumberProgressBar
                 android:id="@+id/npb"
                 style="@style/UpdateAppNumberProgressBar_Red"
                 android:paddingBottom="20px"
                 android:paddingTop="20px"
-                android:visibility="visible"/>
+                android:visibility="gone"/>
 
         </com.zhy.autolayout.AutoLinearLayout>
 

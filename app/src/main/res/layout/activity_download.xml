@@ -11,4 +11,10 @@
         android:layout_height="wrap_content"
         android:text="提示下载"/>
 
+    <Button
+        android:id="@+id/delete_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="删除下载文件"/>
+
 </com.zhy.autolayout.AutoLinearLayout>

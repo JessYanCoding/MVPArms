@@ -81,4 +81,6 @@ dependencies {
     debugCompile rootProject.ext.dependencies["canary-debug"]
     releaseCompile rootProject.ext.dependencies["canary-release"]
     testCompile rootProject.ext.dependencies["canary-release"]
+    //my lib
+    compile 'zlc.season:rxdownload2:2.0.4'
 }

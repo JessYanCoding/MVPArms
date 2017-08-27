@@ -496,6 +496,8 @@ public class NumberProgressBar extends View {
         mListener = listener;
     }
 
+
+
     public enum ProgressTextVisibility {
         VISIBLE, INVISIBLE
     }
