@@ -7,6 +7,7 @@ import android.util.Log;
 public class LogUtils {
 
     private LogUtils() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     private final static boolean isLog = true;

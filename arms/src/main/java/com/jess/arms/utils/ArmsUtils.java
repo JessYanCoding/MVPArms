@@ -41,6 +41,7 @@ public class ArmsUtils {
 
 
     private ArmsUtils() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     /**

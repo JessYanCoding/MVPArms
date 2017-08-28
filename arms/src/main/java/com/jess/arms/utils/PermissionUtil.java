@@ -21,6 +21,7 @@ public class PermissionUtil {
 
 
     private PermissionUtil() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     public interface RequestPermission {

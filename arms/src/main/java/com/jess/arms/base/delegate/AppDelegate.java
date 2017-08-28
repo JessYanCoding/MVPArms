@@ -6,15 +6,16 @@ import android.content.Context;
 import android.content.res.Configuration;
 
 import com.jess.arms.base.App;
+import com.jess.arms.base.lifecycle.ActivityLifecycleForRxLifecycle;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.di.component.DaggerAppComponent;
 import com.jess.arms.di.module.AppModule;
 import com.jess.arms.di.module.ClientModule;
 import com.jess.arms.di.module.GlobalConfigModule;
+import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.integration.ActivityLifecycle;
 import com.jess.arms.integration.ConfigModule;
 import com.jess.arms.integration.ManifestParser;
-import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,8 @@ public class AppDelegate implements App, AppLifecycles {
     private AppComponent mAppComponent;
     @Inject
     protected ActivityLifecycle mActivityLifecycle;
+    @Inject
+    protected ActivityLifecycleForRxLifecycle mActivityLifecycleForRxLifecycle;
     private List<ConfigModule> mModules;
     private List<AppLifecycles> mAppLifecycles = new ArrayList<>();
     private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();
@@ -71,6 +74,7 @@ public class AppDelegate implements App, AppLifecycles {
         this.mModules = null;
 
         mApplication.registerActivityLifecycleCallbacks(mActivityLifecycle);
+        mApplication.registerActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle);
 
         for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles) {
             mApplication.registerActivityLifecycleCallbacks(lifecycle);

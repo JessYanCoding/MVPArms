@@ -27,6 +27,7 @@ import javax.xml.transform.stream.StreamSource;
 public class CharacterHandler {
 
     private CharacterHandler() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     public static final InputFilter emojiFilter = new InputFilter() {//emoji过滤器

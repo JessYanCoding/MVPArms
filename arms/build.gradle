@@ -75,9 +75,7 @@ dependencies {
         exclude module: 'rxjava'
         exclude module: 'jsr305'
     }
-    compile(rootProject.ext.dependencies["rxlifecycle2-components"]) {
-        exclude module: 'support-v4'
-        exclude module: 'appcompat-v7'
+    compile(rootProject.ext.dependencies["rxlifecycle2-android"]) {
         exclude module: 'support-annotations'
         exclude module: 'rxjava'
         exclude module: 'rxandroid'

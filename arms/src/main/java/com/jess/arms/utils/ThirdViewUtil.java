@@ -27,6 +27,7 @@ public class ThirdViewUtil {
     public static int USE_AUTOLAYOUT = -1;//0 说明 AndroidManifest 里面没有使用 AutoLauout 的Meta,即不使用 AutoLayout,1 为有 Meta ,即需要使用
 
     private ThirdViewUtil() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     public static Unbinder bindTarget(Object target, Object source) {

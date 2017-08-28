@@ -168,7 +168,6 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
         @Override
         public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {
-            super.onFragmentAttached(fm, f, context);
             Timber.w(f.toString() + " - onFragmentAttached");
             if (f instanceof IFragment && f.getArguments() != null) {
                 FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
@@ -182,7 +181,6 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
         @Override
         public void onFragmentCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState) {
-            super.onFragmentCreated(fm, f, savedInstanceState);
             Timber.w(f.toString() + " - onFragmentCreated");
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
@@ -192,7 +190,6 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
         @Override
         public void onFragmentViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
-            super.onFragmentViewCreated(fm, f, v, savedInstanceState);
             Timber.w(f.toString() + " - onFragmentViewCreated");
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
@@ -202,7 +199,6 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
         @Override
         public void onFragmentActivityCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState) {
-            super.onFragmentActivityCreated(fm, f, savedInstanceState);
             Timber.w(f.toString() + " - onFragmentActivityCreated");
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
@@ -212,7 +208,6 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
         @Override
         public void onFragmentStarted(FragmentManager fm, Fragment f) {
-            super.onFragmentStarted(fm, f);
             Timber.w(f.toString() + " - onFragmentStarted");
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
@@ -222,7 +217,6 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
         @Override
         public void onFragmentResumed(FragmentManager fm, Fragment f) {
-            super.onFragmentResumed(fm, f);
             Timber.w(f.toString() + " - onFragmentResumed");
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
@@ -232,7 +226,6 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
         @Override
         public void onFragmentPaused(FragmentManager fm, Fragment f) {
-            super.onFragmentPaused(fm, f);
             Timber.w(f.toString() + " - onFragmentPaused");
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
@@ -242,7 +235,6 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
         @Override
         public void onFragmentStopped(FragmentManager fm, Fragment f) {
-            super.onFragmentStopped(fm, f);
             Timber.w(f.toString() + " - onFragmentStopped");
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
@@ -252,7 +244,6 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
         @Override
         public void onFragmentViewDestroyed(FragmentManager fm, Fragment f) {
-            super.onFragmentViewDestroyed(fm, f);
             Timber.w(f.toString() + " - onFragmentViewDestroyed");
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
@@ -262,7 +253,6 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
         @Override
         public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
-            super.onFragmentDestroyed(fm, f);
             Timber.w(f.toString() + " - onFragmentDestroyed");
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {
@@ -272,7 +262,6 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
         @Override
         public void onFragmentDetached(FragmentManager fm, Fragment f) {
-            super.onFragmentDetached(fm, f);
             Timber.w(f.toString() + " - onFragmentDetached");
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate != null) {

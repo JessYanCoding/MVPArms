@@ -56,6 +56,7 @@ public class DeviceUtils {
     }
 
     private DeviceUtils() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     /**

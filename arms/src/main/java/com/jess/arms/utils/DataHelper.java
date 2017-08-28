@@ -22,6 +22,7 @@ public class DataHelper {
 
 
     private DataHelper() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     /**
