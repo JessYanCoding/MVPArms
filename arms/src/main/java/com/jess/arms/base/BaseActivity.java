@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.jess.arms.base.delegate.IActivity;
-import com.jess.arms.base.lifecycle.ActivityLifecycleable;
+import com.jess.arms.integration.lifecycle.ActivityLifecycleable;
 import com.jess.arms.mvp.IPresenter;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 

@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jess.arms.base.delegate.IFragment;
-import com.jess.arms.base.lifecycle.FragmentLifecycleable;
+import com.jess.arms.integration.lifecycle.FragmentLifecycleable;
 import com.jess.arms.mvp.IPresenter;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 

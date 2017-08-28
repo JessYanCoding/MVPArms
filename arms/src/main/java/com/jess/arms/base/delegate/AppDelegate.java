@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 
 import com.jess.arms.base.App;
-import com.jess.arms.base.lifecycle.ActivityLifecycleForRxLifecycle;
+import com.jess.arms.integration.lifecycle.ActivityLifecycleForRxLifecycle;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.di.component.DaggerAppComponent;
 import com.jess.arms.di.module.AppModule;

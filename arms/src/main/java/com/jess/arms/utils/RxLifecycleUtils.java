@@ -1,8 +1,8 @@
 package com.jess.arms.utils;
 
-import com.jess.arms.base.lifecycle.ActivityLifecycleable;
-import com.jess.arms.base.lifecycle.FragmentLifecycleable;
-import com.jess.arms.base.lifecycle.Lifecycleable;
+import com.jess.arms.integration.lifecycle.ActivityLifecycleable;
+import com.jess.arms.integration.lifecycle.FragmentLifecycleable;
+import com.jess.arms.integration.lifecycle.Lifecycleable;
 import com.jess.arms.mvp.IView;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;

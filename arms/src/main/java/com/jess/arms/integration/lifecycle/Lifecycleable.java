@@ -1,4 +1,4 @@
-package com.jess.arms.base.lifecycle;
+package com.jess.arms.integration.lifecycle;
 
 import android.support.annotation.NonNull;
 
