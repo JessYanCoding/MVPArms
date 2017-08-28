@@ -72,16 +72,30 @@ public class UpdateDialogFragment extends DialogFragment {
     public String versionCode;
     public String updateInfo;
 
-    public UpdateDialogFragment(String url, String versionCode, String updateInfo) {
-        this.url = url;
-        this.versionCode = versionCode;
-        this.updateInfo = updateInfo;
+    public UpdateDialogFragment() {
+
+    }
+
+    public static UpdateDialogFragment newInstance(String url, String versionCode, String updateInfo) {
+        UpdateDialogFragment dialogFragment = new UpdateDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("url", url);
+        bundle.putString("versionCode", versionCode);
+        bundle.putString("updateInfo", updateInfo);
+        dialogFragment.setArguments(bundle);
+        return dialogFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.UpdateAppDialog);
+        Bundle args = getArguments();
+        if (args != null) {
+            this.url = args.getString("url");
+            this.versionCode = args.getString("versionCode");
+            this.updateInfo = args.getString("updateInfo");
+        }
     }
 
     @Override
@@ -175,7 +189,7 @@ public class UpdateDialogFragment extends DialogFragment {
                 mTvUpdateInfo.setText(updateInfo);
                 break;
             case DownloadFlag.STARTED: //已开始下载
-                LogUtils.debugInfo("已开始下载");
+//                LogUtils.debugInfo("已开始下载");
                 if (mBtnOk.getVisibility() == View.VISIBLE)
                     mBtnOk.setVisibility(View.GONE);
                 if (mNpb.getVisibility() == View.GONE)
@@ -197,6 +211,7 @@ public class UpdateDialogFragment extends DialogFragment {
             case DownloadFlag.FAILED: //下载失败
                 LogUtils.debugInfo("下载失败");
                 ArmsUtils.makeText(getActivity(), "下载失败");
+                delete(); //下载失败，删除文件
                 dismiss();
                 break;
         }
@@ -234,6 +249,21 @@ public class UpdateDialogFragment extends DialogFragment {
     private void pause() {
         mRxDownload.pauseServiceDownload(url).subscribe();
     }
+
+    //删除下载文件
+    private void delete() {
+        //暂停地址为url的下载并从数据库中删除记录，deleteFile为true会同时删除该url下载产生的所有文件
+        mRxDownload.deleteServiceDownload(url, true).subscribe();
+    }
+
+    //获取文件路径方法
+    //利用url获取
+//    File[] files = rxDownload.getRealFiles(url);
+//    if (files != null) {
+//        File file = files[0];
+//    }
+//    //利用saveName及savePath获取
+//    File file = rxDownload.getRealFiles(saveName,savePath)[0];
 
     @OnClick({R.id.iv_close, R.id.btn_ok, R.id.tv_ignore})
     public void onViewClicked(View view) {

@@ -6,6 +6,7 @@ import android.widget.Button;
 
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.utils.ArmsUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -25,7 +26,7 @@ public class DownloadActivity extends BaseActivity {
 
     public final static String url = "http://s1.music.126.net/download/android/CloudMusic_official_3.7.3_153912.apk"; //下载链接
     public final static String versionCode = "1.0.0"; //更新版本号
-    public final static String updateInfo = "1，新增xx功能\n2，优化用户体验\n3，修复若干个bug\n3，修复若干个bug\n3，修复若干个看见啊含税单价卡号的";
+    public final static String updateInfo = "1，新增xx功能\n2，优化用户体验\n3，遇到在线更新不成功，请卸载后再安装，感谢用户一直的支持和体谅\n4，修复若干个bug";
 
 
     private UpdateDialogFragment mUpdateDialogFragment;
@@ -50,15 +51,14 @@ public class DownloadActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.show_dialog:
-                if (mUpdateDialogFragment == null)
-                    mUpdateDialogFragment = new UpdateDialogFragment(url, versionCode, updateInfo);
-                mUpdateDialogFragment.show(getFragmentManager(), "UpdateDialogFragment");
+                UpdateDialogFragment.newInstance(url, versionCode, updateInfo).show(getFragmentManager(), "UpdateDialogFragment");
                 break;
             case R.id.delete_file:
                 if (mRxDownload == null)
                     mRxDownload = RxDownload.getInstance(this);
-                //暂停地址为url的下载并从数据库中删除记录，deleteFile为true会同时删除该url下载产生的所有文件
+                //暂停地址为url的下载并从数据库中删除记录，deleteFile为true会同时删除该url 下载产生的所有文件
                 mRxDownload.deleteServiceDownload(url, true).subscribe();
+                ArmsUtils.makeText(this, "删除成功");
                 break;
         }
     }
