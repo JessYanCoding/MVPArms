@@ -53,7 +53,7 @@ public final class AppManager {
 
 
     /**
-     * 通过eventbus post事件,远程遥控执行对应方法
+     * 通过 eventbus post 事件,远程遥控执行对应方法
      */
     @Subscriber(tag = APPMANAGER_MESSAGE, mode = ThreadMode.MAIN)
     public void onReceive(Message message) {
@@ -89,7 +89,7 @@ public final class AppManager {
 
 
     /**
-     * 使用snackbar显示内容
+     * 让在前台的 activity,使用 snackbar 显示文本内容
      *
      * @param message
      * @param isLong
@@ -105,23 +105,23 @@ public final class AppManager {
 
 
     /**
-     * 让在前台的activity,打开下一个activity
+     * 让在栈顶的 activity ,打开指定的 activity
      *
      * @param intent
      */
     public void startActivity(Intent intent) {
-        if (getCurrentActivity() == null) {
+        if (getTopActivity() == null) {
             Timber.tag(TAG).w("mCurrentActivity == null when startActivity(Intent)");
             //如果没有前台的activity就使用new_task模式启动activity
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mApplication.startActivity(intent);
             return;
         }
-        getCurrentActivity().startActivity(intent);
+        getTopActivity().startActivity(intent);
     }
 
     /**
-     * 让在前台的activity,打开下一个activity
+     * 让在栈顶的 activity ,打开指定的 activity
      *
      * @param activityClass
      */
@@ -141,7 +141,10 @@ public final class AppManager {
     }
 
     /**
-     * 将在前台的activity保存
+     * 将在前台的 activity 赋值给 currentActivity,注意此方法是在 onResume 方法调用时将栈顶的 activity 赋值给 currentActivity
+     * 所以在栈顶的 activity 执行 onCreate 方法时使用 {@link #getCurrentActivity()} 获取的就不是当前 activity,可能是上一个 activity
+     * 如果在 App 的第一个 activity 执行 onCreate 方法时使用 {@link #getCurrentActivity()} 则会出现返回为 null 的情况
+     * 想避免这种情况请使用 {@link #getTopActivity()}
      *
      * @param currentActivity
      */
@@ -150,18 +153,38 @@ public final class AppManager {
     }
 
     /**
-     * 获得当前在前台的activity
+     * 获取在前台的 activity (保证获取到的 activity 正处于可见状态,即未调用 onStop),获取的 activity 存续时间
+     * 是在 onStop 之前,所以如果当此 activity 调用 onStop 方法之后,没有其他的 activity 回到前台(用户返回桌面或者打开了其他 App 会出现此状况)
+     * 这时调用 {@link #getCurrentActivity()} 有可能返回 null,所以请注意使用场景和 {@link #getTopActivity()} 不一样
+     * <p>
+     * Example usage:
+     * 使用场景比较适合,只需要有前台 activity 时才做的操作
+     * 如当后台 service 执行某个任务,需要使用前台 activity ,做出某种操作,如弹出 Dialog,这时就可以使用 {@link #getCurrentActivity()}
+     * 如果返回为 null ,说明没有前台 activity (用户返回桌面或者打开了其他 App 会出现此状况),则不做任何操作,不为 null ,则弹出 Dialog
      *
      * @return
      */
     public Activity getCurrentActivity() {
-        return mCurrentActivity != null ?
-                mCurrentActivity : mActivityList != null && mActivityList.size() > 0 ?
-                mActivityList.get(mActivityList.size() - 1) : null;
+        return mCurrentActivity != null ? mCurrentActivity : null;
     }
 
     /**
-     * 返回一个存储所有未销毁的activity的集合
+     * 获取位于栈顶的 activity,此方法不保证获取到的 acticity 处于可见状态,即使 App 进入后台也会返回栈顶的 activity
+     * 因此基本不会出现 null 的情况,比较适合大部分的使用场景
+     *
+     * @return
+     */
+    public Activity getTopActivity() {
+        if (mActivityList == null) {
+            Timber.tag(TAG).w("mActivityList == null when getTopActivity()");
+            return null;
+        }
+        return mActivityList.size() > 0 ? mActivityList.get(mActivityList.size() - 1) : null;
+    }
+
+
+    /**
+     * 返回一个存储所有未销毁的 activity 的集合
      *
      * @return
      */
@@ -174,7 +197,7 @@ public final class AppManager {
 
 
     /**
-     * 添加Activity到集合
+     * 添加 activity 到集合
      */
     public void addActivity(Activity activity) {
         if (mActivityList == null) {
@@ -188,7 +211,7 @@ public final class AppManager {
     }
 
     /**
-     * 删除集合里的指定activity
+     * 删除集合里的指定的 activity 实例
      *
      * @param activity
      */
@@ -205,7 +228,7 @@ public final class AppManager {
     }
 
     /**
-     * 删除集合里的指定位置的activity
+     * 删除集合里的指定位置的 activity
      *
      * @param location
      */
@@ -223,13 +246,13 @@ public final class AppManager {
     }
 
     /**
-     * 关闭指定activity
+     * 关闭指定的 activity class 的所有的实例
      *
      * @param activityClass
      */
     public void killActivity(Class<?> activityClass) {
         if (mActivityList == null) {
-            Timber.tag(TAG).w("mActivityList == null when killActivity");
+            Timber.tag(TAG).w("mActivityList == null when killActivity(Class)");
             return;
         }
         for (Activity activity : mActivityList) {
@@ -241,14 +264,14 @@ public final class AppManager {
 
 
     /**
-     * 指定的activity实例是否存活
+     * 指定的 activity 实例是否存活
      *
      * @param activity
      * @return
      */
     public boolean activityInstanceIsLive(Activity activity) {
         if (mActivityList == null) {
-            Timber.tag(TAG).w("mActivityList == null when activityInstanceIsLive");
+            Timber.tag(TAG).w("mActivityList == null when activityInstanceIsLive(Activity)");
             return false;
         }
         return mActivityList.contains(activity);
@@ -256,14 +279,14 @@ public final class AppManager {
 
 
     /**
-     * 指定的activity class是否存活(一个activity可能有多个实例)
+     * 指定的 activity class 是否存活(同一个 activity class 可能有多个实例)
      *
      * @param activityClass
      * @return
      */
     public boolean activityClassIsLive(Class<?> activityClass) {
         if (mActivityList == null) {
-            Timber.tag(TAG).w("mActivityList == null when activityClassIsLive");
+            Timber.tag(TAG).w("mActivityList == null when activityClassIsLive(Class)");
             return false;
         }
         for (Activity activity : mActivityList) {
@@ -271,13 +294,32 @@ public final class AppManager {
                 return true;
             }
         }
-
         return false;
     }
 
 
     /**
-     * 关闭所有activity
+     * 获取指定 activity class 的实例,没有则返回 null(同一个 activity class 有多个实例,则返回最早的实例)
+     *
+     * @param activityClass
+     * @return
+     */
+    public Activity findActivity(Class<?> activityClass) {
+        if (mActivityList == null) {
+            Timber.tag(TAG).w("mActivityList == null when findActivity(Class)");
+            return null;
+        }
+        for (Activity activity : mActivityList) {
+            if (activity.getClass().equals(activityClass)) {
+                return activity;
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * 关闭所有 activity
      */
     public void killAll() {
 //        while (getActivityList().size() != 0) { //此方法只能兼容LinkedList
@@ -300,8 +342,7 @@ public final class AppManager {
     public void appExit() {
         try {
             killAll();
-            if (mActivityList != null)
-                mActivityList = null;
+            release();
             ActivityManager activityMgr =
                     (ActivityManager) mApplication.getSystemService(Context.ACTIVITY_SERVICE);
             activityMgr.killBackgroundProcesses(mApplication.getPackageName());
