@@ -23,9 +23,10 @@ import javax.inject.Singleton;
 import timber.log.Timber;
 
 /**
- * 用于管理所有activity,和在前台的 activity
- * 可以通过直接持有AppManager对象执行对应方法
- * 也可以通过eventbus post事件,远程遥控执行对应方法
+ * 用于管理所有 activity,和在前台的 activity
+ * 可以通过直接持有 AppManager 对象执行对应方法
+ * 也可以通过 eventbus post 事件,远程遥控执行对应方法
+ * <p>
  * Created by jess on 14/12/2016 13:50
  * Contact with jess.yan.effort@gmail.com
  */
@@ -141,8 +142,8 @@ public final class AppManager {
     }
 
     /**
-     * 将在前台的 activity 赋值给 currentActivity,注意此方法是在 onResume 方法调用时将栈顶的 activity 赋值给 currentActivity
-     * 所以在栈顶的 activity 执行 onCreate 方法时使用 {@link #getCurrentActivity()} 获取的就不是当前 activity,可能是上一个 activity
+     * 将在前台的 activity 赋值给 currentActivity,注意此方法是在 onResume 方法执行时将栈顶的 activity 赋值给 currentActivity
+     * 所以在栈顶的 activity 执行 onCreate 方法时使用 {@link #getCurrentActivity()} 获取的就不是当前栈顶的 activity,可能是上一个 activity
      * 如果在 App 的第一个 activity 执行 onCreate 方法时使用 {@link #getCurrentActivity()} 则会出现返回为 null 的情况
      * 想避免这种情况请使用 {@link #getTopActivity()}
      *
@@ -158,8 +159,8 @@ public final class AppManager {
      * 这时调用 {@link #getCurrentActivity()} 有可能返回 null,所以请注意使用场景和 {@link #getTopActivity()} 不一样
      * <p>
      * Example usage:
-     * 使用场景比较适合,只需要有前台 activity 时才做的操作
-     * 如当后台 service 执行某个任务,需要使用前台 activity ,做出某种操作,如弹出 Dialog,这时就可以使用 {@link #getCurrentActivity()}
+     * 使用场景比较适合,只需要在可见状态的 activity 上执行的操作
+     * 如当后台 service 执行某个任务时,需要让前台 activity ,做出某种响应操作或其他操作,如弹出 Dialog,这时在 service 中就可以使用 {@link #getCurrentActivity()}
      * 如果返回为 null ,说明没有前台 activity (用户返回桌面或者打开了其他 App 会出现此状况),则不做任何操作,不为 null ,则弹出 Dialog
      *
      * @return
@@ -169,8 +170,8 @@ public final class AppManager {
     }
 
     /**
-     * 获取位于栈顶的 activity,此方法不保证获取到的 acticity 处于可见状态,即使 App 进入后台也会返回栈顶的 activity
-     * 因此基本不会出现 null 的情况,比较适合大部分的使用场景
+     * 获取位于栈顶的 activity,此方法不保证获取到的 acticity 正处于可见状态,即使 App 进入后台也会返回当前栈顶的 activity
+     * 因此基本不会出现 null 的情况,比较适合大部分的使用场景,如 startActivity,Glide 加载图片
      *
      * @return
      */
