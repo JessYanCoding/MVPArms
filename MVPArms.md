@@ -15,7 +15,7 @@
 >> [老项目想引入此框架,可以参考 Wiki 文档 ,写的非常详细](https://github.com/JessYanCoding/MVPArms/wiki)
 
 ## Wiki
-[详细使用方法及扩展功能,请参照 Wiki (**开发前必看!**)](https://github.com/JessYanCoding/MVPArms/wiki)
+[详细使用方法及扩展功能,请参照 Wiki (**开发前必看!!!**)](https://github.com/JessYanCoding/MVPArms/wiki)
 
 <!--##The project used [In Progress]
 [Inspired by eyepetizer（灵感来源于开眼视频,开发中...）](https://github.com/JessYanCoding/WideEyes) -->
