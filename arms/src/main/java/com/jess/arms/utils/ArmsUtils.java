@@ -23,11 +23,8 @@ import com.jess.arms.base.App;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.integration.AppManager;
 
-import org.simple.eventbus.EventBus;
-
 import java.security.MessageDigest;
 
-import static com.jess.arms.integration.AppManager.APPMANAGER_MESSAGE;
 import static com.jess.arms.integration.AppManager.APP_EXIT;
 import static com.jess.arms.integration.AppManager.KILL_ALL;
 import static com.jess.arms.integration.AppManager.SHOW_SNACKBAR;
@@ -213,7 +210,7 @@ public class ArmsUtils {
         message.what = SHOW_SNACKBAR;
         message.obj = text;
         message.arg1 = 0;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
     /**
@@ -226,7 +223,7 @@ public class ArmsUtils {
         message.what = SHOW_SNACKBAR;
         message.obj = text;
         message.arg1 = 1;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
 
@@ -251,7 +248,7 @@ public class ArmsUtils {
         Message message = new Message();
         message.what = START_ACTIVITY;
         message.obj = homeActivityClass;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
     /**
@@ -263,7 +260,7 @@ public class ArmsUtils {
         Message message = new Message();
         message.what = START_ACTIVITY;
         message.obj = content;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
 
@@ -403,13 +400,13 @@ public class ArmsUtils {
     public static void killAll() {
         Message message = new Message();
         message.what = KILL_ALL;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
     public static void exitApp() {
         Message message = new Message();
         message.what = APP_EXIT;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
     public static AppComponent obtainAppComponentFromContext(Context context) {

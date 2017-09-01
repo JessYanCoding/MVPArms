@@ -6,6 +6,7 @@ import android.content.Context;
 import android.net.ParseException;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.GlobalHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
+import com.jess.arms.integration.AppManager;
 import com.jess.arms.integration.ConfigModule;
 import com.jess.arms.utils.ArmsUtils;
 import com.squareup.leakcanary.LeakCanary;
@@ -139,12 +141,12 @@ public final class GlobalConfiguration implements ConfigModule {
                     // retrofitBuilder.addConverterFactory(FastJsonConverterFactory.create());//比如使用fastjson替代gson
                 })
                 .okhttpConfiguration((context1, okhttpBuilder) -> {//这里可以自己自定义配置Okhttp的参数
+//                    okhttpBuilder.sslSocketFactory(); //支持 Https,详情请百度
                     okhttpBuilder.writeTimeout(10, TimeUnit.SECONDS);
                     //使用一行代码监听 Retrofit／Okhttp 上传下载进度监听,以及 Glide 加载进度监听. 详细使用请方法查看 https://github.com/JessYanCoding/ProgressManager
                     ProgressManager.getInstance().with(okhttpBuilder);
                     //让 Retrofit 同时支持多个 BaseUrl 以及动态改变 BaseUrl. 详细使用请方法查看 https://github.com/JessYanCoding/RetrofitUrlManager
                     RetrofitUrlManager.getInstance().with(okhttpBuilder);
-
                 })
                 .rxCacheConfiguration((context1, rxCacheBuilder) -> {//这里可以自己自定义配置RxCache的参数
                     rxCacheBuilder.useExpiredDataIfLoaderNotAvailable(true);
@@ -180,6 +182,19 @@ public final class GlobalConfiguration implements ConfigModule {
                 }
                 //leakCanary内存泄露检查
                 ArmsUtils.obtainAppComponentFromContext(application).extras().put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
+                //扩展 AppManager 的远程遥控功能
+                ArmsUtils.obtainAppComponentFromContext(application).appManager().setHandleListener(new AppManager.HandleListener() {
+                    @Override
+                    public void handleMessage(AppManager appManager, Message message) {
+                        switch (message.what) {
+                            //case 0:
+                            //do something ...
+                            //   break;
+                        }
+                    }
+                });
+                //Usage:
+                //AppManager.post(message); like EventBus
             }
 
             @Override

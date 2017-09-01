@@ -9,10 +9,13 @@ import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
+import com.jess.arms.base.delegate.AppLifecycles;
+
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
 import org.simple.eventbus.ThreadMode;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,16 +38,17 @@ public final class AppManager {
     protected final String TAG = this.getClass().getSimpleName();
     public static final String APPMANAGER_MESSAGE = "appmanager_message";
     public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list";//true 为不需要加入到 Activity 容器进行统一管理,反之亦然
-    public static final int START_ACTIVITY = 0;
-    public static final int SHOW_SNACKBAR = 1;
-    public static final int KILL_ALL = 2;
-    public static final int APP_EXIT = 3;
+    public static final int START_ACTIVITY = 5000;
+    public static final int SHOW_SNACKBAR = 5001;
+    public static final int KILL_ALL = 5002;
+    public static final int APP_EXIT = 5003;
     private Application mApplication;
-
     //管理所有activity
     public List<Activity> mActivityList;
     //当前在前台的activity
     private Activity mCurrentActivity;
+    //提供给外部扩展 AppManager 的 onReceive 方法
+    private HandleListener mHandleListener;
 
     @Inject
     public AppManager(Application application) {
@@ -79,6 +83,9 @@ public final class AppManager {
                 Timber.tag(TAG).w("The message.what not match");
                 break;
         }
+        if (mHandleListener != null) {
+            mHandleListener.handleMessage(this, message);
+        }
     }
 
     private void dispatchStart(Message message) {
@@ -88,6 +95,29 @@ public final class AppManager {
             startActivity((Class) message.obj);
     }
 
+
+    public HandleListener getHandleListener() {
+        return mHandleListener;
+    }
+
+    /**
+     * 提供给外部扩展 AppManager 的 @{@link #onReceive} 方法(远程遥控 AppManager 的功能)
+     * 建议在 {@link ConfigModule#injectAppLifecycle(Context, List)} 中
+     * 通过 {@link AppLifecycles#onCreate(Application)} 在 App 初始化时,使用此方法传入自定义的 {@link HandleListener}
+     *
+     * @param handleListener
+     */
+    public void setHandleListener(HandleListener handleListener) {
+        this.mHandleListener = handleListener;
+    }
+
+    /**
+     * 通过此方法远程遥控 AppManager ,使 {@link #onReceive(Message)} 执行对应方法
+     * @param msg
+     */
+    public static void post(Message msg) {
+        EventBus.getDefault().post(msg, APPMANAGER_MESSAGE);
+    }
 
     /**
      * 让在前台的 activity,使用 snackbar 显示文本内容
@@ -333,7 +363,44 @@ public final class AppManager {
             iterator.remove();
             next.finish();
         }
+    }
 
+    /**
+     * 关闭所有 activity,排除指定的 activity
+     *
+     * @param excludeActivityClasses activity class
+     */
+    public void killAll(Class<?>... excludeActivityClasses) {
+        List<Class<?>> excludeList = Arrays.asList(excludeActivityClasses);
+        Iterator<Activity> iterator = getActivityList().iterator();
+        while (iterator.hasNext()) {
+            Activity next = iterator.next();
+
+            if (excludeList.contains(next.getClass()))
+                continue;
+
+            iterator.remove();
+            next.finish();
+        }
+    }
+
+    /**
+     * 关闭所有 activity,排除指定的 activity
+     *
+     * @param excludeActivityName activity 的完整全路径
+     */
+    public void killAll(String... excludeActivityName) {
+        List<String> excludeList = Arrays.asList(excludeActivityName);
+        Iterator<Activity> iterator = getActivityList().iterator();
+        while (iterator.hasNext()) {
+            Activity next = iterator.next();
+
+            if (excludeList.contains(next.getClass().getName()))
+                continue;
+
+            iterator.remove();
+            next.finish();
+        }
     }
 
 
@@ -351,5 +418,9 @@ public final class AppManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public interface HandleListener {
+        void handleMessage(AppManager appManager, Message message);
     }
 }
