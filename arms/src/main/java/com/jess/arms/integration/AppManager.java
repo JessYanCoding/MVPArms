@@ -28,7 +28,7 @@ import timber.log.Timber;
 /**
  * 用于管理所有 activity,和在前台的 activity
  * 可以通过直接持有 AppManager 对象执行对应方法
- * 也可以通过 eventbus post 事件,远程遥控执行对应方法
+ * 也可以通过 {@link #post(Message)} ,远程遥控执行对应方法,用法和 EventBus 类似
  * <p>
  * Created by jess on 14/12/2016 13:50
  * Contact with jess.yan.effort@gmail.com
@@ -113,6 +113,7 @@ public final class AppManager {
 
     /**
      * 通过此方法远程遥控 AppManager ,使 {@link #onReceive(Message)} 执行对应方法
+     *
      * @param msg
      */
     public static void post(Message msg) {
@@ -166,6 +167,7 @@ public final class AppManager {
     public void release() {
         EventBus.getDefault().unregister(this);
         mActivityList.clear();
+        mHandleListener = null;
         mActivityList = null;
         mCurrentActivity = null;
         mApplication = null;

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.net.ParseException;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +19,6 @@ import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.GlobalHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
-import com.jess.arms.integration.AppManager;
 import com.jess.arms.integration.ConfigModule;
 import com.jess.arms.utils.ArmsUtils;
 import com.squareup.leakcanary.LeakCanary;
@@ -183,18 +181,17 @@ public final class GlobalConfiguration implements ConfigModule {
                 //leakCanary内存泄露检查
                 ArmsUtils.obtainAppComponentFromContext(application).extras().put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
                 //扩展 AppManager 的远程遥控功能
-                ArmsUtils.obtainAppComponentFromContext(application).appManager().setHandleListener(new AppManager.HandleListener() {
-                    @Override
-                    public void handleMessage(AppManager appManager, Message message) {
-                        switch (message.what) {
-                            //case 0:
-                            //do something ...
-                            //   break;
-                        }
+                ArmsUtils.obtainAppComponentFromContext(application).appManager().setHandleListener((appManager, message) -> {
+                    switch (message.what) {
+                        //case 0:
+                        //do something ...
+                        //   break;
                     }
                 });
                 //Usage:
-                //AppManager.post(message); like EventBus
+                //Message msg = new Message();
+                //msg.what = 0;
+                //AppManager.post(msg); like EventBus
             }
 
             @Override
