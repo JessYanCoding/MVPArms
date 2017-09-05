@@ -26,18 +26,21 @@ import javax.inject.Singleton;
 import timber.log.Timber;
 
 /**
+ * ================================================
  * 用于管理所有 activity,和在前台的 activity
  * 可以通过直接持有 AppManager 对象执行对应方法
  * 也可以通过 {@link #post(Message)} ,远程遥控执行对应方法,用法和 EventBus 类似
  * <p>
- * Created by jess on 14/12/2016 13:50
+ * Created by JessYan on 14/12/2016 13:50
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 @Singleton
 public final class AppManager {
     protected final String TAG = this.getClass().getSimpleName();
     public static final String APPMANAGER_MESSAGE = "appmanager_message";
-    public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list";//true 为不需要加入到 Activity 容器进行统一管理,反之亦然
+    public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list";//true 为不需要加入到 Activity 容器进行统一管理,默认为 false
     public static final int START_ACTIVITY = 5000;
     public static final int SHOW_SNACKBAR = 5001;
     public static final int KILL_ALL = 5002;

@@ -22,9 +22,13 @@ import me.jessyan.progressmanager.ProgressManager;
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 
 /**
+ * ================================================
  * app 的全局配置信息在此配置,需要将此实现类声明到 AndroidManifest 中
- * Created by jess on 12/04/2017 17:25
+ * <p>
+ * Created by JessYan on 12/04/2017 17:25
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public final class GlobalConfiguration implements ConfigModule {
 //    public static String sDomain = Api.APP_DOMAIN;

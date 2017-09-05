@@ -14,10 +14,13 @@ import io.rx_cache2.internal.RxCache;
 import retrofit2.Retrofit;
 
 /**
+ * ================================================
  * 用来管理网络请求层,以及数据缓存层,以后可能添加数据库请求层
  * <p>
- * Created by jess on 13/04/2017 09:52
+ * Created by JessYan on 13/04/2017 09:52
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 @Singleton
 public class RepositoryManager implements IRepositoryManager {
@@ -35,7 +38,7 @@ public class RepositoryManager implements IRepositoryManager {
     }
 
     /**
-     * 根据传入的Class获取对应的Retrift service
+     * 根据传入的 Class 获取对应的 Retrofit service
      *
      * @param service
      * @param <T>
@@ -55,7 +58,7 @@ public class RepositoryManager implements IRepositoryManager {
     }
 
     /**
-     * 根据传入的Class获取对应的RxCache service
+     * 根据传入的 Class 获取对应的 RxCache service
      *
      * @param cache
      * @param <T>
