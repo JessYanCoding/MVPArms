@@ -14,7 +14,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
- * Created by zhiyicx on 2016/3/15.
+ * ================================================
+ * Created by JessYan on 2016/3/15
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public class DataHelper {
     private static SharedPreferences mSharedPreferences;

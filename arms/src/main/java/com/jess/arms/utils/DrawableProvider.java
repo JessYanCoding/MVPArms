@@ -10,7 +10,11 @@ import android.widget.TextView;
 import java.io.IOException;
 
 /**
- * Created by jess on 2015/11/24.
+ * ================================================
+ * Created by JessYan on 2015/11/24
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public class DrawableProvider {
 
@@ -33,45 +37,42 @@ public class DrawableProvider {
     }
 
     /**
-     * 将radiobutton的drawable动态的缩放
+     * 将 TextView/RadioButton 中设置的 drawable 动态的缩放
      *
      * @param percent
-     * @param rb
+     * @param tv
      * @return
      */
-    public static Drawable getScaleDrawableForRadioButton(float percent, TextView rb) {
-        Drawable[] compoundDrawables = rb.getCompoundDrawables();
+    public static Drawable getScaleDrawableForRadioButton(float percent, TextView tv) {
+        Drawable[] compoundDrawables = tv.getCompoundDrawables();
         Drawable drawable = null;
         for (Drawable d : compoundDrawables) {
             if (d != null) {
                 drawable = d;
             }
         }
-        drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * percent + 0.5f), (int) (drawable.getIntrinsicHeight() * percent + 0.5f));
-        return drawable;
+        return getScaleDrawable(percent, drawable);
     }
 
     /**
-     * 将radiobutton的drawable动态的缩放
+     * 将 TextView/RadioButton 中设置的 drawable 动态的缩放
      *
-     * @param rb
+     * @param tv
      * @return
      */
-    public static Drawable getScaleDrawableForRadioButton2(float width, TextView rb) {
-        Drawable[] compoundDrawables = rb.getCompoundDrawables();
+    public static Drawable getScaleDrawableForRadioButton2(float width, TextView tv) {
+        Drawable[] compoundDrawables = tv.getCompoundDrawables();
         Drawable drawable = null;
         for (Drawable d : compoundDrawables) {
             if (d != null) {
                 drawable = d;
             }
         }
-        float percent = width * 1.0f / drawable.getIntrinsicWidth();
-        drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * percent + 0.5f), (int) (drawable.getIntrinsicHeight() * percent + 0.5f));
-        return drawable;
+        return getScaleDrawable2(width, drawable);
     }
 
     /**
-     * 传入图片，将图片按传入比例缩小
+     * 传入图片,将图片按传入比例缩放
      *
      * @param percent
      * @return
@@ -82,15 +83,14 @@ public class DrawableProvider {
     }
 
     /**
-     * 传入图片，将图片按传入比例缩小
+     * 传入图片,将图片按传入宽度和原始宽度的比例缩放
      *
      * @param width
      * @return
      */
     public static Drawable getScaleDrawable2(float width, Drawable drawable) {
         float percent = width * 1.0f / drawable.getIntrinsicWidth();
-        drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * percent + 0.5f), (int) (drawable.getIntrinsicHeight() * percent + 0.5f));
-        return drawable;
+        return getScaleDrawable(percent, drawable);
     }
 
     /**
@@ -189,6 +189,5 @@ public class DrawableProvider {
         }
         return degree;
     }
-
 
 }

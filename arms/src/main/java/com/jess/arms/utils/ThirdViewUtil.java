@@ -21,7 +21,11 @@ import static com.jess.arms.base.delegate.ActivityDelegate.LAYOUT_LINEARLAYOUT;
 import static com.jess.arms.base.delegate.ActivityDelegate.LAYOUT_RELATIVELAYOUT;
 
 /**
- * Created by zhiyicx on 2016/3/17.
+ * ================================================
+ * Created by JessYan on 17/03/2016 13:59
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public class ThirdViewUtil {
     public static int USE_AUTOLAYOUT = -1;//0 说明 AndroidManifest 里面没有使用 AutoLauout 的Meta,即不使用 AutoLayout,1 为有 Meta ,即需要使用

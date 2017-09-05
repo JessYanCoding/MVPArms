@@ -95,6 +95,9 @@ public class AppDelegate implements App, AppLifecycles {
         if (mActivityLifecycle != null) {
             mApplication.unregisterActivityLifecycleCallbacks(mActivityLifecycle);
         }
+        if (mActivityLifecycleForRxLifecycle != null) {
+            mApplication.unregisterActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle);
+        }
         if (mComponentCallback != null) {
             mApplication.unregisterComponentCallbacks(mComponentCallback);
         }
@@ -110,6 +113,7 @@ public class AppDelegate implements App, AppLifecycles {
         }
         this.mAppComponent = null;
         this.mActivityLifecycle = null;
+        this.mActivityLifecycleForRxLifecycle = null;
         this.mActivityLifecycles = null;
         this.mComponentCallback = null;
         this.mAppLifecycles = null;

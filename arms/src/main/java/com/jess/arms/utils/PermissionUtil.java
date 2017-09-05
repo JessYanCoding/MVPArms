@@ -12,10 +12,12 @@ import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import timber.log.Timber;
 
 /**
- * Created by jess on 17/10/2016 10:09
+ * ================================================
+ * Created by JessYan on 17/10/2016 10:09
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
-
 public class PermissionUtil {
     public static final String TAG = "Permission";
 
