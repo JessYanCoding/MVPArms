@@ -83,7 +83,7 @@
 Thanks to all the three libraries used in this framework **Author**, and all for the **Open Sourece** selfless contributions **Developer** and **Organizations**, so that we can better work and study, I will also spare time return to the open source community
 
 ## Donate
-![alipay](image/alipay.JPG) ![](image/wechat.JPG)
+![alipay](image/pay_alipay.jpg) ![](image/pay_wxpay.jpg)
 
 ## About Me
 * **Email**: <jess.yan.effort@gmail.com>  

@@ -102,7 +102,7 @@
 
 **MVPArms** 为作者使用业余时间维护,如果您觉得我的付出给您带来了实质的帮助,您也可以扫描下面的二维码,请作者喝一杯咖啡 ～～
 
-![alipay](image/alipay.JPG) ![](image/wechat.JPG)
+![alipay](image/pay_alipay.jpg) ![](image/pay_wxpay.jpg)
 
 ## About Me
 * **Email**: <jess.yan.effort@gmail.com>  
