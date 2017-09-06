@@ -1,6 +1,7 @@
 package com.jess.arms.di.component;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.google.gson.Gson;
 import com.jess.arms.base.delegate.AppDelegate;
@@ -10,6 +11,7 @@ import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.integration.IRepositoryManager;
+import com.jess.arms.utils.ArmsUtils;
 
 import java.io.File;
 import java.util.Map;
@@ -22,6 +24,9 @@ import okhttp3.OkHttpClient;
 
 /**
  * ================================================
+ * 可通过 {@link ArmsUtils#obtainAppComponentFromContext(Context)} 拿到此接口的实现类
+ * 拥有此接口的实现类即可调用对应的方法拿到 Dagger 提供的对应实例
+ * <p>
  * Created by JessYan on 8/4/2016
  * Contact with jess.yan.effort@gmail.com
  * Follow me on https://github.com/JessYanCoding
