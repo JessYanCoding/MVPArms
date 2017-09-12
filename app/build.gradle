@@ -59,7 +59,6 @@ dependencies {
         exclude module: 'support-annotations'
     }
     //tools
-    provided rootProject.ext.dependencies["javax.annotation"]
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     compile rootProject.ext.dependencies["progressmanager"]
     compile rootProject.ext.dependencies["retrofit-url-manager"]

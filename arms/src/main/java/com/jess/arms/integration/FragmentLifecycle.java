@@ -114,6 +114,15 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
     }
 
     @Override
+    public void onFragmentSaveInstanceState(FragmentManager fm, Fragment f, Bundle outState) {
+        Timber.w(f.toString() + " - onFragmentSaveInstanceState");
+        FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
+        if (fragmentDelegate != null) {
+            fragmentDelegate.onSaveInstanceState(outState);
+        }
+    }
+
+    @Override
     public void onFragmentViewDestroyed(FragmentManager fm, Fragment f) {
         Timber.w(f.toString() + " - onFragmentViewDestroyed");
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
