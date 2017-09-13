@@ -24,7 +24,12 @@ import android.util.Log;
 import android.view.View;
 
 /**
- * Created by paveld on 3/6/14.
+ * ================================================
+ * 处理高斯模糊
+ * Created by JessYan on 03/06/2014.
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public class FastBlur {
 
@@ -267,6 +272,13 @@ public class FastBlur {
         return (bitmap);
     }
 
+    /**
+     * 给 {@link View} 设置高斯模糊背景图片
+     *
+     * @param context
+     * @param bkg
+     * @param view
+     */
     public static void blur(Context context, Bitmap bkg, View view) {
         long startMs = System.currentTimeMillis();
         float radius = 15;
@@ -287,6 +299,14 @@ public class FastBlur {
         Log.w("test", "cost " + (System.currentTimeMillis() - startMs) + "ms");
     }
 
+    /**
+     * 将 {@link Bitmap} 高斯模糊并返回
+     *
+     * @param bkg
+     * @param width
+     * @param height
+     * @return
+     */
     public static Bitmap blurBitmap(Bitmap bkg, int width, int height) {
         long startMs = System.currentTimeMillis();
         float radius = 15;//越大模糊效果越大
