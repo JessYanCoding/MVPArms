@@ -35,8 +35,14 @@ import me.jessyan.mvparms.demo.mvp.model.api.service.UserService;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
 
 /**
- * Created by jess on 9/4/16 10:56
+ * ================================================
+ * 展示 Model 的用法
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.3">Model wiki 官方文档</a>
+ * Created by JessYan on 09/04/2016 10:56
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 @ActivityScope
 public class UserModel extends BaseModel implements UserContract.Model {

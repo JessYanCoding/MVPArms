@@ -23,17 +23,20 @@ import io.rx_cache2.DynamicKey;
 import io.rx_cache2.EvictProvider;
 import io.rx_cache2.LifeCache;
 import io.rx_cache2.Reply;
+import io.rx_cache2.internal.RxCache;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
 
 /**
- * Created by jess on 8/30/16 13:53
+ * ================================================
+ * 展示 {@link RxCache#using(Class)} 中需要传入的 Providers 的使用方式
+ * <p>
+ * Created by JessYan on 08/30/2016 13:53
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public interface CommonCache {
 
-
-
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
     Observable<Reply<List<User>>> getUsers(Observable<List<User>> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
-
 }

@@ -29,14 +29,17 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Created by jess on 11/10/2016 16:39
+ * ================================================
+ * 放置便于使用 RxJava 的一些工具类
+ * <p>
+ * Created by JessYan on 11/10/2016 16:39
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
-
 public class RxUtils {
 
     private RxUtils() {
-
     }
 
     public static <T> ObservableTransformer<T, T> applySchedulers(final IView view) {
@@ -65,10 +68,10 @@ public class RxUtils {
     /**
      * 此接口已废弃
      *
-     * @see RxLifecycleUtils 使用此类代替
      * @param view
      * @param <T>
      * @return
+     * @see RxLifecycleUtils 使用此类代替
      */
     @Deprecated
     public static <T> LifecycleTransformer<T> bindToLifecycle(IView view) {

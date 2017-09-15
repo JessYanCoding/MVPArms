@@ -18,8 +18,13 @@ package me.jessyan.mvparms.demo.app.service;
 import com.jess.arms.base.BaseService;
 
 /**
- * Created by jess on 9/7/16 16:59
+ * ================================================
+ * 展示 {@link BaseService} 的用法
+ * <p>
+ * Created by JessYan on 09/07/2016 16:59
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public class DemoService extends BaseService {
     @Override

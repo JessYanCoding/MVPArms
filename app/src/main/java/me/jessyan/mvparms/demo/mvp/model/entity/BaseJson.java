@@ -20,13 +20,16 @@ import java.io.Serializable;
 import me.jessyan.mvparms.demo.mvp.model.api.Api;
 
 /**
- * 如果你服务器返回的数据固定为这种方式(字段名可根据服务器更改)
- * 替换范型即可重用BaseJson
- * Created by jess on 26/09/2016 15:19
+ * ================================================
+ * 如果你服务器返回的数据格式固定为这种方式(这里只提供思想,服务器返回的数据格式可能不一致,可根据自家服务器返回的格式作更改)
+ * 替换范型即可重用 BaseJson
+ * <p>
+ * Created by JessYan on 26/09/2016 15:19
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
-
-public class BaseJson<T> implements Serializable{
+public class BaseJson<T> implements Serializable {
     private T data;
     private String code;
     private String msg;
@@ -45,6 +48,7 @@ public class BaseJson<T> implements Serializable{
 
     /**
      * 请求是否成功
+     *
      * @return
      */
     public boolean isSuccess() {

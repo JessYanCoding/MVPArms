@@ -37,6 +37,16 @@ import me.jessyan.mvparms.demo.mvp.presenter.UserPresenter;
 import timber.log.Timber;
 
 
+/**
+ * ================================================
+ * 展示 View 的用法
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.2">View wiki 官方文档</a>
+ * Created by JessYan on 09/04/2016 10:59
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
+ */
 public class UserActivity extends BaseActivity<UserPresenter> implements UserContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.recyclerView)
@@ -68,7 +78,6 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     public void initData(Bundle savedInstanceState) {
         mPresenter.requestUsers(true);//打开app时自动加载列表
     }
-
 
 
     @Override

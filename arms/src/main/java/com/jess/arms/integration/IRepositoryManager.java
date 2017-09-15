@@ -30,7 +30,6 @@ import com.jess.arms.mvp.IModel;
  * Follow me on https://github.com/JessYanCoding
  * ================================================
  */
-
 public interface IRepositoryManager {
 
     /**

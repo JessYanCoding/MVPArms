@@ -26,8 +26,14 @@ import io.reactivex.Observable;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
 
 /**
- * Created by jess on 9/4/16 10:47
+ * ================================================
+ * 展示 Contract 的用法
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.1">Contract wiki 官方文档</a>
+ * Created by JessYan on 09/04/2016 10:47
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public interface UserContract {
     //对于经常使用的关于UI的方法可以定义到IView中,如显示隐藏进度条,和显示文字消息
@@ -38,7 +44,7 @@ public interface UserContract {
         //申请权限
         RxPermissions getRxPermissions();
     }
-    //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
+    //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,如是否使用缓存
     interface Model extends IModel{
         Observable<List<User>> getUsers(int lastIdQueried, boolean update);
     }

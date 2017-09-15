@@ -29,12 +29,13 @@ import timber.log.Timber;
 
 /**
  * ================================================
+ * 展示 {@link AppLifecycles} 的用法
+ * <p>
  * Created by JessYan on 04/09/2017 17:12
  * Contact with jess.yan.effort@gmail.com
  * Follow me on https://github.com/JessYanCoding
  * ================================================
  */
-
 public class AppLifecyclesImpl implements AppLifecycles {
 
     @Override

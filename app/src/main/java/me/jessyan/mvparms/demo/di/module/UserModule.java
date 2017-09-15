@@ -23,15 +23,21 @@ import me.jessyan.mvparms.demo.mvp.contract.UserContract;
 import me.jessyan.mvparms.demo.mvp.model.UserModel;
 
 /**
- * Created by jess on 9/4/16 11:10
+ * ================================================
+ * 展示 Module 的用法
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.5">Module wiki 官方文档</a>
+ * Created by JessYan on 09/04/2016 11:10
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 @Module
 public class UserModule {
     private UserContract.View view;
 
     /**
-     * 构建UserModule时,将View的实现类传进来,这样就可以提供View的实现类给presenter
+     * 构建 UserModule 时,将 View 的实现类传进来,这样就可以提供 View 的实现类给 Presenter
      * @param view
      */
     public UserModule(UserContract.View view) {

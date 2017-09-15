@@ -18,13 +18,21 @@ package me.jessyan.mvparms.demo.mvp.ui.widget;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.utils.AutoLayoutHelper;
 
 /**
- * Created by jess on 9/3/16 21:40
+ * ================================================
+ * 实现 AndroidAutoLayout 规范的 {@link CardView}
+ * 可使用 MVP_generator_solution 中的 AutoView 模版生成各种符合 AndroidAutoLayout 规范的 {@link View}
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.6">AutoLayout wiki 官方文档</a>
+ * Created by JessYan on 9/3/16 21:40
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public class AutoCardView extends CardView
 {
