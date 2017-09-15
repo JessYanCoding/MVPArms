@@ -24,6 +24,15 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+/**
+ * ================================================
+ * 基类 {@link FragmentStatePagerAdapter}
+ * <p>
+ * Created by JessYan on 22/03/2016
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
+ */
 public class AdapterViewPager extends FragmentStatePagerAdapter {
     private List<Fragment> mList;
     private CharSequence[] mTitles;

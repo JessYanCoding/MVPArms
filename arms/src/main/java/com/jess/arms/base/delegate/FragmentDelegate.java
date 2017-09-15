@@ -18,14 +18,21 @@ package com.jess.arms.base.delegate;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
 import android.view.View;
 
 /**
- * Created by jess on 29/04/2017 14:30
+ * ================================================
+ * {@link Fragment} 代理类,用于框架内部在每个 {@link Fragment} 的对应生命周期中插入需要的逻辑
+ *
+ * @see FragmentDelegateImpl
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.13">FragmentDelegate wiki 官方文档</a>
+ * Created by JessYan on 29/04/2017 14:30
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
-
-public interface FragmentDelegate extends Parcelable{
+public interface FragmentDelegate extends Parcelable {
 
     String FRAGMENT_DELEGATE = "fragment_delegate";
 

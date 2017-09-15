@@ -15,6 +15,7 @@
   */
 package com.jess.arms.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -38,8 +39,14 @@ import io.reactivex.subjects.Subject;
 import static com.jess.arms.utils.ThirdViewUtil.convertAutoView;
 
 /**
- * 因为java只能单继承,所以如果有需要继承特定Activity的三方库,那你就需要自己自定义Activity
- * 继承于这个特定的Activity,然后按照将BaseActivity的格式,复制过去记住一定要实现{@link IActivity}
+ * ================================================
+ * 因为 Java 只能单继承,所以如果要用到需要继承特定 {@link Activity} 的三方库,那你就需要自己自定义 {@link Activity}
+ * 继承于这个特定的 {@link Activity},然后再按照 {@link BaseActivity} 的格式,将代码复制过去,记住一定要实现{@link IActivity}
+ *
+ * Created by JessYan on 22/03/2016
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IActivity, ActivityLifecycleable {
     protected final String TAG = this.getClass().getSimpleName();

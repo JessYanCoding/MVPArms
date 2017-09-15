@@ -47,7 +47,13 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by jessyan on 2016/3/14.
+ * ================================================
+ * 提供一些三方库客户端实例的 {@link Module}
+ * <p>
+ * Created by JessYan on 2016/3/14.
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 @Module
 public class ClientModule {
@@ -55,13 +61,14 @@ public class ClientModule {
 
 
     /**
+     * 提供 {@link Retrofit}
+     *
      * @param builder
      * @param client
      * @param httpUrl
      * @return
      * @author: jess
      * @date 8/30/16 1:15 PM
-     * @description:提供retrofit
      */
     @Singleton
     @Provides
@@ -81,7 +88,7 @@ public class ClientModule {
     }
 
     /**
-     * 提供OkhttpClient
+     * 提供 {@link OkHttpClient}
      *
      * @param builder
      * @return
@@ -137,7 +144,7 @@ public class ClientModule {
 
 
     /**
-     * 提供RXCache客户端
+     * 提供 {@link RxCache}
      *
      * @param cacheDirectory RxCache缓存路径
      * @return
@@ -152,10 +159,11 @@ public class ClientModule {
                 .persistence(cacheDirectory, new GsonSpeaker());
     }
 
-
     /**
-     * 需要单独给RxCache提供缓存路径
-     * 提供RxCache缓存地址
+     * 需要单独给 {@link RxCache} 提供缓存路径
+     *
+     * @param cacheDir
+     * @return
      */
     @Singleton
     @Provides
@@ -166,7 +174,7 @@ public class ClientModule {
     }
 
     /**
-     * 提供处理Rxjava错误的管理器
+     * 提供处理 Rxjava 错误的管理器
      *
      * @return
      */

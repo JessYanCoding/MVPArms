@@ -24,10 +24,14 @@ import com.jess.arms.utils.ArmsUtils;
 import org.simple.eventbus.EventBus;
 
 /**
- * Created by jess on 26/04/2017 20:23
+ * ================================================
+ * {@link ActivityDelegate} 默认实现类
+ * <p>
+ * Created by JessYan on 26/04/2017 20:23
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
-
 public class ActivityDelegateImpl implements ActivityDelegate {
     private Activity mActivity;
     private IActivity iActivity;

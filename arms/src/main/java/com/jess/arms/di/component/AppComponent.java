@@ -41,7 +41,8 @@ import okhttp3.OkHttpClient;
  * ================================================
  * 可通过 {@link ArmsUtils#obtainAppComponentFromContext(Context)} 拿到此接口的实现类
  * 拥有此接口的实现类即可调用对应的方法拿到 Dagger 提供的对应实例
- * <p>
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.2">AppComponent wiki 官方文档</a>
  * Created by JessYan on 8/4/2016
  * Contact with jess.yan.effort@gmail.com
  * Follow me on https://github.com/JessYanCoding

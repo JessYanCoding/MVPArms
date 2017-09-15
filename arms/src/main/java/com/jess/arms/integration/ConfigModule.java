@@ -26,14 +26,14 @@ import java.util.List;
 
 /**
  * ================================================
- * 此接口可以给框架配置一些参数,需要实现类实现后,并在AndroidManifest中声明该实现类
- * <p>
+ * {@link ConfigModule} 可以给框架配置一些参数,需要实现 {@link ConfigModule} 后,在 AndroidManifest 中声明该实现类
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.1">ConfigModule wiki 官方文档</a>
  * Created by JessYan on 12/04/2017 11:37
  * Contact with jess.yan.effort@gmail.com
  * Follow me on https://github.com/JessYanCoding
  * ================================================
  */
-
 public interface ConfigModule {
     /**
      * 使用{@link GlobalConfigModule.Builder}给框架配置一些配置参数

@@ -22,7 +22,13 @@ import com.jess.arms.utils.ThirdViewUtil;
 import com.zhy.autolayout.utils.AutoUtils;
 
 /**
- * Created by jess on 2015/11/24.
+ * ================================================
+ * 基类 {@link RecyclerView.ViewHolder}
+ * <p>
+ * Created by JessYan on 2015/11/24.
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements View.OnClickListener {
     protected OnViewClickListener mOnViewClickListener = null;
@@ -38,9 +44,8 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
 
     /**
      * 设置数据
-     * 刷新界面
      *
-     * @param
+     * @param data
      * @param position
      */
     public abstract void setData(T data, int position);

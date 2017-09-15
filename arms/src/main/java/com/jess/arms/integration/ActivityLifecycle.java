@@ -36,8 +36,15 @@ import javax.inject.Singleton;
 
 
 /**
- * Created by jess on 21/02/2017 14:23
+ * ================================================
+ * {@link Application.ActivityLifecycleCallbacks} 默认实现类
+ * 通过 {@link ActivityDelegate} 管理 {@link Activity}
+ *
+ * @see <a href="http://www.jianshu.com/p/75a5c24174b2">ActivityLifecycleCallbacks 分析文章</a>
+ * Created by JessYan on 21/02/2017 14:23
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 @Singleton
 public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks {

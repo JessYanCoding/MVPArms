@@ -18,6 +18,8 @@ package com.jess.arms.integration;
 import android.app.Application;
 import android.content.Context;
 
+import com.jess.arms.mvp.IModel;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +33,9 @@ import retrofit2.Retrofit;
 /**
  * ================================================
  * 用来管理网络请求层,以及数据缓存层,以后可能添加数据库请求层
- * <p>
+ * 提供给 {@link IModel} 层必要的 Api 做数据处理
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.3">RepositoryManager wiki 官方文档</a>
  * Created by JessYan on 13/04/2017 09:52
  * Contact with jess.yan.effort@gmail.com
  * Follow me on https://github.com/JessYanCoding

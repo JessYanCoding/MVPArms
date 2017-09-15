@@ -36,12 +36,15 @@ import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
+ * ================================================
  * 此类只是简单的实现了 Glide 加载的策略,方便快速使用,但大部分情况会需要应对复杂的场景
  * 这时可自行实现 {@link BaseImageLoaderStrategy} 和 {@link ImageConfig} 替换现有策略
  *
  * @see GlobalConfigModule.Builder#imageLoaderStrategy(BaseImageLoaderStrategy)
- * Created by jess on 8/5/16 16:28
+ * Created by JessYan on 8/5/16 16:28
  * contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageConfigImpl>, GlideAppliesOptions {
 

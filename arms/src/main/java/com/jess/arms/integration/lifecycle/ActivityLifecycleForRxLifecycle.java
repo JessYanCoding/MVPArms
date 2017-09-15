@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
+import com.trello.rxlifecycle2.RxLifecycle;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import javax.inject.Inject;
@@ -30,6 +31,8 @@ import io.reactivex.subjects.Subject;
 
 /**
  * ================================================
+ * 配合 {@link ActivityLifecycleable} 使用,使 {@link Activity} 具有 {@link RxLifecycle} 的特性
+ *
  * Created by JessYan on 25/08/2017 18:56
  * Contact with jess.yan.effort@gmail.com
  * Follow me on https://github.com/JessYanCoding

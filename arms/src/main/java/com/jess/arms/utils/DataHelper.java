@@ -30,6 +30,8 @@ import java.io.ObjectOutputStream;
 
 /**
  * ================================================
+ * 处理数据或本地文件的工具类
+ * <p>
  * Created by JessYan on 2016/3/15
  * Contact with jess.yan.effort@gmail.com
  * Follow me on https://github.com/JessYanCoding
@@ -199,6 +201,7 @@ public class DataHelper {
 
     /**
      * 获取自定义缓存文件地址
+     *
      * @param context
      * @return
      */
@@ -210,10 +213,11 @@ public class DataHelper {
 
     /**
      * 创建未存在的文件夹
+     *
      * @param file
      * @return
      */
-    public static File makeDirs(File file){
+    public static File makeDirs(File file) {
         if (!file.exists()) {
             file.mkdirs();
         }

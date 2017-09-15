@@ -18,7 +18,15 @@ package com.jess.arms.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
-
+/**
+ * ================================================
+ * 日志工具类
+ * <p>
+ * Created by JessYan on 2015/11/23.
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
+ */
 public class LogUtils {
 
     private LogUtils() {

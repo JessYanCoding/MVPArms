@@ -23,8 +23,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by jess on 12/04/2017 14:41
+ * ================================================
+ * 用于解析 AndroidManifest 中的 Meta 属性
+ * 配合 {@link ConfigModule} 使用
+ *
+ * Created by JessYan on 12/04/2017 14:41
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public final class ManifestParser {
     private static final String MODULE_VALUE = "ConfigModule";

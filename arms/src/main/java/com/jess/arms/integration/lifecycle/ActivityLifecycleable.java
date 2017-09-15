@@ -15,11 +15,14 @@
   */
 package com.jess.arms.integration.lifecycle;
 
+import android.app.Activity;
+
+import com.trello.rxlifecycle2.RxLifecycle;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 /**
  * ================================================
- * 让 Activity 实现此接口,即可正常使用 {@link com.trello.rxlifecycle2.RxLifecycle}
+ * 让 {@link Activity} 实现此接口,即可正常使用 {@link RxLifecycle}
  *
  * Created by JessYan on 26/08/2017 17:14
  * Contact with jess.yan.effort@gmail.com

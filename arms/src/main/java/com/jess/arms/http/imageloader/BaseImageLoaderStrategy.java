@@ -18,10 +18,29 @@ package com.jess.arms.http.imageloader;
 import android.content.Context;
 
 /**
- * Created by jess on 8/5/16 15:50
+ * ================================================
+ * 图片加载策略,实现 {@link BaseImageLoaderStrategy}
+ * 并通过 {@link ImageLoader#setLoadImgStrategy(BaseImageLoaderStrategy)} 配置后,才可进行图片请求
+ * <p>
+ * Created by JessYan on 8/5/2016 15:50
  * contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public interface BaseImageLoaderStrategy<T extends ImageConfig> {
+    /**
+     * 加载图片
+     *
+     * @param ctx
+     * @param config
+     */
     void loadImage(Context ctx, T config);
+
+    /**
+     * 停止加载
+     *
+     * @param ctx
+     * @param config
+     */
     void clear(Context ctx, T config);
 }

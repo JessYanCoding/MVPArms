@@ -26,6 +26,8 @@ import java.io.IOException;
 
 /**
  * ================================================
+ * 处理 {@link Drawable} 和 {@link Bitmap} 的工具类
+ * <p>
  * Created by JessYan on 2015/11/24
  * Contact with jess.yan.effort@gmail.com
  * Follow me on https://github.com/JessYanCoding

@@ -20,6 +20,7 @@ import android.content.res.TypedArray;
 import android.support.design.widget.TabLayout;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -28,26 +29,30 @@ import com.zhy.autolayout.utils.AutoUtils;
 import com.zhy.autolayout.utils.DimenUtils;
 
 /**
- * Created by jess on 16/4/14.
+ * ================================================
+ * 实现 AndroidAutoLayout 规范的 {@link TabLayout}
+ * 可使用 MVP_generator_solution 中的 AutoView 模版生成各种符合 AndroidAutoLayout 规范的 {@link View}
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.6">AutoLayout wiki 官方文档</a>
+ * Created by JessYan on 4/14/2016
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
-public class AutoTabLayout extends TabLayout
-{
+public class AutoTabLayout extends TabLayout {
     private static final int NO_VALID = -1;
     private int mTextSize;
     private boolean mTextSizeBaseWidth = false;
 
-    public AutoTabLayout(Context context)
-    {
+    public AutoTabLayout(Context context) {
         this(context, null);
     }
 
-    public AutoTabLayout(Context context, AttributeSet attrs)
-    {
+    public AutoTabLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public AutoTabLayout(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public AutoTabLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         initTextSizeBaseWidth(context, attrs);
@@ -61,45 +66,38 @@ public class AutoTabLayout extends TabLayout
         a.recycle();
     }
 
-    private void initTextSizeBaseWidth(Context context, AttributeSet attrs)
-    {
+    private void initTextSizeBaseWidth(Context context, AttributeSet attrs) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AutoTabLayout);
         mTextSizeBaseWidth = a.getBoolean(R.styleable.AutoTabLayout_auto_textSize_base_width, false);
         a.recycle();
     }
 
-    private int loadTextSizeFromTextAppearance(int textAppearanceResId)
-    {
+    private int loadTextSizeFromTextAppearance(int textAppearanceResId) {
         TypedArray a = getContext().obtainStyledAttributes(textAppearanceResId,
                 R.styleable.TextAppearance);
 
-        try
-        {
+        try {
             if (!DimenUtils.isPxVal(a.peekValue(R.styleable.TextAppearance_android_textSize)))
                 return NO_VALID;
             return a.getDimensionPixelSize(R.styleable.TextAppearance_android_textSize, NO_VALID);
-        } finally
-        {
+        } finally {
             a.recycle();
         }
     }
 
     @Override
-    public void addTab(Tab tab, int position, boolean setSelected)
-    {
+    public void addTab(Tab tab, int position, boolean setSelected) {
         super.addTab(tab, position, setSelected);
         setUpTabTextSize(tab);
     }
 
     @Override
-    public void addTab(Tab tab, boolean setSelected)
-    {
+    public void addTab(Tab tab, boolean setSelected) {
         super.addTab(tab, setSelected);
         setUpTabTextSize(tab);
     }
 
-    private void setUpTabTextSize(Tab tab)
-    {
+    private void setUpTabTextSize(Tab tab) {
         if (mTextSize == NO_VALID || tab.getCustomView() != null) return;
 
         ViewGroup tabGroup = (ViewGroup) getChildAt(0);
@@ -107,16 +105,13 @@ public class AutoTabLayout extends TabLayout
         TextView textView = (TextView) tabContainer.getChildAt(1);
 
 
-        if (AutoUtils.autoed(textView))
-        {
+        if (AutoUtils.autoed(textView)) {
             return;
         }
-        int autoTextSize = 0 ;
-        if (mTextSizeBaseWidth)
-        {
+        int autoTextSize = 0;
+        if (mTextSizeBaseWidth) {
             autoTextSize = AutoUtils.getPercentWidthSize(mTextSize);
-        } else
-        {
+        } else {
             autoTextSize = AutoUtils.getPercentHeightSize(mTextSize);
         }
 

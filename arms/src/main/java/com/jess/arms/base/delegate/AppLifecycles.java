@@ -19,10 +19,15 @@ import android.app.Application;
 import android.content.Context;
 
 /**
- * Created by jess on 18/07/2017 17:43
+ * ================================================
+ * 用于代理 {@link Application} 的生命周期
+ *
+ * @see AppDelegate
+ * Created by JessYan on 18/07/2017 17:43
  * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
-
 public interface AppLifecycles {
     void attachBaseContext(Context base);
 

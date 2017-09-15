@@ -18,6 +18,7 @@ package com.jess.arms.widget.autolayout;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 
@@ -25,7 +26,15 @@ import com.zhy.autolayout.AutoLayoutInfo;
 import com.zhy.autolayout.utils.AutoLayoutHelper;
 
 /**
- * Created by jess on 16/4/14.
+ * ================================================
+ * 实现 AndroidAutoLayout 规范的 {@link ScrollView}
+ * 可使用 MVP_generator_solution 中的 AutoView 模版生成各种符合 AndroidAutoLayout 规范的 {@link View}
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.6">AutoLayout wiki 官方文档</a>
+ * Created by JessYan on 4/14/2016
+ * Contact with jess.yan.effort@gmail.com
+ * Follow me on https://github.com/JessYanCoding
+ * ================================================
  */
 public class AutoScrollView extends ScrollView {
     private AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
@@ -43,8 +52,7 @@ public class AutoScrollView extends ScrollView {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-    {
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (!isInEditMode())
             mHelper.adjustChildren();
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -52,8 +60,7 @@ public class AutoScrollView extends ScrollView {
 
 
     @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b)
-    {
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
     }
 
@@ -65,36 +72,30 @@ public class AutoScrollView extends ScrollView {
 
 
     public static class LayoutParams extends ScrollView.LayoutParams
-            implements AutoLayoutHelper.AutoLayoutParams
-    {
+            implements AutoLayoutHelper.AutoLayoutParams {
         private AutoLayoutInfo mAutoLayoutInfo;
 
-        public LayoutParams(Context c, AttributeSet attrs)
-        {
+        public LayoutParams(Context c, AttributeSet attrs) {
             super(c, attrs);
             mAutoLayoutInfo = AutoLayoutHelper.getAutoLayoutInfo(c, attrs);
         }
 
         @Override
-        public AutoLayoutInfo getAutoLayoutInfo()
-        {
+        public AutoLayoutInfo getAutoLayoutInfo() {
             return mAutoLayoutInfo;
         }
 
 
-        public LayoutParams(int width, int height)
-        {
+        public LayoutParams(int width, int height) {
             super(width, height);
         }
 
 
-        public LayoutParams(ViewGroup.LayoutParams source)
-        {
+        public LayoutParams(ViewGroup.LayoutParams source) {
             super(source);
         }
 
-        public LayoutParams(MarginLayoutParams source)
-        {
+        public LayoutParams(MarginLayoutParams source) {
             super(source);
         }
 
