@@ -146,7 +146,7 @@ public class GlobalConfigModule {
 
 
     /**
-     * 提供处理 Rxjava 错误的管理器的回调
+     * 提供处理 RxJava 错误的管理器的回调
      *
      * @return
      */
@@ -244,7 +244,7 @@ public class GlobalConfigModule {
         }
 
 
-        public Builder responseErrorListener(ResponseErrorListener listener) {//处理所有Rxjava的onError逻辑
+        public Builder responseErrorListener(ResponseErrorListener listener) {//处理所有RxJava的onError逻辑
             this.responseErrorListener = listener;
             return this;
         }

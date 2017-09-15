@@ -27,7 +27,7 @@ import retrofit2.http.Query;
 /**
  * ================================================
  * 展示 {@link Retrofit#create(Class)} 中需要传入的 ApiService 的使用方式
- * 存放关于用户的一些api
+ * 存放关于用户的一些 API
  * <p>
  * Created by JessYan on 08/05/2016 12:05
  * Contact with jess.yan.effort@gmail.com
@@ -35,7 +35,6 @@ import retrofit2.http.Query;
  * ================================================
  */
 public interface UserService {
-
     String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
 
     @Headers({HEADER_API_VERSION})

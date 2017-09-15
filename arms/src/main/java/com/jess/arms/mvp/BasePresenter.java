@@ -70,8 +70,8 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
 
     @Override
     public void onStart() {
-        if (useEventBus())//如果要使用eventbus请将此方法返回true
-            EventBus.getDefault().register(this);//注册eventbus
+        if (useEventBus())//如果要使用 Eventbus 请将此方法返回 true
+            EventBus.getDefault().register(this);//注册 Eventbus
     }
 
     /**
@@ -79,8 +79,8 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
      */
     @Override
     public void onDestroy() {
-        if (useEventBus())//如果要使用eventbus请将此方法返回true
-            EventBus.getDefault().unregister(this);//解除注册eventbus
+        if (useEventBus())//如果要使用 Eventbus 请将此方法返回 true
+            EventBus.getDefault().unregister(this);//解除注册 Eventbus
         unDispose();//解除订阅
         if (mModel != null)
             mModel.onDestroy();
@@ -90,7 +90,7 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
     }
 
     /**
-     * 是否使用eventBus,默认为使用(true)，
+     * 是否使用 {@link EventBus},默认为使用(true)，
      *
      * @return
      */
@@ -101,7 +101,7 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
 
     /**
      * 将 {@link Disposable} 添加到 {@link CompositeDisposable} 中统一管理
-     * 可在 {@link Activity#onDestroy()} 中使用 {@link #unDispose()} 停止正在执行的 Rxjava 任务,避免内存泄漏
+     * 可在 {@link Activity#onDestroy()} 中使用 {@link #unDispose()} 停止正在执行的 RxJava 任务,避免内存泄漏
      * 目前框架已使用 {@link RxLifecycle} 避免内存泄漏,此方法作为备用方案
      *
      * @param disposable
@@ -110,15 +110,15 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
         if (mCompositeDisposable == null) {
             mCompositeDisposable = new CompositeDisposable();
         }
-        mCompositeDisposable.add(disposable);//将所有disposable放入,集中处理
+        mCompositeDisposable.add(disposable);//将所有 Disposable 放入集中处理
     }
 
     /**
-     * 停止集合中正在执行的 Rxjava 任务
+     * 停止集合中正在执行的 RxJava 任务
      */
     public void unDispose() {
         if (mCompositeDisposable != null) {
-            mCompositeDisposable.clear();//保证activity结束时取消所有正在执行的订阅
+            mCompositeDisposable.clear();//保证 Activity 结束时取消所有正在执行的订阅
         }
     }
 

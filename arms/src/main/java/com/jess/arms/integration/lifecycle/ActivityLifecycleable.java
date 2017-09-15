@@ -29,6 +29,5 @@ import com.trello.rxlifecycle2.android.ActivityEvent;
  * Follow me on https://github.com/JessYanCoding
  * ================================================
  */
-
 public interface ActivityLifecycleable extends Lifecycleable<ActivityEvent> {
 }

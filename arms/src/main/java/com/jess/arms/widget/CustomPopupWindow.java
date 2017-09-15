@@ -160,7 +160,7 @@ public class CustomPopupWindow extends PopupWindow {
 
         public CustomPopupWindow build() {
             if (contentView == null)
-                throw new IllegalStateException("contentView is required");
+                throw new IllegalStateException("ContentView is required");
             if (listener == null)
                 throw new IllegalStateException("CustomPopupWindowListener is required");
 

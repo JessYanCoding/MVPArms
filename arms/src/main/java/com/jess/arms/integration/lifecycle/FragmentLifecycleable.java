@@ -29,6 +29,5 @@ import com.trello.rxlifecycle2.android.FragmentEvent;
  * Follow me on https://github.com/JessYanCoding
  * ================================================
  */
-
 public interface FragmentLifecycleable extends Lifecycleable<FragmentEvent> {
 }

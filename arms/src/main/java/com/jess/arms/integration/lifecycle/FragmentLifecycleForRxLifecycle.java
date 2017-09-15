@@ -35,7 +35,6 @@ import io.reactivex.subjects.Subject;
  * Follow me on https://github.com/JessYanCoding
  * ================================================
  */
-
 public class FragmentLifecycleForRxLifecycle extends FragmentManager.FragmentLifecycleCallbacks {
 
     @Override

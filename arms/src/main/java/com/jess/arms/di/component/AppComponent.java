@@ -59,7 +59,7 @@ public interface AppComponent {
     //用于管理网络请求层,以及数据缓存层
     IRepositoryManager repositoryManager();
 
-    //Rxjava 错误处理管理类
+    //RxJava 错误处理管理类
     RxErrorHandler rxErrorHandler();
 
     //图片管理器,用于加载图片的管理类,默认使用 Glide ,使用策略模式,可在运行时替换框架
