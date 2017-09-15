@@ -1,3 +1,17 @@
+# Contributing
+If you would like to contribute code you can do so through GitHub by forking the repository and sending a pull request targeting the branch `master`.
+
+When submitting code, please make every effort to follow existing conventions and style in order to keep the code as readable as possible.
+
+## License
+
+By contributing your code, you agree to license your contribution under the terms of the APLv2: https://github.com/JessYanCoding/MVPArms/blob/master/LICENSE
+
+All files are released with the Apache 2.0 license.
+
+If you are adding a new file it should have a header like this:
+
+```
 /**
   * Copyright 2017 JessYan
   *
@@ -13,20 +27,4 @@
   * See the License for the specific language governing permissions and
   * limitations under the License.
   */
-package me.jessyan.mvparms.demo.app;
-
-import org.simple.eventbus.EventBus;
-
-/**
- * ================================================
- * 放置 {@link EventBus} 的 Tag ,便于检索
- *
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.5">EventBusTags wiki 官方文档</a>
- * Created by JessYan on 8/30/2016 16:39
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
- * ================================================
- */
-public interface EventBusTags {
-
-}
+ ```
