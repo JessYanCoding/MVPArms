@@ -15,10 +15,10 @@
   */
 package me.jessyan.mvparms.demo.mvp.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.jess.arms.base.BaseActivity;
@@ -27,6 +27,8 @@ import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.paginate.Paginate;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import me.jessyan.mvparms.demo.R;
@@ -53,14 +55,18 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     RecyclerView mRecyclerView;
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @Inject
+    RxPermissions mRxPermissions;
+    @Inject
+    RecyclerView.LayoutManager mLayoutManager;
+    @Inject
+    RecyclerView.Adapter mAdapter;
 
     private Paginate mPaginate;
     private boolean isLoadingMore;
-    private RxPermissions mRxPermissions;
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
-        this.mRxPermissions = new RxPermissions(this);
         DaggerUserComponent
                 .builder()
                 .appComponent(appComponent)
@@ -76,7 +82,10 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        mPresenter.requestUsers(true);//打开app时自动加载列表
+        initRecycleView();
+        mRecyclerView.setAdapter(mAdapter);
+        initPaginate();
+        mPresenter.requestUsers(true);//打开 App 时自动加载列表
     }
 
 
@@ -90,7 +99,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
      */
     private void initRecycleView() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        ArmsUtils.configRecycleView(mRecyclerView, new GridLayoutManager(this, 2));
+        ArmsUtils.configRecycleView(mRecyclerView, mLayoutManager);
     }
 
 
@@ -121,13 +130,6 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
         finish();
     }
 
-    @Override
-    public void setAdapter(DefaultAdapter adapter) {
-        mRecyclerView.setAdapter(adapter);
-        initRecycleView();
-        initPaginate();
-    }
-
     /**
      * 开始加载更多
      */
@@ -142,6 +144,11 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     @Override
     public void endLoadMore() {
         isLoadingMore = false;
+    }
+
+    @Override
+    public Activity getActivity() {
+        return this;
     }
 
     @Override

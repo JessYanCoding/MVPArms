@@ -16,15 +16,14 @@
 package me.jessyan.mvparms.demo.mvp.presenter;
 
 import android.app.Application;
+import android.support.v7.widget.RecyclerView;
 
-import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.PermissionUtil;
 import com.jess.arms.utils.RxLifecycleUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,7 +32,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.mvparms.demo.mvp.contract.UserContract;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
-import me.jessyan.mvparms.demo.mvp.ui.adapter.UserAdapter;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
@@ -53,8 +51,8 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
     private RxErrorHandler mErrorHandler;
     private AppManager mAppManager;
     private Application mApplication;
-    private List<User> mUsers = new ArrayList<>();
-    private DefaultAdapter mAdapter;
+    private List<User> mUsers;
+    private RecyclerView.Adapter mAdapter;
     private int lastUserId = 1;
     private boolean isFirst = true;
     private int preEndIndex;
@@ -62,19 +60,16 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
 
     @Inject
     public UserPresenter(UserContract.Model model, UserContract.View rootView, RxErrorHandler handler
-            , AppManager appManager, Application application) {
+            , AppManager appManager, Application application, List<User> list, RecyclerView.Adapter adapter) {
         super(model, rootView);
         this.mApplication = application;
         this.mErrorHandler = handler;
         this.mAppManager = appManager;
+        this.mUsers = list;
+        this.mAdapter = adapter;
     }
 
     public void requestUsers(final boolean pullToRefresh) {
-        if (mAdapter == null) {
-            mAdapter = new UserAdapter(mUsers);
-            mRootView.setAdapter(mAdapter);//设置Adapter
-        }
-
         //请求外部存储权限用于适配android6.0的权限管理机制
         PermissionUtil.externalStorage(new PermissionUtil.RequestPermission() {
             @Override
