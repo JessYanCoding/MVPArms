@@ -42,7 +42,7 @@ import timber.log.Timber;
  *
  * @see GlobalConfigModule.Builder#imageLoaderStrategy(BaseImageLoaderStrategy)
  * Created by JessYan on 8/5/16 16:28
- * contact with jess.yan.effort@gmail.com
+ * Contact with <mailto:jess.yan.effort@gmail.com>
  * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
