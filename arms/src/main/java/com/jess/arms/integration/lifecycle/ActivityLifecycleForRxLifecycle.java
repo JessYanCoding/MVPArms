@@ -34,8 +34,8 @@ import io.reactivex.subjects.Subject;
  * 配合 {@link ActivityLifecycleable} 使用,使 {@link Activity} 具有 {@link RxLifecycle} 的特性
  *
  * Created by JessYan on 25/08/2017 18:56
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 @Singleton

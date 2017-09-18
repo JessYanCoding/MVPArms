@@ -29,7 +29,7 @@ import javax.inject.Singleton;
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.4">ImageLoader wiki 文档</a>
  * Created by JessYan on 8/5/16 15:57
  * contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 @Singleton

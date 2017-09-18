@@ -28,8 +28,8 @@ import org.simple.eventbus.EventBus;
  * {@link ActivityDelegate} 默认实现类
  * <p>
  * Created by JessYan on 26/04/2017 20:23
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public class ActivityDelegateImpl implements ActivityDelegate {

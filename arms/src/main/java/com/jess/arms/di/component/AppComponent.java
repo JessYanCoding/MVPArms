@@ -44,8 +44,8 @@ import okhttp3.OkHttpClient;
  *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.2">AppComponent wiki 官方文档</a>
  * Created by JessYan on 8/4/2016
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 @Singleton

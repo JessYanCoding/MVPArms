@@ -33,8 +33,8 @@ import java.io.ObjectOutputStream;
  * 处理数据或本地文件的工具类
  * <p>
  * Created by JessYan on 2016/3/15
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public class DataHelper {

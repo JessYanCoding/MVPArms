@@ -32,8 +32,8 @@ import org.simple.eventbus.EventBus;
  *
  * @see BaseFragment
  * Created by JessYan on 29/04/2017 14:31
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public interface IFragment {

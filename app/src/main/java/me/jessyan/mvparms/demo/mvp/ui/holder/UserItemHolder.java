@@ -35,8 +35,8 @@ import me.jessyan.mvparms.demo.mvp.model.entity.User;
  * 展示 {@link BaseHolder} 的用法
  * <p>
  * Created by JessYan on 9/4/16 12:56
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public class UserItemHolder extends BaseHolder<User> {

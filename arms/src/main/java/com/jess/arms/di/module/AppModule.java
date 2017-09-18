@@ -37,8 +37,8 @@ import dagger.Provides;
  * 提供一些框架必须的实例的 {@link Module}
  * <p>
  * Created by JessYan on 8/4/2016.
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 @Module

@@ -27,8 +27,8 @@ import com.jess.arms.http.imageloader.BaseImageLoaderStrategy;
  * 的实现类也必须实现 {@link GlideAppliesOptions}
  * <p>
  * Created by JessYan on 13/08/2017 22:02
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 

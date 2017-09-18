@@ -24,7 +24,7 @@ import android.content.Context;
  * <p>
  * Created by JessYan on 8/5/2016 15:50
  * contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public interface BaseImageLoaderStrategy<T extends ImageConfig> {

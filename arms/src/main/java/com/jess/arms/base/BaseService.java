@@ -30,8 +30,8 @@ import io.reactivex.disposables.Disposable;
  * 基类 {@link Service}
  * <p>
  * Created by jess on 2016/5/6.
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public abstract class BaseService extends Service {

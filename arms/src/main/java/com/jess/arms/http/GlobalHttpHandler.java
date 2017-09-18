@@ -28,8 +28,8 @@ import okhttp3.Response;
  *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.2">GlobalHttpHandler Wiki 官方文档</a>
  * Created by JessYan on 8/30/16 17:47
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public interface GlobalHttpHandler {

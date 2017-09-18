@@ -45,8 +45,8 @@ import okhttp3.Interceptor;
  *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.1">GlobalConfigModule Wiki 官方文档</a>
  * Created by JessYan on 2016/3/14.
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 @Module

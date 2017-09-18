@@ -23,8 +23,8 @@ import org.simple.eventbus.EventBus;
  *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.5">EventBusTags wiki 官方文档</a>
  * Created by JessYan on 8/30/2016 16:39
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public interface EventBusTags {

@@ -24,7 +24,7 @@ import android.widget.ImageView;
  * <p>
  * Created by JessYan on 8/5/16 15:19
  * contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public class ImageConfig {

@@ -33,8 +33,8 @@ import java.util.zip.Inflater;
  * 处理压缩和解压的工具类
  * <p>
  * Created by JessYan on 10/05/2016
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public class ZipHelper {

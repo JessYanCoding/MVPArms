@@ -48,8 +48,8 @@ import javax.inject.Inject;
  * @see BaseApplication
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.12">AppDelegate wiki 官方文档</a>
  * Created by JessYan on 24/04/2017 09:44
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public class AppDelegate implements App, AppLifecycles {

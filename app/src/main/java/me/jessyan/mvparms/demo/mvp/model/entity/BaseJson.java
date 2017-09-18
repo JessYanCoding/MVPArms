@@ -25,8 +25,8 @@ import me.jessyan.mvparms.demo.mvp.model.api.Api;
  * 替换范型即可重用 {@link BaseJson}
  * <p>
  * Created by JessYan on 26/09/2016 15:19
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public class BaseJson<T> implements Serializable {

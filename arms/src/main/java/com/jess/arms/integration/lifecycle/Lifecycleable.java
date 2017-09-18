@@ -31,8 +31,8 @@ import io.reactivex.subjects.Subject;
  *
  * @see RxLifecycleUtils 详细用法请查看此类
  * Created by JessYan on 25/08/2017 18:39
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public interface Lifecycleable<E> {

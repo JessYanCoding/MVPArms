@@ -38,8 +38,8 @@ import static com.jess.arms.base.delegate.ActivityDelegate.LAYOUT_RELATIVELAYOUT
 /**
  * ================================================
  * Created by JessYan on 17/03/2016 13:59
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public class ThirdViewUtil {

@@ -35,8 +35,8 @@ import com.zhy.autolayout.utils.DimenUtils;
  *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.6">AutoLayout wiki 官方文档</a>
  * Created by JessYan on 4/14/2016
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public class AutoTabLayout extends TabLayout {

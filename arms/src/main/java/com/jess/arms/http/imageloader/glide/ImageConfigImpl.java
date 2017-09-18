@@ -27,8 +27,8 @@ import com.jess.arms.http.imageloader.ImageConfig;
  * 其他操作同理
  * <p>
  * Created by JessYan on 8/5/16 15:19
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public class ImageConfigImpl extends ImageConfig {

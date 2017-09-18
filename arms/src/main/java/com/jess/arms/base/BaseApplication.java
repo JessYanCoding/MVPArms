@@ -28,8 +28,8 @@ import com.jess.arms.di.component.AppComponent;
  *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki">请配合官方 Wiki 文档学习本框架</a>
  * Created by JessYan on 22/03/2016
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public class BaseApplication extends Application implements App {

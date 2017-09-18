@@ -30,8 +30,8 @@ import retrofit2.http.Query;
  * 存放关于用户的一些 API
  * <p>
  * Created by JessYan on 08/05/2016 12:05
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public interface UserService {

@@ -29,8 +29,8 @@ import java.util.List;
  * 基类 {@link FragmentStatePagerAdapter}
  * <p>
  * Created by JessYan on 22/03/2016
- * Contact with jess.yan.effort@gmail.com
- * Follow me on https://github.com/JessYanCoding
+ * Contact with <mailto:jess.yan.effort@gmail.com>
+ * Follow me on <https://github.com/JessYanCoding>
  * ================================================
  */
 public class AdapterViewPager extends FragmentStatePagerAdapter {
