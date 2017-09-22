@@ -72,7 +72,7 @@ ext {
                 "rxlifecycle2-components"   : "com.trello.rxlifecycle2:rxlifecycle-components:${version["rxlifecycle2SdkVersion"]}",
                 "rxcache2"                  : "com.github.VictorAlbertos.RxCache:runtime:1.8.1-2.x",
                 "rxpermissions2"            : "com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar",
-                "rxerrorhandler2"           : "me.jessyan:rxerrorhandler:2.0.2",
+                "rxerrorhandler2"           : "me.jessyan:rxerrorhandler:2.1.0",
 
                 //tools
                 "dagger2"                  : "com.google.dagger:dagger:${version["dagger2SdkVersion"]}",

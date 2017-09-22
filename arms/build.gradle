@@ -85,10 +85,7 @@ dependencies {
         exclude module: 'rxjava'
         exclude module: 'support-annotations'
     }
-    compile(rootProject.ext.dependencies['rxerrorhandler2']) {
-        exclude module: 'rxjava'
-        exclude module: 'appcompat-v7'
-    }
+    compile rootProject.ext.dependencies['rxerrorhandler2']
 
     //network
     compile(rootProject.ext.dependencies["retrofit"]) {
