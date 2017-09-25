@@ -153,9 +153,11 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
     }
 
     private FragmentDelegate fetchFragmentDelegate(Fragment fragment) {
-        if (fragment instanceof IFragment) {
-            return fragment.getArguments() == null ? null : fragment.getArguments().getParcelable(FragmentDelegate.FRAGMENT_DELEGATE);
+        if (fragment instanceof IFragment && fragment.getArguments() != null) {
+            fragment.getArguments().setClassLoader(getClass().getClassLoader());
+            return fragment.getArguments().getParcelable(FragmentDelegate.FRAGMENT_DELEGATE);
         }
         return null;
     }
+
 }
