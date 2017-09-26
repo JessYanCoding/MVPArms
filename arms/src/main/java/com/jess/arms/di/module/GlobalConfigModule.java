@@ -16,6 +16,7 @@
 package com.jess.arms.di.module;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
@@ -25,6 +26,9 @@ import com.jess.arms.http.GlobalHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
 import com.jess.arms.http.imageloader.BaseImageLoaderStrategy;
 import com.jess.arms.http.imageloader.glide.GlideImageLoaderStrategy;
+import com.jess.arms.integration.cache.Cache;
+import com.jess.arms.integration.cache.CacheType;
+import com.jess.arms.integration.cache.LruCache;
 import com.jess.arms.utils.DataHelper;
 
 import java.io.File;
@@ -63,6 +67,7 @@ public class GlobalConfigModule {
     private ClientModule.RxCacheConfiguration mRxCacheConfiguration;
     private AppModule.GsonConfiguration mGsonConfiguration;
     private RequestInterceptor.Level mPrintHttpLogLevel;
+    private Cache.Factory mCacheFactory;
 
     private GlobalConfigModule(Builder builder) {
         this.mApiUrl = builder.apiUrl;
@@ -77,6 +82,7 @@ public class GlobalConfigModule {
         this.mRxCacheConfiguration = builder.rxCacheConfiguration;
         this.mGsonConfiguration = builder.gsonConfiguration;
         this.mPrintHttpLogLevel = builder.printHttpLogLevel;
+        this.mCacheFactory = builder.cacheFactory;
     }
 
     public static Builder builder() {
@@ -192,6 +198,26 @@ public class GlobalConfigModule {
         return mPrintHttpLogLevel;
     }
 
+    @Singleton
+    @Provides
+    Cache.Factory provideCacheFactory() {
+        return mCacheFactory == null ? new Cache.Factory() {
+            @NonNull
+            @Override
+            public Cache build(int type) {
+                //若想自定义 LruCache 的 size,或者不想使用 LruCache ,想使用自己自定义的策略
+                //请使用 GlobalConfigModule.Builder#cacheFactory() 扩展
+                switch (type) {
+                    case CacheType.EXTRAS_CACHE_TYPE: //AppComponent 中的 extras 默认最多只能缓存500个内容
+                        return new LruCache(500);
+                    default: //RepositoryManager 中的容器默认缓存 100 个内容
+                        return new LruCache(DEFAULT_CACHE_SIZE);
+
+                }
+            }
+        } : mCacheFactory;
+    }
+
 
     public static final class Builder {
         private HttpUrl apiUrl;
@@ -206,6 +232,7 @@ public class GlobalConfigModule {
         private ClientModule.RxCacheConfiguration rxCacheConfiguration;
         private AppModule.GsonConfiguration gsonConfiguration;
         private RequestInterceptor.Level printHttpLogLevel;
+        private Cache.Factory cacheFactory;
 
         private Builder() {
         }
@@ -279,6 +306,11 @@ public class GlobalConfigModule {
             if (printHttpLogLevel == null)
                 throw new NullPointerException("printHttpLogLevel == null. Use RequestInterceptor.Level.NONE instead.");
             this.printHttpLogLevel = printHttpLogLevel;
+            return this;
+        }
+
+        public Builder cacheFactory(Cache.Factory cacheFactory) {
+            this.cacheFactory = cacheFactory;
             return this;
         }
 

@@ -69,6 +69,22 @@ public final class GlobalConfiguration implements ConfigModule {
 //                    }
 //                })
 
+                //可根据当前项目的情况以及环境为框架某些部件提供自定义的缓存策略,具有强大的扩展性
+//                .cacheFactory(new Cache.Factory() {
+//                    @NonNull
+//                    @Override
+//                    public Cache build(int type) {
+//                        switch (type){
+//                            case EXTRAS_CACHE_TYPE:
+//                                return new LruCache(1000);
+//                            case REPOSITORY_CACHE_TYPE:
+//                                return new Cache();//自定义 Cache
+//                            default:
+//                                return new LruCache(DEFAULT_CACHE_SIZE);
+//                        }
+//                    }
+//                })
+
                 // 这里提供一个全局处理 Http 请求和响应结果的处理类,可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
                 .globalHttpHandler(new GlobalHttpHandlerImpl(context))
                 // 用来处理 rxjava 中发生的所有错误,rxjava 中发生的每个错误都会回调此接口

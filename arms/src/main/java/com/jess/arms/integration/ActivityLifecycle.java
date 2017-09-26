@@ -26,10 +26,10 @@ import com.jess.arms.base.delegate.ActivityDelegate;
 import com.jess.arms.base.delegate.ActivityDelegateImpl;
 import com.jess.arms.base.delegate.FragmentDelegate;
 import com.jess.arms.base.delegate.IActivity;
+import com.jess.arms.integration.cache.Cache;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -51,12 +51,12 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     private AppManager mAppManager;
     private Application mApplication;
-    private Map<String, Object> mExtras;
+    private Cache<String, Object> mExtras;
     private FragmentManager.FragmentLifecycleCallbacks mFragmentLifecycle;
     private List<FragmentManager.FragmentLifecycleCallbacks> mFragmentLifecycles;
 
     @Inject
-    public ActivityLifecycle(AppManager appManager, Application application, Map<String, Object> extras) {
+    public ActivityLifecycle(AppManager appManager, Application application, Cache<String, Object> extras) {
         this.mAppManager = appManager;
         this.mApplication = application;
         this.mExtras = extras;

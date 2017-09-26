@@ -18,14 +18,13 @@ package com.jess.arms.di.module;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v4.util.ArrayMap;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.integration.RepositoryManager;
-
-import java.util.Map;
+import com.jess.arms.integration.cache.Cache;
+import com.jess.arms.integration.cache.CacheType;
 
 import javax.inject.Singleton;
 
@@ -72,8 +71,8 @@ public class AppModule {
 
     @Singleton
     @Provides
-    public Map<String, Object> provideExtras() {
-        return new ArrayMap<>();
+    public Cache<String, Object> provideExtras(Cache.Factory cacheFactory) {
+        return cacheFactory.build(CacheType.EXTRAS_CACHE_TYPE);
     }
 
     public interface GsonConfiguration {
