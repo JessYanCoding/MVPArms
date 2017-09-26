@@ -31,8 +31,8 @@ import io.reactivex.subjects.Subject;
  * 配合 {@link FragmentLifecycleable} 使用,使 {@link Fragment} 具有 {@link RxLifecycle} 的特性
  *
  * Created by JessYan on 26/08/2017 16:02
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public class FragmentLifecycleForRxLifecycle extends FragmentManager.FragmentLifecycleCallbacks {

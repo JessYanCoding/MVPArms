@@ -30,8 +30,8 @@ import io.reactivex.disposables.Disposable;
  *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.4">Presenter wiki 官方文档</a>
  * Created by JessYan on 4/28/2016
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public class BasePresenter<M extends IModel, V extends IView> implements IPresenter {

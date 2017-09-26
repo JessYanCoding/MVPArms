@@ -23,8 +23,8 @@ import com.jess.arms.di.component.AppComponent;
  *
  * @see BaseApplication
  * Created by JessYan on 25/04/2017 14:54
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public interface App {

@@ -35,8 +35,8 @@ import timber.log.Timber;
  * {@link FragmentDelegate} 默认实现类
  * <p>
  * Created by JessYan on 29/04/2017 16:12
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public class FragmentDelegateImpl implements FragmentDelegate {

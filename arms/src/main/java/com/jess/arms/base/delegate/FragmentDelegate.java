@@ -28,8 +28,8 @@ import android.view.View;
  * @see FragmentDelegateImpl
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.13">FragmentDelegate wiki 官方文档</a>
  * Created by JessYan on 29/04/2017 14:30
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public interface FragmentDelegate extends Parcelable {

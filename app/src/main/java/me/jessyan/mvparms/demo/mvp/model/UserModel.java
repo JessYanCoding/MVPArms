@@ -40,8 +40,8 @@ import me.jessyan.mvparms.demo.mvp.model.entity.User;
  *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.3">Model wiki 官方文档</a>
  * Created by JessYan on 09/04/2016 10:56
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 @ActivityScope

@@ -42,8 +42,8 @@ import timber.log.Timber;
  *
  * @see GlobalConfigModule.Builder#imageLoaderStrategy(BaseImageLoaderStrategy)
  * Created by JessYan on 8/5/16 16:28
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageConfigImpl>, GlideAppliesOptions {

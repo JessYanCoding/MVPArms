@@ -51,8 +51,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 提供一些三方库客户端实例的 {@link Module}
  * <p>
  * Created by JessYan on 2016/3/14.
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 @Module

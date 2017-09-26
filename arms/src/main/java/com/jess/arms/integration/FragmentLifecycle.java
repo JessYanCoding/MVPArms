@@ -33,8 +33,8 @@ import timber.log.Timber;
  * 通过 {@link FragmentDelegate} 管理 {@link Fragment}
  * <p>
  * Created by JessYan on 04/09/2017 16:04
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallbacks {

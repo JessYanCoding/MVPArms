@@ -32,8 +32,8 @@ import android.widget.PopupWindow;
  *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.7">CustomPopupWindow wiki 官方文档</a>
  * Created by JessYan on 4/22/2016
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public class CustomPopupWindow extends PopupWindow {

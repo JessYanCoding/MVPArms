@@ -23,8 +23,8 @@ import android.util.Log;
  * 日志工具类
  * <p>
  * Created by JessYan on 2015/11/23.
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public class LogUtils {

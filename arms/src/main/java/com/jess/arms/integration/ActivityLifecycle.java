@@ -42,8 +42,8 @@ import javax.inject.Singleton;
  *
  * @see <a href="http://www.jianshu.com/p/75a5c24174b2">ActivityLifecycleCallbacks 分析文章</a>
  * Created by JessYan on 21/02/2017 14:23
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 @Singleton
@@ -166,7 +166,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
                 for (ConfigModule module : modules) {
                     module.injectFragmentLifecycle(mApplication, mFragmentLifecycles);
                 }
-                mExtras.put(ConfigModule.class.getName(), null);
+                mExtras.remove(ConfigModule.class.getName());
             }
 
             for (FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle : mFragmentLifecycles) {

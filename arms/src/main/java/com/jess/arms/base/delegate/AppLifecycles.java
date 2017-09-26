@@ -24,8 +24,8 @@ import android.content.Context;
  *
  * @see AppDelegate
  * Created by JessYan on 18/07/2017 17:43
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public interface AppLifecycles {

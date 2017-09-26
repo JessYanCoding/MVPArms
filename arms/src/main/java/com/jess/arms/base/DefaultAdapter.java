@@ -27,8 +27,8 @@ import java.util.List;
  * 基类 {@link RecyclerView.Adapter} ,如果需要实现非常复杂的 {@link RecyclerView} ,请尽量使用其他优秀的三方库
  * <p>
  * Created by jess on 2015/11/27.
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<T>> {

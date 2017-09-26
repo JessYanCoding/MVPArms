@@ -51,8 +51,8 @@ import static com.jess.arms.integration.AppManager.START_ACTIVITY;
  * 一些框架常用的工具
  * <p>
  * Created by JessYan on 2015/11/23.
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public class ArmsUtils {

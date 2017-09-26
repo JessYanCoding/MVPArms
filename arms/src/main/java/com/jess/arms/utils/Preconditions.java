@@ -20,8 +20,8 @@ import android.support.annotation.Nullable;
 /**
  * ================================================
  * Created by JessYan on 26/09/2016 13:59
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public final class Preconditions {
