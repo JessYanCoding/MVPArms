@@ -2,7 +2,7 @@ ext {
 
     android = [
                compileSdkVersion       : 26,
-               buildToolsVersion       : "26.0.1",
+               buildToolsVersion       : "26.0.2",
                minSdkVersion           : 15,
                targetSdkVersion        : 26,
                versionCode             : 138,
@@ -10,7 +10,7 @@ ext {
     ]
 
      version = [
-                   androidSupportSdkVersion: "26.0.2",
+                   androidSupportSdkVersion: "26.1.0",
                    retrofitSdkVersion      : "2.3.0",
                    dagger2SdkVersion       : "2.11",
                    glideSdkVersion         : "4.0.0",
@@ -35,7 +35,7 @@ ext {
                 "retrofit-converter-gson"  : "com.squareup.retrofit2:converter-gson:${version["retrofitSdkVersion"]}",
                 "retrofit-adapter-rxjava"  : "com.squareup.retrofit2:adapter-rxjava:${version["retrofitSdkVersion"]}",
                 "retrofit-adapter-rxjava2" : "com.squareup.retrofit2:adapter-rxjava2:${version["retrofitSdkVersion"]}",
-                "okhttp3"                  : "com.squareup.okhttp3:okhttp:3.8.1",
+                "okhttp3"                  : "com.squareup.okhttp3:okhttp:3.9.0",
                 "okhttp-urlconnection"     : "com.squareup.okhttp:okhttp-urlconnection:2.0.0",
                 "glide"                    : "com.github.bumptech.glide:glide:${version["glideSdkVersion"]}",
                 "glide-compiler"           : "com.github.bumptech.glide:compiler:${version["glideSdkVersion"]}",
