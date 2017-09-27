@@ -4,7 +4,7 @@ jdk: oraclejdk8
 env:
   global:
     - ANDROID_API_LEVEL=26
-    - ANDROID_BUILD_TOOLS_VERSION=26.0.1
+    - ANDROID_BUILD_TOOLS_VERSION=26.0.2
     - TRAVIS_SECURE_ENV_VARS=true
 
 android:
