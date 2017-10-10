@@ -95,5 +95,7 @@ public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifec
     @Override
     public void onActivityDestroyed(Activity activity) {
         Timber.w(activity + " - onActivityDestroyed");
+        //横竖屏切换或配置改变时, Activity 会被重新创建实例, 但 bundle 中的基础数据会被保存下来,移除是为了保证重新创建的实例可以正常工作
+        activity.getIntent().removeExtra("isInitToolbar");
     }
 }
