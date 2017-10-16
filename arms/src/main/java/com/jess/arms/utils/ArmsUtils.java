@@ -1,3 +1,18 @@
+/**
+  * Copyright 2017 JessYan
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at
+  *
+  *      http://www.apache.org/licenses/LICENSE-2.0
+  *
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
 package com.jess.arms.utils;
 
 import android.app.Activity;
@@ -6,6 +21,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Message;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -23,24 +39,28 @@ import com.jess.arms.base.App;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.integration.AppManager;
 
-import org.simple.eventbus.EventBus;
-
 import java.security.MessageDigest;
 
-import static com.jess.arms.integration.AppManager.APPMANAGER_MESSAGE;
 import static com.jess.arms.integration.AppManager.APP_EXIT;
 import static com.jess.arms.integration.AppManager.KILL_ALL;
 import static com.jess.arms.integration.AppManager.SHOW_SNACKBAR;
 import static com.jess.arms.integration.AppManager.START_ACTIVITY;
 
 /**
- * Created by jess on 2015/11/23.
+ * ================================================
+ * 一些框架常用的工具
+ * <p>
+ * Created by JessYan on 2015/11/23.
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * ================================================
  */
 public class ArmsUtils {
     static public Toast mToast;
 
 
     private ArmsUtils() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     /**
@@ -98,25 +118,25 @@ public class ArmsUtils {
 
 
     /**
-     * 从dimens中获得尺寸
+     * 从 dimens 中获得尺寸
      *
-     * @param homePicHeight
+     * @param context
+     * @param id
      * @return
      */
-
-    public static int getDimens(Context context, int homePicHeight) {
-        return (int) getResources(context).getDimension(homePicHeight);
+    public static int getDimens(Context context, int id) {
+        return (int) getResources(context).getDimension(id);
     }
 
     /**
-     * 从dimens中获得尺寸
+     * 从 dimens 中获得尺寸
      *
-     * @param
+     * @param context
+     * @param dimenName
      * @return
      */
-
-    public static float getDimens(Context context, String dimenNmae) {
-        return getResources(context).getDimension(getResources(context).getIdentifier(dimenNmae, "dimen", context.getPackageName()));
+    public static float getDimens(Context context, String dimenName) {
+        return getResources(context).getDimension(getResources(context).getIdentifier(dimenName, "dimen", context.getPackageName()));
     }
 
     /**
@@ -168,7 +188,7 @@ public class ArmsUtils {
     }
 
     /**
-     * 根据lauout名字获得id
+     * 根据 layout 名字获得 id
      *
      * @param layoutName
      * @return
@@ -189,11 +209,10 @@ public class ArmsUtils {
     }
 
     /**
-     * 单列toast
+     * 单例 toast
      *
      * @param string
      */
-
     public static void makeText(Context context, String string) {
         if (mToast == null) {
             mToast = Toast.makeText(context, string, Toast.LENGTH_SHORT);
@@ -203,7 +222,7 @@ public class ArmsUtils {
     }
 
     /**
-     * 用snackbar显示
+     * 使用 {@link Snackbar} 显示文本消息
      *
      * @param text
      */
@@ -212,11 +231,11 @@ public class ArmsUtils {
         message.what = SHOW_SNACKBAR;
         message.obj = text;
         message.arg1 = 0;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
     /**
-     * 用snackbar长时间显示
+     * 使用 {@link Snackbar} 长时间显示文本消息
      *
      * @param text
      */
@@ -225,7 +244,7 @@ public class ArmsUtils {
         message.what = SHOW_SNACKBAR;
         message.obj = text;
         message.arg1 = 1;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
 
@@ -243,14 +262,13 @@ public class ArmsUtils {
     /**
      * 跳转界面 1 ,通过 {@link AppManager#startActivity(Class)}
      *
-     * @param
-     * @param homeActivityClass
+     * @param activityClass
      */
-    public static void startActivity(Class homeActivityClass) {
+    public static void startActivity(Class activityClass) {
         Message message = new Message();
         message.what = START_ACTIVITY;
-        message.obj = homeActivityClass;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        message.obj = activityClass;
+        AppManager.post(message);
     }
 
     /**
@@ -262,7 +280,7 @@ public class ArmsUtils {
         Message message = new Message();
         message.what = START_ACTIVITY;
         message.obj = content;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
 
@@ -284,10 +302,6 @@ public class ArmsUtils {
      */
     public static void startActivity(Activity activity, Intent intent) {
         activity.startActivity(intent);
-    }
-
-    public static int getLayoutId(Context context, String layoutName) {
-        return getResources(context).getIdentifier(layoutName, "layout", context.getPackageName());
     }
 
     /**
@@ -371,7 +385,7 @@ public class ArmsUtils {
 
 
     /**
-     * 全屏，并且沉侵式状态栏
+     * 全屏,并且沉侵式状态栏
      *
      * @param activity
      */
@@ -385,7 +399,7 @@ public class ArmsUtils {
 
 
     /**
-     * 配置recycleview
+     * 配置 recycleview
      *
      * @param recyclerView
      * @param layoutManager
@@ -398,17 +412,22 @@ public class ArmsUtils {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-
+    /**
+     * 远程遥控 {@link AppManager#killAll()}
+     */
     public static void killAll() {
         Message message = new Message();
         message.what = KILL_ALL;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
+    /**
+     * 远程遥控 {@link AppManager#appExit()}
+     */
     public static void exitApp() {
         Message message = new Message();
         message.what = APP_EXIT;
-        EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
+        AppManager.post(message);
     }
 
     public static AppComponent obtainAppComponentFromContext(Context context) {

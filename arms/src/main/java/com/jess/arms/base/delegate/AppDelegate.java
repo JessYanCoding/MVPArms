@@ -1,20 +1,39 @@
+/**
+ * Copyright 2017 JessYan
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.jess.arms.base.delegate;
 
 import android.app.Application;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.support.annotation.NonNull;
 
 import com.jess.arms.base.App;
+import com.jess.arms.base.BaseApplication;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.di.component.DaggerAppComponent;
 import com.jess.arms.di.module.AppModule;
 import com.jess.arms.di.module.ClientModule;
 import com.jess.arms.di.module.GlobalConfigModule;
+import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.integration.ActivityLifecycle;
 import com.jess.arms.integration.ConfigModule;
 import com.jess.arms.integration.ManifestParser;
-import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
+import com.jess.arms.integration.lifecycle.ActivityLifecycleForRxLifecycle;
+import com.jess.arms.utils.Preconditions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,19 +41,26 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * AppDelegate可以代理Application的生命周期,在对应的生命周期,执行对应的逻辑,因为Java只能单继承
- * 所以当遇到某些三方库需要继承于它的Application的时候,就只有自定义Application并继承于三方库的Application,这时就不用再继承BaseApplication
- * 只用在自定义Application中对应的生命周期调用AppDelegate对应的方法(Application一定要实现APP接口),框架就能照常运行
- * <p>
- * Created by jess on 24/04/2017 09:44
- * Contact with jess.yan.effort@gmail.com
+ * ================================================
+ * AppDelegate 可以代理 Application 的生命周期,在对应的生命周期,执行对应的逻辑,因为 Java 只能单继承
+ * 所以当遇到某些三方库需要继承于它的 Application 的时候,就只有自定义 Application 并继承于三方库的 Application
+ * 这时就不用再继承 BaseApplication,只用在自定义Application中对应的生命周期调用AppDelegate对应的方法
+ * (Application一定要实现APP接口),框架就能照常运行
+ *
+ * @see BaseApplication
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.12">AppDelegate wiki 官方文档</a>
+ * Created by JessYan on 24/04/2017 09:44
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * ================================================
  */
-
 public class AppDelegate implements App, AppLifecycles {
     private Application mApplication;
     private AppComponent mAppComponent;
     @Inject
     protected ActivityLifecycle mActivityLifecycle;
+    @Inject
+    protected ActivityLifecycleForRxLifecycle mActivityLifecycleForRxLifecycle;
     private List<ConfigModule> mModules;
     private List<AppLifecycles> mAppLifecycles = new ArrayList<>();
     private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();
@@ -71,6 +97,7 @@ public class AppDelegate implements App, AppLifecycles {
         this.mModules = null;
 
         mApplication.registerActivityLifecycleCallbacks(mActivityLifecycle);
+        mApplication.registerActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle);
 
         for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles) {
             mApplication.registerActivityLifecycleCallbacks(lifecycle);
@@ -91,6 +118,9 @@ public class AppDelegate implements App, AppLifecycles {
         if (mActivityLifecycle != null) {
             mApplication.unregisterActivityLifecycleCallbacks(mActivityLifecycle);
         }
+        if (mActivityLifecycleForRxLifecycle != null) {
+            mApplication.unregisterActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle);
+        }
         if (mComponentCallback != null) {
             mApplication.unregisterComponentCallbacks(mComponentCallback);
         }
@@ -106,6 +136,7 @@ public class AppDelegate implements App, AppLifecycles {
         }
         this.mAppComponent = null;
         this.mActivityLifecycle = null;
+        this.mActivityLifecycleForRxLifecycle = null;
         this.mActivityLifecycles = null;
         this.mComponentCallback = null;
         this.mAppLifecycles = null;
@@ -137,8 +168,12 @@ public class AppDelegate implements App, AppLifecycles {
      *
      * @return
      */
+    @NonNull
     @Override
     public AppComponent getAppComponent() {
+        Preconditions.checkNotNull(mAppComponent,
+                "%s cannot be null,first call %s#onCreate(Application) in %s#onCreate()",
+                AppComponent.class.getName(), getClass().getName(), Application.class.getName());
         return mAppComponent;
     }
 
