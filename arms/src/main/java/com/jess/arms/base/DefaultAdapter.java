@@ -42,7 +42,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
     }
 
     /**
-     * 创建Hodler
+     * 创建 {@link BaseHolder}
      *
      * @param parent
      * @param viewType
@@ -76,7 +76,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
 
 
     /**
-     * 数据的个数
+     * 返回数据的个数
      *
      * @return
      */
@@ -91,7 +91,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
     }
 
     /**
-     * 获得item的数据
+     * 获得某个 {@code position} 上的 item 的数据
      *
      * @param position
      * @return
@@ -101,7 +101,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
     }
 
     /**
-     * 子类实现提供holder
+     * 让子类实现用以提供 {@link BaseHolder}
      *
      * @param v
      * @param viewType
@@ -110,7 +110,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
     public abstract BaseHolder<T> getHolder(View v, int viewType);
 
     /**
-     * 提供Item的布局
+     * 提供用于 {@code item} 布局的 {@code layoutId}
      *
      * @param viewType
      * @return
@@ -119,7 +119,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
 
 
     /**
-     * 遍历所有hodler,释放他们需要释放的资源
+     * 遍历所有{@link BaseHolder},释放他们需要释放的资源
      *
      * @param recyclerView
      */

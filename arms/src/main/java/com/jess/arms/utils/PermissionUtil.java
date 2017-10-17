@@ -70,10 +70,10 @@ public class PermissionUtil {
                         @Override
                         public void onNext(Boolean granted) {
                             if (granted) {
-                                Timber.tag(TAG).d("Request permissons success");
+                                Timber.tag(TAG).d("Request permissions success");
                                 requestPermission.onRequestPermissionSuccess();
                             } else {
-                                Timber.tag(TAG).d("Request permissons failure");
+                                Timber.tag(TAG).d("Request permissions failure");
                                 requestPermission.onRequestPermissionFailure();
                             }
                         }
