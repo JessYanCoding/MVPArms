@@ -82,8 +82,8 @@ public class ClientModule {
             configuration.configRetrofit(application, builder);
 
         builder
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用rxjava
-                .addConverterFactory(GsonConverterFactory.create(gson));//使用Gson
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用 Rxjava
+                .addConverterFactory(GsonConverterFactory.create(gson));//使用 Gson
         return builder.build();
     }
 

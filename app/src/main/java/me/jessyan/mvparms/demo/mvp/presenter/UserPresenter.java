@@ -78,8 +78,13 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
             }
 
             @Override
-            public void onRequestPermissionFailure() {
+            public void onRequestPermissionFailure(List<String> permissions) {
                 mRootView.showMessage("Request permissions failure");
+            }
+
+            @Override
+            public void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions) {
+                mRootView.showMessage("Need to go to the settings");
             }
         }, mRootView.getRxPermissions(), mErrorHandler);
 
