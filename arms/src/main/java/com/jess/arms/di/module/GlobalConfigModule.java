@@ -200,20 +200,14 @@ public class GlobalConfigModule {
 
     @Singleton
     @Provides
-    Cache.Factory provideCacheFactory() {
+    Cache.Factory provideCacheFactory(Application application) {
         return mCacheFactory == null ? new Cache.Factory() {
             @NonNull
             @Override
-            public Cache build(int type) {
-                //若想自定义 LruCache 的 size,或者不想使用 LruCache ,想使用自己自定义的策略
-                //请使用 GlobalConfigModule.Builder#cacheFactory() 扩展
-                switch (type) {
-                    case CacheType.EXTRAS_CACHE_TYPE: //AppComponent 中的 extras 默认最多只能缓存500个内容
-                        return new LruCache(500);
-                    default: //RepositoryManager 中的容器默认缓存 100 个内容
-                        return new LruCache(DEFAULT_CACHE_SIZE);
-
-                }
+            public Cache build(CacheType type) {
+                //若想自定义 LruCache 的 size, 或者不想使用 LruCache , 想使用自己自定义的策略
+                //并使用 GlobalConfigModule.Builder#cacheFactory() 扩展
+                return new LruCache(type.calculateCacheSize(application));
             }
         } : mCacheFactory;
     }

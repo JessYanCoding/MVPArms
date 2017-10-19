@@ -63,7 +63,7 @@ public class PermissionUtil {
         /**
          * 用户拒绝了权限请求并且用户选择了以后不再询问, 权限请求失败, 这时将不能继续请求该权限, 需要提示用户进入设置页面打开该权限
          *
-         * @param permissions
+         * @param permissions 请求失败的权限名
          */
         void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions);
     }
@@ -79,7 +79,7 @@ public class PermissionUtil {
             }
         }
 
-        if (needRequest.size() == 0) {//全部权限都已经申请过，直接执行操作
+        if (needRequest.isEmpty()) {//全部权限都已经申请过，直接执行操作
             requestPermission.onRequestPermissionSuccess();
         } else {//没有申请过,则开始申请
             rxPermissions
