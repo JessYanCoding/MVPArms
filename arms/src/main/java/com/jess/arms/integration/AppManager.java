@@ -16,7 +16,6 @@
 package com.jess.arms.integration;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -431,10 +430,7 @@ public final class AppManager {
     public void appExit() {
         try {
             killAll();
-            release();
-            ActivityManager activityMgr =
-                    (ActivityManager) mApplication.getSystemService(Context.ACTIVITY_SERVICE);
-            activityMgr.killBackgroundProcesses(mApplication.getPackageName());
+            android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(0);
         } catch (Exception e) {
             e.printStackTrace();

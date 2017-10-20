@@ -34,7 +34,7 @@ public interface CacheType {
     int CACHE_SERVICE_CACHE_TYPE_ID = 1;
     int EXTRAS_TYPE_ID = 2;
     /**
-     * RepositoryManager 中的容器
+     * RepositoryManager 中存储 Retrofit Service 的容器
      */
     CacheType RETROFIT_SERVICE_CACHE = new CacheType() {
         private static final int MAX_SIZE = 150;
@@ -57,7 +57,7 @@ public interface CacheType {
     };
 
     /**
-     * RepositoryManager 中的容器
+     * RepositoryManager 中储存 Cache Service 的容器
      */
     CacheType CACHE_SERVICE_CACHE = new CacheType() {
         private static final int MAX_SIZE = 150;
