@@ -23,7 +23,7 @@ public interface IActivity {
 
     /**
      * 如果initView返回0,框架则不会调用{@link android.app.Activity#setContentView(int)}
-     * ( getLayoutId() )
+     *
      * @return
      * @param savedInstanceState
      */

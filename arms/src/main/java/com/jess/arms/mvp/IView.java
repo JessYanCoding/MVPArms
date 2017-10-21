@@ -3,9 +3,7 @@ package com.jess.arms.mvp;
 import android.content.Intent;
 
 /**
- *
- * deg 显示加载错误
- * Created by QING on 16/4/22.
+ * Created by jess on 16/4/22.
  */
 public interface IView {
 
@@ -32,10 +30,4 @@ public interface IView {
      * 杀死自己
      */
     void killMyself();
-
-//    //显示加载失败 一般都是没有网络的原因 可以写成showNoNetwork(); showError ?
-//    void showNoNetwork();
-//
-//    //显示无数据
-//    void showNoData();
 }
