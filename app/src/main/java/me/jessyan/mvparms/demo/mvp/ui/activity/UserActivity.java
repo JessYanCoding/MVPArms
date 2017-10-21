@@ -1,21 +1,36 @@
+/**
+  * Copyright 2017 JessYan
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at
+  *
+  *      http://www.apache.org/licenses/LICENSE-2.0
+  *
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
 package me.jessyan.mvparms.demo.mvp.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.component.AppComponent;
-import com.jess.arms.utils.UiUtils;
+import com.jess.arms.utils.ArmsUtils;
 import com.paginate.Paginate;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.di.component.DaggerUserComponent;
 import me.jessyan.mvparms.demo.di.module.UserModule;
@@ -24,20 +39,34 @@ import me.jessyan.mvparms.demo.mvp.presenter.UserPresenter;
 import timber.log.Timber;
 
 
+/**
+ * ================================================
+ * 展示 View 的用法
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.2">View wiki 官方文档</a>
+ * Created by JessYan on 09/04/2016 10:59
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * ================================================
+ */
 public class UserActivity extends BaseActivity<UserPresenter> implements UserContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @Inject
+    RxPermissions mRxPermissions;
+    @Inject
+    RecyclerView.LayoutManager mLayoutManager;
+    @Inject
+    RecyclerView.Adapter mAdapter;
 
     private Paginate mPaginate;
     private boolean isLoadingMore;
-    private RxPermissions mRxPermissions;
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
-        this.mRxPermissions = new RxPermissions(this);
         DaggerUserComponent
                 .builder()
                 .appComponent(appComponent)
@@ -53,9 +82,11 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        mPresenter.requestUsers(true);//打开app时自动加载列表
+        initRecycleView();
+        mRecyclerView.setAdapter(mAdapter);
+        initPaginate();
+        mPresenter.requestUsers(true);//打开 App 时自动加载列表
     }
-
 
 
     @Override
@@ -68,16 +99,14 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
      */
     private void initRecycleView() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        UiUtils.configRecycleView(mRecyclerView, new GridLayoutManager(this, 2));
+        ArmsUtils.configRecycleView(mRecyclerView, mLayoutManager);
     }
 
 
     @Override
     public void showLoading() {
         Timber.tag(TAG).w("showLoading");
-        Observable.just(1)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(integer -> mSwipeRefreshLayout.setRefreshing(true));
+        mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
@@ -88,24 +117,17 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
 
     @Override
     public void showMessage(String message) {
-        UiUtils.snackbarText(message);
+        ArmsUtils.snackbarText(message);
     }
 
     @Override
     public void launchActivity(Intent intent) {
-        UiUtils.startActivity(intent);
+        ArmsUtils.startActivity(intent);
     }
 
     @Override
     public void killMyself() {
         finish();
-    }
-
-    @Override
-    public void setAdapter(DefaultAdapter adapter) {
-        mRecyclerView.setAdapter(adapter);
-        initRecycleView();
-        initPaginate();
     }
 
     /**
@@ -122,6 +144,11 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     @Override
     public void endLoadMore() {
         isLoadingMore = false;
+    }
+
+    @Override
+    public Activity getActivity() {
+        return this;
     }
 
     @Override

@@ -1,5 +1,6 @@
 MVPArms框架自动生成MVP及Dagger2相关文件解决方案
 
+第二代模版已经开源到 https://github.com/JessYanCoding/MVPArmsTemplate ,一键生成所有文件
 
 (设置)Setting -> Editor ->  File and Code Templates -> Files 然后点击左上角绿色的+号
 
@@ -24,7 +25,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import com.jess.arms.base.BaseActivity;
-import com.jess.arms.utils.UiUtils;
+import com.jess.arms.utils.ArmsUtils;
 
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
@@ -77,13 +78,13 @@ public class ${NAME}Activity extends BaseActivity<${NAME}Presenter> implements $
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
-        UiUtils.snackbarText(message);
+        ArmsUtils.snackbarText(message);
     }
 
     @Override
     public void launchActivity(@NonNull Intent intent) {
         checkNotNull(intent);
-        UiUtils.startActivity(intent);
+        ArmsUtils.startActivity(intent);
     }
 
     @Override
@@ -174,7 +175,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import com.jess.arms.base.BaseFragment
 
-import com.jess.arms.utils.UiUtils;
+import com.jess.arms.utils.ArmsUtils;
 
 import butterknife.Bind;
 
@@ -250,13 +251,13 @@ public class ${NAME}Fragment extends BaseFragment<${NAME}Presenter> implements $
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
-        UiUtils.snackbarText(message);
+        ArmsUtils.snackbarText(message);
     }
 
     @Override
     public void launchActivity(@NonNull Intent intent) {
         checkNotNull(intent);
-        UiUtils.startActivity(intent);
+        ArmsUtils.startActivity(intent);
     }
 
     @Override
@@ -375,7 +376,7 @@ import android.app.Application;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
-import com.jess.arms.widget.imageloader.ImageLoader;
+import com.jess.arms.http.imageloader.ImageLoader;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import javax.inject.Inject;
 

@@ -1,39 +1,58 @@
+/**
+  * Copyright 2017 JessYan
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at
+  *
+  *      http://www.apache.org/licenses/LICENSE-2.0
+  *
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
 package me.jessyan.mvparms.demo.mvp.presenter;
 
 import android.app.Application;
+import android.support.v7.widget.RecyclerView;
 
-import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.PermissionUtil;
+import com.jess.arms.utils.RxLifecycleUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import me.jessyan.mvparms.demo.app.utils.RxUtils;
 import me.jessyan.mvparms.demo.mvp.contract.UserContract;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
-import me.jessyan.mvparms.demo.mvp.ui.adapter.UserAdapter;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 
 /**
- * Created by jess on 9/4/16 10:59
- * Contact with jess.yan.effort@gmail.com
+ * ================================================
+ * 展示 Presenter 的用法
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.4">Presenter wiki 官方文档</a>
+ * Created by JessYan on 09/04/2016 10:59
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * ================================================
  */
 @ActivityScope
 public class UserPresenter extends BasePresenter<UserContract.Model, UserContract.View> {
     private RxErrorHandler mErrorHandler;
     private AppManager mAppManager;
     private Application mApplication;
-    private List<User> mUsers = new ArrayList<>();
-    private DefaultAdapter mAdapter;
+    private List<User> mUsers;
+    private RecyclerView.Adapter mAdapter;
     private int lastUserId = 1;
     private boolean isFirst = true;
     private int preEndIndex;
@@ -41,19 +60,16 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
 
     @Inject
     public UserPresenter(UserContract.Model model, UserContract.View rootView, RxErrorHandler handler
-            , AppManager appManager, Application application) {
+            , AppManager appManager, Application application, List<User> list, RecyclerView.Adapter adapter) {
         super(model, rootView);
         this.mApplication = application;
         this.mErrorHandler = handler;
         this.mAppManager = appManager;
+        this.mUsers = list;
+        this.mAdapter = adapter;
     }
 
     public void requestUsers(final boolean pullToRefresh) {
-        if (mAdapter == null) {
-            mAdapter = new UserAdapter(mUsers);
-            mRootView.setAdapter(mAdapter);//设置Adapter
-        }
-
         //请求外部存储权限用于适配android6.0的权限管理机制
         PermissionUtil.externalStorage(new PermissionUtil.RequestPermission() {
             @Override
@@ -62,8 +78,13 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
             }
 
             @Override
-            public void onRequestPermissionFailure() {
-                mRootView.showMessage("Request permissons failure");
+            public void onRequestPermissionFailure(List<String> permissions) {
+                mRootView.showMessage("Request permissions failure");
+            }
+
+            @Override
+            public void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions) {
+                mRootView.showMessage("Need to go to the settings");
             }
         }, mRootView.getRxPermissions(), mErrorHandler);
 
@@ -95,7 +116,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
                     else
                         mRootView.endLoadMore();//隐藏上拉加载更多的进度条
                 })
-                .compose(RxUtils.bindToLifecycle(mRootView))//使用Rxlifecycle,使Disposable和Activity一起销毁
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
                 .subscribe(new ErrorHandleSubscriber<List<User>>(mErrorHandler) {
                     @Override
                     public void onNext(List<User> users) {

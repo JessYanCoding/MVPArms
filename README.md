@@ -1,11 +1,11 @@
 # MVPArms 
-[ ![Bintray](https://img.shields.io/badge/bintray-v2.1.5-brightgreen.svg) ](https://bintray.com/jessyancoding/maven/MVPArms/2.1.5/link)
+[ ![Bintray](https://img.shields.io/badge/bintray-v2.2.3-brightgreen.svg) ](https://bintray.com/jessyancoding/maven/MVPArms/2.2.3/link)
 [ ![Build Status](https://travis-ci.org/JessYanCoding/MVPArms.svg?branch=master) ](https://travis-ci.org/JessYanCoding/MVPArms)
 [ ![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square) ](https://developer.android.com/about/versions/android-4.0.3.html)
 [ ![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square) ](http://www.apache.org/licenses/LICENSE-2.0)
 [ ![QQGroup](https://img.shields.io/badge/QQ群-301733278-ff69b4.svg) ](https://shang.qq.com/wpa/qunwpa?idkey=1a5dc5e9b2e40a780522f46877ba243eeb64405d42398643d544d3eec6624917)
 
-## A common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects( like Dagger2,Rxjava,Retrofit... ),to make your developing quicker and easier. 
+## A common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects( like Dagger2,RxJava,Retrofit... ),to make your developing quicker and easier.
 
 [中文说明](MVPArms.md)
 
@@ -14,13 +14,13 @@
 
 ## Usage
 > New Project
->> If you are building a new project, directly to the entire project **clone** (or download), as **app** as the main **Module** (It is recommended to remove the **arms Module** and use **Gradle** to [depend](https://github.com/JessYanCoding/MVPArms/wiki#1.1) on this framework remotely for easy updates), then the package name into their own package name , **app Module** contains the package structure can be used directly, a mainstream `MVP` +` Dagger2` + `Retrofit` +` Rxjava` framework so easy to build successful, and now you refer **Mvp** Package under the **UserActivity** format,[Use Template to automatically generate MVP, Dagger2 related classes](https://github.com/JessYanCoding/MVPArmsTemplate),With access to [Wiki documents](https://github.com/JessYanCoding/MVPArms/wiki) slowly grasp the framework to see more articles as soon as possible in the project to use it, in practice, learning is the fastest
+>> If you are building a new project, directly to the entire project **clone** (or download), as **app** as the main **Module** (It is recommended to remove the **arms Module** and use **Gradle** to [depend](https://github.com/JessYanCoding/MVPArms/wiki#1.1) on this framework remotely for easy updates), then the package name into their own package name , **app Module** contains the package structure can be used directly, a mainstream `MVP` +` Dagger2` + `Retrofit` +` RxJava` framework so easy to build successful, and now you refer **Mvp** Package under the **UserActivity** format,[Use Template to automatically generate MVP, Dagger2 related classes](https://github.com/JessYanCoding/MVPArmsTemplate),With access to [Wiki documents](https://github.com/JessYanCoding/MVPArms/wiki) slowly grasp the framework to see more articles as soon as possible in the project to use it, in practice, learning is the fastest
 
 > Old Project
 >> [Old projects would like to introduce this framework, you can refer to the Wiki documentation, written in great detail](https://github.com/JessYanCoding/MVPArms/wiki)
 
 ## Wiki
-[Detailed usage reference Wiki](https://github.com/JessYanCoding/MVPArms/wiki)
+[Detailed usage reference Wiki (**Must see!!!**)](https://github.com/JessYanCoding/MVPArms/wiki)
 
 
 ## Notice
@@ -43,7 +43,7 @@
 ## Functionality & Libraries
 1. [`Mvp` Google's official` Mvp` architecture project, which contains several different schema branches (this is the Dagger branch).](https://github.com/googlesamples/android-architecture/tree/todo-mvp-dagger/)
 2. [`Dagger2`](https://github.com/google/dagger)
-3. [`Rxjava`](https://github.com/ReactiveX/RxJava)
+3. [`RxJava`](https://github.com/ReactiveX/RxJava)
 4. [`RxAndroid`](https://github.com/ReactiveX/RxAndroid)
 5. [`Rxlifecycle`](https://github.com/trello/RxLifecycle)
 6. [`RxCache`](https://github.com/VictorAlbertos/RxCache)
@@ -80,7 +80,10 @@
 * Monday, 26 December 2016: [**Version Update**](https://github.com/JessYanCoding/MVPArms/wiki#1.6)
 
 ## Acknowledgements 
-Thanks to all the three libraries used in this framework **Author**, and all for the `Open Sourece` selfless contributions **Developer** and **Organizations**, so that we can better work and study, I will also spare time return to the open source community
+Thanks to all the three libraries used in this framework **Author**, and all for the **Open Sourece** selfless contributions **Developer** and **Organizations**, so that we can better work and study, I will also spare time return to the open source community
+
+## Donate
+![alipay](image/pay_alipay.jpg) ![](image/pay_wxpay.jpg)
 
 ## About Me
 * **Email**: <jess.yan.effort@gmail.com>  

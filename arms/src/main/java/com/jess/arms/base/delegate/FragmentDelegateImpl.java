@@ -1,3 +1,18 @@
+/**
+  * Copyright 2017 JessYan
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at
+  *
+  *      http://www.apache.org/licenses/LICENSE-2.0
+  *
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
 package com.jess.arms.base.delegate;
 
 import android.content.Context;
@@ -7,7 +22,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
-import com.jess.arms.base.App;
+import com.jess.arms.utils.ArmsUtils;
 
 import org.simple.eventbus.EventBus;
 
@@ -16,10 +31,14 @@ import butterknife.Unbinder;
 import timber.log.Timber;
 
 /**
- * Created by jess on 29/04/2017 16:12
- * Contact with jess.yan.effort@gmail.com
+ * ================================================
+ * {@link FragmentDelegate} 默认实现类
+ * <p>
+ * Created by JessYan on 29/04/2017 16:12
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * ================================================
  */
-
 public class FragmentDelegateImpl implements FragmentDelegate {
     private android.support.v4.app.FragmentManager mFragmentManager;
     private android.support.v4.app.Fragment mFragment;
@@ -42,7 +61,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     public void onCreate(Bundle savedInstanceState) {
         if (iFragment.useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().register(mFragment);//注册到事件主线
-        iFragment.setupFragmentComponent(((App) mFragment.getActivity().getApplication()).getAppComponent());
+        iFragment.setupFragmentComponent(ArmsUtils.obtainAppComponentFromContext(mFragment.getActivity()));
     }
 
     @Override
@@ -115,7 +134,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
      */
     @Override
     public boolean isAdded() {
-        return mFragment == null ? false : mFragment.isAdded();
+        return mFragment != null && mFragment.isAdded();
     }
 
     @Override

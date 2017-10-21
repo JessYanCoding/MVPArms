@@ -1,21 +1,38 @@
+/**
+ * Copyright 2017 JessYan
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.jess.arms.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.jess.arms.base.delegate.AppDelegate;
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.utils.Preconditions;
 
 /**
- * 本项目由
- * mvp
- * +dagger2
- * +retrofit
- * +rxjava
- * +androideventbus
- * +butterknife组成
- * 请配合官方wiki文档https://github.com/JessYanCoding/MVPArms/wiki,学习本框架
+ * ================================================
+ * 本框架由 MVP + Dagger2 + Retrofit + RxJava + Androideventbus + Butterknife 组成
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki">请配合官方 Wiki 文档学习本框架</a>
+ * Created by JessYan on 22/03/2016
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * ================================================
  */
 public class BaseApplication extends Application implements App {
     private AppLifecycles mAppDelegate;
@@ -29,14 +46,16 @@ public class BaseApplication extends Application implements App {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        this.mAppDelegate = new AppDelegate(base);
+        if (mAppDelegate == null)
+            this.mAppDelegate = new AppDelegate(base);
         this.mAppDelegate.attachBaseContext(base);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        this.mAppDelegate.onCreate(this);
+        if (mAppDelegate != null)
+            this.mAppDelegate.onCreate(this);
     }
 
     /**
@@ -50,12 +69,16 @@ public class BaseApplication extends Application implements App {
     }
 
     /**
-     * 将AppComponent返回出去,供其它地方使用, AppComponent接口中声明的方法返回的实例,在getAppComponent()拿到对象后都可以直接使用
+     * 将 {@link AppComponent} 返回出去,供其它地方使用,{@link AppComponent} 中声明的方法所返回的实例
+     * 在 {@link #getAppComponent()}拿到对象后都可以直接使用
      *
      * @return
      */
+    @NonNull
     @Override
     public AppComponent getAppComponent() {
+        Preconditions.checkNotNull(mAppDelegate, "%s cannot be null", AppDelegate.class.getName());
+        Preconditions.checkState(mAppDelegate instanceof App, "%s must be implements %s", AppDelegate.class.getName(), App.class.getName());
         return ((App) mAppDelegate).getAppComponent();
     }
 

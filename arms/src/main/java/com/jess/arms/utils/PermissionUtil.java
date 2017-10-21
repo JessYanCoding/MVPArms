@@ -1,32 +1,71 @@
+/**
+ * Copyright 2017 JessYan
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.jess.arms.utils;
 
 import android.Manifest;
 
+import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import io.reactivex.annotations.NonNull;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import timber.log.Timber;
 
 /**
- * Created by jess on 17/10/2016 10:09
- * Contact with jess.yan.effort@gmail.com
+ * ================================================
+ * 权限请求工具类
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.9">PermissionUtil wiki 官方文档</a>
+ * Created by JessYan on 17/10/2016 10:09
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * ================================================
  */
-
 public class PermissionUtil {
     public static final String TAG = "Permission";
 
 
     private PermissionUtil() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
     public interface RequestPermission {
+        /**
+         * 权限请求成功
+         */
         void onRequestPermissionSuccess();
 
-        void onRequestPermissionFailure();
+        /**
+         * 用户拒绝了权限请求, 权限请求失败, 但还可以继续请求该权限
+         *
+         * @param permissions 请求失败的权限名
+         */
+        void onRequestPermissionFailure(List<String> permissions);
+
+        /**
+         * 用户拒绝了权限请求并且用户选择了以后不再询问, 权限请求失败, 这时将不能继续请求该权限, 需要提示用户进入设置页面打开该权限
+         *
+         * @param permissions 请求失败的权限名
+         */
+        void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions);
     }
 
 
@@ -40,21 +79,30 @@ public class PermissionUtil {
             }
         }
 
-        if (needRequest.size() == 0) {//全部权限都已经申请过，直接执行操作
+        if (needRequest.isEmpty()) {//全部权限都已经申请过，直接执行操作
             requestPermission.onRequestPermissionSuccess();
         } else {//没有申请过,则开始申请
             rxPermissions
-                    .request(needRequest.toArray(new String[needRequest.size()]))
-                    .subscribe(new ErrorHandleSubscriber<Boolean>(errorHandler) {
+                    .requestEach(needRequest.toArray(new String[needRequest.size()]))
+                    .buffer(permissions.length)
+                    .subscribe(new ErrorHandleSubscriber<List<Permission>>(errorHandler) {
                         @Override
-                        public void onNext(Boolean granted) {
-                            if (granted) {
-                                Timber.tag(TAG).d("Request permissons success");
-                                requestPermission.onRequestPermissionSuccess();
-                            } else {
-                                Timber.tag(TAG).d("Request permissons failure");
-                                requestPermission.onRequestPermissionFailure();
+                        public void onNext(@NonNull List<Permission> permissions) {
+                            for (Permission p : permissions) {
+                                if (!p.granted) {
+                                    if (p.shouldShowRequestPermissionRationale) {
+                                        Timber.tag(TAG).d("Request permissions failure");
+                                        requestPermission.onRequestPermissionFailure(Arrays.asList(p.name));
+                                        return;
+                                    } else {
+                                        Timber.tag(TAG).d("Request permissions failure with ask never again");
+                                        requestPermission.onRequestPermissionFailureWithAskNeverAgain(Arrays.asList(p.name));
+                                        return;
+                                    }
+                                }
                             }
+                            Timber.tag(TAG).d("Request permissions success");
+                            requestPermission.onRequestPermissionSuccess();
                         }
                     });
         }

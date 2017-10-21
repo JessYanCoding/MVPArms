@@ -1,3 +1,18 @@
+/**
+  * Copyright 2017 JessYan
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at
+  *
+  *      http://www.apache.org/licenses/LICENSE-2.0
+  *
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
 package com.jess.arms.base;
 
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +23,13 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
+ * ================================================
+ * 基类 {@link RecyclerView.Adapter} ,如果需要实现非常复杂的 {@link RecyclerView} ,请尽量使用其他优秀的三方库
+ * <p>
  * Created by jess on 2015/11/27.
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * ================================================
  */
 public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<T>> {
     protected List<T> mInfos;
@@ -21,7 +42,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
     }
 
     /**
-     * 创建Hodler
+     * 创建 {@link BaseHolder}
      *
      * @param parent
      * @param viewType
@@ -55,7 +76,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
 
 
     /**
-     * 数据的个数
+     * 返回数据的个数
      *
      * @return
      */
@@ -70,7 +91,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
     }
 
     /**
-     * 获得item的数据
+     * 获得某个 {@code position} 上的 item 的数据
      *
      * @param position
      * @return
@@ -80,7 +101,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
     }
 
     /**
-     * 子类实现提供holder
+     * 让子类实现用以提供 {@link BaseHolder}
      *
      * @param v
      * @param viewType
@@ -89,7 +110,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
     public abstract BaseHolder<T> getHolder(View v, int viewType);
 
     /**
-     * 提供Item的布局
+     * 提供用于 {@code item} 布局的 {@code layoutId}
      *
      * @param viewType
      * @return
@@ -98,7 +119,7 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
 
 
     /**
-     * 遍历所有hodler,释放他们需要释放的资源
+     * 遍历所有{@link BaseHolder},释放他们需要释放的资源
      *
      * @param recyclerView
      */
