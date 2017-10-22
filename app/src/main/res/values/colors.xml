@@ -3,5 +3,66 @@
     <color name="colorPrimary">#3FA862</color>
     <color name="colorPrimaryDark">#3FA862</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="white">#FFFFFF</color>
+
+    <!-- 字体颜色 -->
+
+    <color name="textColor">#4a4a4a</color>
+    <color name="textColor_hint">#A2A3A3</color>
+    <color name="greyish">#b4b4b4</color>
+    <color name="pinkishGrey">#cdcdcd</color>
+    <color name="warmGrey">#7c7c7c</color>
+
+    <!--背景色-->
+    <color name="bgPrimary">#EAEEF1</color>
+
+    <color name="login_bg">#EAEEF1</color>
+    <color name="device_list">#ffffff</color>
+    <color name="login_divide">#1F6075</color>
+    <color name="bt__login_bg">#FA6909</color>
+    <color name="transparent">#00000000</color>
+    <color name="window_selected">#F96A0E</color>
+    <color name="window_unselected">#804118</color>
+    <color name="app_title_bg">#01406B</color>
+    <color name="rigth_menu_bg">#0F314A</color>
+    <color name="rigth_menu_selected_bg">#0A2435</color>
+    <color name="bottom_menu_bg">#01406B</color>
+    <color name="devlist_pressed">#e8e8e8</color>
+    <color name="alarm_setting_bg">#F5F6F8</color>
+    <color name="alarm_setting_title">#E2E2E2</color>
+    <color name="file_grid_head">#E2E2E2</color>
+    <color name="preview_bg">#EAEFF0</color>
+    <color name="topreview_bg">#e73e04</color>
+    <color name="topreview_bg_pressed">#cc330a</color>
+    <color name="grey_online_dev">#7F7F7F</color>
+    <color name="cb_bg_stroke">#9b9b9b</color>
+    <color name="cb_textcolor">#09A5E2</color>
+    <color name="desalt_textcolor">#bababa</color>
+    <color name="bg_color">#EDEDED</color>
+    <color name="contents_text">#ff000000</color>
+    <color name="encode_view">#ffffffff</color>
+    <color name="help_button_view">#ffcccccc</color>
+    <color name="help_view">#ff404040</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="result_image_border">#ffffffff</color>
+    <color name="result_minor_text">#ffc0c0c0</color>
+    <color name="result_points">#c000ff00</color>
+    <color name="result_text">#ffffffff</color>
+    <color name="result_view">#b0000000</color>
+    <color name="sbc_header_text">#ff808080</color>
+    <color name="sbc_header_view">#ffffffff</color>
+    <color name="sbc_list_item">#fffff0e0</color>
+    <color name="sbc_layout_view">#ffffffff</color>
+    <color name="sbc_page_number_text">#ff000000</color>
+    <color name="sbc_snippet_text">#ff4b4b4b</color>
+    <color name="share_text">#ff000000</color>
+    <color name="share_view">#ffffffff</color>
+    <color name="status_view">#50000000</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="viewfinder_frame">#ff000000</color>
+    <color name="viewfinder_laser">#ffff0000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="header">#58567D</color>
+    <color name="grgray">#686868</color>
+    <color name="front_white">#FFFFFF</color>
+
 </resources>

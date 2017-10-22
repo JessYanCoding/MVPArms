@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/popupwindow_itembg_pressed" />
+            <corners android:radius="@dimen/btn_radius" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <stroke android:width="1px" android:color="@color/popupwindow_itembg_pressed" />
+            <solid android:color="@android:color/transparent" />
+            <corners android:radius="@dimen/btn_radius" />
+        </shape>
+    </item>
+</selector>

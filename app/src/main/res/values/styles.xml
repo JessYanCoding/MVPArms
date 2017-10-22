@@ -16,4 +16,23 @@
         <item name="android:activityCloseExitAnimation">@anim/translate_center_to_right</item>
     </style>
 
+
+    <!-- 登录注册中editText的样式 -->
+    <style name="etStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textSize">@dimen/textSize_middle</item>
+    </style>
+    <!-- 登录注册中FrameLayout的样式 -->
+    <style name="flStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:background">@color/login_divide</item>
+    </style>
+
+
+
+
+
 </resources>

@@ -76,4 +76,7 @@ dependencies {
     debugCompile rootProject.ext.dependencies["canary-debug"]
     releaseCompile rootProject.ext.dependencies["canary-release"]
     testCompile rootProject.ext.dependencies["canary-release"]
+
+    //titlebar
+    compile 'cn.bingoogolapple:bga-titlebar:1.0.8@aar'
 }

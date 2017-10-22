@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--自定义控件-->
+
+    <!--titlebar相关-->
+    <color name="pubblico_maintab_titlebar_bg">#f8f8f8</color>
+    <color name="pubblico_gray_line">#dedede</color>
+
+    <color name="orange_normal">#FD8225</color>
+    <!--按下时80%的透明度-->
+    <color name="orange_pressed">#CCFD8225</color>
+
+    <color name="popupwindow_itembg_pressed">#2F2F2F</color>
+    <color name="popupwindow_itembg_checked">#8F8F8F</color>
+
+</resources>

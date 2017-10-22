@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" >
+
+    <!-- 填充的颜色：这里设置背景透明 -->
+    <solid android:color="@android:color/black" />
+    <!-- 边框的颜色 ：不能和窗口背景色一样-->
+    <stroke
+        android:width="1dp"
+        android:color="#ffffff" />
+    <!-- 设置按钮的四个角为弧形 -->
+    <!-- android:radius 弧形的半径 -->
+    <corners android:radius="5dip" />
+</shape>

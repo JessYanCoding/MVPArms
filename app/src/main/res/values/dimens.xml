@@ -2,4 +2,54 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!--字体大小-->
+    <dimen name="textSize_tiny">12sp</dimen>
+    <dimen name="textSize_small">14sp</dimen>
+    <dimen name="textSize_middle">16sp</dimen>
+    <dimen name="textSize_large">18sp</dimen>
+    <dimen name="textSize_huge">20sp</dimen>
+
+    <!--间隔-->
+    <dimen name="small">5dp</dimen>
+    <dimen name="middle">10dp</dimen>
+    <dimen name="large">15dp</dimen>
+    <dimen name="huge">20dp</dimen>
+
+    <dimen name="pubblico_titlebar_height">44dp</dimen>
+
+    <dimen name="btn_radius">2dp</dimen>
+
+
+    <dimen name="slidingmenu_offset">60dp</dimen>
+    <dimen name="list_padding">10dp</dimen>
+    <dimen name="shadow_width">15dp</dimen>
+
+    <integer name="num_cols">1</integer>
+
+    <dimen name="title_height">60dp</dimen>
+    <dimen name="devlist_height">55dp</dimen>
+    <dimen name="bottom_menu_height">130dp</dimen>
+    <dimen name="right_menu_textsize">20sp</dimen>
+    <dimen name="second_menu_height">65dip</dimen>
+    <dimen name="first_menu_height">65dip</dimen>
+    <dimen name="second_menu_height_half">18dip</dimen>
+    <dimen name="standard_width">50dip</dimen>
+    <dimen name="standardRegist_width">88dip</dimen>
+    <dimen name="standard_height">48dip</dimen>
+    <dimen name="circle_height">100dip</dimen>
+    <dimen name="cloud_pop_margin">15dp</dimen>
+    <dimen name="cloud_pop_height">60dp</dimen>
+    <dimen name="cloud_pop_img_width">30dp</dimen>
+    <dimen name="cloud_pop_layout_height">60dp</dimen>
+    <dimen name="devlist_divider_height">2dp</dimen>
+    <dimen name="picker_marginTop">10dp</dimen>
+    <dimen name="preview_ll_titlebar_height">17dp</dimen>
+    <dimen name="circleInterval">7dp</dimen>
+    <dimen name="radius">3dp</dimen>
+    <dimen name="radius_sw360">5dp</dimen>
+    <dimen name="indicator_bottom_margin">10dp</dimen>
+    <dimen name="speed_bottom_margin">5dp</dimen>
+    <dimen name="indicator_bottom_margin_sw360">15dp</dimen>
+    <dimen name="speed_bottom_margin_sw360">15dp</dimen>
 </resources>

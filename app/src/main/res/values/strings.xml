@@ -1,3 +1,293 @@
 <resources>
     <string name="app_name">MVPArms</string>
+
+    <!--Account相关-->
+    <string name="login_login">登录</string>
+    <string name="login_register">注册</string>
+    <string name="login_username">用户名</string>
+    <string name="login_pwd_register">密码</string>
+    <string name="login_email">邮箱</string>
+    <string name="login_remember_password">记住密码</string>
+    <string name="login_auto_login">自动登录</string>
+    <string name="login_loss_password">忘记密码？</string>
+    <string name="login_send_pwd_to_email">发送密码至邮箱</string>
+    <string name="login_free_login">试试免登陆？</string>
+    <string name="login_input_server_address_port">设置服务器地址与端口</string>
+    <string name="login_input_pwd">密码不能为空</string>
+    <string name="login_input_confirm_pass">确认密码不能为空</string>
+    <string name="login_input_email">邮箱不能为空</string>
+    <string name="login_different_password">密码不匹配</string>
+    <string name="login_email_error">邮箱不可用</string>
+    <string name="login_login_succeed">登录成功</string>
+    <string name="login_keep_your_account">您已成功注册，请记住用户名和密码，以供下次登录使用。</string>
+    <string name="login_sent_fail">发送失败</string>
+    <string name="login_excp_usrregistfail">注册失败</string>
+    <string name="login_has_sent">密码已发送至:</string>
+
+
+
+    <string name="key_ptz_presetsetting">设置</string>
+    <string name="key_ptz_presetcall">调用</string>
+    <string name="key_globle_delete">删除</string>
+
+
+    <string name="ST_Privacy_Policy">隐私权政策</string>
+
+    <string name="preview_Memorywarning">内存不足。请降低图像质量或减少播放相机的数量，并建议关闭其它后台应用程序.</string>
+
+    <string name="login_username_not_registered">用户名未注册</string>
+
+    <string name="alarm_type_in">进入区域侦测</string>
+    <string name="alarm_type_out">离开区域侦测</string>
+    <string name="alarm_type_foget">物品遗留侦测</string>
+    <string name="alarm_type_pickup">物品丢失侦测</string>
+    <string name="alarm_type_move">快速移动侦测</string>
+    <string name="alarm_type_face">人脸侦测</string>
+
+    <string name="notSupportStream">不支持第三码流预览</string>
+
+    <string name="sideber_exit">退出</string>
+    <string name="devices_alias">设备名称</string>
+    <string name="preview_stopping">停止中</string>
+    <string name="preview_audio_stop">请先关闭对讲</string>
+
+    <string name="network_to_mobile_warning">您当前没有连接到WI-FI网络，所以可能会被运营商收取流量费用，是否选择继续？</string>
+    <string name="latest_version_now">已是最新版本</string>
+    <string name="version_name">版本名称</string>
+    <string name="release_time">发布时间</string>
+    <string name="update_describe">更新说明</string>
+    <string name="apk_file_size">文件大小</string>
+    <string name="version_update">版本更新</string>
+
+    <string name="new_version_tips">新版本提示</string>
+    <string name="lastest_version_is">当前最新版本为</string>
+
+    <string name="BACK">返回</string>
+    <string name="START">开始体验</string>
+
+    <string name="ALARM_TYPE_VIDEO_CROSS">越界侦测</string>
+    <string name="ALARM_TYPE_VIDEO_AREA">区域入侵侦测</string>
+    <string name="no_support_h265_recording">暂不支持H.265视频录像</string>
+    <string name="real_preview_menu">实时预览</string>
+    <string name="playback_menu">远程回放</string>
+    <string name="alarmmanager_menu">报警</string>
+    <string name="devmmanager_menu">设备管理</string>
+    <string name="filemanager_menu">图像管理</string>
+    <string name="localesetting_menu">系统配置</string>
+    <string name="userlogout_menu">注销</string>
+
+
+    <string name="real_preview_zoom">电子放大</string>
+    <string name="real_preview_cloud">云台控制</string>
+    <string name="playing">正在播放</string>
+    <string name="stop">已停止</string>
+    <string name="pause">已暂停</string>
+    <string name="connecting">正在连接...</string>
+    <string name="buffering">正在缓冲……</string>
+    <string name="connect_fail">连接设备失败</string>
+    <string name="ready">准备就绪</string>
+    <string name="focal_length">焦距</string>
+
+    <string name="nearfocus">聚焦</string>
+    <string name="aperture">光圈</string>
+
+    <string name="max_32">选择了太多的通道(最多%1$s通道)</string>
+    <string name="ok">确定</string>
+    <string name="bt_preview">开始预览</string>
+    <string name="str_devlist">设备列表</string>
+    <string name="input_name">收藏夹名称</string>
+    <string name="selector_dev_first">请选择至少一个通道或设备</string>
+    <string name="collect_dialog_titlestr">选择收藏夹</string>
+    <string name="favorite_empty">收藏夹名不能为空</string>
+    <string name="favorite_exists">收藏夹已存在</string>
+
+    <string name="online_device">在线设备</string>
+    <string name="manual_adding">手动添加</string>
+
+
+    <string name="end_record">视频录像已保存</string>
+    <string name="is_cancel_collect">是否取消收藏?</string>
+    <string name="is_cancel_all_collect">是否取消全部收藏?</string>
+
+    <string name="no_right_login">无权限登录帐号</string>
+    <string name="net_error">网络错误</string>
+
+
+    <string name="channel_type">类型</string>
+
+    <string name="str_all">全部类型</string>
+    <string name="channel_type1">定时</string>
+
+    <string name="channel_type2">手动录像</string>
+    <string name="channel_type3">移动侦测</string>
+
+    <string name="channel_type4">报警输入</string>
+    <string name="device_channel">设备通道</string>
+    <string name="str_start_time">开始时间</string>
+    <string name="str_end_time">结束时间</string>
+    <string name="bt_playback">开始回放</string>
+    <string name="select_chanel">未选择设备或类型</string>
+    <string name="search_video">搜索</string>
+
+
+    <string name="pic_saved">照片已保存</string>
+
+
+    <string name="add_dev">添加设备</string>
+    <string name="info_dev">设备信息</string>
+    <string name="cancel">取消</string>
+    <string name="dev_type">设备类型</string>
+    <string name="Alias">设备名称</string>
+    <string name="server_address">服务器地址</string>
+    <string name="server_port">服务器端口</string>
+    <string name="serial_number">云ID</string>
+    <string name="chanel_num">通道数目</string>
+    <string name="input_device_name">设备名称不能为空</string>
+
+    <string name="device_domain">设备域名</string>
+    <string name="input_domain">域名不能为空</string>
+    <string name="input_service_address">服务器地址不能为空</string>
+    <string name="input_service_port">服务器端口不能为空</string>
+    <string name="input_serial">序列号不能为空</string>
+    <string name="input_username">用户名不能为空</string>
+    <string name="devicename_already_exist">设备名称已存在</string>
+    <string name="add_succeed">添加成功</string>
+    <string name="resure_delete">确认删除？</string>
+    <string name="modify_success">设备修改成功</string>
+    <string name="NPC_D_MPI_MON_ERROR_USER_PWD_ERROR">用户名或密码错误</string>
+    <string name="NPC_D_MPI_MON_ERROR_SYS_ERROR">系统错误</string>
+    <string name="modify_fail">修改失败</string>
+    <string name="delete_succeed">删除成功</string>
+
+    <string name="dev_address">设备地址</string>
+
+    <string name="register_mode">注册类型</string>
+    <string name="offline_dev">离线设备</string>
+
+
+    <string name="add_failed">添加失败</string>
+    <string name="delete_failed">删除失败</string>
+    <string name="UNKNOWN_ERROR">未知错误</string>
+
+
+    <string name="login">登录</string>
+    <string name="regist">注册</string>
+    <string name="pwd_register">密码</string>
+    <string name="email">邮箱</string>
+    <string name="remenber_password">记住密码</string>
+    <string name="auto_login">自动登录</string>
+    <string name="loss_password">忘记密码？</string>
+    <string name="send_password_to_email">发送密码至邮箱</string>
+    <string name="free_login">试试免登陆？</string>
+    <string name="input_server_address_port">设置服务器地址与端口</string>
+    <string name="input_pwd">密码不能为空</string>
+    <string name="input_confirm_pass">确认密码不能为空</string>
+    <string name="input_email">邮箱不能为空</string>
+    <string name="different_password">密码不匹配</string>
+    <string name="email_error">邮箱不可用</string>
+    <string name="login_succeed">登录成功</string>
+    <string name="keep_your_account">您已成功注册，请记住用户名和密码，以供下次登录使用。</string>
+    <string name="sent_fail">发送失败</string>
+    <string name="excp_usrregistfail">注册失败</string>
+    <string name="has_sent">密码已发送至:</string>
+
+    <string name="letters_numbers">用户名只能包含字母和数字</string>
+    <string name="networkerro">网络错误</string>
+    <string name="REGIST_FAIL">注册失败</string>
+    <string name="confirm_pass_protect">确认密码</string>
+    <string name="user_exist">已有用户名</string>
+    <string name="username_error">用户名错误</string>
+    <string name="PASS_ERROR">密码错误</string>
+    <string name="loginfail">无法连接服务器</string>
+
+
+    <string name="pwd_length">密码长度至少6位</string>
+    <string name="no_sdcard">SD卡不存在</string>
+    <string name="empty_address">服务器地址为空</string>
+    <string name="empty_port">服务器端口为空</string>
+
+
+    <string name="unKnow_device">未知设备</string>
+    <string name="push">推送</string>
+
+    <string name="alarm_type">报警类型</string>
+    <string name="ALARM_TYPE_VIDEO_BLIND">视频遮挡</string>
+    <string name="ALARM_TYPE_VIDEO_LOSS">视频丢失</string>
+
+
+    <string name="operation_success">保存成功</string>
+    <string name="operation_fail">保存失败</string>
+
+    <string name="fail_defense">获取布防信息失败</string>
+    <string name="search_alarminfo">搜索</string>
+    <string name="nodataerro">无数据</string>
+
+
+    <string name="new_alarm_info">新报警信息</string>
+    <string name="resure_delete_all">全部删除?</string>
+    <string name="xrefreshview_footer_hint_normal">查看更多</string>
+    <string name="xrefreshview_footer_hint_ready">松开载入更多</string>
+    <string name="xrefreshview_never_refresh">从未刷新</string>
+    <string name="xrefreshview_refresh_justnow">刚刚刷新</string>
+    <string name="xrefreshview_refresh_minutes_ago">%1s分钟之前刷新</string>
+    <string name="xrefreshview_refresh_hours_ago">%1s小时之前刷新</string>
+    <string name="xrefreshview_refresh_days_ago">%1s天之前刷新</string>
+
+
+    <string name="PASSWORD_PROTECT">密码保护</string>
+    <string name="CLOUD_STEP">云台步长</string>
+    <string name="HELP">帮助</string>
+    <string name="notificaiton_sound">消息铃声</string>
+    <string name="ABOUT">关于</string>
+    <string name="Modify_Password">修改密码</string>
+    <string name="no_disturb">免打扰</string>
+    <string name="old_pass_protect">旧密码</string>
+    <string name="new_pass_protect">新密码</string>
+    <string name="modify_pass_success">修改密码成功</string>
+    <string name="enter_pass">输入密码</string>
+    <string name="vibration">报警震动</string>
+    <string name="alarm_settings">报警设置</string>
+
+
+    <string name="limit">1~10 characters</string>
+    <string name="ptz_save">云台步长已保存</string>
+
+
+    <string name="isExit">是否退出?</string>
+    <string name="NPC_D_MPI_MON_ERROR_CONNECTED">已连接</string>
+    <string name="NPC_D_MPI_MON_ERROR_PLAY_FAIL">播放失败</string>
+    <string name="NPC_D_MPI_MON_ERROR_FILE_NONENTITY">文件不存在</string>
+    <string name="NPC_D_MPI_MON_ERROR_EXEC_ORDER_CALL_FAIL">执行命令调用失败</string>
+    <string name="NPC_D_MPI_MON_ERROR_EXEC_ORDER_RET_FAIL">命令返回错误</string>
+    <string name="NPC_D_MPI_MON_ERROR_ALLOC_RES_FAIL">分配资源失败</string>
+    <string name="NPC_D_MPI_MON_ERROR_NO_CONNECT_CAMERA">未连接设备</string>
+    <string name="NPC_D_MPI_MON_ERROR_INNER_OP_FAIL">内部操作失败</string>
+    <string name="NPC_D_MPI_MON_ERROR_NO_PLAY">未播放</string>
+    <string name="NPC_D_MPI_MON_ERROR_NONSUP_VENDOR">不支持该厂家</string>
+    <string name="NPC_D_MPI_MON_ERROR_REJECT_ACCESS">权限不够</string>
+    <string name="NPC_D_MPI_MON_ERROR_CAMERA_OFFLINE">摄像机离线</string>
+    <string name="NPC_D_MPI_MON_ERROR_ACCOUNT_LOGINED">帐号已登录</string>
+    <string name="NPC_D_MPI_MON_ERROR_ACCOUNT_HAVE_EXPIRED">用户帐号已过有效期</string>
+    <string name="NPC_D_MPI_MON_ERROR_ACCOUNT_NO_ACTIVE">用户帐号未激活</string>
+    <string name="NPC_D_MPI_MON_ERROR_ACCOUNT_DEBT_STOP">用户帐号已欠费停机</string>
+    <string name="NPC_D_MPI_MON_ERROR_TIMESECT_NOT_ALLOW_CAMERA">该时间段不允许访问该摄像机</string>
+
+    <string name="version">版本</string>
+    <string name="no_result">%1$s 无搜索结果</string>
+    <string name="modify_dev">编辑</string>
+    <string name="dev_port">端口</string>
+    <string name="xrefreshview_header_hint_ready">松开立即刷新</string>
+    <string name="xrefreshview_header_hint_loading">刷新中...</string>
+    <string name="max_preview_channel_num">最多预览32个通道!</string>
+    <string name="alarm_IPDevice_unsupported">IP直连设备不支持报警设置</string>
+    <string name="IP_DNSS_address_error">IP/DDNS 地址格式错误</string>
+    <string name="Device_connect_limit">设备忙</string>
+    <string name="login_Logout_Failed">注销失败</string>
+    <string name="alarm_output">报警输出</string>
+    <string name="alarm_output_setting_fail">设置失败</string>
+    <string name="xrefreshview_header_hint_normal">下拉可以刷新</string>
+    <string name="alarm_type_loitering">徘徊侦测</string>
+    <string name="alarm_type_forbidden_parking">停车侦测</string>
+    <string name="alarm_type_gathering">人员聚集侦测</string>
+    <string name="alarm_type_defocus">虚焦侦测</string>
 </resources>

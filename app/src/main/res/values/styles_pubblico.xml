@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="TitleBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/pubblico_titlebar_height</item>
+        <item name="android:background">@drawable/pubblico_layer_titlebar_bg</item>
+        <item name="bgatitlebar_leftAndRightTextColor">@color/selector_orange</item>
+        <item name="bgatitlebar_leftAndRightTextSize">@dimen/textSize_large</item>
+        <item name="bgatitlebar_titleTextColor">@color/black</item>
+        <item name="bgatitlebar_titleTextSize">@dimen/textSize_huge</item>
+        <item name="bgatitlebar_leftAndRightPadding">@dimen/middle</item>
+    </style>
+
+</resources>
