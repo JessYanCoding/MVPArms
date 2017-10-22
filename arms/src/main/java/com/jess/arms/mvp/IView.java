@@ -46,6 +46,11 @@ public interface IView {
     void showMessage(String message);
 
     /**
+     *  显示错误
+     */
+    void showError(int Code, String msg);
+
+    /**
      * 跳转 {@link Activity}
      */
     void launchActivity(Intent intent);

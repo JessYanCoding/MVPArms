@@ -121,6 +121,11 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     }
 
     @Override
+    public void showError(int Code, String msg) {
+
+    }
+
+    @Override
     public void launchActivity(Intent intent) {
         ArmsUtils.startActivity(intent);
     }

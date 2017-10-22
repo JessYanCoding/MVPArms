@@ -70,13 +70,27 @@ dependencies {
     compile rootProject.ext.dependencies["paginate"]
     //arms
     compile project(':arms')
-//    compile 'me.jessyan:arms:2.2.3'
+    //    compile 'me.jessyan:arms:2.2.3'
     //test
     testCompile rootProject.ext.dependencies["junit"]
     debugCompile rootProject.ext.dependencies["canary-debug"]
     releaseCompile rootProject.ext.dependencies["canary-release"]
     testCompile rootProject.ext.dependencies["canary-release"]
 
+    //sdk相关
+    compile files('libs/activation.jar')
+    compile files('libs/additionnal.jar')
+    compile files('libs/core.jar')
+    compile files('libs/fastjson-1.1.43.android.jar')
+    compile files('libs/GetuiSDK2.10.3.5.jar')
+    compile files('libs/json_simple-1.1.jar')
+    compile files('libs/mail.jar')
+    compile files('libs/NewLivePlayer-new.jar')
+    compile files('libs/org.apache.http.legacy.jar')
+    compile files('libs/SmartLink.jar')
+    compile files('libs/WebSocket.jar')
+
     //titlebar
     compile 'cn.bingoogolapple:bga-titlebar:1.0.8@aar'
+
 }
