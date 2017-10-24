@@ -5,3 +5,4 @@
 * [**MVPFrames** : 这个项目是将MVPArms和MVPArt框架合并成一个通用型项目，并增加了数据库](https://github.com/DesignQu/MVPFrames)
 * [**Ganamrs** : 这是一个干果开源客户端,使用 MVPArms 框架做的一个简单 demo ](https://github.com/lianhuo/Ganamrs)
 * [**MVVMArms** : Android MVVM Architecture Components based on MVPArms and Android Architecture Components.](https://github.com/xiaobailong24/MVVMArms)
+* [**LQRBiliBlili** : 一个基于MVPArms开发的高仿bilibili安卓客户端](https://github.com/GitLqr/LQRBiliBlili)
