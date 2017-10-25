@@ -1,4 +1,4 @@
-**如果您使用或基于 MVPArms 开发过开源的 APP 或者 Framework, 恳请您将项目地址 Pull Request 到这个页面, 方便更多人学习的同时, 也能为您的开源项目引入更多的流量, 也衷心的希望大家在学习 MVPArms 获得自我提升的同时, 也能帮助其他朋友更快的成长, 将开源精神传递下去!**
+**如果您使用或基于 MVPArms 开发过开源的 APP 或者 Framework, 恳请您将项目地址 [Pull Request](https://github.com/JessYanCoding/MVPArms/pull/new/master) 到这个页面, 方便更多人学习的同时, 也能为您的开源项目引入更多的流量, 也衷心的希望大家在学习 MVPArms 获得自我提升的同时, 也能帮助其他朋友更快的成长, 将开源精神传递下去!**
 
 <!-- 格式为: [**项目名字** : 项目描述](项目地址) -->
 ### App
