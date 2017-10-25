@@ -4,7 +4,6 @@
 ### App
 * [**LQRBiliBlili** : 这是一个基于 **MVPArms** 开发的高仿 **bilibili** 安卓客户端](https://github.com/GitLqr/LQRBiliBlili)
 * [**DiyCode** : 这是一个基于 **MVPArms** 搭建的 **DiyCode** 社区客户端](https://github.com/linsneider/DiyCodeAndroid)
-* [**Ganamrs** : 这是一个干果开源客户端,使用 MVPArms 框架做的一个简单 demo ](https://github.com/lianhuo/Ganamrs)
 * [**Ganamrs** : 这是一个基于 **MVPArms** 开发的 **Gank** 开源客户端](https://github.com/lianhuo/Ganamrs)
 
 ### Framework
