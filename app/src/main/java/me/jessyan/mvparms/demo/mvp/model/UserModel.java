@@ -15,6 +15,9 @@
   */
 package me.jessyan.mvparms.demo.mvp.model;
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.OnLifecycleEvent;
+
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
@@ -33,6 +36,7 @@ import me.jessyan.mvparms.demo.mvp.contract.UserContract;
 import me.jessyan.mvparms.demo.mvp.model.api.cache.CommonCache;
 import me.jessyan.mvparms.demo.mvp.model.api.service.UserService;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
+import timber.log.Timber;
 
 /**
  * ================================================
@@ -70,6 +74,11 @@ public class UserModel extends BaseModel implements UserContract.Model {
                     }
                 });
 
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    void onPause() {
+        Timber.d("Release Resource");
     }
 
 }

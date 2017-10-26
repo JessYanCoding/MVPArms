@@ -16,6 +16,10 @@
 package me.jessyan.mvparms.demo.mvp.presenter;
 
 import android.app.Application;
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.OnLifecycleEvent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.SupportActivity;
 import android.support.v7.widget.RecyclerView;
 
 import com.jess.arms.di.scope.ActivityScope;
@@ -67,6 +71,15 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
         this.mAppManager = appManager;
         this.mUsers = list;
         this.mAdapter = adapter;
+    }
+
+    /**
+     * 使用 2017 Google IO 发布的 Architecture Components 中的 Lifecycles 的新特性 (此特性已被加入 Support library)
+     * 使 {@code Presenter} 可以与 {@link SupportActivity} 和 {@link Fragment} 的部分生命周期绑定
+     */
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    void onCreate() {
+        requestUsers(true);//打开 App 时自动加载列表
     }
 
     public void requestUsers(final boolean pullToRefresh) {

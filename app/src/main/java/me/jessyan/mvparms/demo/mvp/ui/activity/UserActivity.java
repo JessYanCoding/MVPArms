@@ -85,7 +85,6 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
         initRecycleView();
         mRecyclerView.setAdapter(mAdapter);
         initPaginate();
-        mPresenter.requestUsers(true);//打开 App 时自动加载列表
     }
 
 
