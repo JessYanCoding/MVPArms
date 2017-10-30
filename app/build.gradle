@@ -64,7 +64,6 @@ dependencies {
     //view
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'support-annotations'
-        exclude module: 'butterknife-annotations'
     }
     compile rootProject.ext.dependencies["paginate"]
     //arms

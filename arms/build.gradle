@@ -114,9 +114,7 @@ dependencies {
     //tools
     provided rootProject.ext.dependencies["javax.annotation"]
     compile rootProject.ext.dependencies["dagger2"]
-    annotationProcessor(rootProject.ext.dependencies["dagger2-compiler"]) {
-        exclude module: 'dagger'
-    }
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     compile rootProject.ext.dependencies["androideventbus"]
     compile rootProject.ext.dependencies["gson"]
 
