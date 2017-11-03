@@ -17,7 +17,7 @@ ext {
                    butterknifeSdkVersion   : "8.8.1",
                    rxlifecycleSdkVersion   : "1.0",
                    rxlifecycle2SdkVersion  : "2.2.0",
-                   espressoSdkVersion      : "2.2.2",
+                   espressoSdkVersion      : "3.0.1",
                    canarySdkVersion        : "1.5.4"
         ]
 
@@ -90,7 +90,7 @@ ext {
                 //test
                 "junit"                    : "junit:junit:4.12",
                 "androidJUnitRunner"       : "android.support.test.runner.AndroidJUnitRunner",
-                "runner"                   : "com.android.support.test:runner:0.5",
+                "runner"                   : "com.android.support.test:runner:1.0.1",
                 "espresso-core"            : "com.android.support.test.espresso:espresso-core:${version["espressoSdkVersion"]}",
                 "espresso-contrib"         : "com.android.support.test.espresso:espresso-contrib:${version["espressoSdkVersion"]}",
                 "espresso-intents"         : "com.android.support.test.espresso:espresso-intents:${version["espressoSdkVersion"]}",
