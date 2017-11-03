@@ -68,7 +68,7 @@ dependencies {
     implementation rootProject.ext.dependencies["paginate"]
     //arms
     implementation project(':arms')
-//    implementation 'me.jessyan:arms:2.2.3'
+//    implementation 'me.jessyan:arms:2.3.1'
     //test
     testImplementation rootProject.ext.dependencies["junit"]
     debugImplementation rootProject.ext.dependencies["canary-debug"]
