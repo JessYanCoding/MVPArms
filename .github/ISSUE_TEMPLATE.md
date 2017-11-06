@@ -6,16 +6,17 @@
 - → Did you search in openned&closed Issues?
 - → **Receive only bugs and suggestions**
 
-### MVPArms Version:
+### Environment
 
-
-### AndroidStudio Version:
-
-
-### Target Android Version：
+- [x] MVPArms Version: <!--like: v2.3.1 -->
+- [x] AndroidStudio Version: <!-- like: v3.0.0 -->
+- [x] Gradle Plugin Version: <!-- like: v3.0.0 -->
+- [x] Target Android Version: <!-- like: Android 5.0 -->
+- [x] Device Model: <!-- like: Nexus 6 -->
 
 
 ### Bug Description:
+
 
 
 ### Related Code:
