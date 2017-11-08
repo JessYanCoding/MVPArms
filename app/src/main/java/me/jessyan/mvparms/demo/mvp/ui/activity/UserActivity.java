@@ -98,7 +98,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
      */
     private void initRecyclerView() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        ArmsUtils.configRecycleView(mRecyclerView, mLayoutManager);
+        ArmsUtils.configRecyclerView(mRecyclerView, mLayoutManager);
     }
 
 
