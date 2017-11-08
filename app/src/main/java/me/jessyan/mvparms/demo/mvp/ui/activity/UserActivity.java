@@ -82,7 +82,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        initRecycleView();
+        initRecyclerView();
         mRecyclerView.setAdapter(mAdapter);
         initPaginate();
     }
@@ -94,9 +94,9 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     }
 
     /**
-     * 初始化RecycleView
+     * 初始化RecyclerView
      */
-    private void initRecycleView() {
+    private void initRecyclerView() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
         ArmsUtils.configRecycleView(mRecyclerView, mLayoutManager);
     }
