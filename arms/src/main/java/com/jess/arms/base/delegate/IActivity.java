@@ -18,6 +18,7 @@ package com.jess.arms.base.delegate;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 
 import com.jess.arms.base.BaseActivity;
@@ -45,6 +46,7 @@ public interface IActivity {
      *
      * @return like {@link LruCache}
      */
+    @NonNull
     Cache<String, Object> provideCache();
 
     /**

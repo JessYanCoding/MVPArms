@@ -59,6 +59,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     @Inject
     protected P mPresenter;
 
+    @NonNull
     @Override
     public Cache<String, Object> provideCache() {
         return mCache;
