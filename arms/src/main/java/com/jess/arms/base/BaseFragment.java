@@ -49,13 +49,16 @@ import io.reactivex.subjects.Subject;
 public abstract class BaseFragment<P extends IPresenter> extends Fragment implements IFragment, FragmentLifecycleable {
     protected final String TAG = this.getClass().getSimpleName();
     private final BehaviorSubject<FragmentEvent> mLifecycleSubject = BehaviorSubject.create();
-    private final Cache<String, Object> mCache = ArmsUtils.obtainAppComponentFromContext(getActivity()).cacheFactory().build(CacheType.ACTIVITY_CACHE);
+    private Cache<String, Object> mCache;
     @Inject
     protected P mPresenter;
 
     @NonNull
     @Override
     public Cache<String, Object> provideCache() {
+        if (mCache == null){
+            mCache = ArmsUtils.obtainAppComponentFromContext(getActivity()).cacheFactory().build(CacheType.FRAGMENT_CACHE);
+        }
         return mCache;
     }
 
@@ -64,11 +67,6 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     @Override
     public final Subject<FragmentEvent> provideLifecycleSubject() {
         return mLifecycleSubject;
-    }
-
-    public BaseFragment() {
-        //必须确保在Fragment实例化时setArguments()
-        setArguments(new Bundle());
     }
 
 
