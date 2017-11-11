@@ -18,7 +18,7 @@
   </a>
 </p>
 
-## 一个整合了大量主流开源项目的 Android MVP 快速搭建框架
+<h2 align="center">一个整合了大量主流开源项目高度可配置化的 Android MVP 快速集成框架</h2>
 
 ## Usage
 > New Project (以下步骤太麻烦? 一键生成整个新项目, [开发中... 敬请期待!](http://androidstarters.com/))
