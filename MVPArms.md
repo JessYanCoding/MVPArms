@@ -53,14 +53,6 @@
 * 作为通用框架,本框架不提供与 **UI** 有关的任何第三方库(除了 `AutoLayout` 屏幕适配方案).
 
 
-## Feature
-
-* **网络请求层**: 如今主流的网络请求框架有 `Volley` , `Okhttp` , `Retrofit` (`Android-async-http` 停止维护了) ,因为这个库是基于 `RxJava` , `Retrofit` 支持 `RxJava` ,默认使用 `Okhttp` 请求网络(`Okhttp` 使用 `Okio` , `Okio` 基于 IO 和 NIO 性能优于 `Volley` , `Volley` 内部封装有 Imageloader ,支持扩展 `Okhttp` ,封装比 `Okhttp` 好,但是比较适合频繁,数据量小的网络请求),所以此库默认使用 `Retrofit` 作为网络请求层.
-
-* **图片加载**: 因为图片加载框架各有优缺点, `Fresco` , `Picasso` , `Glide` 这些都是现在比较主流得图片加载框架,所以为了扩展性本框架提供一个统一的管理类 Imageloader ,使用策略者模式,开发者只用实现接口,就可以动态替换图片框架,外部提供统一接口加载图片,替换图片加载框架毫无痛点,并且为了快速实现,默认提供一个 Glide 的默认实现类,有其它需求可以参照 [**Wiki**](https://github.com/JessYanCoding/MVPArms/wiki#3.4) 替换为别的图片加载框架.
-
-* **Model层**: 优秀的数据库太多, `GreenDao` , `Realm` , `SqlBrite`（Square 公司出品，对 SQLiteOpenHelper 封装，提供响应式 Api 访问数据库）, `SqlDelight` , `Storio` , `DBFlow` ,每个框架的使用方法都不一样,本框架只提供有一个管理类 RepositoryManager 里面默认封装了 `RxCache` (此框架根据 `Retrofit` Api 实现了缓存逻辑,并提供响应式接口), `Retrofit` 等与数据相关的框架,以后有其他需求如需使用数据库,就可以直接封装进 RepositoryManager ,本框架通过 Dagger2 向 Model 层注入 RepositoryManager,来提供给开发者数据处理的能力,这样的好处的是上层（Activity/Fragment/Presenter）不需要知道数据源的细节（来自于网络、数据库、亦或是内存等等）,下层可以根据需求修改（缓存的实现细节）上下两层分离互不影响.
-
 ## Functionality & Libraries
 1. [`Mvp`Google官方出品的`Mvp`架构项目，含有多个不同的架构分支(此为Dagger分支).](https://github.com/googlesamples/android-architecture/tree/todo-mvp-dagger/)
 2. [`Dagger2`Google根据Square的Dagger1出品的依赖注入框架，通过Apt编译时生成代码，性能优于使用运行时反射技术的依赖注入框架.](https://github.com/google/dagger)
@@ -82,11 +74,11 @@
 
 ## Who is using MVPArms?
 
-**MVPArms** 从诞生之初,一直真诚的为开发者做着力所能及的事,从详细的 [**Wiki**文档](https://github.com/JessYanCoding/MVPArmsTemplate) 到高效的[代码生成器](https://github.com/JessYanCoding/MVPArms/wiki),无一不透露着 **MVPArms** 对开发者诚挚的付出和关怀  
+**MVPArms** 从诞生之初, 一直真诚的为开发者做着力所能及的事, 从详细的 [**Wiki**文档](https://github.com/JessYanCoding/MVPArmsTemplate) 到高效的 [代码生成器](https://github.com/JessYanCoding/MVPArms/wiki), 无一不透露着 **MVPArms** 对开发者诚挚的付出和关怀  
 
-**MVPArms** 经过长达一年半时间殷勤的耕耘,逐渐的变得成熟且稳定,这不得不归功于 **MVPArms** 大家庭中每一位成员一直以来真诚的反馈和建议,在此衷心感谢他们为 **MVPArms** 做出的不可磨灭的贡献  
+**MVPArms** 经过近两年时间殷勤的耕耘, 逐渐变得成熟, 稳定, 这不得不归功于 **MVPArms** 大家庭中每一位成员一直以来真诚的反馈和建议, 在此由衷的感谢他们为 **MVPArms** 做出的不可磨灭的贡献  
 
-但是 **MVPArms** 远不止于此,还有更多的路要走,还会继续成长,变得更加强大,现在我们诚挚的邀请您也成为咱们 **MVPArms** 大家庭中的一员  
+但是 **MVPArms** 远不止于此, 还有更多的路要走, 还会继续成长, 变得更加强大, 现在我们诚挚的邀请您也成为咱们 **MVPArms** 大家庭中的一员  
 
 **小顶家装 工长端** | **小顶家装 工人端** | **小顶家装 材料端** | **小顶网** | **智播** |
 :-------------------------------------------------------------------:|:----------:|:---------------:|:--------:|:--------------:|
