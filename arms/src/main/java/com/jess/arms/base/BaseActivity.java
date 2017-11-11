@@ -53,15 +53,18 @@ import static com.jess.arms.utils.ThirdViewUtil.convertAutoView;
  */
 public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IActivity, ActivityLifecycleable {
     protected final String TAG = this.getClass().getSimpleName();
-    private Unbinder mUnbinder;
     private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
-    private final Cache<String, Object> mCache = ArmsUtils.obtainAppComponentFromContext(this).cacheFactory().build(CacheType.ACTIVITY_CACHE);
+    private Cache<String, Object> mCache;
+    private Unbinder mUnbinder;
     @Inject
     protected P mPresenter;
 
     @NonNull
     @Override
     public Cache<String, Object> provideCache() {
+        if (mCache == null){
+            mCache = ArmsUtils.obtainAppComponentFromContext(this).cacheFactory().build(CacheType.ACTIVITY_CACHE);
+        }
         return mCache;
     }
 

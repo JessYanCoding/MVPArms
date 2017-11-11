@@ -447,6 +447,7 @@ public class ArmsUtils {
     }
 
     public static AppComponent obtainAppComponentFromContext(Context context) {
+        Preconditions.checkNotNull(context, "%s cannot be null", Context.class.getName());
         Preconditions.checkState(context.getApplicationContext() instanceof App, "Application does not implements App");
         return ((App) context.getApplicationContext()).getAppComponent();
     }

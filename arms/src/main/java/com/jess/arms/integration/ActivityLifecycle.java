@@ -27,6 +27,7 @@ import com.jess.arms.base.delegate.ActivityDelegateImpl;
 import com.jess.arms.base.delegate.FragmentDelegate;
 import com.jess.arms.base.delegate.IActivity;
 import com.jess.arms.integration.cache.Cache;
+import com.jess.arms.utils.Preconditions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,11 +74,13 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             mAppManager.addActivity(activity);
 
         //配置ActivityDelegate
-        if (activity instanceof IActivity && activity.getIntent() != null) {
+        if (activity instanceof IActivity) {
             ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
             if (activityDelegate == null) {
+                IActivity iActivity = (IActivity) activity;
+                Preconditions.checkNotNull(iActivity.provideCache(), "%s cannot be null on Activity", Cache.class.getName());
                 activityDelegate = new ActivityDelegateImpl(activity);
-                activity.getIntent().putExtra(ActivityDelegate.ACTIVITY_DELEGATE, activityDelegate);
+                iActivity.provideCache().put(ActivityDelegate.ACTIVITY_DELEGATE, activityDelegate);
             }
             activityDelegate.onCreate(savedInstanceState);
         }
@@ -139,7 +142,6 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
         if (activityDelegate != null) {
             activityDelegate.onDestroy();
-            activity.getIntent().removeExtra(ActivityDelegate.ACTIVITY_DELEGATE);
         }
     }
 
@@ -177,9 +179,10 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     private ActivityDelegate fetchActivityDelegate(Activity activity) {
         ActivityDelegate activityDelegate = null;
-        if (activity instanceof IActivity && activity.getIntent() != null) {
-            activity.getIntent().setExtrasClassLoader(getClass().getClassLoader());
-            activityDelegate = activity.getIntent().getParcelableExtra(ActivityDelegate.ACTIVITY_DELEGATE);
+        if (activity instanceof IActivity) {
+            IActivity iActivity = (IActivity) activity;
+            Preconditions.checkNotNull(iActivity.provideCache(), "%s cannot be null on Activity", Cache.class.getName());
+            activityDelegate = (ActivityDelegate) iActivity.provideCache().get(ActivityDelegate.ACTIVITY_DELEGATE);
         }
         return activityDelegate;
     }

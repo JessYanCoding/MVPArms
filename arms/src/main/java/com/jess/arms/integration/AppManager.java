@@ -17,6 +17,8 @@ package com.jess.arms.integration;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Dialog;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
@@ -41,8 +43,8 @@ import timber.log.Timber;
 
 /**
  * ================================================
- * 用于管理所有 activity,和在前台的 activity
- * 可以通过直接持有 AppManager 对象执行对应方法
+ * 用于管理所有 {@link Activity},和在前台的 {@link Activity}
+ * 可以通过直接持有 {@link AppManager} 对象执行对应方法
  * 也可以通过 {@link #post(Message)} ,远程遥控执行对应方法,用法和 EventBus 类似
  *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.11">AppManager wiki 官方文档</a>
@@ -76,7 +78,8 @@ public final class AppManager {
 
 
     /**
-     * 通过 eventbus post 事件,远程遥控执行对应方法
+     * 通过 {@link EventBus#post(Object)} 事件, 远程遥控执行对应方法
+     * 可通过 {@link #setHandleListener(HandleListener)}, 让外部可扩展新的事件
      */
     @Subscriber(tag = APPMANAGER_MESSAGE, mode = ThreadMode.MAIN)
     public void onReceive(Message message) {
@@ -119,7 +122,7 @@ public final class AppManager {
     }
 
     /**
-     * 提供给外部扩展 AppManager 的 @{@link #onReceive} 方法(远程遥控 AppManager 的功能)
+     * 提供给外部扩展 {@link AppManager} 的 {@link #onReceive} 方法(远程遥控 {@link AppManager} 的功能)
      * 建议在 {@link ConfigModule#injectAppLifecycle(Context, List)} 中
      * 通过 {@link AppLifecycles#onCreate(Application)} 在 App 初始化时,使用此方法传入自定义的 {@link HandleListener}
      *
@@ -130,7 +133,7 @@ public final class AppManager {
     }
 
     /**
-     * 通过此方法远程遥控 AppManager ,使 {@link #onReceive(Message)} 执行对应方法
+     * 通过此方法远程遥控 {@link AppManager} ,使 {@link #onReceive(Message)} 执行对应方法
      *
      * @param msg
      */
@@ -139,7 +142,7 @@ public final class AppManager {
     }
 
     /**
-     * 让在前台的 activity,使用 snackbar 显示文本内容
+     * 让在前台的 {@link Activity},使用 {@link Snackbar} 显示文本内容
      *
      * @param message
      * @param isLong
@@ -155,7 +158,7 @@ public final class AppManager {
 
 
     /**
-     * 让在栈顶的 activity ,打开指定的 activity
+     * 让在栈顶的 {@link Activity} ,打开指定的 {@link Activity}
      *
      * @param intent
      */
@@ -171,7 +174,7 @@ public final class AppManager {
     }
 
     /**
-     * 让在栈顶的 activity ,打开指定的 activity
+     * 让在栈顶的 {@link Activity} ,打开指定的 {@link Activity}
      *
      * @param activityClass
      */
@@ -192,9 +195,9 @@ public final class AppManager {
     }
 
     /**
-     * 将在前台的 activity 赋值给 currentActivity,注意此方法是在 onResume 方法执行时将栈顶的 activity 赋值给 currentActivity
-     * 所以在栈顶的 activity 执行 onCreate 方法时使用 {@link #getCurrentActivity()} 获取的就不是当前栈顶的 activity,可能是上一个 activity
-     * 如果在 App 的第一个 activity 执行 onCreate 方法时使用 {@link #getCurrentActivity()} 则会出现返回为 null 的情况
+     * 将在前台的 {@link Activity} 赋值给 {@code currentActivity}, 注意此方法是在 {@link Activity#onResume} 方法执行时将栈顶的 {@link Activity} 赋值给 {@code currentActivity}
+     * 所以在栈顶的 {@link Activity} 执行 {@link Activity#onCreate} 方法时使用 {@link #getCurrentActivity()} 获取的就不是当前栈顶的 {@link Activity}, 可能是上一个 {@link Activity}
+     * 如果在 App 的第一个 {@link Activity} 执行 {@link Activity#onCreate} 方法时使用 {@link #getCurrentActivity()} 则会出现返回为 {@code null} 的情况
      * 想避免这种情况请使用 {@link #getTopActivity()}
      *
      * @param currentActivity
@@ -204,14 +207,14 @@ public final class AppManager {
     }
 
     /**
-     * 获取在前台的 activity (保证获取到的 activity 正处于可见状态,即未调用 onStop),获取的 activity 存续时间
-     * 是在 onStop 之前,所以如果当此 activity 调用 onStop 方法之后,没有其他的 activity 回到前台(用户返回桌面或者打开了其他 App 会出现此状况)
-     * 这时调用 {@link #getCurrentActivity()} 有可能返回 null,所以请注意使用场景和 {@link #getTopActivity()} 不一样
+     * 获取在前台的 {@link Activity} (保证获取到的 {@link Activity} 正处于可见状态, 即未调用 {@link Activity#onStop()}), 获取的 {@link Activity} 存续时间
+     * 是在 {@link Activity#onStop()} 之前, 所以如果当此 {@link Activity} 调用 {@link Activity#onStop()} 方法之后, 没有其他的 {@link Activity} 回到前台(用户返回桌面或者打开了其他 App 会出现此状况)
+     * 这时调用 {@link #getCurrentActivity()} 有可能返回 {@code null}, 所以请注意使用场景和 {@link #getTopActivity()} 不一样
      * <p>
      * Example usage:
-     * 使用场景比较适合,只需要在可见状态的 activity 上执行的操作
-     * 如当后台 service 执行某个任务时,需要让前台 activity ,做出某种响应操作或其他操作,如弹出 Dialog,这时在 service 中就可以使用 {@link #getCurrentActivity()}
-     * 如果返回为 null ,说明没有前台 activity (用户返回桌面或者打开了其他 App 会出现此状况),则不做任何操作,不为 null ,则弹出 Dialog
+     * 使用场景比较适合, 只需要在可见状态的 {@link Activity} 上执行的操作
+     * 如当后台 {@link Service} 执行某个任务时, 需要让前台 {@link Activity} ,做出某种响应操作或其他操作,如弹出 {@link Dialog}, 这时在 {@link Service} 中就可以使用 {@link #getCurrentActivity()}
+     * 如果返回为 {@code null}, 说明没有前台 {@link Activity} (用户返回桌面或者打开了其他 App 会出现此状况), 则不做任何操作, 不为 {@code null}, 则弹出 {@link Dialog}
      *
      * @return
      */
@@ -220,8 +223,8 @@ public final class AppManager {
     }
 
     /**
-     * 获取位于栈顶的 activity,此方法不保证获取到的 acticity 正处于可见状态,即使 App 进入后台也会返回当前栈顶的 activity
-     * 因此基本不会出现 null 的情况,比较适合大部分的使用场景,如 startActivity,Glide 加载图片
+     * 获取位于栈顶的 {@link Activity}, 此方法不保证获取到的 {@link Activity} 正处于可见状态, 即使 App 进入后台也会返回当前栈顶的 {@link Activity}
+     * 因此基本不会出现 {@code null} 的情况, 比较适合大部分的使用场景, 如 startActivity, Glide 加载图片
      *
      * @return
      */
@@ -235,7 +238,7 @@ public final class AppManager {
 
 
     /**
-     * 返回一个存储所有未销毁的 activity 的集合
+     * 返回一个存储所有未销毁的 {@link Activity} 的集合
      *
      * @return
      */
@@ -248,7 +251,7 @@ public final class AppManager {
 
 
     /**
-     * 添加 activity 到集合
+     * 添加 {@link Activity} 到集合
      */
     public void addActivity(Activity activity) {
         if (mActivityList == null) {
@@ -262,9 +265,9 @@ public final class AppManager {
     }
 
     /**
-     * 删除集合里的指定的 activity 实例
+     * 删除集合里的指定的 {@link Activity} 实例
      *
-     * @param activity
+     * @param {@link Activity}
      */
     public void removeActivity(Activity activity) {
         if (mActivityList == null) {
@@ -279,7 +282,7 @@ public final class AppManager {
     }
 
     /**
-     * 删除集合里的指定位置的 activity
+     * 删除集合里的指定位置的 {@link Activity}
      *
      * @param location
      */
@@ -297,7 +300,7 @@ public final class AppManager {
     }
 
     /**
-     * 关闭指定的 activity class 的所有的实例
+     * 关闭指定的 {@link Activity} class 的所有的实例
      *
      * @param activityClass
      */
@@ -315,9 +318,9 @@ public final class AppManager {
 
 
     /**
-     * 指定的 activity 实例是否存活
+     * 指定的 {@link Activity} 实例是否存活
      *
-     * @param activity
+     * @param {@link Activity}
      * @return
      */
     public boolean activityInstanceIsLive(Activity activity) {
@@ -330,7 +333,7 @@ public final class AppManager {
 
 
     /**
-     * 指定的 activity class 是否存活(同一个 activity class 可能有多个实例)
+     * 指定的 {@link Activity} class 是否存活(同一个 {@link Activity} class 可能有多个实例)
      *
      * @param activityClass
      * @return
@@ -350,7 +353,7 @@ public final class AppManager {
 
 
     /**
-     * 获取指定 activity class 的实例,没有则返回 null(同一个 activity class 有多个实例,则返回最早的实例)
+     * 获取指定 {@link Activity} class 的实例,没有则返回 null(同一个 {@link Activity} class 有多个实例,则返回最早的实例)
      *
      * @param activityClass
      * @return
@@ -370,7 +373,7 @@ public final class AppManager {
 
 
     /**
-     * 关闭所有 activity
+     * 关闭所有 {@link Activity}
      */
     public void killAll() {
 //        while (getActivityList().size() != 0) { //此方法只能兼容LinkedList
@@ -386,7 +389,7 @@ public final class AppManager {
     }
 
     /**
-     * 关闭所有 activity,排除指定的 activity
+     * 关闭所有 {@link Activity},排除指定的 {@link Activity}
      *
      * @param excludeActivityClasses activity class
      */
@@ -405,9 +408,9 @@ public final class AppManager {
     }
 
     /**
-     * 关闭所有 activity,排除指定的 activity
+     * 关闭所有 {@link Activity},排除指定的 {@link Activity}
      *
-     * @param excludeActivityName activity 的完整全路径
+     * @param excludeActivityName {@link Activity} 的完整全路径
      */
     public void killAll(String... excludeActivityName) {
         List<String> excludeList = Arrays.asList(excludeActivityName);
