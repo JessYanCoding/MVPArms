@@ -17,9 +17,6 @@ package com.jess.arms.base.delegate;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.jess.arms.utils.ArmsUtils;
@@ -136,33 +133,4 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     public boolean isAdded() {
         return mFragment != null && mFragment.isAdded();
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-    }
-
-    protected FragmentDelegateImpl(Parcel in) {
-        this.mFragmentManager = in.readParcelable(FragmentManager.class.getClassLoader());
-        this.mFragment = in.readParcelable(Fragment.class.getClassLoader());
-        this.iFragment = in.readParcelable(IFragment.class.getClassLoader());
-        this.mUnbinder = in.readParcelable(Unbinder.class.getClassLoader());
-    }
-
-    public static final Creator<FragmentDelegateImpl> CREATOR = new Creator<FragmentDelegateImpl>() {
-        @Override
-        public FragmentDelegateImpl createFromParcel(Parcel source) {
-            return new FragmentDelegateImpl(source);
-        }
-
-        @Override
-        public FragmentDelegateImpl[] newArray(int size) {
-            return new FragmentDelegateImpl[size];
-        }
-    };
 }

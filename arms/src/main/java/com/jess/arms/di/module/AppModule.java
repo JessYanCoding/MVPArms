@@ -72,7 +72,7 @@ public class AppModule {
     @Singleton
     @Provides
     public Cache<String, Object> provideExtras(Cache.Factory cacheFactory) {
-        return cacheFactory.build(CacheType.EXTRAS_CACHE_TYPE);
+        return cacheFactory.build(CacheType.EXTRAS);
     }
 
     public interface GsonConfiguration {

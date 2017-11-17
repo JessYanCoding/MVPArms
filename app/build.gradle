@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
@@ -57,29 +56,29 @@ buildscript {
 
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     //support
-    compile(rootProject.ext.dependencies["cardview-v7"]) {
+    implementation(rootProject.ext.dependencies["cardview-v7"]) {
         exclude module: 'support-annotations'
     }
     //tools
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
-    compile rootProject.ext.dependencies["progressmanager"]
-    compile rootProject.ext.dependencies["retrofit-url-manager"]
+    implementation rootProject.ext.dependencies["progressmanager"]
+    implementation rootProject.ext.dependencies["retrofit-url-manager"]
     //view
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'support-annotations'
-        exclude module: 'butterknife-annotations'
     }
-    compile rootProject.ext.dependencies["paginate"]
+    implementation rootProject.ext.dependencies["paginate"]
     //arms
-    compile project(':arms')
-//    compile 'me.jessyan:arms:2.2.3'
+    implementation project(':arms')
+    //Github 仓库上最新的 Demo 具有下一个版本的新特性, 所以依赖最新的远程库会出现版本不兼容的情况, 详情请查看 https://github.com/JessYanCoding/MVPArms/wiki/Issues#2
+//    implementation 'me.jessyan:arms:2.3.1'
     //test
-    testCompile rootProject.ext.dependencies["junit"]
-    debugCompile rootProject.ext.dependencies["canary-debug"]
-    releaseCompile rootProject.ext.dependencies["canary-release"]
-    testCompile rootProject.ext.dependencies["canary-release"]
+    testImplementation rootProject.ext.dependencies["junit"]
+    debugImplementation rootProject.ext.dependencies["canary-debug"]
+    releaseImplementation rootProject.ext.dependencies["canary-release"]
+    testImplementation rootProject.ext.dependencies["canary-release"]
     //my lib
     compile 'zlc.season:rxdownload2:2.0.4'
 }

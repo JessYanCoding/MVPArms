@@ -1,18 +1,18 @@
 /**
-  * Copyright 2017 JessYan
-  *
-  * Licensed under the Apache License, Version 2.0 (the "License");
-  * you may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at
-  *
-  *      http://www.apache.org/licenses/LICENSE-2.0
-  *
-  * Unless required by applicable law or agreed to in writing, software
-  * distributed under the License is distributed on an "AS IS" BASIS,
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  */
+ * Copyright 2017 JessYan
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.jess.arms.di.module;
 
 import android.app.Application;
@@ -82,8 +82,8 @@ public class ClientModule {
             configuration.configRetrofit(application, builder);
 
         builder
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用rxjava
-                .addConverterFactory(GsonConverterFactory.create(gson));//使用Gson
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用 Rxjava
+                .addConverterFactory(GsonConverterFactory.create(gson));//使用 Gson
         return builder.build();
     }
 
@@ -153,8 +153,11 @@ public class ClientModule {
     @Provides
     RxCache provideRxCache(Application application, @Nullable RxCacheConfiguration configuration, @Named("RxCacheDirectory") File cacheDirectory) {
         RxCache.Builder builder = new RxCache.Builder();
-        if (configuration != null)
-            configuration.configRxCache(application, builder);
+        RxCache rxCache = null;
+        if (configuration != null) {
+            rxCache = configuration.configRxCache(application, builder);
+        }
+        if (rxCache != null) return rxCache;
         return builder
                 .persistence(cacheDirectory, new GsonSpeaker());
     }
@@ -197,6 +200,14 @@ public class ClientModule {
     }
 
     public interface RxCacheConfiguration {
-        void configRxCache(Context context, RxCache.Builder builder);
+        /**
+         * 若想自定义 RxCache 的缓存文件夹或者解析方式, 如改成 fastjson
+         * 请 {@code return rxCacheBuilder.persistence(cacheDirectory, new FastJsonSpeaker());}, 否则请 {@code return null;}
+         *
+         * @param context
+         * @param builder
+         * @return
+         */
+        RxCache configRxCache(Context context, RxCache.Builder builder);
     }
 }

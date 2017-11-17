@@ -45,6 +45,9 @@ public interface ConfigModule {
 
     /**
      * 使用{@link AppLifecycles}在Application的生命周期中注入一些操作
+     *
+     * @param context
+     * @param lifecycles
      */
     void injectAppLifecycle(Context context, List<AppLifecycles> lifecycles);
 

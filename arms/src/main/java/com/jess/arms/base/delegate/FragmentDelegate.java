@@ -17,7 +17,6 @@ package com.jess.arms.base.delegate;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
@@ -32,8 +31,7 @@ import android.view.View;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public interface FragmentDelegate extends Parcelable {
-
+public interface FragmentDelegate {
     String FRAGMENT_DELEGATE = "fragment_delegate";
 
     void onAttach(Context context);

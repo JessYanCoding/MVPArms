@@ -76,5 +76,8 @@ public interface AppComponent {
     //用来存取一些整个App公用的数据,切勿大量存放大容量数据
     Cache<String, Object> extras();
 
+    //用于创建框架所需缓存对象的工厂
+    Cache.Factory cacheFactory();
+
     void inject(AppDelegate delegate);
 }

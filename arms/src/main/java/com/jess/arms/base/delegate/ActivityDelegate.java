@@ -17,7 +17,6 @@ package com.jess.arms.base.delegate;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Parcelable;
 
 /**
  * ================================================
@@ -30,7 +29,7 @@ import android.os.Parcelable;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public interface ActivityDelegate extends Parcelable {
+public interface ActivityDelegate {
     String LAYOUT_LINEARLAYOUT = "LinearLayout";
     String LAYOUT_FRAMELAYOUT = "FrameLayout";
     String LAYOUT_RELATIVELAYOUT = "RelativeLayout";

@@ -24,6 +24,8 @@ import android.view.View;
 import com.jess.arms.base.delegate.FragmentDelegate;
 import com.jess.arms.base.delegate.FragmentDelegateImpl;
 import com.jess.arms.base.delegate.IFragment;
+import com.jess.arms.integration.cache.Cache;
+import com.jess.arms.utils.Preconditions;
 
 import timber.log.Timber;
 
@@ -42,11 +44,13 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
     @Override
     public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {
         Timber.w(f.toString() + " - onFragmentAttached");
-        if (f instanceof IFragment && f.getArguments() != null) {
+        if (f instanceof IFragment) {
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate == null || !fragmentDelegate.isAdded()) {
+                IFragment iFragment = (IFragment) f;
+                Preconditions.checkNotNull(iFragment.provideCache(), "%s cannot be null on Fragment", Cache.class.getName());
                 fragmentDelegate = new FragmentDelegateImpl(fm, f);
-                f.getArguments().putParcelable(FragmentDelegate.FRAGMENT_DELEGATE, fragmentDelegate);
+                iFragment.provideCache().put(FragmentDelegate.FRAGMENT_DELEGATE, fragmentDelegate);
             }
             fragmentDelegate.onAttach(context);
         }
@@ -148,14 +152,14 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
             fragmentDelegate.onDetach();
-            f.getArguments().clear();
         }
     }
 
     private FragmentDelegate fetchFragmentDelegate(Fragment fragment) {
-        if (fragment instanceof IFragment && fragment.getArguments() != null) {
-            fragment.getArguments().setClassLoader(getClass().getClassLoader());
-            return fragment.getArguments().getParcelable(FragmentDelegate.FRAGMENT_DELEGATE);
+        if (fragment instanceof IFragment) {
+            IFragment iFragment = (IFragment) fragment;
+            Preconditions.checkNotNull(iFragment.provideCache(), "%s cannot be null on Fragment", Cache.class.getName());
+            return (FragmentDelegate) iFragment.provideCache().get(FragmentDelegate.FRAGMENT_DELEGATE);
         }
         return null;
     }
