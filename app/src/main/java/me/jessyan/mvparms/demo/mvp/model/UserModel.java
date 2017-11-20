@@ -60,6 +60,8 @@ public class UserModel extends BaseModel implements UserContract.Model {
     @Override
     public Observable<List<User>> getUsers(int lastIdQueried, boolean update) {
         //使用rxcache缓存,上拉刷新则不读取缓存,加载更多读取缓存
+//        RetrofitUrlManager.getInstance().putDomain("baidu", "https://www.baidu.com"); //单独请求需要修改BaseUrl,需要在RetrofitService添加@Headers({DOMAIN_NAME_HEADER + "baidu"})
+//        RetrofitUrlManager.getInstance().setGlobalDomain("https://www.baidu.com"); //修改全局的BaseUrl
         return Observable.just(mRepositoryManager
                 .obtainRetrofitService(UserService.class)
                 .getUsers(lastIdQueried, USERS_PER_PAGE))
