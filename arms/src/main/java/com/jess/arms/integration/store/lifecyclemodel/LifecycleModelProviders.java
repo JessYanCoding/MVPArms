@@ -48,7 +48,7 @@ import android.support.v4.app.FragmentActivity;
  * public class MyActivity extends AppCompatActivity {
  *
  *     protected void onCreate(@Nullable Bundle savedInstanceState) {
- *          LifecycleModelProviders.of(this).put(UserLifecycleModel.class.getCanonicalName(), new UserLifecycleModel());
+ *          LifecycleModelProviders.of(this).put(UserLifecycleModel.class.getName(), new UserLifecycleModel());
  *          fragmentManager.beginTransaction().add(R.layout.afragment_container_Id, new AFragment).commit();
  *          fragmentManager.beginTransaction().add(R.layout.bfragment_container_Id, new BFragment).commit();
  *     }
@@ -62,13 +62,13 @@ import android.support.v4.app.FragmentActivity;
  * <pre>
  * public class AFragment extends Fragment {
  *     public void onStart() {
- *         UserLifecycleModel userLifecycleModel = LifecycleModelProviders.of(getActivity()).get(UserLifecycleModel.class.getCanonicalName());
+ *         UserLifecycleModel userLifecycleModel = LifecycleModelProviders.of(getActivity()).get(UserLifecycleModel.class.getName());
  *     }
  * }
  *
  * public class BFragment extends Fragment {
  *     public void onStart() {
- *         UserLifecycleModel userLifecycleModel = LifecycleModelProviders.of(getActivity()).get(UserLifecycleModel.class.getCanonicalName());
+ *         UserLifecycleModel userLifecycleModel = LifecycleModelProviders.of(getActivity()).get(UserLifecycleModel.class.getName());
  *     }
  * }
  *
@@ -76,6 +76,10 @@ import android.support.v4.app.FragmentActivity;
  *
  * @see <a href="https://developer.android.google.cn/topic/libraries/architecture/viewmodel.html">
  * 功能和 Android Architecture 中的 ViewModel 一致, 但放开了权限不仅可以存储 ViewModel, 还可以存储任意自定义对象</a>
+ * <p>
+ * Created by JessYan on 21/11/2017 16:57
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  */
 public class LifecycleModelProviders {
 

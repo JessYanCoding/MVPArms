@@ -92,6 +92,10 @@ package com.jess.arms.integration.store.lifecyclemodel;
  * }
  * </pre>
  * </>
+ *
+ * Created by JessYan on 21/11/2017 16:57
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  */
 public interface LifecycleModel {
     /**

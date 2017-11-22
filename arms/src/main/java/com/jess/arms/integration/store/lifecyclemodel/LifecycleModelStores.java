@@ -24,6 +24,10 @@ import android.support.v4.app.FragmentActivity;
 
 /**
  * Factory methods for {@link LifecycleModelStore} class.
+ * <p>
+ * Created by JessYan on 21/11/2017 16:57
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  */
 @SuppressWarnings("WeakerAccess")
 public class LifecycleModelStores {

@@ -32,7 +32,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @hide
+ * @hide 此类为实现 {@link LifecycleModel} 的核心类
+ * <p>
+ * Created by JessYan on 21/11/2017 16:57
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  */
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 public class HolderFragment extends Fragment {
