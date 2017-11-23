@@ -126,9 +126,6 @@ public class LoginActivity extends BaseAty<LoginPresenter> implements LoginContr
         }
         mPresenter.requestLogin(userName,pwd);
 
-
-
-
     }
 
 

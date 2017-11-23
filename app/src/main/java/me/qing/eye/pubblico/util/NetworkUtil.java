@@ -17,11 +17,11 @@ public class NetworkUtil {
     /**
      * 判断是否有网络连接
      */
-    public static boolean isNetworkAvailable(){
+    public static boolean isNetworkAvailable() {
         return isNetworkAvailable(MyApp.getInstance());
     }
 
-    public static boolean isNetworkAvailable(Context context) {
+    private static boolean isNetworkAvailable(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm == null) {
@@ -31,8 +31,6 @@ public class NetworkUtil {
             return info != null && info.isAvailable();
         }
     }
-
-
 
     /**
      * 判断当前是否是移动网络
@@ -63,8 +61,6 @@ public class NetworkUtil {
                     && (info.getType() == ConnectivityManager.TYPE_WIFI);
         }
     }
-
-
 
 
 }
