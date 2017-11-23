@@ -24,7 +24,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 /**
- * {@link LifecycleModelProviders} 配合 {@link LifecycleModel} 可以帮助 {@link Activity} 和 {@link Fragment}
+ * {@link LifecycleModelProviders} 配合 {@link LifecycleModel} 的实现类可以帮助 {@link Activity} 和 {@link Fragment}
  * 暂存和管理一些与 UI 相关以及他们必需的数据, 并且这些数据在屏幕旋转或配置更改引起的 {@link Activity} 重建的情况下也会被保留, 直到最后被 finish
  * 但是 {@link LifecycleModel} 的实现类切勿直接引用 {@link Activity} 和 {@link Fragment} 以及他们里面 UI 元素
  * <p>
@@ -33,14 +33,14 @@ import android.support.v4.app.FragmentActivity;
  * <p>
  * <pre>
  * public class UserLifecycleModel implements LifecycleModel {
+ *     private int id;
  *
- *     public UserLifecycleModel() {
- *         // trigger user load.
+ *     public UserLifecycleModel(int id) {
+ *          this.id = id;
  *     }
  *
  *     void doAction() {
- *         // depending on the action, do necessary business logic calls and update the
- *         // userLiveData.
+ *
  *     }
  * }
  *
@@ -48,7 +48,7 @@ import android.support.v4.app.FragmentActivity;
  * public class MyActivity extends AppCompatActivity {
  *
  *     protected void onCreate(@Nullable Bundle savedInstanceState) {
- *          LifecycleModelProviders.of(this).put(UserLifecycleModel.class.getName(), new UserLifecycleModel());
+ *          LifecycleModelProviders.of(this).put(UserLifecycleModel.class.getName(), new UserLifecycleModel(123));
  *          fragmentManager.beginTransaction().add(R.layout.afragment_container_Id, new AFragment).commit();
  *          fragmentManager.beginTransaction().add(R.layout.bfragment_container_Id, new BFragment).commit();
  *     }

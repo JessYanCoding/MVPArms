@@ -16,94 +16,71 @@
 
 package com.jess.arms.integration.store.lifecyclemodel;
 
+import android.app.Activity;
+import android.support.v4.app.Fragment;
+
 /**
- * LifecycleModel is a class that is responsible for preparing and managing the data for
- * an {@link android.app.Activity Activity} or a {@link android.support.v4.app.Fragment Fragment}.
- * It also handles the communication of the Activity / Fragment with the rest of the application
- * (e.g. calling the business logic classes).
+ * {@link LifecycleModelProviders} 配合 {@link LifecycleModel} 的实现类可以帮助 {@link Activity} 和 {@link Fragment}
+ * 暂存和管理一些与 UI 相关以及他们必需的数据, 并且这些数据在屏幕旋转或配置更改引起的 {@link Activity} 重建的情况下也会被保留, 直到最后被 finish
+ * 但是 {@link LifecycleModel} 的实现类切勿直接引用 {@link Activity} 和 {@link Fragment} 以及他们里面 UI 元素
  * <p>
- * A LifecycleModel is always created in association with a scope (an fragment or an activity) and will
- * be retained as long as the scope is alive. E.g. if it is an Activity, until it is
- * finished.
+ * 他还可以让开发者能够在绑定在同一个 {@link Activity} 之下的多个不同的 {@link Fragment} 之间共享数据以及通讯
+ * 使用这种方式进行通讯, {@link Fragment} 之间不存在任何耦合关系
  * <p>
- * In other words, this means that a LifecycleModel will not be destroyed if its owner is destroyed for a
- * configuration change (e.g. rotation). The new instance of the owner will just re-connected to the
- * existing LifecycleModel.
- * <p>
- * The purpose of the LifecycleModel is to acquire and keep the information that is necessary for an
- * Activity or a Fragment. The Activity or the Fragment should be able to observe changes in the
- * LifecycleModel. ViewModels usually expose this information via {@link LiveData} or Android Data
- * Binding. You can also use any observability construct from you favorite framework.
- * <p>
- * LifecycleModel's only responsibility is to manage the data for the UI. It <b>should never</b> access
- * your view hierarchy or hold a reference back to the Activity or the Fragment.
- * <p>
- * Typical usage from an Activity standpoint would be:
  * <pre>
- * public class UserActivity extends Activity {
+ * public class UserLifecycleModel implements LifecycleModel {
+ *     private int id;
  *
- *     {@literal @}Override
- *     protected void onCreate(Bundle savedInstanceState) {
- *         super.onCreate(savedInstanceState);
- *         setContentView(R.layout.user_activity_layout);
- *         final UserModel viewModel = LifecycleModelProviders.of(this).get(UserModel.class);
- *         viewModel.userLiveData.observer(this, new Observer<User>() {
- *            {@literal @}Override
- *             public void onChanged(@Nullable User data) {
- *                 // update ui.
- *             }
- *         });
- *         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
- *             {@literal @}Override
- *             public void onClick(View v) {
- *                  viewModel.doAction();
- *             }
- *         });
- *     }
- * }
- * </pre>
- *
- * LifecycleModel would be:
- * <pre>
- * public class UserModel extends LifecycleModel {
- *     public final LiveData&lt;User&gt; userLiveData = new LiveData<>();
- *
- *     public UserModel() {
- *         // trigger user load.
+ *     public UserLifecycleModel(int id) {
+ *          this.id = id;
  *     }
  *
  *     void doAction() {
- *         // depending on the action, do necessary business logic calls and update the
- *         // userLiveData.
+ *
+ *     }
+ * }
+ *
+ *
+ * public class MyActivity extends AppCompatActivity {
+ *
+ *     protected void onCreate(@Nullable Bundle savedInstanceState) {
+ *          LifecycleModelProviders.of(this).put(UserLifecycleModel.class.getName(), new UserLifecycleModel(123));
+ *          fragmentManager.beginTransaction().add(R.layout.afragment_container_Id, new AFragment).commit();
+ *          fragmentManager.beginTransaction().add(R.layout.bfragment_container_Id, new BFragment).commit();
  *     }
  * }
  * </pre>
- *
  * <p>
- * ViewModels can also be used as a communication layer between different Fragments of an Activity.
- * Each Fragment can acquire the LifecycleModel using the same key via their Activity. This allows
- * communication between Fragments in a de-coupled fashion such that they never need to talk to
- * the other Fragment directly.
+ * 只要 AFragment 和 BFragment 绑定在同一个 Activity 下, 并使用同一个 key, 那获取到的 UserLifecycleModel 就是同一个对象
+ * 这时就可以使用这个 UserLifecycleModel 进行通讯 (Fragment 之间如何通讯? 比如说接口回调? 观察者模式?) 和共享数据
+ * 这时 Fragment 之间并不知道彼此, 也不互相持有, 所以也不存在耦合关系
+ * <p>
  * <pre>
- * public class MyFragment extends Fragment {
+ * public class AFragment extends Fragment {
  *     public void onStart() {
- *         UserModel userModel = LifecycleModelProviders.of(getActivity()).get(UserModel.class);
+ *         UserLifecycleModel userLifecycleModel = LifecycleModelProviders.of(getActivity()).get(UserLifecycleModel.class.getName());
  *     }
  * }
- * </pre>
- * </>
  *
+ * public class BFragment extends Fragment {
+ *     public void onStart() {
+ *         UserLifecycleModel userLifecycleModel = LifecycleModelProviders.of(getActivity()).get(UserLifecycleModel.class.getName());
+ *     }
+ * }
+ *
+ * </pre>
+ *
+ * @see <a href="https://developer.android.google.cn/topic/libraries/architecture/viewmodel.html">
+ * 功能和 Android Architecture 中的 ViewModel 一致, 但放开了权限不仅可以存储 ViewModel, 还可以存储任意自定义对象</a>
+ * <p>
  * Created by JessYan on 21/11/2017 16:57
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  */
 public interface LifecycleModel {
     /**
-     * This method will be called when this LifecycleModel is no longer used and will be destroyed.
-     * <p>
-     * It is useful when LifecycleModel observes some data and you need to clear this subscription to
-     * prevent a leak of this LifecycleModel.
+     * 这个方法会在宿主 {@link Activity} 或 {@link Fragment} 被彻底销毁时被调用, 在这个方法中释放一些资源可以避免内存泄漏
      */
     @SuppressWarnings("WeakerAccess")
-     void onCleared();
+    void onCleared();
 }
