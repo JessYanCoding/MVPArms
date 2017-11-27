@@ -53,9 +53,18 @@ public class HolderFragment extends Fragment {
 
     private LifecycleModelStore mLifecycleModelStore;
 
-    public HolderFragment(Application application) {
-        mLifecycleModelStore = new LifecycleModelStore(application);
+    private static HolderFragment newInstance(Application application) {
+        HolderFragment holderFragment = new HolderFragment();
+        holderFragment.initialization(application);
+        return holderFragment;
+    }
+
+    public HolderFragment() {
         setRetainInstance(true);
+    }
+
+    private void initialization(Application application){
+        mLifecycleModelStore = new LifecycleModelStore(application);
     }
 
     @Override
@@ -151,7 +160,7 @@ public class HolderFragment extends Fragment {
         }
 
         private static HolderFragment createHolderFragment(FragmentManager fragmentManager, Application application) {
-            HolderFragment holder = new HolderFragment(application);
+            HolderFragment holder = HolderFragment.newInstance(application);
             fragmentManager.beginTransaction().add(holder, HOLDER_TAG).commitAllowingStateLoss();
             return holder;
         }
