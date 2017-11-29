@@ -17,12 +17,9 @@
 package com.jess.arms.integration.store.lifecyclemodel;
 
 import android.app.Activity;
-import android.app.Application;
 import android.support.v4.app.Fragment;
 
-import com.jess.arms.base.App;
 import com.jess.arms.integration.cache.Cache;
-import com.jess.arms.integration.cache.CacheType;
 import com.jess.arms.integration.cache.LruCache;
 
 /**
@@ -42,15 +39,7 @@ import com.jess.arms.integration.cache.LruCache;
  */
 public class LifecycleModelStore {
 
-    private Cache<String, LifecycleModel> mCache;
-
-    public LifecycleModelStore(Application application) {
-        if (application instanceof App) {
-            mCache = ((App) application).getAppComponent().cacheFactory().build(CacheType.FRAGMENT_CACHE);
-        } else {
-            mCache = new LruCache<>(CacheType.FRAGMENT_CACHE.calculateCacheSize(application));
-        }
-    }
+    private final Cache<String, LifecycleModel> mCache = new LruCache<>(80);
 
     /**
      * 将 {@code lifecycleModel} 以 {@code key} 作为键进行存储

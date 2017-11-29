@@ -111,7 +111,8 @@ public class LifecycleModelProviders {
      */
     @MainThread
     public static LifecycleModelStore of(@NonNull Fragment fragment) {
-        return LifecycleModelStores.of(fragment, checkApplication(checkActivity(fragment)));
+        checkApplication(checkActivity(fragment));
+        return LifecycleModelStores.of(fragment);
     }
 
     /**
@@ -124,7 +125,8 @@ public class LifecycleModelProviders {
      */
     @MainThread
     public static LifecycleModelStore of(@NonNull FragmentActivity activity) {
-        return LifecycleModelStores.of(activity, checkApplication(activity));
+        checkApplication(activity);
+        return LifecycleModelStores.of(activity);
     }
 
 }

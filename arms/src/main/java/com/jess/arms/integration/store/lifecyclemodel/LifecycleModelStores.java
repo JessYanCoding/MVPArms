@@ -16,7 +16,6 @@
 
 package com.jess.arms.integration.store.lifecyclemodel;
 
-import android.app.Application;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -42,8 +41,8 @@ public class LifecycleModelStores {
      * @return a {@code LifecycleModelStore}
      */
     @MainThread
-    public static LifecycleModelStore of(@NonNull FragmentActivity activity, @NonNull Application application) {
-        return HolderFragment.holderFragmentFor(activity, application).getLifecycleModelStore();
+    public static LifecycleModelStore of(@NonNull FragmentActivity activity) {
+        return HolderFragment.holderFragmentFor(activity).getLifecycleModelStore();
     }
 
     /**
@@ -53,7 +52,7 @@ public class LifecycleModelStores {
      * @return a {@code LifecycleModelStore}
      */
     @MainThread
-    public static LifecycleModelStore of(@NonNull Fragment fragment, @NonNull Application application) {
-        return HolderFragment.holderFragmentFor(fragment, application).getLifecycleModelStore();
+    public static LifecycleModelStore of(@NonNull Fragment fragment) {
+        return HolderFragment.holderFragmentFor(fragment).getLifecycleModelStore();
     }
 }

@@ -17,7 +17,6 @@
 package com.jess.arms.integration.store.lifecyclemodel;
 
 import android.app.Activity;
-import android.app.Application;
 import android.app.Application.ActivityLifecycleCallbacks;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -51,20 +50,10 @@ public class HolderFragment extends Fragment {
     public static final String HOLDER_TAG =
             "me.jessyan.arms.state.StateProviderHolderFragment";
 
-    private LifecycleModelStore mLifecycleModelStore;
-
-    private static HolderFragment newInstance(Application application) {
-        HolderFragment holderFragment = new HolderFragment();
-        holderFragment.initialization(application);
-        return holderFragment;
-    }
+    private final LifecycleModelStore mLifecycleModelStore = new LifecycleModelStore();
 
     public HolderFragment() {
         setRetainInstance(true);
-    }
-
-    private void initialization(Application application){
-        mLifecycleModelStore = new LifecycleModelStore(application);
     }
 
     @Override
@@ -92,16 +81,16 @@ public class HolderFragment extends Fragment {
      * @hide
      */
     @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-    public static HolderFragment holderFragmentFor(FragmentActivity activity, Application application) {
-        return sHolderFragmentManager.holderFragmentFor(activity, application);
+    public static HolderFragment holderFragmentFor(FragmentActivity activity) {
+        return sHolderFragmentManager.holderFragmentFor(activity);
     }
 
     /**
      * @hide
      */
     @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-    public static HolderFragment holderFragmentFor(Fragment fragment, Application application) {
-        return sHolderFragmentManager.holderFragmentFor(fragment, application);
+    public static HolderFragment holderFragmentFor(Fragment fragment) {
+        return sHolderFragmentManager.holderFragmentFor(fragment);
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -159,13 +148,13 @@ public class HolderFragment extends Fragment {
             return (HolderFragment) fragmentByTag;
         }
 
-        private static HolderFragment createHolderFragment(FragmentManager fragmentManager, Application application) {
-            HolderFragment holder = HolderFragment.newInstance(application);
+        private static HolderFragment createHolderFragment(FragmentManager fragmentManager) {
+            HolderFragment holder = new HolderFragment();
             fragmentManager.beginTransaction().add(holder, HOLDER_TAG).commitAllowingStateLoss();
             return holder;
         }
 
-        HolderFragment holderFragmentFor(FragmentActivity activity, Application application) {
+        HolderFragment holderFragmentFor(FragmentActivity activity) {
             FragmentManager fm = activity.getSupportFragmentManager();
             HolderFragment holder = findHolderFragment(fm);
             if (holder != null) {
@@ -180,12 +169,12 @@ public class HolderFragment extends Fragment {
                 mActivityCallbacksIsAdded = true;
                 activity.getApplication().registerActivityLifecycleCallbacks(mActivityCallbacks);
             }
-            holder = createHolderFragment(fm, application);
+            holder = createHolderFragment(fm);
             mNotCommittedActivityHolders.put(activity, holder);
             return holder;
         }
 
-        HolderFragment holderFragmentFor(Fragment parentFragment, Application application) {
+        HolderFragment holderFragmentFor(Fragment parentFragment) {
             FragmentManager fm = parentFragment.getChildFragmentManager();
             HolderFragment holder = findHolderFragment(fm);
             if (holder != null) {
@@ -198,7 +187,7 @@ public class HolderFragment extends Fragment {
 
             parentFragment.getFragmentManager()
                     .registerFragmentLifecycleCallbacks(mParentDestroyedCallback, false);
-            holder = createHolderFragment(fm, application);
+            holder = createHolderFragment(fm);
             mNotCommittedFragmentHolders.put(parentFragment, holder);
             return holder;
         }
