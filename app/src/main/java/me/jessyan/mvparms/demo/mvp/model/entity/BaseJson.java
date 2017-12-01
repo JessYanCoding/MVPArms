@@ -17,8 +17,6 @@ package me.jessyan.mvparms.demo.mvp.model.entity;
 
 import java.io.Serializable;
 
-import me.jessyan.mvparms.demo.mvp.model.api.Api;
-
 /**
  * ================================================
  * 如果你服务器返回的数据格式固定为这种方式(这里只提供思想,服务器返回的数据格式可能不一致,可根据自家服务器返回的格式作更改)
@@ -30,32 +28,51 @@ import me.jessyan.mvparms.demo.mvp.model.api.Api;
  * ================================================
  */
 public class BaseJson<T> implements Serializable {
+
     private T data;
-    private String code;
+    private int code;
     private String msg;
+    private boolean success;
 
     public T getData() {
         return data;
     }
 
-    public String getCode() {
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public int getCode() {
         return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public String getMsg() {
         return msg;
     }
 
-    /**
-     * 请求是否成功
-     *
-     * @return
-     */
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
     public boolean isSuccess() {
-        if (code.equals(Api.RequestSuccess)) {
-            return true;
-        } else {
-            return false;
-        }
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    @Override
+    public String toString() {
+        return "BaseJson{" +
+                "data=" + data +
+                ", code=" + code +
+                ", msg='" + msg + '\'' +
+                ", success=" + success +
+                '}';
     }
 }

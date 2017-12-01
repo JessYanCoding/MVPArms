@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
@@ -80,5 +81,10 @@ dependencies {
     releaseImplementation rootProject.ext.dependencies["canary-release"]
     testImplementation rootProject.ext.dependencies["canary-release"]
     //my lib
-    compile 'zlc.season:rxdownload2:2.0.4'
+    //compile 'zlc.season:rxdownload2:2.0.4'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile rootProject.ext.dependencies["smartRefreshLayout"]
+}
+repositories {
+    mavenCentral()
 }

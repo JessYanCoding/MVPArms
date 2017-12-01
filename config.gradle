@@ -99,7 +99,12 @@ ext {
                 "logger"                   : "com.orhanobut:logger:2.1.1",
                 "canary-debug"             : "com.squareup.leakcanary:leakcanary-android:${version["canarySdkVersion"]}",
                 "canary-release"           : "com.squareup.leakcanary:leakcanary-android-no-op:${version["canarySdkVersion"]}",
-                "umeng-analytics"          : "com.umeng.analytics:analytics:6.0.1"
+                "umeng-analytics"          : "com.umeng.analytics:analytics:6.0.1",
+
+                //my tools
+                //下拉刷新
+                "smartRefreshLayout"       : "com.scwang.smartrefresh:SmartRefreshLayout:1.0.3"
+
         ]
 
 
