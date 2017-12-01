@@ -1,18 +1,18 @@
 /**
-  * Copyright 2017 JessYan
-  *
-  * Licensed under the Apache License, Version 2.0 (the "License");
-  * you may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at
-  *
-  *      http://www.apache.org/licenses/LICENSE-2.0
-  *
-  * Unless required by applicable law or agreed to in writing, software
-  * distributed under the License is distributed on an "AS IS" BASIS,
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  */
+ * Copyright 2017 JessYan
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.jess.arms.integration;
 
 import android.app.Activity;
@@ -57,15 +57,16 @@ import timber.log.Timber;
 public final class AppManager {
     protected final String TAG = this.getClass().getSimpleName();
     public static final String APPMANAGER_MESSAGE = "appmanager_message";
-    public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list";//true 为不需要加入到 Activity 容器进行统一管理,默认为 false
+    //true 为不需要加入到 Activity 容器进行统一管理,默认为 false
+    public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list";
     public static final int START_ACTIVITY = 5000;
     public static final int SHOW_SNACKBAR = 5001;
     public static final int KILL_ALL = 5002;
     public static final int APP_EXIT = 5003;
     private Application mApplication;
-    //管理所有activity
+    //管理所有存活的 Activity, 容器中的顺序仅仅是 Activity 的创建顺序, 并不能保证和 Activity 任务栈顺序一致
     public List<Activity> mActivityList;
-    //当前在前台的activity
+    //当前在前台的 Activity
     private Activity mCurrentActivity;
     //提供给外部扩展 AppManager 的 onReceive 方法
     private HandleListener mHandleListener;
@@ -197,7 +198,7 @@ public final class AppManager {
     /**
      * 将在前台的 {@link Activity} 赋值给 {@code currentActivity}, 注意此方法是在 {@link Activity#onResume} 方法执行时将栈顶的 {@link Activity} 赋值给 {@code currentActivity}
      * 所以在栈顶的 {@link Activity} 执行 {@link Activity#onCreate} 方法时使用 {@link #getCurrentActivity()} 获取的就不是当前栈顶的 {@link Activity}, 可能是上一个 {@link Activity}
-     * 如果在 App 的第一个 {@link Activity} 执行 {@link Activity#onCreate} 方法时使用 {@link #getCurrentActivity()} 则会出现返回为 {@code null} 的情况
+     * 如果在 App 启动第一个 {@link Activity} 执行 {@link Activity#onCreate} 方法时使用 {@link #getCurrentActivity()} 则会出现返回为 {@code null} 的情况
      * 想避免这种情况请使用 {@link #getTopActivity()}
      *
      * @param currentActivity
@@ -223,8 +224,12 @@ public final class AppManager {
     }
 
     /**
-     * 获取位于栈顶的 {@link Activity}, 此方法不保证获取到的 {@link Activity} 正处于可见状态, 即使 App 进入后台也会返回当前栈顶的 {@link Activity}
-     * 因此基本不会出现 {@code null} 的情况, 比较适合大部分的使用场景, 如 startActivity, Glide 加载图片
+     * 获取最近启动的一个 {@link Activity}, 此方法不保证获取到的 {@link Activity} 正处于前台可见状态
+     * 即使 App 进入后台或在这个 {@link Activity} 中打开一个之前已经存在的 {@link Activity}, 这时调用此方法
+     * 还是会返回这个最近启动的 {@link Activity}, 因此基本不会出现 {@code null} 的情况
+     * 比较适合大部分的使用场景, 如 startActivity
+     * <p>
+     * Tips: mActivityList 容器中的顺序仅仅是 Activity 的创建顺序, 并不能保证和 Activity 任务栈顺序一致
      *
      * @return
      */
@@ -353,7 +358,7 @@ public final class AppManager {
 
 
     /**
-     * 获取指定 {@link Activity} class 的实例,没有则返回 null(同一个 {@link Activity} class 有多个实例,则返回最早的实例)
+     * 获取指定 {@link Activity} class 的实例,没有则返回 null(同一个 {@link Activity} class 有多个实例,则返回最早创建的实例)
      *
      * @param activityClass
      * @return

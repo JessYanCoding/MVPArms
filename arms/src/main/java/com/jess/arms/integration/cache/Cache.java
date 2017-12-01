@@ -21,6 +21,8 @@ import android.support.annotation.Nullable;
 
 import com.jess.arms.di.module.GlobalConfigModule;
 
+import java.util.Set;
+
 
 /**
  * ================================================
@@ -98,6 +100,13 @@ public interface Cache<K, V> {
      * @return
      */
     boolean containsKey(K key);
+
+    /**
+     * 返回当前缓存中含有的所有 {@code key}
+     *
+     * @return
+     */
+    Set<K> keySet();
 
     /**
      * 清除缓存中所有的内容

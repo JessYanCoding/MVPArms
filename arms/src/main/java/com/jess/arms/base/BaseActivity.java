@@ -61,8 +61,8 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
 
     @NonNull
     @Override
-    public Cache<String, Object> provideCache() {
-        if (mCache == null){
+    public synchronized Cache<String, Object> provideCache() {
+        if (mCache == null) {
             mCache = ArmsUtils.obtainAppComponentFromContext(this).cacheFactory().build(CacheType.ACTIVITY_CACHE);
         }
         return mCache;

@@ -17,6 +17,7 @@ package com.jess.arms.integration;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -47,10 +48,9 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
         if (f instanceof IFragment) {
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate == null || !fragmentDelegate.isAdded()) {
-                IFragment iFragment = (IFragment) f;
-                Preconditions.checkNotNull(iFragment.provideCache(), "%s cannot be null on Fragment", Cache.class.getName());
+                Cache<String, Object> cache = getCacheFromFragment((IFragment) f);
                 fragmentDelegate = new FragmentDelegateImpl(fm, f);
-                iFragment.provideCache().put(FragmentDelegate.FRAGMENT_DELEGATE, fragmentDelegate);
+                cache.put(FragmentDelegate.FRAGMENT_DELEGATE, fragmentDelegate);
             }
             fragmentDelegate.onAttach(context);
         }
@@ -157,11 +157,17 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
 
     private FragmentDelegate fetchFragmentDelegate(Fragment fragment) {
         if (fragment instanceof IFragment) {
-            IFragment iFragment = (IFragment) fragment;
-            Preconditions.checkNotNull(iFragment.provideCache(), "%s cannot be null on Fragment", Cache.class.getName());
-            return (FragmentDelegate) iFragment.provideCache().get(FragmentDelegate.FRAGMENT_DELEGATE);
+            Cache<String, Object> cache = getCacheFromFragment((IFragment) fragment);
+            return (FragmentDelegate) cache.get(FragmentDelegate.FRAGMENT_DELEGATE);
         }
         return null;
+    }
+
+    @NonNull
+    private Cache<String, Object> getCacheFromFragment(IFragment fragment) {
+        Cache<String, Object> cache = fragment.provideCache();
+        Preconditions.checkNotNull(cache, "%s cannot be null on Fragment", Cache.class.getName());
+        return cache;
     }
 
 }
