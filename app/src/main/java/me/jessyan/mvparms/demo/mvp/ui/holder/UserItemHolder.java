@@ -60,8 +60,8 @@ public class UserItemHolder extends BaseHolder<User> {
         Observable.just(data.getLogin())
                 .subscribe(s -> mName.setText(s));
 
-        mImageLoader.loadImage(mAppComponent.appManager().getTopActivity() == null
-                        ? mAppComponent.application() : mAppComponent.appManager().getTopActivity(),
+        //itemView 的 Context 就是 Activity, Glide 会自动处理并和该 Activity 的生命周期绑定
+        mImageLoader.loadImage(itemView.getContext(),
                 ImageConfigImpl
                         .builder()
                         .url(data.getAvatarUrl())
