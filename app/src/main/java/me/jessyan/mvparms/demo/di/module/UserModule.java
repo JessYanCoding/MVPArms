@@ -15,6 +15,8 @@
  */
 package me.jessyan.mvparms.demo.di.module;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -44,14 +46,16 @@ import me.jessyan.mvparms.demo.mvp.ui.adapter.UserAdapter;
 @Module
 public class UserModule {
     private UserContract.View view;
+    private Context context;
 
     /**
      * 构建 UserModule 时,将 View 的实现类传进来,这样就可以提供 View 的实现类给 Presenter
      *
      * @param view
      */
-    public UserModule(UserContract.View view) {
+    public UserModule(UserContract.View view,Context context) {
         this.view = view;
+        this.context = context;
     }
 
     @ActivityScope
@@ -68,14 +72,20 @@ public class UserModule {
 
     @ActivityScope
     @Provides
+    Context provideContext() {
+        return context;
+    }
+
+    @ActivityScope
+    @Provides
     RxPermissions provideRxPermissions() {
-        return new RxPermissions(view.getActivity());
+        return new RxPermissions((Activity) context);
     }
 
     @ActivityScope
     @Provides
     RecyclerView.LayoutManager provideLayoutManager() {
-        return new GridLayoutManager(view.getActivity(), 2);
+        return new GridLayoutManager(context, 2);
     }
 
     @ActivityScope

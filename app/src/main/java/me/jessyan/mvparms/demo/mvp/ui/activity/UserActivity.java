@@ -70,7 +70,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
         DaggerUserComponent
                 .builder()
                 .appComponent(appComponent)
-                .userModule(new UserModule(this))
+                .userModule(new UserModule(this,this))
                 .build()
                 .inject(this);
     }
@@ -143,11 +143,6 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     @Override
     public void endLoadMore() {
         isLoadingMore = false;
-    }
-
-    @Override
-    public Activity getActivity() {
-        return this;
     }
 
     @Override
