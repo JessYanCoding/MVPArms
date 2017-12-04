@@ -26,10 +26,10 @@ import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.integration.IRepositoryManager;
+import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.utils.ArmsUtils;
 
 import java.io.File;
-import java.util.Map;
 
 import javax.inject.Singleton;
 
@@ -44,8 +44,8 @@ import okhttp3.OkHttpClient;
  *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.2">AppComponent wiki 官方文档</a>
  * Created by JessYan on 8/4/2016
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 @Singleton
@@ -74,7 +74,10 @@ public interface AppComponent {
     File cacheFile();
 
     //用来存取一些整个App公用的数据,切勿大量存放大容量数据
-    Map<String, Object> extras();
+    Cache<String, Object> extras();
+
+    //用于创建框架所需缓存对象的工厂
+    Cache.Factory cacheFactory();
 
     void inject(AppDelegate delegate);
 }

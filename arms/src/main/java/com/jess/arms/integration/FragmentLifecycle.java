@@ -17,6 +17,7 @@ package com.jess.arms.integration;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -24,6 +25,8 @@ import android.view.View;
 import com.jess.arms.base.delegate.FragmentDelegate;
 import com.jess.arms.base.delegate.FragmentDelegateImpl;
 import com.jess.arms.base.delegate.IFragment;
+import com.jess.arms.integration.cache.Cache;
+import com.jess.arms.utils.Preconditions;
 
 import timber.log.Timber;
 
@@ -33,8 +36,8 @@ import timber.log.Timber;
  * 通过 {@link FragmentDelegate} 管理 {@link Fragment}
  * <p>
  * Created by JessYan on 04/09/2017 16:04
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallbacks {
@@ -42,11 +45,12 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
     @Override
     public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {
         Timber.w(f.toString() + " - onFragmentAttached");
-        if (f instanceof IFragment && f.getArguments() != null) {
+        if (f instanceof IFragment) {
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate == null || !fragmentDelegate.isAdded()) {
+                Cache<String, Object> cache = getCacheFromFragment((IFragment) f);
                 fragmentDelegate = new FragmentDelegateImpl(fm, f);
-                f.getArguments().putParcelable(FragmentDelegate.FRAGMENT_DELEGATE, fragmentDelegate);
+                cache.put(FragmentDelegate.FRAGMENT_DELEGATE, fragmentDelegate);
             }
             fragmentDelegate.onAttach(context);
         }
@@ -148,16 +152,22 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
             fragmentDelegate.onDetach();
-            f.getArguments().clear();
         }
     }
 
     private FragmentDelegate fetchFragmentDelegate(Fragment fragment) {
-        if (fragment instanceof IFragment && fragment.getArguments() != null) {
-            fragment.getArguments().setClassLoader(getClass().getClassLoader());
-            return fragment.getArguments().getParcelable(FragmentDelegate.FRAGMENT_DELEGATE);
+        if (fragment instanceof IFragment) {
+            Cache<String, Object> cache = getCacheFromFragment((IFragment) fragment);
+            return (FragmentDelegate) cache.get(FragmentDelegate.FRAGMENT_DELEGATE);
         }
         return null;
+    }
+
+    @NonNull
+    private Cache<String, Object> getCacheFromFragment(IFragment fragment) {
+        Cache<String, Object> cache = fragment.provideCache();
+        Preconditions.checkNotNull(cache, "%s cannot be null on Fragment", Cache.class.getName());
+        return cache;
     }
 
 }

@@ -16,6 +16,10 @@
 package me.jessyan.mvparms.demo.mvp.presenter;
 
 import android.app.Application;
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.OnLifecycleEvent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.SupportActivity;
 import android.support.v7.widget.RecyclerView;
 
 import com.jess.arms.di.scope.ActivityScope;
@@ -42,8 +46,8 @@ import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
  *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.4">Presenter wiki 官方文档</a>
  * Created by JessYan on 09/04/2016 10:59
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 @ActivityScope
@@ -69,6 +73,15 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
         this.mAdapter = adapter;
     }
 
+    /**
+     * 使用 2017 Google IO 发布的 Architecture Components 中的 Lifecycles 的新特性 (此特性已被加入 Support library)
+     * 使 {@code Presenter} 可以与 {@link SupportActivity} 和 {@link Fragment} 的部分生命周期绑定
+     */
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    void onCreate() {
+        requestUsers(true);//打开 App 时自动加载列表
+    }
+
     public void requestUsers(final boolean pullToRefresh) {
         //请求外部存储权限用于适配android6.0的权限管理机制
         PermissionUtil.externalStorage(new PermissionUtil.RequestPermission() {
@@ -78,8 +91,13 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
             }
 
             @Override
-            public void onRequestPermissionFailure() {
-                mRootView.showMessage("Request permissons failure");
+            public void onRequestPermissionFailure(List<String> permissions) {
+                mRootView.showMessage("Request permissions failure");
+            }
+
+            @Override
+            public void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions) {
+                mRootView.showMessage("Need to go to the settings");
             }
         }, mRootView.getRxPermissions(), mErrorHandler);
 

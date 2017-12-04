@@ -24,8 +24,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jess.arms.base.delegate.IFragment;
+import com.jess.arms.integration.cache.Cache;
+import com.jess.arms.integration.cache.CacheType;
 import com.jess.arms.integration.lifecycle.FragmentLifecycleable;
 import com.jess.arms.mvp.IPresenter;
+import com.jess.arms.utils.ArmsUtils;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import javax.inject.Inject;
@@ -39,26 +42,31 @@ import io.reactivex.subjects.Subject;
  * 继承于这个特定的 @{@link Fragment},然后再按照 {@link BaseFragment} 的格式,将代码复制过去,记住一定要实现{@link IFragment}
  * <p>
  * Created by JessYan on 22/03/2016
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public abstract class BaseFragment<P extends IPresenter> extends Fragment implements IFragment, FragmentLifecycleable {
     protected final String TAG = this.getClass().getSimpleName();
     private final BehaviorSubject<FragmentEvent> mLifecycleSubject = BehaviorSubject.create();
+    private Cache<String, Object> mCache;
     @Inject
     protected P mPresenter;
+
+    @NonNull
+    @Override
+    public synchronized Cache<String, Object> provideCache() {
+        if (mCache == null) {
+            mCache = ArmsUtils.obtainAppComponentFromContext(getActivity()).cacheFactory().build(CacheType.FRAGMENT_CACHE);
+        }
+        return mCache;
+    }
 
 
     @NonNull
     @Override
     public final Subject<FragmentEvent> provideLifecycleSubject() {
         return mLifecycleSubject;
-    }
-
-    public BaseFragment() {
-        //必须确保在Fragment实例化时setArguments()
-        setArguments(new Bundle());
     }
 
 

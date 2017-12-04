@@ -45,8 +45,8 @@ import timber.log.Timber;
  *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.2">View wiki 官方文档</a>
  * Created by JessYan on 09/04/2016 10:59
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public class UserActivity extends BaseActivity<UserPresenter> implements UserContract.View, SwipeRefreshLayout.OnRefreshListener {
@@ -82,10 +82,9 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        initRecycleView();
+        initRecyclerView();
         mRecyclerView.setAdapter(mAdapter);
         initPaginate();
-        mPresenter.requestUsers(true);//打开 App 时自动加载列表
     }
 
 
@@ -95,11 +94,11 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     }
 
     /**
-     * 初始化RecycleView
+     * 初始化RecyclerView
      */
-    private void initRecycleView() {
+    private void initRecyclerView() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        ArmsUtils.configRecycleView(mRecyclerView, mLayoutManager);
+        ArmsUtils.configRecyclerView(mRecyclerView, mLayoutManager);
     }
 
 

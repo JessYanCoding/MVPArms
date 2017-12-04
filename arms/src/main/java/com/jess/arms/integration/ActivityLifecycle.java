@@ -18,6 +18,7 @@ package com.jess.arms.integration;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
@@ -26,10 +27,11 @@ import com.jess.arms.base.delegate.ActivityDelegate;
 import com.jess.arms.base.delegate.ActivityDelegateImpl;
 import com.jess.arms.base.delegate.FragmentDelegate;
 import com.jess.arms.base.delegate.IActivity;
+import com.jess.arms.integration.cache.Cache;
+import com.jess.arms.utils.Preconditions;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -42,8 +44,8 @@ import javax.inject.Singleton;
  *
  * @see <a href="http://www.jianshu.com/p/75a5c24174b2">ActivityLifecycleCallbacks 分析文章</a>
  * Created by JessYan on 21/02/2017 14:23
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 @Singleton
@@ -51,12 +53,12 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     private AppManager mAppManager;
     private Application mApplication;
-    private Map<String, Object> mExtras;
+    private Cache<String, Object> mExtras;
     private FragmentManager.FragmentLifecycleCallbacks mFragmentLifecycle;
     private List<FragmentManager.FragmentLifecycleCallbacks> mFragmentLifecycles;
 
     @Inject
-    public ActivityLifecycle(AppManager appManager, Application application, Map<String, Object> extras) {
+    public ActivityLifecycle(AppManager appManager, Application application, Cache<String, Object> extras) {
         this.mAppManager = appManager;
         this.mApplication = application;
         this.mExtras = extras;
@@ -73,18 +75,18 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             mAppManager.addActivity(activity);
 
         //配置ActivityDelegate
-        if (activity instanceof IActivity && activity.getIntent() != null) {
+        if (activity instanceof IActivity) {
             ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
             if (activityDelegate == null) {
+                Cache<String, Object> cache = getCacheFromActivity((IActivity) activity);
                 activityDelegate = new ActivityDelegateImpl(activity);
-                activity.getIntent().putExtra(ActivityDelegate.ACTIVITY_DELEGATE, activityDelegate);
+                cache.put(ActivityDelegate.ACTIVITY_DELEGATE, activityDelegate);
             }
             activityDelegate.onCreate(savedInstanceState);
         }
 
         registerFragmentCallbacks(activity);
     }
-
 
     @Override
     public void onActivityStarted(Activity activity) {
@@ -139,7 +141,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
         if (activityDelegate != null) {
             activityDelegate.onDestroy();
-            activity.getIntent().removeExtra(ActivityDelegate.ACTIVITY_DELEGATE);
+            getCacheFromActivity((IActivity) activity).clear();
         }
     }
 
@@ -166,7 +168,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
                 for (ConfigModule module : modules) {
                     module.injectFragmentLifecycle(mApplication, mFragmentLifecycles);
                 }
-                mExtras.put(ConfigModule.class.getName(), null);
+                mExtras.remove(ConfigModule.class.getName());
             }
 
             for (FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle : mFragmentLifecycles) {
@@ -177,11 +179,18 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     private ActivityDelegate fetchActivityDelegate(Activity activity) {
         ActivityDelegate activityDelegate = null;
-        if (activity instanceof IActivity && activity.getIntent() != null) {
-            activity.getIntent().setExtrasClassLoader(getClass().getClassLoader());
-            activityDelegate = activity.getIntent().getParcelableExtra(ActivityDelegate.ACTIVITY_DELEGATE);
+        if (activity instanceof IActivity) {
+            Cache<String, Object> cache = getCacheFromActivity((IActivity) activity);
+            activityDelegate = (ActivityDelegate) cache.get(ActivityDelegate.ACTIVITY_DELEGATE);
         }
         return activityDelegate;
+    }
+
+    @NonNull
+    private Cache<String, Object> getCacheFromActivity(IActivity activity) {
+        Cache<String, Object> cache = activity.provideCache();
+        Preconditions.checkNotNull(cache, "%s cannot be null on Activity", Cache.class.getName());
+        return cache;
     }
 
 }

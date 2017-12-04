@@ -17,7 +17,6 @@ package com.jess.arms.base.delegate;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Parcel;
 
 import com.jess.arms.utils.ArmsUtils;
 
@@ -28,8 +27,8 @@ import org.simple.eventbus.EventBus;
  * {@link ActivityDelegate} 默认实现类
  * <p>
  * Created by JessYan on 26/04/2017 20:23
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public class ActivityDelegateImpl implements ActivityDelegate {
@@ -80,31 +79,4 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         this.iActivity = null;
         this.mActivity = null;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-    }
-
-    protected ActivityDelegateImpl(Parcel in) {
-        this.mActivity = in.readParcelable(Activity.class.getClassLoader());
-        this.iActivity = in.readParcelable(IActivity.class.getClassLoader());
-    }
-
-    public static final Creator<ActivityDelegateImpl> CREATOR = new Creator<ActivityDelegateImpl>() {
-        @Override
-        public ActivityDelegateImpl createFromParcel(Parcel source) {
-            return new ActivityDelegateImpl(source);
-        }
-
-        @Override
-        public ActivityDelegateImpl[] newArray(int size) {
-            return new ActivityDelegateImpl[size];
-        }
-    };
 }

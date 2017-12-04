@@ -53,8 +53,8 @@ import java.util.List;
  * 获取设备常用信息和处理设备常用操作的工具类
  * <p>
  * Created by JessYan on 2016/3/15
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)

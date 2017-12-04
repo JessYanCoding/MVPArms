@@ -41,8 +41,8 @@ import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
  * app 的全局配置信息在此配置,需要将此实现类声明到 AndroidManifest 中
  * <p>
  * Created by JessYan on 12/04/2017 17:25
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public final class GlobalConfiguration implements ConfigModule {
@@ -50,8 +50,9 @@ public final class GlobalConfiguration implements ConfigModule {
 
     @Override
     public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
-        if (!BuildConfig.LOG_DEBUG) //Release 时,让框架不再打印 Http 请求和响应的信息
+        if (!BuildConfig.LOG_DEBUG){ //Release 时,让框架不再打印 Http 请求和响应的信息
             builder.printHttpLogLevel(RequestInterceptor.Level.NONE);
+        }
 
         builder.baseurl(Api.APP_DOMAIN)
                 //强烈建议自己自定义图片加载逻辑,因为默认提供的 GlideImageLoaderStrategy 并不能满足复杂的需求
@@ -66,6 +67,22 @@ public final class GlobalConfiguration implements ConfigModule {
 //                    @Override
 //                    public HttpUrl url() {
 //                        return HttpUrl.parse(sDomain);
+//                    }
+//                })
+
+                //可根据当前项目的情况以及环境为框架某些部件提供自定义的缓存策略, 具有强大的扩展性
+//                .cacheFactory(new Cache.Factory() {
+//                    @NonNull
+//                    @Override
+//                    public Cache build(CacheType type) {
+//                        switch (type.getCacheTypeId()){
+//                            case CacheType.EXTRAS_TYPE_ID:
+//                                return new LruCache(1000);
+//                            case CacheType.CACHE_SERVICE_CACHE_TYPE_ID:
+//                                return new Cache(type.calculateCacheSize(context));//自定义 Cache
+//                            default:
+//                                return new LruCache(200);
+//                        }
 //                    }
 //                })
 
@@ -90,8 +107,11 @@ public final class GlobalConfiguration implements ConfigModule {
                     //让 Retrofit 同时支持多个 BaseUrl 以及动态改变 BaseUrl. 详细使用请方法查看 https://github.com/JessYanCoding/RetrofitUrlManager
                     RetrofitUrlManager.getInstance().with(okhttpBuilder);
                 })
-                .rxCacheConfiguration((context1, rxCacheBuilder) -> {//这里可以自己自定义配置RxCache的参数
+                .rxCacheConfiguration((context1, rxCacheBuilder) -> {//这里可以自己自定义配置 RxCache 的参数
                     rxCacheBuilder.useExpiredDataIfLoaderNotAvailable(true);
+                    // 想自定义 RxCache 的缓存文件夹或者解析方式, 如改成 fastjson, 请 return rxCacheBuilder.persistence(cacheDirectory, new FastJsonSpeaker());
+                    // 否则请 return null;
+                    return null;
                 });
     }
 
@@ -115,7 +135,7 @@ public final class GlobalConfiguration implements ConfigModule {
 
             @Override
             public void onFragmentCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState) {
-                // 在配置变化的时候将这个 Fragment 保存下来,在 Activity 由于配置变化重建是重复利用已经创建的Fragment。
+                // 在配置变化的时候将这个 Fragment 保存下来,在 Activity 由于配置变化重建时重复利用已经创建的 Fragment。
                 // https://developer.android.com/reference/android/app/Fragment.html?hl=zh-cn#setRetainInstance(boolean)
                 // 如果在 XML 中使用 <Fragment/> 标签,的方式创建 Fragment 请务必在标签中加上 android:id 或者 android:tag 属性,否则 setRetainInstance(true) 无效
                 // 在 Activity 中绑定少量的 Fragment 建议这样做,如果需要绑定较多的 Fragment 不建议设置此参数,如 ViewPager 需要展示较多 Fragment

@@ -22,8 +22,8 @@ import okhttp3.HttpUrl;
  * 针对于 BaseUrl 在 App 启动时不能确定,需要请求服务器接口动态获取的应用场景
  * <p>
  * Created by JessYan on 11/07/2017 14:58
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public interface BaseUrl {

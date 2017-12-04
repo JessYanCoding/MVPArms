@@ -25,8 +25,11 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.jess.arms.base.delegate.IActivity;
+import com.jess.arms.integration.cache.Cache;
+import com.jess.arms.integration.cache.CacheType;
 import com.jess.arms.integration.lifecycle.ActivityLifecycleable;
 import com.jess.arms.mvp.IPresenter;
+import com.jess.arms.utils.ArmsUtils;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import javax.inject.Inject;
@@ -44,17 +47,26 @@ import static com.jess.arms.utils.ThirdViewUtil.convertAutoView;
  * 继承于这个特定的 {@link Activity},然后再按照 {@link BaseActivity} 的格式,将代码复制过去,记住一定要实现{@link IActivity}
  *
  * Created by JessYan on 22/03/2016
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IActivity, ActivityLifecycleable {
     protected final String TAG = this.getClass().getSimpleName();
-    private Unbinder mUnbinder;
     private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
+    private Cache<String, Object> mCache;
+    private Unbinder mUnbinder;
     @Inject
     protected P mPresenter;
 
+    @NonNull
+    @Override
+    public synchronized Cache<String, Object> provideCache() {
+        if (mCache == null) {
+            mCache = ArmsUtils.obtainAppComponentFromContext(this).cacheFactory().build(CacheType.ACTIVITY_CACHE);
+        }
+        return mCache;
+    }
 
     @NonNull
     @Override

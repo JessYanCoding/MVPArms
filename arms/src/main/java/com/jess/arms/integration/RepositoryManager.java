@@ -1,27 +1,27 @@
 /**
-  * Copyright 2017 JessYan
-  *
-  * Licensed under the Apache License, Version 2.0 (the "License");
-  * you may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at
-  *
-  *      http://www.apache.org/licenses/LICENSE-2.0
-  *
-  * Unless required by applicable law or agreed to in writing, software
-  * distributed under the License is distributed on an "AS IS" BASIS,
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  */
+ * Copyright 2017 JessYan
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.jess.arms.integration;
 
 import android.app.Application;
 import android.content.Context;
 
+import com.jess.arms.integration.cache.Cache;
+import com.jess.arms.integration.cache.CacheType;
 import com.jess.arms.mvp.IModel;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.jess.arms.utils.Preconditions;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -37,8 +37,8 @@ import retrofit2.Retrofit;
  *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.3">RepositoryManager wiki 官方文档</a>
  * Created by JessYan on 13/04/2017 09:52
- * Contact with <mailto:jess.yan.effort@gmail.com>
- * Follow me on <https://github.com/JessYanCoding>
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 @Singleton
@@ -46,14 +46,17 @@ public class RepositoryManager implements IRepositoryManager {
     private Lazy<Retrofit> mRetrofit;
     private Lazy<RxCache> mRxCache;
     private Application mApplication;
-    private final Map<String, Object> mRetrofitServiceCache = new HashMap<>();
-    private final Map<String, Object> mCacheServiceCache = new HashMap<>();
+    private Cache<String, Object> mRetrofitServiceCache;
+    private Cache<String, Object> mCacheServiceCache;
+    private Cache.Factory mCachefactory;
 
     @Inject
-    public RepositoryManager(Lazy<Retrofit> retrofit, Lazy<RxCache> rxCache, Application application) {
+    public RepositoryManager(Lazy<Retrofit> retrofit, Lazy<RxCache> rxCache, Application application
+            , Cache.Factory cachefactory) {
         this.mRetrofit = retrofit;
         this.mRxCache = rxCache;
         this.mApplication = application;
+        this.mCachefactory = cachefactory;
     }
 
     /**
@@ -65,12 +68,15 @@ public class RepositoryManager implements IRepositoryManager {
      */
     @Override
     public <T> T obtainRetrofitService(Class<T> service) {
+        if (mRetrofitServiceCache == null)
+            mRetrofitServiceCache = mCachefactory.build(CacheType.RETROFIT_SERVICE_CACHE);
+        Preconditions.checkNotNull(mRetrofitServiceCache,"Cannot return null from a Cache.Factory#build(int) method");
         T retrofitService;
         synchronized (mRetrofitServiceCache) {
-            retrofitService = (T) mRetrofitServiceCache.get(service.getName());
+            retrofitService = (T) mRetrofitServiceCache.get(service.getCanonicalName());
             if (retrofitService == null) {
                 retrofitService = mRetrofit.get().create(service);
-                mRetrofitServiceCache.put(service.getName(), retrofitService);
+                mRetrofitServiceCache.put(service.getCanonicalName(), retrofitService);
             }
         }
         return retrofitService;
@@ -85,12 +91,15 @@ public class RepositoryManager implements IRepositoryManager {
      */
     @Override
     public <T> T obtainCacheService(Class<T> cache) {
+        if (mCacheServiceCache == null)
+            mCacheServiceCache = mCachefactory.build(CacheType.CACHE_SERVICE_CACHE);
+        Preconditions.checkNotNull(mCacheServiceCache,"Cannot return null from a Cache.Factory#build(int) method");
         T cacheService;
         synchronized (mCacheServiceCache) {
-            cacheService = (T) mCacheServiceCache.get(cache.getName());
+            cacheService = (T) mCacheServiceCache.get(cache.getCanonicalName());
             if (cacheService == null) {
                 cacheService = mRxCache.get().using(cache);
-                mCacheServiceCache.put(cache.getName(), cacheService);
+                mCacheServiceCache.put(cache.getCanonicalName(), cacheService);
             }
         }
         return cacheService;

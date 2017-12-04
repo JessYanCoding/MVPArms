@@ -2,23 +2,23 @@ ext {
 
     android = [
                compileSdkVersion       : 26,
-               buildToolsVersion       : "26.0.1",
+               buildToolsVersion       : "26.0.2",
                minSdkVersion           : 15,
                targetSdkVersion        : 26,
-               versionCode             : 138,
-               versionName             : "2.2.3"
+               versionCode             : 146,
+               versionName             : "2.3.1"
     ]
 
      version = [
-                   androidSupportSdkVersion: "26.0.2",
+                   androidSupportSdkVersion: "26.1.0",
                    retrofitSdkVersion      : "2.3.0",
-                   dagger2SdkVersion       : "2.11",
-                   glideSdkVersion         : "4.0.0",
+                   dagger2SdkVersion       : "2.12",
+                   glideSdkVersion         : "4.2.0",
                    butterknifeSdkVersion   : "8.8.1",
                    rxlifecycleSdkVersion   : "1.0",
-                   rxlifecycle2SdkVersion  : "2.1.0",
-                   espressoSdkVersion      : "2.2.2",
-                   canarySdkVersion        : "1.5.1"
+                   rxlifecycle2SdkVersion  : "2.2.0",
+                   espressoSdkVersion      : "3.0.1",
+                   canarySdkVersion        : "1.5.4"
         ]
 
     dependencies = [
@@ -35,7 +35,7 @@ ext {
                 "retrofit-converter-gson"  : "com.squareup.retrofit2:converter-gson:${version["retrofitSdkVersion"]}",
                 "retrofit-adapter-rxjava"  : "com.squareup.retrofit2:adapter-rxjava:${version["retrofitSdkVersion"]}",
                 "retrofit-adapter-rxjava2" : "com.squareup.retrofit2:adapter-rxjava2:${version["retrofitSdkVersion"]}",
-                "okhttp3"                  : "com.squareup.okhttp3:okhttp:3.8.1",
+                "okhttp3"                  : "com.squareup.okhttp3:okhttp:3.9.0",
                 "okhttp-urlconnection"     : "com.squareup.okhttp:okhttp-urlconnection:2.0.0",
                 "glide"                    : "com.github.bumptech.glide:glide:${version["glideSdkVersion"]}",
                 "glide-compiler"           : "com.github.bumptech.glide:compiler:${version["glideSdkVersion"]}",
@@ -66,7 +66,7 @@ ext {
 
                 //rx2
                 "rxandroid2"                : "io.reactivex.rxjava2:rxandroid:2.0.1",
-                "rxjava2"                   : "io.reactivex.rxjava2:rxjava:2.1.3",
+                "rxjava2"                   : "io.reactivex.rxjava2:rxjava:2.1.6",
                 "rxlifecycle2"              : "com.trello.rxlifecycle2:rxlifecycle:${version["rxlifecycle2SdkVersion"]}",
                 "rxlifecycle2-android"      : "com.trello.rxlifecycle2:rxlifecycle-android:${version["rxlifecycle2SdkVersion"]}",
                 "rxlifecycle2-components"   : "com.trello.rxlifecycle2:rxlifecycle-components:${version["rxlifecycle2SdkVersion"]}",
@@ -79,18 +79,18 @@ ext {
                 "dagger2-compiler"         : "com.google.dagger:dagger-compiler:${version["dagger2SdkVersion"]}",
                 "androideventbus"          : "org.simple:androideventbus:1.0.5.1",
                 "otto"                     : "com.squareup:otto:1.3.8",
-                "gson"                     : "com.google.code.gson:gson:2.8.1",
+                "gson"                     : "com.google.code.gson:gson:2.8.2",
                 "multidex"                 : "com.android.support:multidex:1.0.1",
                 "javax.annotation"         : "javax.annotation:jsr250-api:1.0",
-                "arouter"                  : "com.alibaba:arouter-api:1.2.2",
-                "arouter-compiler"         : "com.alibaba:arouter-compiler:1.1.3",
-                "progressmanager"          : "me.jessyan:progressmanager:1.3.3",
-                "retrofit-url-manager"     : "me.jessyan:retrofit-url-manager:1.0.5",
+                "arouter"                  : "com.alibaba:arouter-api:1.2.4",
+                "arouter-compiler"         : "com.alibaba:arouter-compiler:1.1.4",
+                "progressmanager"          : "me.jessyan:progressmanager:1.5.0",
+                "retrofit-url-manager"     : "me.jessyan:retrofit-url-manager:1.1.0",
 
                 //test
                 "junit"                    : "junit:junit:4.12",
                 "androidJUnitRunner"       : "android.support.test.runner.AndroidJUnitRunner",
-                "runner"                   : "com.android.support.test:runner:0.5",
+                "runner"                   : "com.android.support.test:runner:1.0.1",
                 "espresso-core"            : "com.android.support.test.espresso:espresso-core:${version["espressoSdkVersion"]}",
                 "espresso-contrib"         : "com.android.support.test.espresso:espresso-contrib:${version["espressoSdkVersion"]}",
                 "espresso-intents"         : "com.android.support.test.espresso:espresso-intents:${version["espressoSdkVersion"]}",
