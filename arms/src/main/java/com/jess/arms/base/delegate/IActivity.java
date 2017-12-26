@@ -19,7 +19,6 @@ package com.jess.arms.base.delegate;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
 import com.jess.arms.base.BaseActivity;
@@ -27,8 +26,6 @@ import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.integration.cache.LruCache;
-import com.jess.arms.integration.store.lifecyclemodel.LifecycleModel;
-import com.jess.arms.integration.store.lifecyclemodel.LifecycleModelProviders;
 
 import org.simple.eventbus.EventBus;
 
@@ -47,9 +44,8 @@ public interface IActivity {
     /**
      * 提供在 {@link Activity} 生命周期内的缓存容器, 可向此 {@link Activity} 存取一些必要的数据
      * 此缓存容器和 {@link Activity} 的生命周期绑定, 如果 {@link Activity} 在屏幕旋转或者配置更改的情况下
-     * 重新创建, 那此缓存容器中的数据也会被清空, 如果你想避免此种情况请使用 {@link LifecycleModel}
+     * 重新创建, 那此缓存容器中的数据也会被清空, 如果你想避免此种情况请使用 <a href="https://github.com/JessYanCoding/LifecycleModel">LifecycleModel</a>
      *
-     * @see LifecycleModelProviders#of(FragmentActivity)
      * @return like {@link LruCache}
      */
     @NonNull
