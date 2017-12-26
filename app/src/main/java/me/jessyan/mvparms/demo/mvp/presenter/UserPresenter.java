@@ -18,6 +18,7 @@ package me.jessyan.mvparms.demo.mvp.presenter;
 import android.app.Application;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.OnLifecycleEvent;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.SupportActivity;
 import android.support.v7.widget.RecyclerView;
@@ -55,6 +56,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
     private RxErrorHandler mErrorHandler;
     private AppManager mAppManager;
     private Application mApplication;
+    private Context mContext;
     private List<User> mUsers;
     private RecyclerView.Adapter mAdapter;
     private int lastUserId = 1;
@@ -64,11 +66,12 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
 
     @Inject
     public UserPresenter(UserContract.Model model, UserContract.View rootView, RxErrorHandler handler
-            , AppManager appManager, Application application, List<User> list, RecyclerView.Adapter adapter) {
+            , AppManager appManager, Application application, Context context, List<User> list, RecyclerView.Adapter adapter) {
         super(model, rootView);
         this.mApplication = application;
         this.mErrorHandler = handler;
         this.mAppManager = appManager;
+        this.mContext = context;
         this.mUsers = list;
         this.mAdapter = adapter;
     }
