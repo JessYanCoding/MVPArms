@@ -5,8 +5,8 @@ ext {
                buildToolsVersion       : "27.0.2",
                minSdkVersion           : 15,
                targetSdkVersion        : 27,
-               versionCode             : 146,
-               versionName             : "2.3.1"
+               versionCode             : 1,
+               versionName             : "1.0.0"
     ]
 
      version = [
@@ -103,8 +103,7 @@ ext {
                 "umeng-analytics"          : "com.umeng.analytics:analytics:6.0.1",
 
                 //my tools
-                //下拉刷新
-                "smartRefreshLayout"       : "com.scwang.smartrefresh:SmartRefreshLayout:1.0.3"
+                "smartRefreshLayout"       : "com.scwang.smartrefresh:SmartRefreshLayout:1.0.3" //下拉刷新
 
         ]
 

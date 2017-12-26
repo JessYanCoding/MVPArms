@@ -1,7 +1,6 @@
 package me.jessyan.mvparms.demo.mvp.presenter;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.http.imageloader.ImageLoader;
@@ -21,6 +20,7 @@ import me.jessyan.mvparms.demo.mvp.contract.MainContract;
 import me.jessyan.mvparms.demo.mvp.model.entity.ConvenienceEntity;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import timber.log.Timber;
 
 
 @ActivityScope
@@ -67,7 +67,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                 .subscribe(new ErrorHandleSubscriber<List<ConvenienceEntity>>(mErrorHandler) {
                     @Override
                     public void onNext(List<ConvenienceEntity> response) {
-                        Log.e("czw", response.toString());
+                        Timber.e(response.toString());
                     }
 
                     @Override
