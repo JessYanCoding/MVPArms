@@ -81,7 +81,7 @@ public class RequestInterceptor implements Interceptor {
         if (logRequest) {
             boolean hasRequestBody = request.body() != null;
             //打印请求信息
-            Timber.tag(getTag(request, "Request_Info")).w("Params : 「 %s 」%nConnection : 「 %s 」%nHeaders : %n「 %s 」"
+            Timber.tag(getTag(request, "Request_Info")).w("%nParams : 「 %n%s%n 」%nConnection : 「 %s 」%nHeaders : %n「 %s 」"
                     , hasRequestBody ? request.url().toString() + "?" + parseParams(request.newBuilder().build().body()) : "Null"
                     , chain.connection()
                     , request.headers());

@@ -5,11 +5,10 @@ import android.app.Activity;
 import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
 
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import me.jessyan.mvparms.demo.mvp.model.entity.ConvenienceEntity;
+import me.jessyan.mvparms.demo.mvp.model.entity.IndexMenuEntity;
 
 
 public interface MainContract {
@@ -20,6 +19,6 @@ public interface MainContract {
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model extends IModel {
-        Observable<List<ConvenienceEntity>> getMainMenu(Map<String, String> maps);
+        Observable<IndexMenuEntity> getMainMenu(Map<String, String> maps);
     }
 }

@@ -7,16 +7,14 @@ import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import me.jessyan.mvparms.demo.app.ApiConfiguration;
-import me.jessyan.mvparms.demo.app.utils.NetworkUtils;
+import me.jessyan.mvparms.demo.app.utils.net.NetworkUtils;
 import me.jessyan.mvparms.demo.mvp.contract.MainContract;
-import me.jessyan.mvparms.demo.mvp.model.entity.ConvenienceEntity;
+import me.jessyan.mvparms.demo.mvp.model.entity.IndexMenuEntity;
 
 
 @ActivityScope
@@ -39,7 +37,7 @@ public class MainModel extends BaseModel implements MainContract.Model {
     }
 
     @Override
-    public Observable<List<ConvenienceEntity>> getMainMenu(Map<String, String> maps) {
-        return NetworkUtils.requestObjectList(mRepositoryManager, ApiConfiguration.Domain.CARD_BASE_URL, maps, ConvenienceEntity[].class);
+    public Observable<IndexMenuEntity> getMainMenu(Map<String, String> maps) {
+        return NetworkUtils.requestToObject(mRepositoryManager, maps, IndexMenuEntity.class);
     }
 }

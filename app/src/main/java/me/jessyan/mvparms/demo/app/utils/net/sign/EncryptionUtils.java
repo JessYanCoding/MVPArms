@@ -1,4 +1,4 @@
-package me.jessyan.mvparms.demo.app.utils.sign;
+package me.jessyan.mvparms.demo.app.utils.net.sign;
 
 import android.util.Base64;
 

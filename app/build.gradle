@@ -85,6 +85,7 @@ dependencies {
     //compile 'zlc.season:rxdownload2:2.0.4'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile rootProject.ext.dependencies["smartRefreshLayout"]
+    compile 'com.alibaba:fastjson:1.1.67.android'
 }
 repositories {
     mavenCentral()
