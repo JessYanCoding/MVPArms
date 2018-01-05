@@ -1,6 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 apply from: "config.gradle"
 buildscript {
+    ext.kotlin_version = '1.2.10'
     repositories {
         jcenter()
         google()
@@ -11,6 +12,8 @@ buildscript {
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
         //Gradle Bintray Plugin
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+        //kotlin Plugin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -19,6 +22,8 @@ allprojects {
         jcenter()
         google()
         maven { url "https://jitpack.io" }
+//        mavenCentral()
+//        maven { url "https://maven.google.com" }
     }
 }
 

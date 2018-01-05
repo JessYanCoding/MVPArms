@@ -5,8 +5,8 @@ ext {
                buildToolsVersion       : "27.0.2",
                minSdkVersion           : 15,
                targetSdkVersion        : 27,
-               versionCode             : 146,
-               versionName             : "2.3.1"
+               versionCode             : 1,
+               versionName             : "1.0.0"
     ]
 
      version = [
@@ -100,7 +100,11 @@ ext {
                 "logger"                   : "com.orhanobut:logger:2.1.1",
                 "canary-debug"             : "com.squareup.leakcanary:leakcanary-android:${version["canarySdkVersion"]}",
                 "canary-release"           : "com.squareup.leakcanary:leakcanary-android-no-op:${version["canarySdkVersion"]}",
-                "umeng-analytics"          : "com.umeng.analytics:analytics:6.0.1"
+                "umeng-analytics"          : "com.umeng.analytics:analytics:6.0.1",
+
+                //my tools
+                "smartRefreshLayout"       : "com.scwang.smartrefresh:SmartRefreshLayout:1.0.3" //下拉刷新
+
         ]
 
 
