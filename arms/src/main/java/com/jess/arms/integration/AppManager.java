@@ -259,12 +259,10 @@ public final class AppManager {
      * 添加 {@link Activity} 到集合
      */
     public void addActivity(Activity activity) {
-        if (mActivityList == null) {
-            mActivityList = new LinkedList<>();
-        }
         synchronized (AppManager.class) {
-            if (!mActivityList.contains(activity)) {
-                mActivityList.add(activity);
+            List<Activity> activities = getActivityList();
+            if (!activities.contains(activity)) {
+                activities.add(activity);
             }
         }
     }
@@ -314,9 +312,15 @@ public final class AppManager {
             Timber.tag(TAG).w("mActivityList == null when killActivity(Class)");
             return;
         }
-        for (Activity activity : mActivityList) {
-            if (activity.getClass().equals(activityClass)) {
-                activity.finish();
+        synchronized (AppManager.class) {
+            Iterator<Activity> iterator = getActivityList().iterator();
+            while (iterator.hasNext()) {
+                Activity next = iterator.next();
+
+                if (next.getClass().equals(activityClass)) {
+                    iterator.remove();
+                    next.finish();
+                }
             }
         }
     }
@@ -384,12 +388,13 @@ public final class AppManager {
 //        while (getActivityList().size() != 0) { //此方法只能兼容LinkedList
 //            getActivityList().remove(0).finish();
 //        }
-
-        Iterator<Activity> iterator = getActivityList().iterator();
-        while (iterator.hasNext()) {
-            Activity next = iterator.next();
-            iterator.remove();
-            next.finish();
+        synchronized (AppManager.class) {
+            Iterator<Activity> iterator = getActivityList().iterator();
+            while (iterator.hasNext()) {
+                Activity next = iterator.next();
+                iterator.remove();
+                next.finish();
+            }
         }
     }
 
@@ -400,15 +405,17 @@ public final class AppManager {
      */
     public void killAll(Class<?>... excludeActivityClasses) {
         List<Class<?>> excludeList = Arrays.asList(excludeActivityClasses);
-        Iterator<Activity> iterator = getActivityList().iterator();
-        while (iterator.hasNext()) {
-            Activity next = iterator.next();
+        synchronized (AppManager.class) {
+            Iterator<Activity> iterator = getActivityList().iterator();
+            while (iterator.hasNext()) {
+                Activity next = iterator.next();
 
-            if (excludeList.contains(next.getClass()))
-                continue;
+                if (excludeList.contains(next.getClass()))
+                    continue;
 
-            iterator.remove();
-            next.finish();
+                iterator.remove();
+                next.finish();
+            }
         }
     }
 
@@ -419,15 +426,17 @@ public final class AppManager {
      */
     public void killAll(String... excludeActivityName) {
         List<String> excludeList = Arrays.asList(excludeActivityName);
-        Iterator<Activity> iterator = getActivityList().iterator();
-        while (iterator.hasNext()) {
-            Activity next = iterator.next();
+        synchronized (AppManager.class) {
+            Iterator<Activity> iterator = getActivityList().iterator();
+            while (iterator.hasNext()) {
+                Activity next = iterator.next();
 
-            if (excludeList.contains(next.getClass().getName()))
-                continue;
+                if (excludeList.contains(next.getClass().getName()))
+                    continue;
 
-            iterator.remove();
-            next.finish();
+                iterator.remove();
+                next.finish();
+            }
         }
     }
 
