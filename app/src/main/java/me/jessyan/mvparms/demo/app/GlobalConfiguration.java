@@ -39,6 +39,10 @@ import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 /**
  * ================================================
  * app 的全局配置信息在此配置,需要将此实现类声明到 AndroidManifest 中
+ * ConfigModule 的实现类可以有无数多个！在Application中只是注册回调，并不会影响性能。
+ * 不过要注意 ConfigModule 接口的实现类对象是通过反射的生成的，这里会有些性能损耗
+ * {@link com.jess.arms.base.delegate.AppDelegate}
+ * {@link com.jess.arms.integration.ManifestParser}
  * <p>
  * Created by JessYan on 12/04/2017 17:25
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
