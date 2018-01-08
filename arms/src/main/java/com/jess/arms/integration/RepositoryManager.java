@@ -67,17 +67,14 @@ public class RepositoryManager implements IRepositoryManager {
      * @return
      */
     @Override
-    public <T> T obtainRetrofitService(Class<T> service) {
+    public synchronized <T> T obtainRetrofitService(Class<T> service) {
         if (mRetrofitServiceCache == null)
             mRetrofitServiceCache = mCachefactory.build(CacheType.RETROFIT_SERVICE_CACHE);
-        Preconditions.checkNotNull(mRetrofitServiceCache,"Cannot return null from a Cache.Factory#build(int) method");
-        T retrofitService;
-        synchronized (mRetrofitServiceCache) {
-            retrofitService = (T) mRetrofitServiceCache.get(service.getCanonicalName());
-            if (retrofitService == null) {
-                retrofitService = mRetrofit.get().create(service);
-                mRetrofitServiceCache.put(service.getCanonicalName(), retrofitService);
-            }
+        Preconditions.checkNotNull(mRetrofitServiceCache, "Cannot return null from a Cache.Factory#build(int) method");
+        T retrofitService = (T) mRetrofitServiceCache.get(service.getCanonicalName());
+        if (retrofitService == null) {
+            retrofitService = mRetrofit.get().create(service);
+            mRetrofitServiceCache.put(service.getCanonicalName(), retrofitService);
         }
         return retrofitService;
     }
@@ -90,17 +87,14 @@ public class RepositoryManager implements IRepositoryManager {
      * @return
      */
     @Override
-    public <T> T obtainCacheService(Class<T> cache) {
+    public synchronized <T> T obtainCacheService(Class<T> cache) {
         if (mCacheServiceCache == null)
             mCacheServiceCache = mCachefactory.build(CacheType.CACHE_SERVICE_CACHE);
-        Preconditions.checkNotNull(mCacheServiceCache,"Cannot return null from a Cache.Factory#build(int) method");
-        T cacheService;
-        synchronized (mCacheServiceCache) {
-            cacheService = (T) mCacheServiceCache.get(cache.getCanonicalName());
-            if (cacheService == null) {
-                cacheService = mRxCache.get().using(cache);
-                mCacheServiceCache.put(cache.getCanonicalName(), cacheService);
-            }
+        Preconditions.checkNotNull(mCacheServiceCache, "Cannot return null from a Cache.Factory#build(int) method");
+        T cacheService = (T) mCacheServiceCache.get(cache.getCanonicalName());
+        if (cacheService == null) {
+            cacheService = mRxCache.get().using(cache);
+            mCacheServiceCache.put(cache.getCanonicalName(), cacheService);
         }
         return cacheService;
     }
