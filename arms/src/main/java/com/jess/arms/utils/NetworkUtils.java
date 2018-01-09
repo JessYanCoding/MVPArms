@@ -24,6 +24,10 @@ import java.util.Enumeration;
  */
 public final class NetworkUtils {
 
+    private static final int NETWORK_TYPE_GSM = 16;
+    private static final int NETWORK_TYPE_TD_SCDMA = 17;
+    private static final int NETWORK_TYPE_IWLAN = 18;
+
     private NetworkUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
@@ -220,10 +224,6 @@ public final class NetworkUtils {
                 (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return tm != null ? tm.getNetworkOperatorName() : null;
     }
-
-    private static final int NETWORK_TYPE_GSM = 16;
-    private static final int NETWORK_TYPE_TD_SCDMA = 17;
-    private static final int NETWORK_TYPE_IWLAN = 18;
 
     /**
      * 获取当前网络类型
