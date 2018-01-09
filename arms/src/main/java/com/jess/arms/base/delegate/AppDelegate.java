@@ -67,16 +67,16 @@ public class AppDelegate implements App, AppLifecycles {
 
     public AppDelegate(Context context) {
 
-        // 用反射，将AndroidManifest.xml中带有ConfigModule标签的class转成对象集合（List<ConfigModule>）
+        //用反射, 将 AndroidManifest.xml 中带有 ConfigModule 标签的 class 转成对象集合（List<ConfigModule>）
         this.mModules = new ManifestParser(context).parse();
 
-        // 遍历之前获得的集合，将每一个 ConfigModule接口的实现类 所插入的代码存放进统一的List中
+        //遍历之前获得的集合, 执行每一个 ConfigModule 实现类的某些方法
         for (ConfigModule module : mModules) {
 
-            // 将个人实现的 Application 的回调 存入List mAppLifecycles（此时还未注册回调）
+            //将个人实现的 Application 的生命周期回调 (AppLifecycles) 存入 mAppLifecycles 集合 (此时还未注册回调)
             module.injectAppLifecycle(context, mAppLifecycles);
 
-            // 将个人实现的 Activity 的回调 存入List mActivityLifecycles（此时还未注册回调）
+            //将个人实现的 Activity 的生命周期回调 (ActivityLifecycleCallbacks) 存入 mActivityLifecycles 集合 (此时还未注册回调)
             module.injectActivityLifecycle(context, mActivityLifecycles);
         }
     }
@@ -84,7 +84,7 @@ public class AppDelegate implements App, AppLifecycles {
     @Override
     public void attachBaseContext(Context base) {
 
-        //遍历 mAppLifecycles,注册所有attachBaseContext()回调
+        //遍历 mAppLifecycles, 回调所有已注册的 AppLifecycles 的 attachBaseContext() 方法
         for (AppLifecycles lifecycle : mAppLifecycles) {
             lifecycle.attachBaseContext(base);
         }
@@ -101,19 +101,20 @@ public class AppDelegate implements App, AppLifecycles {
                 .build();
         mAppComponent.inject(this);
 
-        // 将ConfigModule的实现类的List存放到缓存Cache，可以随时获取
-        // 大于或等于缓存所能允许的最大 size, 则不能向缓存中添加此条目
+        //将 ConfigModule 的实现类的集合存放到缓存 Cache, 可以随时获取
+        //大于或等于缓存所能允许的最大 size, 则会根据 LRU 算法清除之前的条目
         mAppComponent.extras().put(ConfigModule.class.getName(), mModules);
 
         this.mModules = null;
 
-        // 该注册是为了给每个Activity 增加Arms框架中统一的全局逻辑
+        //该注册是为了给每个 Activity 增加 Arms 框架中统一的全局逻辑
         mApplication.registerActivityLifecycleCallbacks(mActivityLifecycle);
 
-        // 该注册是为了RxLifecycle能在每个Activity的生命周期 发送对应 ActivityEvent事件
+        //该注册是为了 RxLifecycle 能在每个 Activity 或 Fragment 的生命周期中, 发送对应 Event 事件
         mApplication.registerActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle);
 
-        // 遍历 mActivityLifecycles,注册所有activity生命周期回调，有N个ConfigModule的实现类，就会注册N次（这里有无限的可能性，看个人实现）
+        //遍历 mActivityLifecycles, 注册所有 Activity 的生命周期回调, 每个 ConfigModule 的实现类可以声明多个 Activity 的生命周期回调
+        //也可以有 N 个 ConfigModule 的实现类 (完美支持组件化项目 各个 Module 的各种独特需求)
         for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLifecycles) {
             mApplication.registerActivityLifecycleCallbacks(lifecycle);
         }
@@ -122,7 +123,7 @@ public class AppDelegate implements App, AppLifecycles {
 
         mApplication.registerComponentCallbacks(mComponentCallback);
 
-        //遍历 mAppLifecycles,注册所有onCreate()回调
+        //遍历 mAppLifecycles, 回调所有已注册的 AppLifecycles 的 onCreate() 方法
         for (AppLifecycles lifecycle : mAppLifecycles) {
             lifecycle.onCreate(mApplication);
         }
@@ -171,7 +172,7 @@ public class AppDelegate implements App, AppLifecycles {
         GlobalConfigModule.Builder builder = GlobalConfigModule
                 .builder();
 
-        // 该注册是为了给全局配置 GlobalConfigModule 添加参数
+        //遍历 ConfigModule 集合, 给全局配置 GlobalConfigModule 添加参数
         for (ConfigModule module : modules) {
             module.applyOptions(context, builder);
         }

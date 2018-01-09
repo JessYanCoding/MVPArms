@@ -47,8 +47,8 @@ public class ActivityLifecycleForRxLifecycle implements Application.ActivityLife
     }
 
     /**
-     * 通过桥梁对象  {@code BehaviorSubject<ActivityEvent> mLifecycleSubject}
-     * 转发它收到(Observe)的数据，并在每个Activity的生命周期发出对应的生命周期事件
+     * 通过桥梁对象 {@code BehaviorSubject<ActivityEvent> mLifecycleSubject}
+     * 在每个 Activity 的生命周期中发出对应的生命周期事件
      */
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
@@ -104,8 +104,8 @@ public class ActivityLifecycleForRxLifecycle implements Application.ActivityLife
     }
 
     /**
-     * 从{@link com.jess.arms.base.BaseActivity} 中获得桥梁对象 {@code BehaviorSubject<ActivityEvent> mLifecycleSubject}
-     * <a href="https://mcxiaoke.gitbooks.io/rxdocs/content/Subject.html">BehaviorSubject 官方中文文档</a>
+     * 从 {@link com.jess.arms.base.BaseActivity} 中获得桥梁对象 {@code BehaviorSubject<ActivityEvent> mLifecycleSubject}
+     * @see <a href="https://mcxiaoke.gitbooks.io/rxdocs/content/Subject.html">BehaviorSubject 官方中文文档</a>
      */
     private Subject<ActivityEvent> obtainSubject(Activity activity) {
         return ((ActivityLifecycleable) activity).provideLifecycleSubject();
