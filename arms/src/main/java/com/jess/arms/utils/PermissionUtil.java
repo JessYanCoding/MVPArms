@@ -1,38 +1,110 @@
+/**
+ * Copyright 2017 JessYan
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.jess.arms.utils;
 
 import android.Manifest;
 
-import com.jess.arms.base.BaseActivity;
-import com.jess.arms.base.BaseFragment;
-import com.jess.arms.mvp.BaseView;
-import com.tbruyelle.rxpermissions.RxPermissions;
-import com.trello.rxlifecycle.LifecycleTransformer;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import io.reactivex.annotations.NonNull;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import timber.log.Timber;
 
 /**
- * 如果申请权限无效,请把每个方法中的「compose(PermissionUtil.<Boolean>bindToLifecycle(view))」删掉
- * Created by jess on 17/10/2016 10:09
- * Contact with jess.yan.effort@gmail.com
+ * ================================================
+ * 权限请求工具类
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.9">PermissionUtil wiki 官方文档</a>
+ * Created by JessYan on 17/10/2016 10:09
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * ================================================
  */
-
 public class PermissionUtil {
     public static final String TAG = "Permission";
 
 
-    public interface RequestPermission {
-        void onRequestPermissionSuccess();
+    private PermissionUtil() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
 
-    public static <T> LifecycleTransformer<T> bindToLifecycle(BaseView view) {
-        if (view instanceof BaseActivity) {
-            return ((BaseActivity) view).<T>bindToLifecycle();
-        } else if (view instanceof BaseFragment) {
-            return ((BaseFragment) view).<T>bindToLifecycle();
-        } else {
-            throw new IllegalArgumentException("view isn't activity or fragment");
+    public interface RequestPermission {
+        /**
+         * 权限请求成功
+         */
+        void onRequestPermissionSuccess();
+
+        /**
+         * 用户拒绝了权限请求, 权限请求失败, 但还可以继续请求该权限
+         *
+         * @param permissions 请求失败的权限名
+         */
+        void onRequestPermissionFailure(List<String> permissions);
+
+        /**
+         * 用户拒绝了权限请求并且用户选择了以后不再询问, 权限请求失败, 这时将不能继续请求该权限, 需要提示用户进入设置页面打开该权限
+         *
+         * @param permissions 请求失败的权限名
+         */
+        void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions);
+    }
+
+
+    public static void requestPermission(final RequestPermission requestPermission, RxPermissions rxPermissions, RxErrorHandler errorHandler, String... permissions) {
+        if (permissions == null || permissions.length == 0) return;
+
+        List<String> needRequest = new ArrayList<>();
+        for (String permission : permissions) { //过滤调已经申请过的权限
+            if (!rxPermissions.isGranted(permission)) {
+                needRequest.add(permission);
+            }
+        }
+
+        if (needRequest.isEmpty()) {//全部权限都已经申请过，直接执行操作
+            requestPermission.onRequestPermissionSuccess();
+        } else {//没有申请过,则开始申请
+            rxPermissions
+                    .requestEach(needRequest.toArray(new String[needRequest.size()]))
+                    .buffer(permissions.length)
+                    .subscribe(new ErrorHandleSubscriber<List<Permission>>(errorHandler) {
+                        @Override
+                        public void onNext(@NonNull List<Permission> permissions) {
+                            for (Permission p : permissions) {
+                                if (!p.granted) {
+                                    if (p.shouldShowRequestPermissionRationale) {
+                                        Timber.tag(TAG).d("Request permissions failure");
+                                        requestPermission.onRequestPermissionFailure(Arrays.asList(p.name));
+                                        return;
+                                    } else {
+                                        Timber.tag(TAG).d("Request permissions failure with ask never again");
+                                        requestPermission.onRequestPermissionFailureWithAskNeverAgain(Arrays.asList(p.name));
+                                        return;
+                                    }
+                                }
+                            }
+                            Timber.tag(TAG).d("Request permissions success");
+                            requestPermission.onRequestPermissionSuccess();
+                        }
+                    });
         }
 
     }
@@ -41,154 +113,40 @@ public class PermissionUtil {
     /**
      * 请求摄像头权限
      */
-    public static void launchCamera(final RequestPermission requestPermission, RxPermissions rxPermissions, final BaseView view, RxErrorHandler errorHandler) {
-        //先确保是否已经申请过摄像头，和写入外部存储的权限
-        boolean isPermissionsGranted =
-                rxPermissions
-                        .isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
-                        rxPermissions
-                                .isGranted(Manifest.permission.CAMERA);
-
-        if (isPermissionsGranted) {//已经申请过，直接执行操作
-            requestPermission.onRequestPermissionSuccess();
-        } else {//没有申请过，则申请
-            rxPermissions
-                    .request(Manifest.permission.WRITE_EXTERNAL_STORAGE
-                            , Manifest.permission.CAMERA)
-                    .compose(PermissionUtil.<Boolean>bindToLifecycle(view))//使用RXlifecycle,使subscription和activity一起销毁
-                    .subscribe(new ErrorHandleSubscriber<Boolean>(errorHandler) {
-                        @Override
-                        public void onNext(Boolean granted) {
-                            if (granted) {
-                                Timber.tag(TAG).d("request WRITE_EXTERNAL_STORAGE and CAMERA success");
-                                requestPermission.onRequestPermissionSuccess();
-                            } else {
-                                view.showMessage("request permissons failure");
-                            }
-                        }
-                    });
-        }
+    public static void launchCamera(RequestPermission requestPermission, RxPermissions rxPermissions, RxErrorHandler errorHandler) {
+        requestPermission(requestPermission, rxPermissions, errorHandler, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
     }
-
 
 
     /**
      * 请求外部存储的权限
      */
-    public static void externalStorage(final RequestPermission requestPermission, RxPermissions rxPermissions, final BaseView view, RxErrorHandler errorHandler) {
-        //先确保是否已经申请过摄像头，和写入外部存储的权限
-        boolean isPermissionsGranted =
-                rxPermissions
-                        .isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if (isPermissionsGranted) {//已经申请过，直接执行操作
-            requestPermission.onRequestPermissionSuccess();
-        } else {//没有申请过，则申请
-            rxPermissions
-                    .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    .compose(PermissionUtil.<Boolean>bindToLifecycle(view))//使用RXlifecycle,使subscription和activity一起销毁
-                    .subscribe(new ErrorHandleSubscriber<Boolean>(errorHandler) {
-                        @Override
-                        public void onNext(Boolean granted) {
-                            if (granted) {
-                                Timber.tag(TAG).d("request WRITE_EXTERNAL_STORAGE and CAMERA success");
-                                requestPermission.onRequestPermissionSuccess();
-                            } else {
-                                view.showMessage("request permissons failure");
-                            }
-                        }
-                    });
-        }
+    public static void externalStorage(RequestPermission requestPermission, RxPermissions rxPermissions, RxErrorHandler errorHandler) {
+        requestPermission(requestPermission, rxPermissions, errorHandler, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
-
 
 
     /**
      * 请求发送短信权限
      */
-    public static void sendSms(final RequestPermission requestPermission, RxPermissions rxPermissions, final BaseView view, RxErrorHandler errorHandler) {
-//先确保是否已经申请过权限
-        boolean isPermissionsGranted =
-                rxPermissions
-                        .isGranted(Manifest.permission.SEND_SMS);
-
-        if (isPermissionsGranted) {//已经申请过，直接执行操作
-            requestPermission.onRequestPermissionSuccess();
-        } else {//没有申请过，则申请
-            rxPermissions
-                    .request(Manifest.permission.SEND_SMS)
-                    .compose(PermissionUtil.<Boolean>bindToLifecycle(view))//使用RXlifecycle,使subscription和activity一起销毁
-                    .subscribe(new ErrorHandleSubscriber<Boolean>(errorHandler) {
-                        @Override
-                        public void onNext(Boolean granted) {
-                            if (granted) {
-                                Timber.tag(TAG).d("request SEND_SMS success");
-                                requestPermission.onRequestPermissionSuccess();
-                            } else {
-                                view.showMessage("request permissons failure");
-                            }
-                        }
-                    });
-        }
+    public static void sendSms(RequestPermission requestPermission, RxPermissions rxPermissions, RxErrorHandler errorHandler) {
+        requestPermission(requestPermission, rxPermissions, errorHandler, Manifest.permission.SEND_SMS);
     }
 
 
     /**
      * 请求打电话权限
      */
-    public static void callPhone(final RequestPermission requestPermission, RxPermissions rxPermissions, final BaseView view, RxErrorHandler errorHandler) {
-//先确保是否已经申请过权限
-        boolean isPermissionsGranted =
-                rxPermissions
-                        .isGranted(Manifest.permission.CALL_PHONE);
-
-        if (isPermissionsGranted) {//已经申请过，直接执行操作
-            requestPermission.onRequestPermissionSuccess();
-        } else {//没有申请过，则申请
-            rxPermissions
-                    .request(Manifest.permission.CALL_PHONE)
-                    .compose(PermissionUtil.<Boolean>bindToLifecycle(view))//使用RXlifecycle,使subscription和activity一起销毁
-                    .subscribe(new ErrorHandleSubscriber<Boolean>(errorHandler) {
-                        @Override
-                        public void onNext(Boolean granted) {
-                            if (granted) {
-                                Timber.tag(TAG).d("request SEND_SMS success");
-                                requestPermission.onRequestPermissionSuccess();
-                            } else {
-                                view.showMessage("request permissons failure");
-                            }
-                        }
-                    });
-        }
+    public static void callPhone(RequestPermission requestPermission, RxPermissions rxPermissions, RxErrorHandler errorHandler) {
+        requestPermission(requestPermission, rxPermissions, errorHandler, Manifest.permission.CALL_PHONE);
     }
 
 
     /**
      * 请求获取手机状态的权限
      */
-    public static void readPhonestate(final RequestPermission requestPermission, RxPermissions rxPermissions, RxErrorHandler errorHandler) {
-//先确保是否已经申请过权限
-        boolean isPermissionsGranted =
-                rxPermissions
-                        .isGranted(Manifest.permission.READ_PHONE_STATE);
-
-        if (isPermissionsGranted) {//已经申请过，直接执行操作
-            requestPermission.onRequestPermissionSuccess();
-        } else {//没有申请过，则申请
-            rxPermissions
-                    .request(Manifest.permission.READ_PHONE_STATE)
-                    .subscribe(new ErrorHandleSubscriber<Boolean>(errorHandler) {
-                        @Override
-                        public void onNext(Boolean granted) {
-                            if (granted) {
-                                Timber.tag(TAG).d("request SEND_SMS success");
-                                requestPermission.onRequestPermissionSuccess();
-                            } else {
-                                Timber.tag(TAG).e("request permissons failure");
-                            }
-                        }
-                    });
-        }
+    public static void readPhonestate(RequestPermission requestPermission, RxPermissions rxPermissions, RxErrorHandler errorHandler) {
+        requestPermission(requestPermission, rxPermissions, errorHandler, Manifest.permission.READ_PHONE_STATE);
     }
 
 }

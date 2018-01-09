@@ -1,5 +1,6 @@
 MVPArms框架自动生成MVP及Dagger2相关文件解决方案
 
+第二代模版已经开源到 https://github.com/JessYanCoding/MVPArmsTemplate ,一键生成所有文件
 
 (设置)Setting -> Editor ->  File and Code Templates -> Files 然后点击左上角绿色的+号
 
@@ -23,8 +24,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
-
-import com.jess.arms.utils.UiUtils;
+import com.jess.arms.base.BaseActivity;
+import com.jess.arms.utils.ArmsUtils;
 
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
@@ -40,11 +41,11 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 #parse("File Header.java")
 
-public class ${NAME}Activity extends WEActivity<${NAME}Presenter> implements ${NAME}Contract.View {
+public class ${NAME}Activity extends BaseActivity<${NAME}Presenter> implements ${NAME}Contract.View {
 
 
     @Override
-    protected void setupActivityComponent(AppComponent appComponent) {
+    public void setupActivityComponent(AppComponent appComponent) {
         Dagger${NAME}Component
                 .builder()
                 .appComponent(appComponent)
@@ -54,15 +55,14 @@ public class ${NAME}Activity extends WEActivity<${NAME}Presenter> implements ${N
     }
 
     @Override
-    protected View initView() {
-        return LayoutInflater.from(this).inflate(layout_id, null, false);
+    public int initView(Bundle savedInstanceState) {
+        return 0;
     }
 
     @Override
-    protected void initData() {
+    public void initData(Bundle savedInstanceState) {
 
     }
-
 
 
     @Override
@@ -78,13 +78,13 @@ public class ${NAME}Activity extends WEActivity<${NAME}Presenter> implements ${N
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
-        UiUtils.SnackbarText(message);
+        ArmsUtils.snackbarText(message);
     }
 
     @Override
     public void launchActivity(@NonNull Intent intent) {
         checkNotNull(intent);
-        UiUtils.startActivity(intent);
+        ArmsUtils.startActivity(intent);
     }
 
     @Override
@@ -135,7 +135,7 @@ Name: Contract
 
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 
-import com.jess.arms.mvp.BaseView;
+import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
 
 /**
@@ -150,11 +150,11 @@ import com.jess.arms.mvp.IModel;
 #parse("File Header.java")
 
 public interface ${NAME}Contract {
-    //对于经常使用的关于UI的方法可以定义到BaseView中,如显示隐藏进度条,和显示文字消息
-    interface View extends BaseView {
+    //对于经常使用的关于UI的方法可以定义到IView中,如显示隐藏进度条,和显示文字消息
+    interface View extends IView {
 
     }
-    //Model层定义接口,外部只需关心model返回的数据,无需关心内部细节,及是否使用缓存
+    //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model extends IModel{
 
     }
@@ -173,8 +173,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import com.jess.arms.base.BaseFragment
 
-import com.jess.arms.utils.UiUtils;
+import com.jess.arms.utils.ArmsUtils;
 
 import butterknife.Bind;
 
@@ -191,7 +192,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 #parse("File Header.java")
 
-public class ${NAME}Fragment extends WEFragment<${NAME}Presenter> implements ${NAME}Contract.View{
+public class ${NAME}Fragment extends BaseFragment<${NAME}Presenter> implements ${NAME}Contract.View{
 
 
     public static ${NAME}Fragment newInstance() {
@@ -200,7 +201,7 @@ public class ${NAME}Fragment extends WEFragment<${NAME}Presenter> implements ${N
     }
 
     @Override
-    protected void setupFragmentComponent(AppComponent appComponent) {
+    public void setupFragmentComponent(AppComponent appComponent) {
         Dagger${NAME}Component
                 .builder()
                 .appComponent(appComponent)
@@ -210,24 +211,23 @@ public class ${NAME}Fragment extends WEFragment<${NAME}Presenter> implements ${N
     }
 
     @Override
-    protected View initView() {
-        return LayoutInflater.from(getActivity()).inflate(layout_id, null, false);
+    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(layout_id, container, false);
     }
 
     @Override
-    protected void initData() {
+    public void initData(Bundle savedInstanceState) {
 
     }
 
     /**
      * 此方法是让外部调用使fragment做一些操作的,比如说外部的activity想让fragment对象执行一些方法,
-     * 建议在有多个需要让外界调用的方法时,统一传bundle,里面存一个what字段,来区分不同的方法,在setData
-     * 方法中就可以switch做不同的操作,这样就可以用统一的入口方法做不同的事,和message同理
+     * 建议在有多个需要让外界调用的方法时,统一传Message,通过what字段,来区分不同的方法,在setData
+     * 方法中就可以switch做不同的操作,这样就可以用统一的入口方法做不同的事
      *
-     * 使用此方法时请注意调用时fragment的生命周期,如果调用此setData方法时onActivityCreated
-     * 还没执行,setData里调用presenter的方法时,是会报空的,因为dagger注入是在onActivityCreated
-     * 方法中执行的,如果要做一些初始化操作,可以不必让外部调setData,在内部onActivityCreated中
-     * 初始化就可以了
+     * 使用此方法时请注意调用时fragment的生命周期,如果调用此setData方法时onCreate还没执行
+     * setData里却调用了presenter的方法时,是会报空的,因为dagger注入是在onCreated方法中执行的,然后才创建的presenter
+     * 如果要做一些初始化操作,可以不必让外部调setData,在initData中初始化就可以了
      *
      * @param data
      */
@@ -251,13 +251,13 @@ public class ${NAME}Fragment extends WEFragment<${NAME}Presenter> implements ${N
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
-        UiUtils.SnackbarText(message);
+        ArmsUtils.snackbarText(message);
     }
 
     @Override
     public void launchActivity(@NonNull Intent intent) {
         checkNotNull(intent);
-        UiUtils.startActivity(intent);
+        ArmsUtils.startActivity(intent);
     }
 
     @Override
@@ -276,10 +276,12 @@ Name: Model
 
 import android.app.Application;
 import com.google.gson.Gson;
+import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
-
+import com.jess.arms.di.scope.ActivityScope;
+import javax.inject.Inject;
 
 /**
   * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同
@@ -293,20 +295,20 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 #parse("File Header.java")
 
 @ActivityScope
-public class ${NAME}Model extends BaseModel<ServiceManager,CacheManager> implements ${NAME}Contract.Model{
+public class ${NAME}Model extends BaseModel implements ${NAME}Contract.Model{
     private Gson mGson;
     private Application mApplication;
 
     @Inject
-    public ${NAME}Model(ServiceManager serviceManager, CacheManager cacheManager, Gson gson, Application application) {
-        super(serviceManager, cacheManager);
+    public ${NAME}Model(IRepositoryManager repositoryManager, Gson gson, Application application) {
+        super(repositoryManager);
         this.mGson = gson;
         this.mApplication = application;
     }
 
     @Override
-    public void onDestory() {
-        super.onDestory();
+    public void onDestroy() {
+        super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
     }
@@ -371,10 +373,10 @@ Name: Presenter
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 
 import android.app.Application;
-import com.jess.arms.base.AppManager;
+import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
-import com.jess.arms.widget.imageloader.ImageLoader;
+import com.jess.arms.http.imageloader.ImageLoader;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import javax.inject.Inject;
 

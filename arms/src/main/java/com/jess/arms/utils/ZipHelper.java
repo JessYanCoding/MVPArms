@@ -1,7 +1,23 @@
+/**
+  * Copyright 2017 JessYan
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at
+  *
+  *      http://www.apache.org/licenses/LICENSE-2.0
+  *
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
 package com.jess.arms.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -13,9 +29,21 @@ import java.util.zip.GZIPOutputStream;
 import java.util.zip.Inflater;
 
 /**
- * Created by jess on 16/5/10.
+ * ================================================
+ * 处理压缩和解压的工具类
+ * <p>
+ * Created by JessYan on 10/05/2016
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * ================================================
  */
 public class ZipHelper {
+
+
+    private ZipHelper() {
+        throw new IllegalStateException("you can't instantiate me!");
+    }
+
     /**
      * zlib decompress 2 String
      *
@@ -23,6 +51,18 @@ public class ZipHelper {
      * @return
      */
     public static String decompressToStringForZlib(byte[] bytesToDecompress) {
+        return decompressToStringForZlib(bytesToDecompress, "UTF-8");
+    }
+
+
+    /**
+     * zlib decompress 2 String
+     *
+     * @param bytesToDecompress
+     * @param charsetName
+     * @return
+     */
+    public static String decompressToStringForZlib(byte[] bytesToDecompress, String charsetName) {
         byte[] bytesDecompressed = decompressForZlib
                 (
                         bytesToDecompress
@@ -36,13 +76,14 @@ public class ZipHelper {
                             bytesDecompressed,
                             0,
                             bytesDecompressed.length,
-                            "UTF-8"
+                            charsetName
                     );
         } catch (UnsupportedEncodingException uee) {
             uee.printStackTrace();
         }
 
         return returnValue;
+
     }
 
 
@@ -171,8 +212,8 @@ public class ZipHelper {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            okhttp3.internal.Util.closeQuietly(gos);
-            okhttp3.internal.Util.closeQuietly(os);
+            closeQuietly(gos);
+            closeQuietly(os);
         }
         return null;
     }
@@ -185,7 +226,17 @@ public class ZipHelper {
      * @throws IOException
      */
     public static String decompressForGzip(byte[] compressed) {
+        return decompressForGzip(compressed, "UTF-8");
+    }
 
+    /**
+     * gzip decompress 2 string
+     *
+     * @param compressed
+     * @param charsetName
+     * @return
+     */
+    public static String decompressForGzip(byte[] compressed, String charsetName) {
         final int BUFFER_SIZE = compressed.length;
         GZIPInputStream gis = null;
         ByteArrayInputStream is = null;
@@ -196,15 +247,26 @@ public class ZipHelper {
             byte[] data = new byte[BUFFER_SIZE];
             int bytesRead;
             while ((bytesRead = gis.read(data)) != -1) {
-                string.append(new String(data, 0, bytesRead, "UTF-8"));
+                string.append(new String(data, 0, bytesRead, charsetName));
             }
             return string.toString();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            okhttp3.internal.Util.closeQuietly(gis);
-            okhttp3.internal.Util.closeQuietly(is);
+            closeQuietly(gis);
+            closeQuietly(is);
         }
         return null;
+    }
+
+    public static void closeQuietly(Closeable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (RuntimeException rethrown) {
+                throw rethrown;
+            } catch (Exception ignored) {
+            }
+        }
     }
 }

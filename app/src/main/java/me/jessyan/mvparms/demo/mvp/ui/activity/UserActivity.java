@@ -1,51 +1,72 @@
+/**
+  * Copyright 2017 JessYan
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at
+  *
+  *      http://www.apache.org/licenses/LICENSE-2.0
+  *
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
 package me.jessyan.mvparms.demo.mvp.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.Nullable;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 
+import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.DefaultAdapter;
-import com.jess.arms.utils.UiUtils;
+import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.utils.ArmsUtils;
 import com.paginate.Paginate;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import me.jessyan.mvparms.demo.R;
-import common.AppComponent;
 import me.jessyan.mvparms.demo.di.component.DaggerUserComponent;
 import me.jessyan.mvparms.demo.di.module.UserModule;
 import me.jessyan.mvparms.demo.mvp.contract.UserContract;
 import me.jessyan.mvparms.demo.mvp.presenter.UserPresenter;
-import common.WEActivity;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import timber.log.Timber;
 
-import static me.jessyan.mvparms.demo.R.id.SwipeRefreshLayout;
 
+/**
+ * ================================================
+ * 展示 View 的用法
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.2">View wiki 官方文档</a>
+ * Created by JessYan on 09/04/2016 10:59
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * ================================================
+ */
+public class UserActivity extends BaseActivity<UserPresenter> implements UserContract.View, SwipeRefreshLayout.OnRefreshListener {
 
-public class UserActivity extends WEActivity<UserPresenter> implements UserContract.View, SwipeRefreshLayout.OnRefreshListener {
-
-    @Nullable
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-    @Nullable
-    @BindView(SwipeRefreshLayout)
+    @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @Inject
+    RxPermissions mRxPermissions;
+    @Inject
+    RecyclerView.LayoutManager mLayoutManager;
+    @Inject
+    RecyclerView.Adapter mAdapter;
 
     private Paginate mPaginate;
     private boolean isLoadingMore;
-    private RxPermissions mRxPermissions;
 
     @Override
-    protected void setupActivityComponent(AppComponent appComponent) {
-        this.mRxPermissions = new RxPermissions(this);
+    public void setupActivityComponent(AppComponent appComponent) {
         DaggerUserComponent
                 .builder()
                 .appComponent(appComponent)
@@ -55,14 +76,17 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
     }
 
     @Override
-    protected View initView() {
-        return LayoutInflater.from(this).inflate(R.layout.activity_user, null, false);
+    public int initView(Bundle savedInstanceState) {
+        return R.layout.activity_user;
     }
 
     @Override
-    protected void initData() {
-        mPresenter.requestUsers(true);//打开app时自动加载列表
+    public void initData(Bundle savedInstanceState) {
+        initRecyclerView();
+        mRecyclerView.setAdapter(mAdapter);
+        initPaginate();
     }
+
 
     @Override
     public void onRefresh() {
@@ -70,41 +94,18 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
     }
 
     /**
-     * 初始化RecycleView
+     * 初始化RecyclerView
      */
-    private void initRecycleView() {
+    private void initRecyclerView() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        configRecycleView(mRecyclerView, new GridLayoutManager(this, 2));
-    }
-
-
-    /**
-     * 配置recycleview
-     *
-     * @param recyclerView
-     * @param layoutManager
-     */
-    private void configRecycleView(RecyclerView recyclerView
-            , RecyclerView.LayoutManager layoutManager
-    ) {
-        recyclerView.setLayoutManager(layoutManager);
-        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        ArmsUtils.configRecyclerView(mRecyclerView, mLayoutManager);
     }
 
 
     @Override
     public void showLoading() {
         Timber.tag(TAG).w("showLoading");
-        Observable.just(1)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Integer>() {
-                    @Override
-                    public void call(Integer integer) {
-                        mSwipeRefreshLayout.setRefreshing(true);
-                    }
-                });
+        mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
@@ -115,24 +116,17 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
 
     @Override
     public void showMessage(String message) {
-        UiUtils.SnackbarText(message);
+        ArmsUtils.snackbarText(message);
     }
 
     @Override
     public void launchActivity(Intent intent) {
-        UiUtils.startActivity(intent);
+        ArmsUtils.startActivity(intent);
     }
 
     @Override
     public void killMyself() {
         finish();
-    }
-
-    @Override
-    public void setAdapter(DefaultAdapter adapter) {
-        mRecyclerView.setAdapter(adapter);
-        initRecycleView();
-        initPaginate();
     }
 
     /**
@@ -144,11 +138,16 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
     }
 
     /**
-     * 介绍加载更多
+     * 结束加载更多
      */
     @Override
     public void endLoadMore() {
         isLoadingMore = false;
+    }
+
+    @Override
+    public Activity getActivity() {
+        return this;
     }
 
     @Override
@@ -187,6 +186,7 @@ public class UserActivity extends WEActivity<UserPresenter> implements UserContr
 
     @Override
     protected void onDestroy() {
+        DefaultAdapter.releaseAllHolder(mRecyclerView);//super.onDestroy()之后会unbind,所有view被置为null,所以必须在之前调用
         super.onDestroy();
         this.mRxPermissions = null;
         this.mPaginate = null;

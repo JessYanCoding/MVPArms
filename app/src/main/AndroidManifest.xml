@@ -11,13 +11,12 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
-        android:name="common.WEApplication"
+        android:name="com.jess.arms.base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".mvp.ui.activity.UserActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -26,7 +25,8 @@
             </intent-filter>
         </activity>
         <!-- autolayout meta
-        将设计图的宽高配置后,配合AutoLauout控件使用,在设计图尺寸以外的其它尺寸手机上,也能达到和设计图一样的效果
+        配置设计图的宽高,配合AutoLauout控件使用,在设计图尺寸以外的其它尺寸手机上,也能达到和设计图一样的效果
+        注意: 本框架并不强制你使用 AutoLayout,如果你不想使用 AutoLayout,就不要配置下面的 meta-data
         -->
         <meta-data
             android:name="design_width"
@@ -34,10 +34,11 @@
         <meta-data
             android:name="design_height"
             android:value="1920"/>
-        <!--glide配置-->
+
+        <!-- arms配置 -->
         <meta-data
-            android:name="com.jess.arms.widget.imageloader.glide.GlideConfiguration"
-            android:value="GlideModule"/>
+            android:name="me.jessyan.mvparms.demo.app.GlobalConfiguration"
+            android:value="ConfigModule"/>
 
     </application>
 

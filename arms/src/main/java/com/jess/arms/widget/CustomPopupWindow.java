@@ -1,3 +1,18 @@
+/**
+  * Copyright 2017 JessYan
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at
+  *
+  *      http://www.apache.org/licenses/LICENSE-2.0
+  *
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
 package com.jess.arms.widget;
 
 import android.graphics.drawable.ColorDrawable;
@@ -9,7 +24,18 @@ import android.view.View;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
 
-
+/**
+ * ================================================
+ * 因为继承于 {@link PopupWindow} ,所以它本身就是一个 {@link PopupWindow}
+ * 因此如果此类里封装的功能并不能满足您的需求(不想过多封装 UI 的东西,这里只提供思想,觉得不满足需求可以自己仿照着封装)
+ * 您可以直接调用 {@link PopupWindow} 的 Api 满足需求
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.7">CustomPopupWindow wiki 官方文档</a>
+ * Created by JessYan on 4/22/2016
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * ================================================
+ */
 public class CustomPopupWindow extends PopupWindow {
     private View mContentView;
     private View mParentView;
@@ -43,7 +69,7 @@ public class CustomPopupWindow extends PopupWindow {
         setFocusable(isFocus);
         setOutsideTouchable(isOutsideTouch);
         setBackgroundDrawable(mBackgroundDrawable);
-        if (mAnimationStyle != -1)//如果设置了对话则使用对话
+        if (mAnimationStyle != -1)//如果设置了动画则使用动画
             setAnimationStyle(mAnimationStyle);
         setContentView(mContentView);
     }
@@ -134,7 +160,7 @@ public class CustomPopupWindow extends PopupWindow {
 
         public CustomPopupWindow build() {
             if (contentView == null)
-                throw new IllegalStateException("contentView is required");
+                throw new IllegalStateException("ContentView is required");
             if (listener == null)
                 throw new IllegalStateException("CustomPopupWindowListener is required");
 

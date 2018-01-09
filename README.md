@@ -1,85 +1,116 @@
-# MVPArms 
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/nimelepbpejjlbmoobocpfnjhihnpked.svg)]()
-[![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](http://www.apache.org/licenses/LICENSE-2.0)
-[![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square)](https://developer.android.com/about/versions/android-4.0.3.html)
+<h1 align="center">MVPArms</h1>
 
-##a common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects( like Dagger2,Rxjava,Retrofit... ),to make your developing quicker and easier. 
+<p align="center">
+   <a href="https://bintray.com/jessyancoding/maven/MVPArms/2.3.1/link">
+    <img src="https://img.shields.io/badge/bintray-v2.3.1-brightgreen.svg" alt="Latest Stable Version" />
+  </a>
+  <a href="https://travis-ci.org/JessYanCoding/MVPArms">
+    <img src="https://travis-ci.org/JessYanCoding/MVPArms.svg?branch=master" alt="Build Status" />
+  </a>
+  <a href="https://developer.android.com/about/versions/android-4.0.3.html">
+    <img src="https://img.shields.io/badge/API-15%2B-blue.svg?style=flat-square" alt="Min Sdk Version" />
+  </a>
+  <a href="http://www.apache.org/licenses/LICENSE-2.0">
+    <img src="http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square" alt="License" />
+  </a>
+  <a href="https://shang.qq.com/wpa/qunwpa?idkey=1a5dc5e9b2e40a780522f46877ba243eeb64405d42398643d544d3eec6624917">
+    <img src="https://img.shields.io/badge/QQ群-301733278-ff69b4.svg" alt="QQ Group" />
+  </a>
+</p>
 
-[中文说明](MVPArms.md)
+<p align="center">
+  <a href="MVPArms.md">
+    <b>中文说明</b>
+  </a>
+</p> 
 
-##Architectural
+## A common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects( like Dagger2,RxJava,Retrofit... ),to make your developing quicker and easier.
+
+## Architectural
 <img src="https://github.com/JessYanCoding/MVPArms/raw/master/image/Architecture.png" width="80%" height="80%">
 
-##Usage
+## Usage
 > New Project
->> If you are building a new project, directly to the entire project **clone** (or download), as **Demo** as the main module, then the package name into their own package name , **Demo** contains the package structure can be used directly, a mainstream `MVP` +` Dagger2` + `Retrofit` +` Rxjava` framework so easy to build successful, and now you refer **Demo Mvp** Package under the **UserActivity** format,[Use Template to automatically generate MVP, Dagger2 related classes under the corresponding package](http://www.jianshu.com/p/56cf17ab896d),With access to [Wiki documents] (https://github.com/JessYanCoding/MVPArms/wiki) slowly grasp the framework to see more articles as soon as possible in the project to use it, in practice, learning is the fastest
+>> If you are building a new project, directly to the entire project **clone** (or download), as **app** as the main **Module** (It is recommended to remove the **arms Module** and use **Gradle** to [depend](https://github.com/JessYanCoding/MVPArms/wiki#1.1) on this framework remotely for easy updates), then the package name into their own package name , **app Module** contains the package structure can be used directly, a mainstream `MVP` +` Dagger2` + `Retrofit` +` RxJava` framework so easy to build successful, and now you refer **Mvp** Package under the **UserActivity** format,[Use Template to automatically generate MVP, Dagger2 related classes](https://github.com/JessYanCoding/MVPArmsTemplate),With access to [Wiki documents](https://github.com/JessYanCoding/MVPArms/wiki) slowly grasp the framework to see more articles as soon as possible in the project to use it, in practice, learning is the fastest
 
 > Old Project
 >> [Old projects would like to introduce this framework, you can refer to the Wiki documentation, written in great detail](https://github.com/JessYanCoding/MVPArms/wiki)
 
-##Wiki
-[Detailed usage reference Wiki](https://github.com/JessYanCoding/MVPArms/wiki)
+## Wiki
+[Detailed usage reference Wiki (**Must see!!!**)](https://github.com/JessYanCoding/MVPArms/wiki)
 
 
-##Notice
+## Notice
+
+* [MVPArms Learning Project](https://github.com/JessYanCoding/MVPArms/blob/master/CONTRIBUTING_APP.md)
+
+* [Collection Box](https://github.com/JessYanCoding/MVPArms/issues/40)
 
 * [Update Log](https://github.com/JessYanCoding/MVPArms/wiki/UpdateLog)
 
-* [Version Updata](https://github.com/JessYanCoding/MVPArms/wiki#1.6)
+* [Common Issues](https://github.com/JessYanCoding/MVPArms/wiki/Issues)
 
-* The use of these technologies for the latter part of the project maintenance and iterative, especially large projects is very helpful, but is to develop a pre-write a page to write a lot of `MVP`,` Dagger2` class and interface, which is indeed a headache for the development of pre- Now the framework has been able to [mvp_generator_solution](https://github.com/JessYanCoding/MVPArms/blob/master/MVP_generator_solution) automatically generate some `MVP`,` Dagger2` template code, and now we can very easily use the framework.
-
-* First run **app**, the cold start will be a long time, this is not because of this framework, because the `Instant run` in **Debug** mode will start the first deployment of some resources, if the signature to play **Release** package is not There will be a cold start is very slow, so do not worry about affecting the user experience.
-
-* If you rename **WEApplication**, the following error occurs in the startup **app**: `Unable to instantiate application com.android.tools.fd.runtime.BootstrapApplication`, please close the instant run.
-
-* AppComponent is a management of all single-instance object class, the use of dagger2 management, DaggerAppComponent for Dagger2 automatically generated using apt if missing, the first part of the error comment out, and then compile the project, DaggerAppComponent automatically generated, this time to open the Notes on Can, the specific use of dagger2 please refer to the document.
+* The use of these technologies for the latter part of the project maintenance and iterative, especially large projects is very helpful, but is to develop a pre-write a page to write a lot of `MVP`,` Dagger2` class and interface, which is indeed a headache for the development of pre- Now the framework has been able to [Template](https://github.com/JessYanCoding/MVPArmsTemplate) automatically generate some `MVP`,` Dagger2` template code, and now we can very easily use the framework.
 
 * Use this frame comes with automatic adaptation function, please refer to [AndroidAutoLayout](https://github.com/hongyangAndroid/AndroidAutoLayout).
-
-* This framework uses `RxPermissions` for rights management (adaptation android6.0), and provides a PermissionUtil tool class line of code to implement the permission request.
 
 * This framework does not provide any third-party libraries associated with the **UI**(except for the [`AndroidAutoLayout`](https://github.com/hongyangAndroid/AndroidAutoLayout) screen adaptation scheme).
 
 
-##Functionality & Libraries
+## Functionality & Libraries
 1. [`Mvp` Google's official` Mvp` architecture project, which contains several different schema branches (this is the Dagger branch).](https://github.com/googlesamples/android-architecture/tree/todo-mvp-dagger/)
 2. [`Dagger2`](https://github.com/google/dagger)
-3. [`Rxjava`](https://github.com/ReactiveX/RxJava)
+3. [`RxJava`](https://github.com/ReactiveX/RxJava)
 4. [`RxAndroid`](https://github.com/ReactiveX/RxAndroid)
 5. [`Rxlifecycle`](https://github.com/trello/RxLifecycle)
-6. [`Rxbinding`](https://github.com/JakeWharton/RxBinding)
-7. [`RxCache`](https://github.com/VictorAlbertos/RxCache)
-8. [`Retrofit`](https://github.com/square/retrofit)
-9. [`Okhttp`](https://github.com/square/okhttp)
-10. [`Autolayout`](https://github.com/hongyangAndroid/AndroidAutoLayout)
-11. [`Gson`](https://github.com/google/gson)
-12. [`Butterknife`](https://github.com/JakeWharton/butterknife)
-13. [`Androideventbus`](https://github.com/hehonghui/AndroidEventBus)
-14. [`Timber`](https://github.com/JakeWharton/timber)
-15. [`Glide`](https://github.com/bumptech/glide)
-16. [`LeakCanary`](https://github.com/square/leakcanary)
-17. [`RxErroHandler`](https://github.com/JessYanCoding/RxErrorHandler)
+6. [`RxCache`](https://github.com/VictorAlbertos/RxCache)
+7. [`RxPermissions`](https://github.com/tbruyelle/RxPermissions)
+8. [`RxErroHandler`](https://github.com/JessYanCoding/RxErrorHandler)
+9. [`Retrofit`](https://github.com/square/retrofit)
+10. [`Okhttp`](https://github.com/square/okhttp)
+11. [`Autolayout`](https://github.com/hongyangAndroid/AndroidAutoLayout)
+12. [`Gson`](https://github.com/google/gson)
+13. [`Butterknife`](https://github.com/JakeWharton/butterknife)
+14. [`Androideventbus`](https://github.com/hehonghui/AndroidEventBus)
+15. [`Timber`](https://github.com/JakeWharton/timber)
+16. [`Glide`](https://github.com/bumptech/glide)
+17. [`LeakCanary`](https://github.com/square/leakcanary)
 
+## Who is using MVPArms?
 
-##Update
+**小顶家装 工长端** | **小顶家装 工人端** | **小顶家装 材料端** | **小顶网** | **智播** |
+:-------------------------------------------------------------------:|:----------:|:---------------:|:--------:|:--------------:|
+[<img src="image/xiaoding_foreman_logo.png" width="80" height="80">](http://www.dggxdjz.com) | [<img src="image/xiaoding_worker_logo.png" width="80" height="80">](http://www.dggxdjz.com) | [<img src="image/xiaoding_material_logo.png" width="80" height="80">](http://www.dggxdjz.com) | [<img src="image/top_net_work_logo.png" width="80" height="80">](http://www.dgg.net/appload.htm) | [<img src="image/zhibo_logo.png" width="80" height="80">](http://www.zhibocloud.cn/)| 
+**天天视频** | **天天直播** | **中斗通航** | **中斗祥云** | **麋鹿旅行** |
+[<img src="image/tiantian_video_logo.png" width="80" height="80">](http://sj.qq.com/myapp/detail.htm?apkName=com.dzwh.ttys) | [<img src="image/tiantian_live_logo.png" width="80" height="80">](http://www.25pp.com/android/detail_7611392/) | [<img src="image/tong_hang_logo.png" width="80" height="80">](https://fir.im/3176) | <img src="image/xiang_yun_logo.png" width="80" height="80">  | [<img src="image/mi_lu_logo.png" width="80" height="80">](http://android.myapp.com/myapp/detail.htm?apkName=com.elk.tourist) | 
+**汇财富** | **觅窝** | **(Internal App ...)** | **(In Progress App ...)** | **(Your App ...)** |
+[<img src="image/hui_cai_fu_logo.png" width="80" height="80">](http://android.myapp.com/myapp/detail.htm?apkName=com.tahone.client) | [<img src="image/mi_wo_logo.png" width="80" height="80">](http://miwo.ai/) | <img src="image/android_logo.png" width="80" height="80">  | <img src="image/android_logo.png" width="80" height="80"> | <img src="image/android_logo.png" width="80" height="80">|  
+
+## Update
+* Tuesday, 26 September 2017: [**Cache**](https://github.com/JessYanCoding/MVPArms/blob/master/arms/src/main/java/com/jess/arms/integration/cache/)
+* Tuesday, 12 September 2017: [**Lifecycleable**](https://github.com/JessYanCoding/MVPArms/blob/master/arms/src/main/java/com/jess/arms/integration/lifecycle)
+* Thursday, 20 July 2017: [**RetrofitUrlManager**](https://github.com/JessYanCoding/RetrofitUrlManager)
+* Tuesday, 13 June 2017: [**ProgressManager**](https://github.com/JessYanCoding/ProgressManager)
+* Wednesday, 31 May 2017: [**Template**](https://github.com/JessYanCoding/MVPArmsTemplate)
+* Monday, 24 April 2017: [**AppDelegate**](https://github.com/JessYanCoding/MVPArms/wiki#3.12)
+* Thursday, 13 April 2017: [**RepositoryManager**](https://github.com/JessYanCoding/MVPArms/wiki#2.3)
 * Thursday, 15 December 2016: [**AppManager**](https://github.com/JessYanCoding/MVPArms/wiki#3.11)
 * Sunday, 25 December 2016: [**GlobeConfigModule**](https://github.com/JessYanCoding/MVPArms/wiki#3.1)
 * Monday, 26 December 2016: [**Version Update**](https://github.com/JessYanCoding/MVPArms/wiki#1.6)
 
+## Acknowledgements 
+Thanks to all the three libraries used in this framework **Author**, and all for the **Open Sourece** selfless contributions **Developer** and **Organizations**, so that we can better work and study, I will also spare time return to the open source community
 
-##TODO
-* Improve RxErrorHandler
-* Improve RequestIntercept
+## Donate
+![alipay](image/pay_alipay.jpg) ![](image/pay_wxpay.jpg)
 
+## About Me
+* **Email**: <jess.yan.effort@gmail.com>  
+* **Home**: <http://jessyan.me>
+* **掘金**: <https://gold.xitu.io/user/57a9dbd9165abd0061714613>
+* **简书**: <http://www.jianshu.com/u/1d0c0bc634db>
 
-##Acknowledgements 
-Thanks to all the three libraries used in this framework **Author**, and all for the 'Open Sourece' selfless contributions **Developer** and **Organizations**, so that we can better work and study, I will also spare time return to the open source community
-
-##About Me
-* **Email**: jess.yan.effort@gmail.com  
-
-##License
+## License
 ``` 
  Copyright 2016, jessyan       
   
