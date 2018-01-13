@@ -13,7 +13,7 @@ ext {
                    androidSupportSdkVersion: "27.0.2",
                    retrofitSdkVersion      : "2.3.0",
                    dagger2SdkVersion       : "2.13",
-                   glideSdkVersion         : "4.4.0",
+                   glideSdkVersion         : "4.5.0",
                    butterknifeSdkVersion   : "8.8.1",
                    rxlifecycleSdkVersion   : "1.0",
                    rxlifecycle2SdkVersion  : "2.2.1",
