@@ -1,8 +1,8 @@
 <h1 align="center">MVPArms</h1>
 
 <p align="center">
-   <a href="https://bintray.com/jessyancoding/maven/MVPArms/2.3.1/link">
-    <img src="https://img.shields.io/badge/bintray-v2.3.1-brightgreen.svg" alt="Latest Stable Version" />
+   <a href="https://bintray.com/jessyancoding/maven/MVPArms/2.3.5/link">
+    <img src="https://img.shields.io/badge/bintray-v2.3.5-brightgreen.svg" alt="Latest Stable Version" />
   </a>
   <a href="https://travis-ci.org/JessYanCoding/MVPArms">
     <img src="https://travis-ci.org/JessYanCoding/MVPArms.svg?branch=master" alt="Build Status" />
