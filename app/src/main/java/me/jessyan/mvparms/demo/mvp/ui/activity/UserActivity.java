@@ -78,11 +78,10 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     private Paginate mPaginate;
     private boolean isLoadingMore;
     private boolean isGirl = false;//是否显示的是妹子
-    private UserComponent userComponent;
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
-        userComponent = DaggerUserComponent
+        UserComponent userComponent= DaggerUserComponent
                 .builder()
                 .appComponent(appComponent)
                 .userModule(new UserModule(this))

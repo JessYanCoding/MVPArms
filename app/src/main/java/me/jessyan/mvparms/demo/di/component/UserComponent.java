@@ -21,7 +21,6 @@ import com.jess.arms.di.scope.ActivityScope;
 import dagger.Component;
 import me.jessyan.mvparms.demo.di.module.GirlModule;
 import me.jessyan.mvparms.demo.di.module.UserModule;
-import me.jessyan.mvparms.demo.mvp.ui.activity.UserActivity;
 
 /**
  * ================================================

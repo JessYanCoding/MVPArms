@@ -15,12 +15,9 @@
  */
 package me.jessyan.mvparms.demo.mvp.presenter;
 
-import android.app.Application;
 import android.support.v7.widget.RecyclerView;
 
-import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
-import com.jess.arms.utils.PermissionUtil;
 import com.jess.arms.utils.RxLifecycleUtils;
 
 import java.util.List;

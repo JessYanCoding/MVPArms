@@ -17,7 +17,6 @@ package me.jessyan.mvparms.demo.mvp.ui.holder;
 
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.jess.arms.base.BaseHolder;
 import com.jess.arms.di.component.AppComponent;
