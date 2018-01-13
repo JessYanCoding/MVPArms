@@ -20,6 +20,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.DefaultAdapter;
@@ -29,12 +31,17 @@ import com.paginate.Paginate;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.di.component.DaggerUserComponent;
+import me.jessyan.mvparms.demo.di.component.UserComponent;
+import me.jessyan.mvparms.demo.di.module.GirlModule;
 import me.jessyan.mvparms.demo.di.module.UserModule;
+import me.jessyan.mvparms.demo.mvp.contract.GirlContract;
 import me.jessyan.mvparms.demo.mvp.contract.UserContract;
+import me.jessyan.mvparms.demo.mvp.presenter.GirlPresenter;
 import me.jessyan.mvparms.demo.mvp.presenter.UserPresenter;
 import timber.log.Timber;
 
@@ -49,7 +56,7 @@ import timber.log.Timber;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public class UserActivity extends BaseActivity<UserPresenter> implements UserContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class UserActivity extends BaseActivity<UserPresenter> implements UserContract.View, GirlContract.View,  SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -60,19 +67,35 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     @Inject
     RecyclerView.LayoutManager mLayoutManager;
     @Inject
-    RecyclerView.Adapter mAdapter;
+    RecyclerView.Adapter mUserAdapter;
+
+    //注意因为2个Adapter的类型是一样的，必须加上@Named来让Dagger知道注入哪一个
+    @Inject
+    @Named("girl")
+    RecyclerView.Adapter mGirlAdapter;
 
     private Paginate mPaginate;
     private boolean isLoadingMore;
+    //是否显示的是妹子
+    private boolean isGirl = false;
+
+    //复用注入的P
+    @Inject
+    GirlPresenter mGirlPresenter;
+
+    UserComponent userComponent;
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
-        DaggerUserComponent
+        userComponent = DaggerUserComponent
                 .builder()
                 .appComponent(appComponent)
                 .userModule(new UserModule(this))
-                .build()
-                .inject(this);
+                .build();
+
+        //通用的P的注入
+        userComponent.plus(new GirlModule(this)).
+                inject(this);
     }
 
     @Override
@@ -82,17 +105,31 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
 
     @Override
     public void initData(Bundle savedInstanceState) {
+
         initRecyclerView();
-        mRecyclerView.setAdapter(mAdapter);
+        //默认显示github用户页面
+        setAdapter(isGirl);
         initPaginate();
     }
 
-
     @Override
     public void onRefresh() {
-        mPresenter.requestUsers(true);
+        refreshList(isGirl,true);
     }
 
+    /**
+     * 刷新列表
+     *
+     * @param isGirl 是否是妹子
+     * @param pullToRefresh 是否是下拉刷新
+     */
+    private void refreshList(boolean isGirl, boolean pullToRefresh) {
+        if (isGirl) {
+            mGirlPresenter.requestGirls(pullToRefresh);
+        } else {
+            mPresenter.requestUsers(pullToRefresh);
+        }
+    }
     /**
      * 初始化RecyclerView
      */
@@ -163,7 +200,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
             Paginate.Callbacks callbacks = new Paginate.Callbacks() {
                 @Override
                 public void onLoadMore() {
-                    mPresenter.requestUsers(false);
+                    refreshList(isGirl, false);
                 }
 
                 @Override
@@ -182,6 +219,40 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
                     .build();
             mPaginate.setHasMoreDataToLoad(false);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_girl:
+                // 切换状态
+                isGirl = !isGirl;
+                setAdapter(isGirl);
+                // 刷新列表
+                onRefresh();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * 切换适配器
+     *
+     * @param isGirlll
+     */
+    private void setAdapter(boolean isGirlll) {
+        if (isGirlll) {
+            mRecyclerView.setAdapter(mGirlAdapter);
+        } else {
+            mRecyclerView.setAdapter(mUserAdapter);
+        }
+
     }
 
     @Override

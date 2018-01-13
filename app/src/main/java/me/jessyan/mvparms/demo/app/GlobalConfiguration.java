@@ -36,6 +36,9 @@ import me.jessyan.mvparms.demo.mvp.model.api.Api;
 import me.jessyan.progressmanager.ProgressManager;
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 
+import static me.jessyan.mvparms.demo.mvp.model.api.Api.APP_GANK_DOMAIN;
+import static me.jessyan.mvparms.demo.mvp.model.api.Api.GANK_DOMAIN_NAME;
+
 /**
  * ================================================
  * App 的全局配置信息在此配置, 需要将此实现类声明到 AndroidManifest 中
@@ -58,7 +61,7 @@ public final class GlobalConfiguration implements ConfigModule {
             builder.printHttpLogLevel(RequestInterceptor.Level.NONE);
         }
 
-        builder.baseurl(Api.APP_DOMAIN)
+        builder.baseurl(Api.APP_GITHUB_DOMAIN)
                 //强烈建议自己自定义图片加载逻辑,因为默认提供的 GlideImageLoaderStrategy 并不能满足复杂的需求
                 //请参考 https://github.com/JessYanCoding/MVPArms/wiki#3.4
 //                .imageLoaderStrategy(new CustomLoaderStrategy())
@@ -110,6 +113,8 @@ public final class GlobalConfiguration implements ConfigModule {
                     ProgressManager.getInstance().with(okhttpBuilder);
                     //让 Retrofit 同时支持多个 BaseUrl 以及动态改变 BaseUrl. 详细使用请方法查看 https://github.com/JessYanCoding/RetrofitUrlManager
                     RetrofitUrlManager.getInstance().with(okhttpBuilder);
+                    // 添加gank.io
+                    RetrofitUrlManager.getInstance().putDomain(GANK_DOMAIN_NAME, APP_GANK_DOMAIN);
                 })
                 .rxCacheConfiguration((context1, rxCacheBuilder) -> {//这里可以自己自定义配置 RxCache 的参数
                     rxCacheBuilder.useExpiredDataIfLoaderNotAvailable(true);
