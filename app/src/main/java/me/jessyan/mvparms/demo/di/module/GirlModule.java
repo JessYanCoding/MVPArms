@@ -53,7 +53,6 @@ public class GirlModule {
         this.view = view;
     }
 
-    // 注意Scope不同
     @GirlScope
     @Provides
     GirlContract.View provideTestView() {
@@ -65,7 +64,6 @@ public class GirlModule {
     GirlContract.Model provideGirlModel(GirlModel model) {
         return model;
     }
-
 
     @GirlScope
     @Provides

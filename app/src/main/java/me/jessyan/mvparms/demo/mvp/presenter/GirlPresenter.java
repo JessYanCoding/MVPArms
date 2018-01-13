@@ -51,8 +51,6 @@ import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 @GirlScope
 public class GirlPresenter extends BasePresenter<GirlContract.Model, GirlContract.View> {
     private RxErrorHandler mErrorHandler;
-    private AppManager mAppManager;
-    private Application mApplication;
     private List<Girl> mGirls;
     private RecyclerView.Adapter mAdapter;
 
@@ -61,34 +59,15 @@ public class GirlPresenter extends BasePresenter<GirlContract.Model, GirlContrac
 
     @Inject
     public GirlPresenter(GirlContract.Model model, GirlContract.View rootView, RxErrorHandler handler
-            , AppManager appManager, Application application, List<Girl> list, @Named("girl") RecyclerView.Adapter adapter) {
+            , List<Girl> list, @Named("girl") RecyclerView.Adapter adapter) {
         super(model, rootView);
-        this.mApplication = application;
         this.mErrorHandler = handler;
-        this.mAppManager = appManager;
         this.mGirls = list;
         this.mAdapter = adapter;
     }
 
 
     public void requestGirls(final boolean pullToRefresh) {
-        //请求外部存储权限用于适配android6.0的权限管理机制
-        PermissionUtil.externalStorage(new PermissionUtil.RequestPermission() {
-            @Override
-            public void onRequestPermissionSuccess() {
-
-            }
-
-            @Override
-            public void onRequestPermissionFailure(List<String> permissions) {
-                mRootView.showMessage("Request permissions failure");
-            }
-
-            @Override
-            public void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions) {
-                mRootView.showMessage("Need to go to the settings");
-            }
-        }, mRootView.getRxPermissions(), mErrorHandler);
 
         //下拉刷新默认只请求第一页
         if (pullToRefresh) {
@@ -144,7 +123,5 @@ public class GirlPresenter extends BasePresenter<GirlContract.Model, GirlContrac
         this.mAdapter = null;
         this.mGirls = null;
         this.mErrorHandler = null;
-        this.mAppManager = null;
-        this.mApplication = null;
     }
 }

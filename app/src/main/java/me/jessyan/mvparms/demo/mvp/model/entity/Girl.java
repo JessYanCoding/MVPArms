@@ -20,19 +20,19 @@ public class Girl implements Serializable{
     private String used;
     private String who;
 
-    public String get_id() {
+    public String getId() {
         return _id;
     }
 
-    public void set_id(String _id) {
+    public void setId(String _id) {
         this._id = _id;
     }
 
-    public String get_ns() {
+    public String getNs() {
         return _ns;
     }
 
-    public void set_ns(String _ns) {
+    public void setNs(String _ns) {
         this._ns = _ns;
     }
 

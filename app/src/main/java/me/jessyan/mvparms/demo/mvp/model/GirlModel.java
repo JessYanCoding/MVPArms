@@ -59,14 +59,10 @@ public class GirlModel extends BaseModel implements GirlContract.Model {
         super(repositoryManager);
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    void onPause() {
-        Timber.d("Release Resource");
-    }
-
     @Override
     public Observable<BaseJson<List<Girl>>> getGirls(int pageNum, boolean update) {
 
+        //实际过程拆分开
 //        Observable<BaseJson<List<Girl>>> girlData = mRepositoryManager
 //                .obtainRetrofitService(CommonService.class)
 //                .getGirlData(pageNum, USERS_PER_PAGE);
@@ -85,12 +81,12 @@ public class GirlModel extends BaseModel implements GirlContract.Model {
 //        });
 
         return Observable.just(mRepositoryManager
-                .obtainRetrofitService(CommonService.class)
+                .obtainRetrofitService(CommonService.class) //这里给Dagger2 提供Retrofit对象
                 .getGirlData(pageNum, USERS_PER_PAGE))
                 .flatMap(new Function<Observable<BaseJson<List<Girl>>>, ObservableSource<BaseJson<List<Girl>>>>() {
                     @Override
                     public ObservableSource<BaseJson<List<Girl>>> apply(Observable<BaseJson<List<Girl>>> baseJsonObservable) throws Exception {
-                        return mRepositoryManager.obtainCacheService(CommonCache.class)
+                        return mRepositoryManager.obtainCacheService(CommonCache.class) //这里给Dagger2 提供RxCache对象
                                 .getGirls(baseJsonObservable
                                         , new DynamicKey(pageNum)
                                         , new EvictDynamicKey(update))

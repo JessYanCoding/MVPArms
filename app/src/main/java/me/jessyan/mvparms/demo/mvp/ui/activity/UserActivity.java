@@ -68,22 +68,17 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     RecyclerView.LayoutManager mLayoutManager;
     @Inject
     RecyclerView.Adapter mUserAdapter;
-
     //注意因为2个Adapter的类型是一样的，必须加上@Named来让Dagger知道注入哪一个
     @Inject
     @Named("girl")
     RecyclerView.Adapter mGirlAdapter;
+    @Inject
+    GirlPresenter mGirlPresenter; //复用注入的P
 
     private Paginate mPaginate;
     private boolean isLoadingMore;
-    //是否显示的是妹子
-    private boolean isGirl = false;
-
-    //复用注入的P
-    @Inject
-    GirlPresenter mGirlPresenter;
-
-    UserComponent userComponent;
+    private boolean isGirl = false;//是否显示的是妹子
+    private UserComponent userComponent;
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
@@ -236,6 +231,8 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
                 setAdapter(isGirl);
                 // 刷新列表
                 onRefresh();
+                break;
+            default:
                 break;
         }
         return super.onOptionsItemSelected(item);
