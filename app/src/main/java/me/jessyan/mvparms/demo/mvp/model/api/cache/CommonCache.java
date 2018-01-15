@@ -24,6 +24,8 @@ import io.rx_cache2.EvictProvider;
 import io.rx_cache2.LifeCache;
 import io.rx_cache2.Reply;
 import io.rx_cache2.internal.RxCache;
+import me.jessyan.mvparms.demo.mvp.model.entity.BaseJson;
+import me.jessyan.mvparms.demo.mvp.model.entity.Girl;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
 
 /**
@@ -39,4 +41,7 @@ public interface CommonCache {
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
     Observable<Reply<List<User>>> getUsers(Observable<List<User>> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
+
+    @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
+    Observable<Reply<BaseJson<List<Girl>>>> getGirls(Observable<BaseJson<List<Girl>>> girls, DynamicKey pageNo, EvictProvider evictProvider);
 }

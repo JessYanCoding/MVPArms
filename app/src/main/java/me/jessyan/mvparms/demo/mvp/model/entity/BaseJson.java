@@ -30,12 +30,14 @@ import me.jessyan.mvparms.demo.mvp.model.api.Api;
  * ================================================
  */
 public class BaseJson<T> implements Serializable {
-    private T data;
+
+    // 这个字段要根据接口返回的实体名称改变，一般名字是data，results，看接口
+    private T results;
     private String code;
     private String msg;
 
     public T getData() {
-        return data;
+        return results;
     }
 
     public String getCode() {

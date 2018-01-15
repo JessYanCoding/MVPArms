@@ -15,6 +15,18 @@
   */
 package me.jessyan.mvparms.demo.mvp.model.api.service;
 
+import java.util.List;
+
+import io.reactivex.Observable;
+import me.jessyan.mvparms.demo.mvp.model.entity.BaseJson;
+import me.jessyan.mvparms.demo.mvp.model.entity.Girl;
+import retrofit2.http.GET;
+import retrofit2.http.Headers;
+import retrofit2.http.Path;
+
+import static me.jessyan.mvparms.demo.mvp.model.api.Api.GANK_DOMAIN_NAME;
+import static me.jessyan.retrofiturlmanager.RetrofitUrlManager.DOMAIN_NAME_HEADER;
+
 /**
  * ================================================
  * 存放通用的一些 API
@@ -26,4 +38,13 @@ package me.jessyan.mvparms.demo.mvp.model.api.service;
  */
 public interface CommonService {
 
+    /**
+     * 如果不需要多个 BaseUrl ,继续使用初始化时传入 Retrofit 中的默认 BaseUrl,就不要加上 DOMAIN_NAME_HEADER 这个 Header
+     * @param pageNum  page页数
+     * @param pageSize 一页多少条数据
+     * @return
+     */
+    @Headers({DOMAIN_NAME_HEADER + GANK_DOMAIN_NAME})
+    @GET("api/data/福利/{number}/{page}")
+    Observable<BaseJson<List<Girl>>> getGirlData(@Path("page") int pageNum, @Path("number") int pageSize);
 }

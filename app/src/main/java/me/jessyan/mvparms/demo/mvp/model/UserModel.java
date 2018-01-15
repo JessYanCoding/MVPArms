@@ -40,7 +40,8 @@ import timber.log.Timber;
 
 /**
  * ================================================
- * 展示 Model 的用法
+ * 展示 Model 的用法:注意,如果你提供了Model对象，必须要提供Retrofit对象和RxCache对象，即使你不使用缓存也要提供R'xCache
+ * 对象
  *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.3">Model wiki 官方文档</a>
  * Created by JessYan on 09/04/2016 10:56
@@ -61,12 +62,12 @@ public class UserModel extends BaseModel implements UserContract.Model {
     public Observable<List<User>> getUsers(int lastIdQueried, boolean update) {
         //使用rxcache缓存,上拉刷新则不读取缓存,加载更多读取缓存
         return Observable.just(mRepositoryManager
-                .obtainRetrofitService(UserService.class)
+                .obtainRetrofitService(UserService.class)//这里给Dagger2 提供Retrofit对象
                 .getUsers(lastIdQueried, USERS_PER_PAGE))
                 .flatMap(new Function<Observable<List<User>>, ObservableSource<List<User>>>() {
                     @Override
                     public ObservableSource<List<User>> apply(@NonNull Observable<List<User>> listObservable) throws Exception {
-                        return mRepositoryManager.obtainCacheService(CommonCache.class)
+                        return mRepositoryManager.obtainCacheService(CommonCache.class)//这里给Dagger2 提供RxCache对象
                                 .getUsers(listObservable
                                         , new DynamicKey(lastIdQueried)
                                         , new EvictDynamicKey(update))

@@ -286,7 +286,7 @@ public class DeviceUtils {
     @Deprecated
     public static boolean hasInternet(Context context) {
         boolean flag;
-        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager manager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (manager != null && manager.getActiveNetworkInfo() != null)
             flag = true;
         else
@@ -641,7 +641,7 @@ public class DeviceUtils {
     @Deprecated
     public static boolean isWifiOpen(Context context) {
         boolean isWifiConnect = false;
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         // check the networkInfos numbers
         NetworkInfo[] networkInfos = cm.getAllNetworkInfo();
         for (int i = 0; i < networkInfos.length; i++) {
@@ -758,7 +758,7 @@ public class DeviceUtils {
     @Deprecated
     public static int getNetworkType(Context context) {
         int netType = 0;
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo == null) {
             return netType;
@@ -781,7 +781,7 @@ public class DeviceUtils {
 
     @Deprecated
     public static boolean netIsConnected(Context context) {
-        ConnectivityManager connectMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectMgr = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         //手机网络连接状态
         NetworkInfo mobNetInfo = connectMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         //WIFI连接状态

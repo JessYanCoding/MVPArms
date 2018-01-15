@@ -18,13 +18,14 @@ package me.jessyan.mvparms.demo.app;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.google.gson.reflect.TypeToken;
 import com.jess.arms.http.GlobalHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
+import com.jess.arms.utils.ArmsUtils;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.List;
 
+import me.jessyan.mvparms.demo.mvp.model.entity.User;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -50,20 +51,17 @@ public class GlobalHttpHandlerImpl implements GlobalHttpHandler {
     public Response onHttpResultResponse(String httpResult, Interceptor.Chain chain, Response response) {
                     /* 这里可以先客户端一步拿到每一次http请求的结果,可以解析成json,做一些操作,如检测到token过期后
                        重新请求token,并重新执行请求 */
-        try {
-            if (!TextUtils.isEmpty(httpResult) && RequestInterceptor.isJson(response.body().contentType())) {
-                JSONArray array = new JSONArray(httpResult);
-                JSONObject object = (JSONObject) array.get(0);
-                String login = object.getString("login");
-                String avatar_url = object.getString("avatar_url");
-                Timber.w("Result ------> " + login + "    ||   Avatar_url------> " + avatar_url);
+
+        if (!TextUtils.isEmpty(httpResult) && RequestInterceptor.isJson(response.body().contentType())) {
+            try {
+                List<User> list = ArmsUtils.obtainAppComponentFromContext(context).gson().fromJson(httpResult, new TypeToken<List<User>>() {}.getType());
+                User user = list.get(0);
+                Timber.w("Result ------> " + user.getLogin() + "    ||   Avatar_url------> " + user.getAvatarUrl());
+            } catch (Exception e) {
+                e.printStackTrace();
+                return response;
             }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return response;
         }
-
 
                  /* 这里如果发现token过期,可以先请求最新的token,然后在拿新的token放入request里去重新请求
                     注意在这个回调之前已经调用过proceed,所以这里必须自己去建立网络请求,如使用okhttp使用新的request去请求
