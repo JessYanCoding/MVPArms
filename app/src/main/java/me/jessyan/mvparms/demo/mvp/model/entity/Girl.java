@@ -2,12 +2,13 @@ package me.jessyan.mvparms.demo.mvp.model.entity;
 
 import java.io.Serializable;
 
-/*
- * Description: 妹子尸体类
- * Created by Egoist on 2018/1/12
- * 修改备注 ：
+/**
+ * Description: 妹子信息实体
+ *
+ * @author Sum41forever 2018/1/15
+ *         <a href="http://www.sum41forever.com/">Contact me</a>
  */
-public class Girl implements Serializable{
+public class Girl implements Serializable {
 
     private String _id;
     private String _ns;

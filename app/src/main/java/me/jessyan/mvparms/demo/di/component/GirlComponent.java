@@ -3,7 +3,7 @@ package me.jessyan.mvparms.demo.di.component;
 import dagger.Subcomponent;
 import me.jessyan.mvparms.demo.di.module.GirlModule;
 import me.jessyan.mvparms.demo.di.scope.GirlScope;
-import me.jessyan.mvparms.demo.mvp.ui.activity.UserActivity;
+import me.jessyan.mvparms.demo.mvp.ui.activity.MultiPersenterActivity;
 
 /**
  * ================================================
@@ -19,5 +19,5 @@ import me.jessyan.mvparms.demo.mvp.ui.activity.UserActivity;
 @Subcomponent(modules = {GirlModule.class})
 public interface GirlComponent {
 
-    void inject(UserActivity activity);
+    void inject(MultiPersenterActivity activity);
 }
