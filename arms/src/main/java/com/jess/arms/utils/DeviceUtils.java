@@ -60,8 +60,11 @@ import java.util.List;
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class DeviceUtils {
     // 手机网络类型
+    @Deprecated
     public static final int NETTYPE_WIFI = 0x01;
+    @Deprecated
     public static final int NETTYPE_CMWAP = 0x02;
+    @Deprecated
     public static final int NETTYPE_CMNET = 0x03;
 
     public static boolean GTE_HC;
@@ -280,6 +283,7 @@ public class DeviceUtils {
      * @param context
      * @return
      */
+    @Deprecated
     public static boolean hasInternet(Context context) {
         boolean flag;
         ConnectivityManager manager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -634,6 +638,7 @@ public class DeviceUtils {
      * @param context
      * @return
      */
+    @Deprecated
     public static boolean isWifiOpen(Context context) {
         boolean isWifiConnect = false;
         ConnectivityManager cm = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -750,6 +755,7 @@ public class DeviceUtils {
      *
      * @return 0：没有网络 1：WIFI网络 2：WAP网络 3：NET网络
      */
+    @Deprecated
     public static int getNetworkType(Context context) {
         int netType = 0;
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -773,6 +779,7 @@ public class DeviceUtils {
         return netType;
     }
 
+    @Deprecated
     public static boolean netIsConnected(Context context) {
         ConnectivityManager connectMgr = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         //手机网络连接状态

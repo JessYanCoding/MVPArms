@@ -25,6 +25,13 @@ package me.jessyan.mvparms.demo.mvp.model.api;
  * ================================================
  */
 public interface Api {
-    String APP_DOMAIN = "https://api.github.com";
     String RequestSuccess = "0";
+
+    String APP_GITHUB_DOMAIN = "https://api.github.com";
+    String APP_GANK_DOMAIN = "http://gank.io";
+    String APP_DOUBAN_DOMAIN = "https://api.douban.com";
+
+    String GITHUB_DOMAIN_NAME = "github";
+    String GANK_DOMAIN_NAME = "gank";
+    String DOUBAN_DOMAIN_NAME = "douban";
 }
