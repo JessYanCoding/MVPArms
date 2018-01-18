@@ -40,10 +40,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         this.iActivity = (IActivity) activity;
     }
 
-    /**
-     *
-     * @param savedInstanceState
-     */
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // 如果要使用eventbus请将此方法返回true
