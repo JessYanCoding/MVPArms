@@ -282,7 +282,7 @@ public class AppDelegate implements App, AppLifecycles {
          */
         @Override
         public void onLowMemory() {
-
+            // 内存不足时清理不必要的资源
         }
     }
 
