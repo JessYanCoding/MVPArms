@@ -85,7 +85,8 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         super.onCreate(savedInstanceState);
         try {
             int layoutResID = initView(savedInstanceState);
-            if (layoutResID != 0) {//如果initView返回0,框架则不会调用setContentView(),当然也不会 Bind ButterKnife
+            //如果initView返回0,框架则不会调用setContentView(),当然也不会 Bind ButterKnife
+            if (layoutResID != 0) {
                 setContentView(layoutResID);
                 //绑定到butterknife
                 mUnbinder = ButterKnife.bind(this);
