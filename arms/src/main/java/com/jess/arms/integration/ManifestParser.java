@@ -35,7 +35,7 @@ import java.util.List;
  * ================================================
  */
 public final class ManifestParser {
-    private static final String MODULE_VALUE = "ARMS_MODULE_CONFIG";
+    private static final String MODULE_VALUE = "ConfigModule";
 
     private final Context context;
 
@@ -50,22 +50,20 @@ public final class ManifestParser {
                     context.getPackageName(), PackageManager.GET_META_DATA);
             if (appInfo.metaData != null) {
                 for (String key : appInfo.metaData.keySet()) {
-                    if(MODULE_VALUE.equals(key)) {
+                    String configModuleName = appInfo.metaData.get(key).toString();
+                    if(!TextUtils.isEmpty(configModuleName) && MODULE_VALUE.equals(configModuleName)) {
                         try {
-                            String className = appInfo.metaData.get(key).toString();
-                            if(!TextUtils.isEmpty(className)) {
-                                Class<?> clazz = Class.forName(className);
-                                for(Class clazzInter : clazz.getInterfaces()) {
-                                    if("com.jess.arms.integration.ConfigModule".equals(clazzInter.getName())) {
-                                        modules.add(parseModule(clazz));
-                                    }
+                            Class<?> clazz = Class.forName(key);
+                            for(Class clazzInter : clazz.getInterfaces()) {
+                                if("com.jess.arms.integration.ConfigModule".equals(clazzInter.getName())) {
+                                    modules.add(parseModule(clazz));
                                 }
-                            } else {
-                                Log.w("ManifestParser", "module config value cannot be null in AndroidManifest,xml");
                             }
                         } catch (ClassNotFoundException e) {
                             Log.w("ManifestParser", "Unable to find module config class");
                         }
+                    }else {
+                        Log.w("ManifestParser", "module config value cannot be null in AndroidManifest,xml");
                     }
                 }
             }
