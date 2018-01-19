@@ -61,10 +61,10 @@ public final class ManifestParser {
                                     }
                                 }
                             } else {
-                                throw new RuntimeException("module config value cannot be null in AndroidManifest,xml");
+                                Log.w("ManifestParser", "module config value cannot be null in AndroidManifest,xml");
                             }
                         } catch (ClassNotFoundException e) {
-                            throw new RuntimeException("Unable to find module config class", e);
+                            Log.w("ManifestParser", "Unable to find module config class");
                         }
                     }
                 }
