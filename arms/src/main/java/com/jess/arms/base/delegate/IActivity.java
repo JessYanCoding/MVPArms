@@ -24,6 +24,7 @@ import android.support.v4.app.FragmentManager;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.integration.ActivityLifecycle;
 import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.integration.cache.LruCache;
 
@@ -81,9 +82,9 @@ public interface IActivity {
     void initData(Bundle savedInstanceState);
 
     /**
-     * 这个Activity是否会使用Fragment,框架会根据这个属性判断是否注册{@link FragmentManager.FragmentLifecycleCallbacks}
-     * 如果返回false,那意味着这个Activity不需要绑定Fragment,那你再在这个Activity中绑定继承于 {@link BaseFragment} 的Fragment将不起任何作用
-     * @see com.jess.arms.integration.ActivityLifecycle#registerFragmentCallbacks (Fragment的注册过程)
+     * 这个 Activity 是否会使用 Fragment,框架会根据这个属性判断是否注册 {@link FragmentManager.FragmentLifecycleCallbacks}
+     * 如果返回{@code false},那意味着这个 Activity 不需要绑定 Fragment,那你再在这个 Activity 中绑定继承于 {@link BaseFragment} 的 Fragment 将不起任何作用
+     * @see ActivityLifecycle#registerFragmentCallbacks (Fragment 的注册过程)
      *
      * @return
      */

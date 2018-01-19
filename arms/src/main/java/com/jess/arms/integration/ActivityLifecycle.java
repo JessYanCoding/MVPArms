@@ -158,11 +158,11 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         if (activity instanceof FragmentActivity && useFragment) {
 
             if (mFragmentLifecycle == null) {
-                // Fragment生命周期实现类：EventBus，ButterKnife注册解绑，IFragment部分接口的实现
+                //Fragment 生命周期实现类, 用于框架内部对每个 Fragment 的必要操作, 如给每个 Fragment 配置 FragmentDelegate
                 mFragmentLifecycle = new FragmentLifecycle();
             }
 
-            // 注册框架已实现的Fragment生命周期逻辑
+            //注册框架内部已实现的 Fragment 生命周期逻辑
             ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(mFragmentLifecycle, true);
 
             if (mFragmentLifecycles == null && mExtras.containsKey(ConfigModule.class.getName())) {
@@ -176,7 +176,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
                 mExtras.remove(ConfigModule.class.getName());
             }
 
-            // 注册个人扩展的Fragment生命周期逻辑
+            //注册框架外部, 开发者扩展的 Fragment 生命周期逻辑
             for (FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle : mFragmentLifecycles) {
                 ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(fragmentLifecycle, true);
             }

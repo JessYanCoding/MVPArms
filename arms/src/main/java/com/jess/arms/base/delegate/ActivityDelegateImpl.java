@@ -43,13 +43,13 @@ public class ActivityDelegateImpl implements ActivityDelegate {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // 如果要使用eventbus请将此方法返回true
+        //如果要使用 EventBus 请将此方法返回 true
         if (iActivity.useEventBus()){
             //注册到事件主线
             EventBus.getDefault().register(mActivity);
         }
 
-        // 这里提供AppComponent对象给BaseActivity的实现类，用于Dagger2依赖注入
+        //这里提供 AppComponent 对象给 BaseActivity 的子类, 用于 Dagger2 的依赖注入
         iActivity.setupActivityComponent(ArmsUtils.obtainAppComponentFromContext(mActivity));
     }
 
@@ -80,7 +80,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
 
     @Override
     public void onDestroy() {
-        //如果要使用eventbus请将此方法返回true
+        //如果要使用 EventBus 请将此方法返回 true
         if (iActivity != null && iActivity.useEventBus())
             EventBus.getDefault().unregister(mActivity);
         this.iActivity = null;
