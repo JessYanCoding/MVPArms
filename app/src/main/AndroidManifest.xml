@@ -36,9 +36,8 @@
             android:value="1920"/>
 
         <!-- arms配置 -->
-        <meta-data
-            android:name="me.jessyan.mvparms.demo.app.GlobalConfiguration"
-            android:value="ConfigModule"/>
+        <meta-data android:name="ARMS_MODULE_CONFIG"
+            android:value="me.jessyan.mvparms.demo.app.GlobalConfiguration"/>
 
     </application>
 
