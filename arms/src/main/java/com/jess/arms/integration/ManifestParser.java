@@ -18,6 +18,8 @@ package com.jess.arms.integration;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.text.TextUtils;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +50,20 @@ public final class ManifestParser {
                     context.getPackageName(), PackageManager.GET_META_DATA);
             if (appInfo.metaData != null) {
                 for (String key : appInfo.metaData.keySet()) {
-                    if (MODULE_VALUE.equals(appInfo.metaData.get(key))) {
-                        modules.add(parseModule(key));
+                    String configModuleName = appInfo.metaData.get(key).toString();
+                    if(!TextUtils.isEmpty(configModuleName) && MODULE_VALUE.equals(configModuleName)) {
+                        try {
+                            Class<?> clazz = Class.forName(key);
+                            for(Class clazzInter : clazz.getInterfaces()) {
+                                if("com.jess.arms.integration.ConfigModule".equals(clazzInter.getName())) {
+                                    modules.add(parseModule(clazz));
+                                }
+                            }
+                        } catch (ClassNotFoundException e) {
+                            Log.w("ManifestParser", "Unable to find module config class");
+                        }
+                    }else {
+                        Log.w("ManifestParser", "module config value cannot be null in AndroidManifest,xml");
                     }
                 }
             }
@@ -60,13 +74,7 @@ public final class ManifestParser {
         return modules;
     }
 
-    private static ConfigModule parseModule(String className) {
-        Class<?> clazz;
-        try {
-            clazz = Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            throw new IllegalArgumentException("Unable to find ConfigModule implementation", e);
-        }
+    private static ConfigModule parseModule(Class<?> clazz) {
 
         Object module;
         try {
@@ -77,9 +85,6 @@ public final class ManifestParser {
             throw new RuntimeException("Unable to instantiate ConfigModule implementation for " + clazz, e);
         }
 
-        if (!(module instanceof ConfigModule)) {
-            throw new RuntimeException("Expected instanceof ConfigModule, but found: " + module);
-        }
         return (ConfigModule) module;
     }
 }
