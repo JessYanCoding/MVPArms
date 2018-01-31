@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jess.arms.http;
+package com.jess.arms.http.log;
 
 import android.support.annotation.Nullable;
 
 import com.jess.arms.di.module.GlobalConfigModule;
+import com.jess.arms.http.GlobalHttpHandler;
 import com.jess.arms.utils.CharacterHandler;
 import com.jess.arms.utils.ZipHelper;
 
@@ -82,9 +83,9 @@ public class RequestInterceptor implements Interceptor {
         if (logRequest) {
             //打印请求信息
             if (request.body() != null && isParseable(request.body().contentType())) {
-                FormatPrinter.printJsonRequest(request, parseParams(request));
+                DefaultFormatPrinter.printJsonRequest(request, parseParams(request));
             } else {
-                FormatPrinter.printFileRequest(request);
+                DefaultFormatPrinter.printFileRequest(request);
             }
         }
 
@@ -117,13 +118,13 @@ public class RequestInterceptor implements Interceptor {
             final String url = originalResponse.request().url().toString();
 
             if (responseBody != null && isParseable(responseBody.contentType())) {
-                FormatPrinter.printJsonResponse(TimeUnit.NANOSECONDS.toMillis(t2 - t1),
+                DefaultFormatPrinter.printJsonResponse(TimeUnit.NANOSECONDS.toMillis(t2 - t1),
                         isSuccessful, code, header,
                         isJson(responseBody.contentType()) ?
                                 CharacterHandler.jsonFormat(bodyString) : isXml(responseBody.contentType()) ?
                                 CharacterHandler.xmlFormat(bodyString) : bodyString, segmentList, message, url);
             } else {
-                FormatPrinter.printFileResponse(TimeUnit.NANOSECONDS.toMillis(t2 - t1),
+                DefaultFormatPrinter.printFileResponse(TimeUnit.NANOSECONDS.toMillis(t2 - t1),
                         isSuccessful, code, header, segmentList, message, url);
             }
 

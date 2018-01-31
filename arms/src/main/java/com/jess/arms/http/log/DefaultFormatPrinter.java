@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jess.arms.http;
+package com.jess.arms.http.log;
 
 import android.text.TextUtils;
 
@@ -33,7 +33,7 @@ import timber.log.Timber;
  * ================================================
  */
 
-public class FormatPrinter {
+public class DefaultFormatPrinter {
     private static final String TAG = "ArmsHttpLog";
     private static final String LINE_SEPARATOR = System.getProperty("line.separator");
     private static final String DOUBLE_SEPARATOR = LINE_SEPARATOR + LINE_SEPARATOR;
@@ -57,7 +57,7 @@ public class FormatPrinter {
     private static final String CENTER_LINE = "├ ";
     private static final String DEFAULT_LINE = "│ ";
 
-    private FormatPrinter() {
+    private DefaultFormatPrinter() {
         throw new UnsupportedOperationException("you can't instantiate me!");
     }
 
