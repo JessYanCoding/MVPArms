@@ -56,6 +56,7 @@ import timber.log.Timber;
 @Singleton
 public class RequestInterceptor implements Interceptor {
     private GlobalHttpHandler mHandler;
+    private final FormatPrinter mPrinter;
     private final Level printLevel;
 
     public enum Level {
@@ -66,12 +67,13 @@ public class RequestInterceptor implements Interceptor {
     }
 
     @Inject
-    public RequestInterceptor(@Nullable GlobalHttpHandler handler, @Nullable Level level) {
+    public RequestInterceptor(@Nullable GlobalHttpHandler handler, @Nullable Level level, FormatPrinter printer) {
         this.mHandler = handler;
+        this.mPrinter = printer;
         if (level == null)
-            printLevel = Level.ALL;
+            this.printLevel = Level.ALL;
         else
-            printLevel = level;
+            this.printLevel = level;
     }
 
     @Override
@@ -83,9 +85,9 @@ public class RequestInterceptor implements Interceptor {
         if (logRequest) {
             //打印请求信息
             if (request.body() != null && isParseable(request.body().contentType())) {
-                DefaultFormatPrinter.printJsonRequest(request, parseParams(request));
+                mPrinter.printJsonRequest(request, parseParams(request));
             } else {
-                DefaultFormatPrinter.printFileRequest(request);
+                mPrinter.printFileRequest(request);
             }
         }
 
@@ -118,13 +120,10 @@ public class RequestInterceptor implements Interceptor {
             final String url = originalResponse.request().url().toString();
 
             if (responseBody != null && isParseable(responseBody.contentType())) {
-                DefaultFormatPrinter.printJsonResponse(TimeUnit.NANOSECONDS.toMillis(t2 - t1),
-                        isSuccessful, code, header,
-                        isJson(responseBody.contentType()) ?
-                                CharacterHandler.jsonFormat(bodyString) : isXml(responseBody.contentType()) ?
-                                CharacterHandler.xmlFormat(bodyString) : bodyString, segmentList, message, url);
+                mPrinter.printJsonResponse(TimeUnit.NANOSECONDS.toMillis(t2 - t1), isSuccessful,
+                        code, header, responseBody.contentType(), bodyString, segmentList, message, url);
             } else {
-                DefaultFormatPrinter.printFileResponse(TimeUnit.NANOSECONDS.toMillis(t2 - t1),
+                mPrinter.printFileResponse(TimeUnit.NANOSECONDS.toMillis(t2 - t1),
                         isSuccessful, code, header, segmentList, message, url);
             }
 

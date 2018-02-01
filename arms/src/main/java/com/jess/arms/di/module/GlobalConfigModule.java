@@ -23,6 +23,8 @@ import android.text.TextUtils;
 import com.bumptech.glide.Glide;
 import com.jess.arms.http.BaseUrl;
 import com.jess.arms.http.GlobalHttpHandler;
+import com.jess.arms.http.log.DefaultFormatPrinter;
+import com.jess.arms.http.log.FormatPrinter;
 import com.jess.arms.http.log.RequestInterceptor;
 import com.jess.arms.http.imageloader.BaseImageLoaderStrategy;
 import com.jess.arms.http.imageloader.glide.GlideImageLoaderStrategy;
@@ -67,6 +69,7 @@ public class GlobalConfigModule {
     private ClientModule.RxCacheConfiguration mRxCacheConfiguration;
     private AppModule.GsonConfiguration mGsonConfiguration;
     private RequestInterceptor.Level mPrintHttpLogLevel;
+    private FormatPrinter mFormatPrinter;
     private Cache.Factory mCacheFactory;
 
     private GlobalConfigModule(Builder builder) {
@@ -82,6 +85,7 @@ public class GlobalConfigModule {
         this.mRxCacheConfiguration = builder.rxCacheConfiguration;
         this.mGsonConfiguration = builder.gsonConfiguration;
         this.mPrintHttpLogLevel = builder.printHttpLogLevel;
+        this.mFormatPrinter = builder.formatPrinter;
         this.mCacheFactory = builder.cacheFactory;
     }
 
@@ -200,6 +204,12 @@ public class GlobalConfigModule {
 
     @Singleton
     @Provides
+    FormatPrinter provideFormatPrinter(){
+        return mFormatPrinter == null ? new DefaultFormatPrinter() : mFormatPrinter;
+    }
+
+    @Singleton
+    @Provides
     Cache.Factory provideCacheFactory(Application application) {
         return mCacheFactory == null ? new Cache.Factory() {
             @NonNull
@@ -226,6 +236,7 @@ public class GlobalConfigModule {
         private ClientModule.RxCacheConfiguration rxCacheConfiguration;
         private AppModule.GsonConfiguration gsonConfiguration;
         private RequestInterceptor.Level printHttpLogLevel;
+        private FormatPrinter formatPrinter;
         private Cache.Factory cacheFactory;
 
         private Builder() {
@@ -300,6 +311,13 @@ public class GlobalConfigModule {
             if (printHttpLogLevel == null)
                 throw new NullPointerException("printHttpLogLevel == null. Use RequestInterceptor.Level.NONE instead.");
             this.printHttpLogLevel = printHttpLogLevel;
+            return this;
+        }
+
+        public Builder formatPrinter(FormatPrinter formatPrinter){
+            if (formatPrinter == null)
+                throw new NullPointerException("FormatPrinter can not be null");
+            this.formatPrinter = formatPrinter;
             return this;
         }
 

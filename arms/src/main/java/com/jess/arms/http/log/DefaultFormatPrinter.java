@@ -18,22 +18,28 @@ package com.jess.arms.http.log;
 
 import android.text.TextUtils;
 
+import com.jess.arms.di.module.GlobalConfigModule;
+import com.jess.arms.utils.CharacterHandler;
+
 import java.util.List;
 
+import okhttp3.MediaType;
 import okhttp3.Request;
 import timber.log.Timber;
 
 /**
  * ================================================
- * 对 OkHttp 的请求和响应信息进行更规范和清晰的打印
- * <p>
+ * 对 OkHttp 的请求和响应信息进行更规范和清晰的打印, 此类为框架默认实现, 以默认格式打印信息, 若觉得默认打印格式
+ * 并不能满足自己的需求, 可自行扩展自己理想的打印格式
+ *
+ * @see GlobalConfigModule.Builder#formatPrinter(FormatPrinter)
  * Created by JessYan on 25/01/2018 14:51
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
 
-public class DefaultFormatPrinter {
+public class DefaultFormatPrinter implements FormatPrinter {
     private static final String TAG = "ArmsHttpLog";
     private static final String LINE_SEPARATOR = System.getProperty("line.separator");
     private static final String DOUBLE_SEPARATOR = LINE_SEPARATOR + LINE_SEPARATOR;
@@ -57,9 +63,6 @@ public class DefaultFormatPrinter {
     private static final String CENTER_LINE = "├ ";
     private static final String DEFAULT_LINE = "│ ";
 
-    private DefaultFormatPrinter() {
-        throw new UnsupportedOperationException("you can't instantiate me!");
-    }
 
     private static boolean isEmpty(String line) {
         return TextUtils.isEmpty(line) || N.equals(line) || T.equals(line) || TextUtils.isEmpty(line.trim());
@@ -71,7 +74,8 @@ public class DefaultFormatPrinter {
      * @param request
      * @param bodyString
      */
-    static void printJsonRequest(Request request, String bodyString) {
+    @Override
+    public void printJsonRequest(Request request, String bodyString) {
         final String requestBody = LINE_SEPARATOR + BODY_TAG + LINE_SEPARATOR + bodyString;
         final String tag = getTag(true);
 
@@ -87,7 +91,8 @@ public class DefaultFormatPrinter {
      *
      * @param request
      */
-    static void printFileRequest(Request request) {
+    @Override
+    public void printFileRequest(Request request) {
         final String tag = getTag(true);
 
         Timber.tag(tag).i(REQUEST_UP_LINE);
@@ -100,17 +105,21 @@ public class DefaultFormatPrinter {
     /**
      * 打印网络响应信息, 当网络响应时 {{@link okhttp3.ResponseBody}} 可以解析的情况
      *
-     * @param chainMs
-     * @param isSuccessful
-     * @param code
-     * @param headers
-     * @param bodyString
-     * @param segments
-     * @param message
-     * @param responseUrl
+     * @param chainMs 服务器响应耗时(单位毫秒)
+     * @param isSuccessful 请求是否成功
+     * @param code 响应码
+     * @param headers 请求头
+     * @param contentType 服务器返回数据的数据类型
+     * @param bodyString 服务器返回的数据(已解析)
+     * @param segments 域名后面的资源地址
+     * @param message 响应信息
+     * @param responseUrl 请求地址
      */
-    static void printJsonResponse(long chainMs, boolean isSuccessful,
-                                  int code, String headers, String bodyString, List<String> segments, String message, final String responseUrl) {
+    @Override
+    public void printJsonResponse(long chainMs, boolean isSuccessful, int code, String headers, MediaType contentType,
+                                  String bodyString, List<String> segments, String message, final String responseUrl) {
+        bodyString = RequestInterceptor.isJson(contentType) ? CharacterHandler.jsonFormat(bodyString)
+                : RequestInterceptor.isXml(contentType) ? CharacterHandler.xmlFormat(bodyString) : bodyString;
 
         final String responseBody = LINE_SEPARATOR + BODY_TAG + LINE_SEPARATOR + bodyString;
         final String tag = getTag(false);
@@ -126,16 +135,17 @@ public class DefaultFormatPrinter {
     /**
      * 打印网络响应信息, 当网络响应时 {{@link okhttp3.ResponseBody}} 为 {@code null} 或不可解析的情况
      *
-     * @param chainMs
-     * @param isSuccessful
-     * @param code
-     * @param headers
-     * @param segments
-     * @param message
-     * @param responseUrl
+     * @param chainMs 服务器响应耗时(单位毫秒)
+     * @param isSuccessful 请求是否成功
+     * @param code 响应码
+     * @param headers 请求头
+     * @param segments 域名后面的资源地址
+     * @param message 响应信息
+     * @param responseUrl 请求地址
      */
-    static void printFileResponse(long chainMs, boolean isSuccessful,
-                                  int code, String headers, List<String> segments, String message, final String responseUrl) {
+    @Override
+    public void printFileResponse(long chainMs, boolean isSuccessful, int code, String headers,
+                                  List<String> segments, String message, final String responseUrl) {
         final String tag = getTag(false);
         final String[] urlLine = {URL_TAG + responseUrl, N};
 
