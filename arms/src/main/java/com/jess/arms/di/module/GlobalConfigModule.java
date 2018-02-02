@@ -198,9 +198,8 @@ public class GlobalConfigModule {
 
     @Singleton
     @Provides
-    @Nullable
     RequestInterceptor.Level providePrintHttpLogLevel() {
-        return mPrintHttpLogLevel;
+        return mPrintHttpLogLevel == null ? RequestInterceptor.Level.ALL : mPrintHttpLogLevel;
     }
 
     @Singleton
