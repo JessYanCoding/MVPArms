@@ -28,6 +28,9 @@ import com.jess.arms.base.delegate.IFragment;
 import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.utils.Preconditions;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import timber.log.Timber;
 
 /**
@@ -40,7 +43,11 @@ import timber.log.Timber;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
+@Singleton
 public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallbacks {
+
+    @Inject
+    public FragmentLifecycle(){}
 
     @Override
     public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {

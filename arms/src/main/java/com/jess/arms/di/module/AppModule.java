@@ -71,8 +71,8 @@ public class AppModule {
 
     @Singleton
     @Provides
-    public FragmentManager.FragmentLifecycleCallbacks provideFragmentLifecycle() {
-        return new FragmentLifecycle();
+    public FragmentManager.FragmentLifecycleCallbacks provideFragmentLifecycle(FragmentLifecycle fragmentLifecycle) {
+        return fragmentLifecycle;
     }
 
     @Singleton
