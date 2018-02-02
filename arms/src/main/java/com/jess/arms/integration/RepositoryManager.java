@@ -43,20 +43,19 @@ import retrofit2.Retrofit;
  */
 @Singleton
 public class RepositoryManager implements IRepositoryManager {
-    private Lazy<Retrofit> mRetrofit;
-    private Lazy<RxCache> mRxCache;
-    private Application mApplication;
+    @Inject
+    Lazy<Retrofit> mRetrofit;
+    @Inject
+    Lazy<RxCache> mRxCache;
+    @Inject
+    Application mApplication;
+    @Inject
+    Cache.Factory mCachefactory;
     private Cache<String, Object> mRetrofitServiceCache;
     private Cache<String, Object> mCacheServiceCache;
-    private Cache.Factory mCachefactory;
 
     @Inject
-    public RepositoryManager(Lazy<Retrofit> retrofit, Lazy<RxCache> rxCache, Application application
-            , Cache.Factory cachefactory) {
-        this.mRetrofit = retrofit;
-        this.mRxCache = rxCache;
-        this.mApplication = application;
-        this.mCachefactory = cachefactory;
+    public RepositoryManager() {
     }
 
     /**
