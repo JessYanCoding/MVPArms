@@ -52,21 +52,19 @@ import dagger.Lazy;
 @Singleton
 public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks {
 
-    private AppManager mAppManager;
-    private Application mApplication;
-    private Cache<String, Object> mExtras;
-    private Lazy<FragmentManager.FragmentLifecycleCallbacks> mFragmentLifecycle;
-    private Lazy<List<FragmentManager.FragmentLifecycleCallbacks>> mFragmentLifecycles;
+    @Inject
+    AppManager mAppManager;
+    @Inject
+    Application mApplication;
+    @Inject
+    Cache<String, Object> mExtras;
+    @Inject
+    Lazy<FragmentManager.FragmentLifecycleCallbacks> mFragmentLifecycle;
+    @Inject
+    Lazy<List<FragmentManager.FragmentLifecycleCallbacks>> mFragmentLifecycles;
 
     @Inject
-    public ActivityLifecycle(AppManager appManager, Application application, Cache<String, Object> extras,
-                             Lazy<FragmentManager.FragmentLifecycleCallbacks> fragmentLifecycle,
-                             Lazy<List<FragmentManager.FragmentLifecycleCallbacks>> fragmentLifecycles) {
-        this.mAppManager = appManager;
-        this.mApplication = application;
-        this.mExtras = extras;
-        this.mFragmentLifecycle = fragmentLifecycle;
-        this.mFragmentLifecycles = fragmentLifecycles;
+    public ActivityLifecycle() {
     }
 
     @Override
