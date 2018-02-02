@@ -63,7 +63,8 @@ public final class AppManager {
     public static final int SHOW_SNACKBAR = 5001;
     public static final int KILL_ALL = 5002;
     public static final int APP_EXIT = 5003;
-    private Application mApplication;
+    @Inject
+    Application mApplication;
     //管理所有存活的 Activity, 容器中的顺序仅仅是 Activity 的创建顺序, 并不能保证和 Activity 任务栈顺序一致
     public List<Activity> mActivityList;
     //当前在前台的 Activity
@@ -72,11 +73,14 @@ public final class AppManager {
     private HandleListener mHandleListener;
 
     @Inject
-    public AppManager(Application application) {
-        this.mApplication = application;
-        EventBus.getDefault().register(this);
+    public AppManager() {
     }
 
+
+    @Inject
+    void init() {
+        EventBus.getDefault().register(this);
+    }
 
     /**
      * 通过 {@link EventBus#post(Object)} 事件, 远程遥控执行对应方法
