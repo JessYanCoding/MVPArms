@@ -30,10 +30,8 @@ import com.jess.arms.base.BaseApplication;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.di.component.DaggerAppComponent;
 import com.jess.arms.di.module.GlobalConfigModule;
-import com.jess.arms.integration.ActivityLifecycle;
 import com.jess.arms.integration.ConfigModule;
 import com.jess.arms.integration.ManifestParser;
-import com.jess.arms.integration.lifecycle.ActivityLifecycleForRxLifecycle;
 import com.jess.arms.utils.ArmsUtils;
 import com.jess.arms.utils.Preconditions;
 
@@ -41,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * ================================================
@@ -60,9 +59,11 @@ public class AppDelegate implements App, AppLifecycles {
     private Application mApplication;
     private AppComponent mAppComponent;
     @Inject
-    protected ActivityLifecycle mActivityLifecycle;
+    @Named("ActivityLifecycle")
+    protected Application.ActivityLifecycleCallbacks mActivityLifecycle;
     @Inject
-    protected ActivityLifecycleForRxLifecycle mActivityLifecycleForRxLifecycle;
+    @Named("ActivityLifecycleForRxLifecycle")
+    protected Application.ActivityLifecycleCallbacks mActivityLifecycleForRxLifecycle;
     private List<ConfigModule> mModules;
     private List<AppLifecycles> mAppLifecycles = new ArrayList<>();
     private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();

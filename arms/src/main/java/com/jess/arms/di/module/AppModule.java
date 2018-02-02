@@ -22,15 +22,18 @@ import android.support.v4.app.FragmentManager;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jess.arms.integration.ActivityLifecycle;
 import com.jess.arms.integration.FragmentLifecycle;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.integration.RepositoryManager;
 import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.integration.cache.CacheType;
+import com.jess.arms.integration.lifecycle.ActivityLifecycleForRxLifecycle;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -67,6 +70,20 @@ public class AppModule {
     @Provides
     public Cache<String, Object> provideExtras(Cache.Factory cacheFactory) {
         return cacheFactory.build(CacheType.EXTRAS);
+    }
+
+    @Singleton
+    @Provides
+    @Named("ActivityLifecycle")
+    public Application.ActivityLifecycleCallbacks provideActivityLifecycle(ActivityLifecycle activityLifecycle) {
+        return activityLifecycle;
+    }
+
+    @Singleton
+    @Provides
+    @Named("ActivityLifecycleForRxLifecycle")
+    public Application.ActivityLifecycleCallbacks proviceActivityLifecycleForRxLifecycle(ActivityLifecycleForRxLifecycle activityLifecycleForRxLifecycle) {
+        return activityLifecycleForRxLifecycle;
     }
 
     @Singleton
