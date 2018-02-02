@@ -32,6 +32,7 @@ import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.integration.cache.CacheType;
 import com.jess.arms.integration.cache.LruCache;
 import com.jess.arms.utils.DataHelper;
+import com.jess.arms.utils.Preconditions;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -251,10 +252,7 @@ public class GlobalConfigModule {
         }
 
         public Builder baseurl(BaseUrl baseUrl) {
-            if (baseUrl == null) {
-                throw new NullPointerException("BaseUrl can not be null");
-            }
-            this.baseUrl = baseUrl;
+            this.baseUrl = Preconditions.checkNotNull(baseUrl, BaseUrl.class.getCanonicalName() + "can not be null.");
             return this;
         }
 
@@ -308,16 +306,12 @@ public class GlobalConfigModule {
         }
 
         public Builder printHttpLogLevel(RequestInterceptor.Level printHttpLogLevel) {//是否让框架打印 Http 的请求和响应信息
-            if (printHttpLogLevel == null)
-                throw new NullPointerException("printHttpLogLevel == null. Use RequestInterceptor.Level.NONE instead.");
-            this.printHttpLogLevel = printHttpLogLevel;
+            this.printHttpLogLevel = Preconditions.checkNotNull(printHttpLogLevel, "The printHttpLogLevel can not be null, use RequestInterceptor.Level.NONE instead.");
             return this;
         }
 
         public Builder formatPrinter(FormatPrinter formatPrinter){
-            if (formatPrinter == null)
-                throw new NullPointerException("FormatPrinter can not be null");
-            this.formatPrinter = formatPrinter;
+            this.formatPrinter = Preconditions.checkNotNull(formatPrinter, FormatPrinter.class.getCanonicalName() + "can not be null.");
             return this;
         }
 

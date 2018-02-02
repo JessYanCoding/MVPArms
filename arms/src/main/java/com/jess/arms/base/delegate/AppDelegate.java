@@ -29,8 +29,6 @@ import com.jess.arms.base.App;
 import com.jess.arms.base.BaseApplication;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.di.component.DaggerAppComponent;
-import com.jess.arms.di.module.AppModule;
-import com.jess.arms.di.module.ClientModule;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.integration.ActivityLifecycle;
 import com.jess.arms.integration.ConfigModule;
@@ -100,8 +98,7 @@ public class AppDelegate implements App, AppLifecycles {
         this.mApplication = application;
         mAppComponent = DaggerAppComponent
                 .builder()
-                .appModule(new AppModule(mApplication))//提供application
-                .clientModule(new ClientModule())//用于提供okhttp和retrofit的单例
+                .application(mApplication)//提供application
                 .globalConfigModule(getGlobalConfigModule(mApplication, mModules))//全局配置
                 .build();
         mAppComponent.inject(this);
