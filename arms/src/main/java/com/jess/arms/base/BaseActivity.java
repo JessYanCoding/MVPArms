@@ -57,7 +57,8 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     private Cache<String, Object> mCache;
     private Unbinder mUnbinder;
     @Inject
-    protected P mPresenter;
+    @Nullable
+    protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
 
     @NonNull
     @Override
