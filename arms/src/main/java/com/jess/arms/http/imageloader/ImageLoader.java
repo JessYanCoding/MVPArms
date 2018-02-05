@@ -34,11 +34,11 @@ import javax.inject.Singleton;
  */
 @Singleton
 public final class ImageLoader {
-    private BaseImageLoaderStrategy mStrategy;
+    @Inject
+    BaseImageLoaderStrategy mStrategy;
 
     @Inject
-    public ImageLoader(BaseImageLoaderStrategy strategy) {
-        setLoadImgStrategy(strategy);
+    public ImageLoader() {
     }
 
 

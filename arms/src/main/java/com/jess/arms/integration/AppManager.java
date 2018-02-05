@@ -66,7 +66,7 @@ public final class AppManager {
     @Inject
     Application mApplication;
     //管理所有存活的 Activity, 容器中的顺序仅仅是 Activity 的创建顺序, 并不能保证和 Activity 任务栈顺序一致
-    public List<Activity> mActivityList;
+    private List<Activity> mActivityList;
     //当前在前台的 Activity
     private Activity mCurrentActivity;
     //提供给外部扩展 AppManager 的 onReceive 方法
