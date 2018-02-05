@@ -51,7 +51,8 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     private final BehaviorSubject<FragmentEvent> mLifecycleSubject = BehaviorSubject.create();
     private Cache<String, Object> mCache;
     @Inject
-    protected P mPresenter;
+    @Nullable
+    protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
 
     @NonNull
     @Override
