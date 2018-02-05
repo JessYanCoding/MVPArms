@@ -30,6 +30,9 @@ import com.trello.rxlifecycle2.RxLifecycle;
 
 import org.simple.eventbus.EventBus;
 
+import javax.inject.Inject;
+
+import io.reactivex.annotations.Nullable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
@@ -47,8 +50,11 @@ import io.reactivex.functions.Action;
 public class BasePresenter<M extends IModel, V extends IView> implements IPresenter, LifecycleObserver {
     protected final String TAG = this.getClass().getSimpleName();
     protected CompositeDisposable mCompositeDisposable;
-
-    protected M mModel;
+    @Inject
+    @Nullable
+    protected M mModel;//如果当前 Presenter 不需要处理数据, Model 可以为 null
+    @Inject
+    @Nullable
     protected V mRootView;
 
     /**

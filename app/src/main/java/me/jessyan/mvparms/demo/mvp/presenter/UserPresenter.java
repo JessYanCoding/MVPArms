@@ -52,25 +52,23 @@ import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
  */
 @ActivityScope
 public class UserPresenter extends BasePresenter<UserContract.Model, UserContract.View> {
-    private RxErrorHandler mErrorHandler;
-    private AppManager mAppManager;
-    private Application mApplication;
-    private List<User> mUsers;
-    private RecyclerView.Adapter mAdapter;
+    @Inject
+    RxErrorHandler mErrorHandler;
+    @Inject
+    AppManager mAppManager;
+    @Inject
+    Application mApplication;
+    @Inject
+    List<User> mUsers;
+    @Inject
+    RecyclerView.Adapter mAdapter;
     private int lastUserId = 1;
     private boolean isFirst = true;
     private int preEndIndex;
 
 
     @Inject
-    public UserPresenter(UserContract.Model model, UserContract.View rootView, RxErrorHandler handler
-            , AppManager appManager, Application application, List<User> list, RecyclerView.Adapter adapter) {
-        super(model, rootView);
-        this.mApplication = application;
-        this.mErrorHandler = handler;
-        this.mAppManager = appManager;
-        this.mUsers = list;
-        this.mAdapter = adapter;
+    public UserPresenter() {
     }
 
     /**
