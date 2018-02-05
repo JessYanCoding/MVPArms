@@ -19,7 +19,6 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.OnLifecycleEvent;
 
 import com.jess.arms.di.scope.ActivityScope;
-import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 
 import java.util.List;
@@ -53,8 +52,7 @@ public class UserModel extends BaseModel implements UserContract.Model {
     public static final int USERS_PER_PAGE = 10;
 
     @Inject
-    public UserModel(IRepositoryManager repositoryManager) {
-        super(repositoryManager);
+    public UserModel() {
     }
 
     @Override
