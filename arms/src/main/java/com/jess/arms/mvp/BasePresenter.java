@@ -21,7 +21,6 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.OnLifecycleEvent;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.SupportActivity;
 import android.view.View;
@@ -30,8 +29,6 @@ import com.jess.arms.utils.Preconditions;
 import com.trello.rxlifecycle2.RxLifecycle;
 
 import org.simple.eventbus.EventBus;
-
-import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -50,11 +47,8 @@ import io.reactivex.functions.Action;
 public class BasePresenter<M extends IModel, V extends IView> implements IPresenter, LifecycleObserver {
     protected final String TAG = this.getClass().getSimpleName();
     protected CompositeDisposable mCompositeDisposable;
-    @Inject
-    @Nullable
-    protected M mModel;//如果当前 Presenter 不需要处理数据, Model 可以为 null
-    @Inject
-    @Nullable
+
+    protected M mModel;
     protected V mRootView;
 
     /**

@@ -68,7 +68,8 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
 
 
     @Inject
-    public UserPresenter() {
+    public UserPresenter(UserContract.Model model, UserContract.View rootView) {
+        super(model, rootView);
     }
 
     /**
