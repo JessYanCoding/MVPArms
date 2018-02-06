@@ -36,6 +36,7 @@ import java.util.List;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 
@@ -49,57 +50,44 @@ import dagger.Provides;
  * ================================================
  */
 @Module
-public class AppModule {
+public abstract class AppModule {
 
     @Singleton
     @Provides
-    public Gson provideGson(Application application, @Nullable GsonConfiguration configuration) {
+    public static Gson provideGson(Application application, @Nullable GsonConfiguration configuration) {
         GsonBuilder builder = new GsonBuilder();
         if (configuration != null)
             configuration.configGson(application, builder);
         return builder.create();
     }
 
-    @Singleton
-    @Provides
-    public IRepositoryManager provideRepositoryManager(RepositoryManager repositoryManager) {
-        return repositoryManager;
-    }
+    @Binds
+    abstract IRepositoryManager bindRepositoryManager(RepositoryManager repositoryManager);
 
     @Singleton
     @Provides
-    public Cache<String, Object> provideExtras(Cache.Factory cacheFactory) {
+    public static Cache<String, Object> provideExtras(Cache.Factory cacheFactory) {
         return cacheFactory.build(CacheType.EXTRAS);
     }
 
-    @Singleton
-    @Provides
+    @Binds
     @Named("ActivityLifecycle")
-    public Application.ActivityLifecycleCallbacks provideActivityLifecycle(ActivityLifecycle activityLifecycle) {
-        return activityLifecycle;
-    }
+    abstract Application.ActivityLifecycleCallbacks bindActivityLifecycle(ActivityLifecycle activityLifecycle);
 
-    @Singleton
-    @Provides
+    @Binds
     @Named("ActivityLifecycleForRxLifecycle")
-    public Application.ActivityLifecycleCallbacks proviceActivityLifecycleForRxLifecycle(ActivityLifecycleForRxLifecycle activityLifecycleForRxLifecycle) {
-        return activityLifecycleForRxLifecycle;
-    }
+    abstract Application.ActivityLifecycleCallbacks bindActivityLifecycleForRxLifecycle(ActivityLifecycleForRxLifecycle activityLifecycleForRxLifecycle);
+
+    @Binds
+    abstract FragmentManager.FragmentLifecycleCallbacks bindFragmentLifecycle(FragmentLifecycle fragmentLifecycle);
 
     @Singleton
     @Provides
-    public FragmentManager.FragmentLifecycleCallbacks provideFragmentLifecycle(FragmentLifecycle fragmentLifecycle) {
-        return fragmentLifecycle;
-    }
-
-    @Singleton
-    @Provides
-    public List<FragmentManager.FragmentLifecycleCallbacks> provideFragmentLifecycles(){
+    public static List<FragmentManager.FragmentLifecycleCallbacks> provideFragmentLifecycles(){
         return new ArrayList<>();
     }
 
     public interface GsonConfiguration {
         void configGson(Context context, GsonBuilder builder);
     }
-
 }
