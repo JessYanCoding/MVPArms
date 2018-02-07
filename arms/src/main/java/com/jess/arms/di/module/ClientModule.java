@@ -32,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import io.rx_cache2.internal.RxCache;
@@ -56,23 +57,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * ================================================
  */
 @Module
-public class ClientModule {
+public abstract class ClientModule {
     private static final int TIME_OUT = 10;
-
 
     /**
      * 提供 {@link Retrofit}
      *
+     * @param application
+     * @param configuration
      * @param builder
      * @param client
      * @param httpUrl
-     * @return
-     * @author: jess
-     * @date 8/30/16 1:15 PM
+     * @param gson
+     * @return {@link Retrofit}
      */
     @Singleton
     @Provides
-    Retrofit provideRetrofit(Application application, @Nullable RetrofitConfiguration configuration, Retrofit.Builder builder, OkHttpClient client
+    static Retrofit provideRetrofit(Application application, @Nullable RetrofitConfiguration configuration, Retrofit.Builder builder, OkHttpClient client
             , HttpUrl httpUrl, Gson gson) {
         builder
                 .baseUrl(httpUrl)//域名
@@ -90,12 +91,17 @@ public class ClientModule {
     /**
      * 提供 {@link OkHttpClient}
      *
+     * @param application
+     * @param configuration
      * @param builder
-     * @return
+     * @param intercept
+     * @param interceptors
+     * @param handler
+     * @return {@link OkHttpClient}
      */
     @Singleton
     @Provides
-    OkHttpClient provideClient(Application application, @Nullable OkhttpConfiguration configuration, OkHttpClient.Builder builder, Interceptor intercept
+    static OkHttpClient provideClient(Application application, @Nullable OkhttpConfiguration configuration, OkHttpClient.Builder builder, Interceptor intercept
             , @Nullable List<Interceptor> interceptors, @Nullable GlobalHttpHandler handler) {
         builder
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
@@ -121,37 +127,32 @@ public class ClientModule {
         return builder.build();
     }
 
-
     @Singleton
     @Provides
-    Retrofit.Builder provideRetrofitBuilder() {
+    static Retrofit.Builder provideRetrofitBuilder() {
         return new Retrofit.Builder();
     }
 
-
     @Singleton
     @Provides
-    OkHttpClient.Builder provideClientBuilder() {
+    static OkHttpClient.Builder provideClientBuilder() {
         return new OkHttpClient.Builder();
     }
 
-
-    @Singleton
-    @Provides
-    Interceptor provideInterceptor(RequestInterceptor intercept) {
-        return intercept;//打印请求信息的拦截器
-    }
-
+    @Binds
+    abstract Interceptor bindInterceptor(RequestInterceptor interceptor);
 
     /**
      * 提供 {@link RxCache}
      *
-     * @param cacheDirectory RxCache缓存路径
-     * @return
+     * @param application
+     * @param configuration
+     * @param cacheDirectory cacheDirectory RxCache缓存路径
+     * @return {@link RxCache}
      */
     @Singleton
     @Provides
-    RxCache provideRxCache(Application application, @Nullable RxCacheConfiguration configuration, @Named("RxCacheDirectory") File cacheDirectory) {
+    static RxCache provideRxCache(Application application, @Nullable RxCacheConfiguration configuration, @Named("RxCacheDirectory") File cacheDirectory) {
         RxCache.Builder builder = new RxCache.Builder();
         RxCache rxCache = null;
         if (configuration != null) {
@@ -166,12 +167,12 @@ public class ClientModule {
      * 需要单独给 {@link RxCache} 提供缓存路径
      *
      * @param cacheDir
-     * @return
+     * @return {@link File}
      */
     @Singleton
     @Provides
     @Named("RxCacheDirectory")
-    File provideRxCacheDirectory(File cacheDir) {
+    static File provideRxCacheDirectory(File cacheDir) {
         File cacheDirectory = new File(cacheDir, "RxCache");
         return DataHelper.makeDirs(cacheDirectory);
     }
@@ -179,11 +180,13 @@ public class ClientModule {
     /**
      * 提供处理 RxJava 错误的管理器
      *
-     * @return
+     * @param application
+     * @param listener
+     * @return {@link RxErrorHandler}
      */
     @Singleton
     @Provides
-    RxErrorHandler proRxErrorHandler(Application application, ResponseErrorListener listener) {
+    static RxErrorHandler proRxErrorHandler(Application application, ResponseErrorListener listener) {
         return RxErrorHandler
                 .builder()
                 .with(application)
@@ -206,7 +209,7 @@ public class ClientModule {
          *
          * @param context
          * @param builder
-         * @return
+         * @return {@link RxCache}
          */
         RxCache configRxCache(Context context, RxCache.Builder builder);
     }
