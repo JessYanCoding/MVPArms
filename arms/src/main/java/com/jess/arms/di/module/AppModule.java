@@ -54,7 +54,7 @@ public abstract class AppModule {
 
     @Singleton
     @Provides
-    public static Gson provideGson(Application application, @Nullable GsonConfiguration configuration) {
+    static Gson provideGson(Application application, @Nullable GsonConfiguration configuration) {
         GsonBuilder builder = new GsonBuilder();
         if (configuration != null)
             configuration.configGson(application, builder);
@@ -66,7 +66,7 @@ public abstract class AppModule {
 
     @Singleton
     @Provides
-    public static Cache<String, Object> provideExtras(Cache.Factory cacheFactory) {
+    static Cache<String, Object> provideExtras(Cache.Factory cacheFactory) {
         return cacheFactory.build(CacheType.EXTRAS);
     }
 
@@ -83,7 +83,7 @@ public abstract class AppModule {
 
     @Singleton
     @Provides
-    public static List<FragmentManager.FragmentLifecycleCallbacks> provideFragmentLifecycles(){
+    static List<FragmentManager.FragmentLifecycleCallbacks> provideFragmentLifecycles(){
         return new ArrayList<>();
     }
 
