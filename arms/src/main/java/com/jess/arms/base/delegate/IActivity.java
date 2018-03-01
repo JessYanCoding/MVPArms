@@ -19,6 +19,7 @@ package com.jess.arms.base.delegate;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 
 import com.jess.arms.base.BaseActivity;
@@ -53,11 +54,11 @@ public interface IActivity {
     Cache<String, Object> provideCache();
 
     /**
-     * 提供 AppComponent(提供所有的单例对象)给实现类,进行 Component 依赖
+     * 提供 AppComponent (提供所有的单例对象) 给实现类, 进行 Component 依赖
      *
      * @param appComponent
      */
-    void setupActivityComponent(AppComponent appComponent);
+    void setupActivityComponent(@NonNull AppComponent appComponent);
 
     /**
      * 是否使用 {@link EventBus}
@@ -67,19 +68,19 @@ public interface IActivity {
     boolean useEventBus();
 
     /**
-     * 初始化 View,如果initView返回0,框架则不会调用{@link Activity#setContentView(int)}
+     * 初始化 View, 如果 {@link #initView(Bundle)} 返回 0, 框架则不会调用 {@link Activity#setContentView(int)}
      *
      * @param savedInstanceState
      * @return
      */
-    int initView(Bundle savedInstanceState);
+    int initView(@Nullable Bundle savedInstanceState);
 
     /**
      * 初始化数据
      *
      * @param savedInstanceState
      */
-    void initData(Bundle savedInstanceState);
+    void initData(@Nullable Bundle savedInstanceState);
 
     /**
      * 这个 Activity 是否会使用 Fragment,框架会根据这个属性判断是否注册 {@link FragmentManager.FragmentLifecycleCallbacks}

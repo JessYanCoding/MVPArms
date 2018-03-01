@@ -17,6 +17,7 @@ package com.jess.arms.base.delegate;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import com.jess.arms.utils.ArmsUtils;
 
@@ -42,7 +43,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         //如果要使用 EventBus 请将此方法返回 true
         if (iActivity.useEventBus()){
             //注册到事件主线
