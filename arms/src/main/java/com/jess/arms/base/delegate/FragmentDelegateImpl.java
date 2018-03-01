@@ -17,6 +17,8 @@ package com.jess.arms.base.delegate;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.jess.arms.utils.ArmsUtils;
@@ -55,21 +57,21 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         if (iFragment.useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().register(mFragment);//注册到事件主线
         iFragment.setupFragmentComponent(ArmsUtils.obtainAppComponentFromContext(mFragment.getActivity()));
     }
 
     @Override
-    public void onCreateView(View view, Bundle savedInstanceState) {
+    public void onCreateView(@Nullable View view, @Nullable Bundle savedInstanceState) {
         //绑定到butterknife
         if (view != null)
             mUnbinder = ButterKnife.bind(mFragment, view);
     }
 
     @Override
-    public void onActivityCreate(Bundle savedInstanceState) {
+    public void onActivityCreate(@Nullable Bundle savedInstanceState) {
         iFragment.initData(savedInstanceState);
     }
 
@@ -94,13 +96,13 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
 
     }
 
     @Override
     public void onDestroyView() {
-        if (mUnbinder != null && mUnbinder != mUnbinder.EMPTY) {
+        if (mUnbinder != null && mUnbinder != Unbinder.EMPTY) {
             try {
                 mUnbinder.unbind();
             } catch (IllegalStateException e) {
