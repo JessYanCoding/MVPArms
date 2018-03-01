@@ -33,7 +33,7 @@ import me.jessyan.mvparms.demo.mvp.ui.activity.UserActivity;
  * ================================================
  */
 @ActivityScope
-@Component(modules = UserModule.class,dependencies = AppComponent.class)
+@Component(modules = UserModule.class, dependencies = AppComponent.class)
 public interface UserComponent {
     void inject(UserActivity activity);
 }
