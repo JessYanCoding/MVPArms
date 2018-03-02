@@ -96,7 +96,7 @@ public interface IFragment {
      * Example usage:
      * <pre> {@code
 
-      public void setData(Object data) {
+      public void setData(@Nullable Object data) {
           if (data != null && data instanceof Message) {
               switch (((Message) data).what) {
                   case 0:

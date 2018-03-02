@@ -17,6 +17,7 @@ package com.jess.arms.mvp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 
 /**
  * ================================================
@@ -42,13 +43,18 @@ public interface IView {
 
     /**
      * 显示信息
+     *
+     * @param message 消息内容, 不能为 {@code null}
      */
-    void showMessage(String message);
+    void showMessage(@NonNull String message);
 
     /**
      * 跳转 {@link Activity}
+     *
+     * @param intent {@code intent} 不能为 {@code null}
      */
-    void launchActivity(Intent intent);
+    void launchActivity(@NonNull Intent intent);
+
     /**
      * 杀死自己
      */
