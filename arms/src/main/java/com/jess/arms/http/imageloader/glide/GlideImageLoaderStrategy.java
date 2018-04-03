@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.imageloader.BaseImageLoaderStrategy;
@@ -60,9 +61,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
 
         requests = GlideArms.with(ctx);//如果context是activity则自动使用Activity的生命周期
 
-        GlideRequest<Drawable> glideRequest = requests.load(config.getUrl())
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .centerCrop();
+        GlideRequest<Drawable> glideRequest = requests.load(config.getUrl());
 
         switch (config.getCacheStrategy()) {//缓存策略
             case 0:
@@ -84,10 +83,26 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.ALL);
                 break;
         }
+
+        if (config.isCrossFade()) {
+            glideRequest.transition(DrawableTransitionOptions.withCrossFade());
+        }
+
+        if (config.isCenterCrop()) {
+            glideRequest.centerCrop();
+        }
+
+        if (config.isCircle()) {
+            glideRequest.circleCrop();
+        }
+
+        if (config.isImageRadius()) {
+            glideRequest.transform(new RoundedCorners(config.getImageRadius()));
+        }
+
         if (config.getTransformation() != null) {//glide用它来改变图形的形状
             glideRequest.transform(config.getTransformation());
         }
-
 
         if (config.getPlaceholder() != 0)//设置占位符
             glideRequest.placeholder(config.getPlaceholder());
