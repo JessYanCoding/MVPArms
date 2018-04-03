@@ -100,6 +100,10 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
             glideRequest.transform(new RoundedCorners(config.getImageRadius()));
         }
 
+        if (config.isBlurImage()) {
+            glideRequest.transform(new BlurTransformation(config.getBlurValue()));
+        }
+
         if (config.getTransformation() != null) {//glide用它来改变图形的形状
             glideRequest.transform(config.getTransformation());
         }
