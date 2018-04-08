@@ -70,7 +70,7 @@ dependencies {
     //arms
     implementation project(':arms')
     //Github 仓库上最新的 Demo 具有下一个版本的新特性, 所以依赖最新的远程库会出现版本不兼容的情况, 详情请查看 https://github.com/JessYanCoding/MVPArms/wiki/Issues#2
-//    implementation 'me.jessyan:arms:2.3.5'
+//    implementation 'me.jessyan:arms:2.4.0'
     //test
     testImplementation rootProject.ext.dependencies["junit"]
     debugImplementation rootProject.ext.dependencies["canary-debug"]
