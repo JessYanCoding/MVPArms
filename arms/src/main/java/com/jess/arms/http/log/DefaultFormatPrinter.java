@@ -185,7 +185,7 @@ public class DefaultFormatPrinter implements FormatPrinter {
 
     private static final String[] ARMS = new String[]{"-A-", "-R-", "-M-", "-S-"};
 
-    public static String computeKey() {
+    private static String computeKey() {
         if (last.get() >= 4) {
             last.set(0);
         }
