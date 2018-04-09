@@ -176,16 +176,21 @@ public class DefaultFormatPrinter implements FormatPrinter {
         }
     }
 
-    private static int last;
+    private static ThreadLocal<Integer> last = new ThreadLocal<Integer>() {
+        @Override
+        protected Integer initialValue() {
+            return 0;
+        }
+    };
 
     private static final String[] ARMS = new String[]{"-A-", "-R-", "-M-", "-S-"};
 
-    private static String computeKey() {
-        if (last == 4) {
-            last = 0;
+    public static String computeKey() {
+        if (last.get() >= 4) {
+            last.set(0);
         }
-        String s = String.valueOf(ARMS[last]);
-        last++;
+        String s = ARMS[last.get()];
+        last.set(last.get() + 1);
         return s;
     }
 
