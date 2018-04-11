@@ -17,6 +17,7 @@ package com.jess.arms.base.delegate;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.jess.arms.utils.ArmsUtils;
@@ -36,7 +37,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
     private Activity mActivity;
     private IActivity iActivity;
 
-    public ActivityDelegateImpl(Activity activity) {
+    public ActivityDelegateImpl(@NonNull Activity activity) {
         this.mActivity = activity;
         this.iActivity = (IActivity) activity;
     }
@@ -75,7 +76,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
 
     }
 
