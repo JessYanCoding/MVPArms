@@ -69,7 +69,7 @@ public class AppDelegate implements App, AppLifecycles {
     private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();
     private ComponentCallbacks2 mComponentCallback;
 
-    public AppDelegate(Context context) {
+    public AppDelegate(@NonNull Context context) {
 
         //用反射, 将 AndroidManifest.xml 中带有 ConfigModule 标签的 class 转成对象集合（List<ConfigModule>）
         this.mModules = new ManifestParser(context).parse();
@@ -86,7 +86,7 @@ public class AppDelegate implements App, AppLifecycles {
     }
 
     @Override
-    public void attachBaseContext(Context base) {
+    public void attachBaseContext(@NonNull Context base) {
 
         //遍历 mAppLifecycles, 执行所有已注册的 AppLifecycles 的 attachBaseContext() 方法 (框架外部, 开发者扩展的逻辑)
         for (AppLifecycles lifecycle : mAppLifecycles) {
@@ -95,7 +95,7 @@ public class AppDelegate implements App, AppLifecycles {
     }
 
     @Override
-    public void onCreate(Application application) {
+    public void onCreate(@NonNull Application application) {
         this.mApplication = application;
         mAppComponent = DaggerAppComponent
                 .builder()
@@ -137,7 +137,7 @@ public class AppDelegate implements App, AppLifecycles {
 
 
     @Override
-    public void onTerminate(Application application) {
+    public void onTerminate(@NonNull Application application) {
         if (mActivityLifecycle != null) {
             mApplication.unregisterActivityLifecycleCallbacks(mActivityLifecycle);
         }
