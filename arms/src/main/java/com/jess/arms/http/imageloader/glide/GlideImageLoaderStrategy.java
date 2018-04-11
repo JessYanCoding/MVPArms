@@ -28,6 +28,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.imageloader.BaseImageLoaderStrategy;
 import com.jess.arms.http.imageloader.ImageConfig;
+import com.jess.arms.utils.Preconditions;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -51,10 +52,10 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
 
     @Override
     public void loadImage(Context ctx, ImageConfigImpl config) {
-        if (ctx == null) throw new NullPointerException("Context is required");
-        if (config == null) throw new NullPointerException("ImageConfigImpl is required");
+        Preconditions.checkNotNull(ctx, "Context is required");
+        Preconditions.checkNotNull(config, "ImageConfigImpl is required");
         if (TextUtils.isEmpty(config.getUrl())) throw new NullPointerException("Url is required");
-        if (config.getImageView() == null) throw new NullPointerException("Imageview is required");
+        Preconditions.checkNotNull(config.getImageView(), "ImageView is required");
 
 
         GlideRequests requests;
@@ -124,8 +125,8 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
 
     @Override
     public void clear(final Context ctx, ImageConfigImpl config) {
-        if (ctx == null) throw new NullPointerException("Context is required");
-        if (config == null) throw new NullPointerException("ImageConfigImpl is required");
+        Preconditions.checkNotNull(ctx, "Context is required");
+        Preconditions.checkNotNull(config, "ImageConfigImpl is required");
 
         if (config.getImageViews() != null && config.getImageViews().length > 0) {//取消在执行的任务并且释放资源
             for (ImageView imageView : config.getImageViews()) {
