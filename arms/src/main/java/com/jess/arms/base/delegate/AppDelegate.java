@@ -106,9 +106,9 @@ public class AppDelegate implements App, AppLifecycles {
         mAppComponent.inject(this);
 
         //将 ConfigModule 的实现类的集合存放到缓存 Cache, 可以随时获取
-        //大于或等于缓存所能允许的最大 size, 则会根据 LRU 算法清除之前的条目
         //使用 IntelligentCache.KEY_KEEP 作为 key 的前缀, 可以使储存的数据永久存储在内存中
-        //否则存储在 LRU 算法的存储空间中, 前提是 extras 使用的是 IntelligentCache (框架默认使用)
+        //否则存储在 LRU 算法的存储空间中 (大于或等于缓存所能允许的最大 size, 则会根据 LRU 算法清除之前的条目)
+        //前提是 extras 使用的是 IntelligentCache (框架默认使用)
         mAppComponent.extras().put(IntelligentCache.KEY_KEEP + ConfigModule.class.getName(), mModules);
 
         this.mModules = null;
