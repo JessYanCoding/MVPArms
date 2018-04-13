@@ -25,6 +25,7 @@ import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.log.RequestInterceptor;
 import com.jess.arms.integration.ConfigModule;
+import com.jess.arms.integration.cache.IntelligentCache;
 import com.jess.arms.utils.ArmsUtils;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -178,7 +179,7 @@ public final class GlobalConfiguration implements ConfigModule {
                 ((RefWatcher) ArmsUtils
                         .obtainAppComponentFromContext(f.getActivity())
                         .extras()
-                        .get(RefWatcher.class.getName()))
+                        .get(IntelligentCache.KEY_KEEP + RefWatcher.class.getName()))
                         .watch(f);
             }
         });

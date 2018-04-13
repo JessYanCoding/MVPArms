@@ -28,6 +28,7 @@ import com.jess.arms.base.delegate.ActivityDelegateImpl;
 import com.jess.arms.base.delegate.FragmentDelegate;
 import com.jess.arms.base.delegate.IActivity;
 import com.jess.arms.integration.cache.Cache;
+import com.jess.arms.integration.cache.IntelligentCache;
 import com.jess.arms.utils.Preconditions;
 
 import java.util.List;
@@ -164,12 +165,12 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             //注册框架内部已实现的 Fragment 生命周期逻辑
             ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(mFragmentLifecycle.get(), true);
 
-            if (mExtras.containsKey(ConfigModule.class.getName())) {
-                List<ConfigModule> modules = (List<ConfigModule>) mExtras.get(ConfigModule.class.getName());
+            if (mExtras.containsKey(IntelligentCache.KEY_KEEP + ConfigModule.class.getName())) {
+                List<ConfigModule> modules = (List<ConfigModule>) mExtras.get(IntelligentCache.KEY_KEEP + ConfigModule.class.getName());
                 for (ConfigModule module : modules) {
                     module.injectFragmentLifecycle(mApplication, mFragmentLifecycles.get());
                 }
-                mExtras.remove(ConfigModule.class.getName());
+                mExtras.remove(IntelligentCache.KEY_KEEP + ConfigModule.class.getName());
             }
 
             //注册框架外部, 开发者扩展的 Fragment 生命周期逻辑
