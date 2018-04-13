@@ -82,7 +82,7 @@ public final class GlobalConfiguration implements ConfigModule {
 //                    public Cache build(CacheType type) {
 //                        switch (type.getCacheTypeId()){
 //                            case CacheType.EXTRAS_TYPE_ID:
-//                                return new LruCache(1000);
+//                                return new IntelligentCache(500);
 //                            case CacheType.CACHE_SERVICE_CACHE_TYPE_ID:
 //                                return new Cache(type.calculateCacheSize(context));//自定义 Cache
 //                            default:
