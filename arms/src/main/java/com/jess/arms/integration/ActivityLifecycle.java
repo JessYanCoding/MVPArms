@@ -84,7 +84,9 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             if (activityDelegate == null) {
                 Cache<String, Object> cache = getCacheFromActivity((IActivity) activity);
                 activityDelegate = new ActivityDelegateImpl(activity);
-                cache.put(ActivityDelegate.ACTIVITY_DELEGATE, activityDelegate);
+                //使用 IntelligentCache.KEY_KEEP 作为 key 的前缀, 可以使储存的数据永久存储在内存中
+                //否则存储在 LRU 算法的存储空间中, 前提是 Activity 使用的是 IntelligentCache (框架默认使用)
+                cache.put(IntelligentCache.KEY_KEEP + ActivityDelegate.ACTIVITY_DELEGATE, activityDelegate);
             }
             activityDelegate.onCreate(savedInstanceState);
         }
@@ -184,7 +186,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         ActivityDelegate activityDelegate = null;
         if (activity instanceof IActivity) {
             Cache<String, Object> cache = getCacheFromActivity((IActivity) activity);
-            activityDelegate = (ActivityDelegate) cache.get(ActivityDelegate.ACTIVITY_DELEGATE);
+            activityDelegate = (ActivityDelegate) cache.get(IntelligentCache.KEY_KEEP + ActivityDelegate.ACTIVITY_DELEGATE);
         }
         return activityDelegate;
     }
