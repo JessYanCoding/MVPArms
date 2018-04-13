@@ -26,6 +26,7 @@ import com.jess.arms.base.delegate.FragmentDelegate;
 import com.jess.arms.base.delegate.FragmentDelegateImpl;
 import com.jess.arms.base.delegate.IFragment;
 import com.jess.arms.integration.cache.Cache;
+import com.jess.arms.integration.cache.IntelligentCache;
 import com.jess.arms.utils.Preconditions;
 
 import javax.inject.Inject;
@@ -58,7 +59,9 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
             if (fragmentDelegate == null || !fragmentDelegate.isAdded()) {
                 Cache<String, Object> cache = getCacheFromFragment((IFragment) f);
                 fragmentDelegate = new FragmentDelegateImpl(fm, f);
-                cache.put(FragmentDelegate.FRAGMENT_DELEGATE, fragmentDelegate);
+                //使用 IntelligentCache.KEY_KEEP 作为 key 的前缀, 可以使储存的数据永久存储在内存中
+                //否则存储在 LRU 算法的存储空间中, 前提是 Fragment 使用的是 IntelligentCache (框架默认使用)
+                cache.put(IntelligentCache.KEY_KEEP + FragmentDelegate.FRAGMENT_DELEGATE, fragmentDelegate);
             }
             fragmentDelegate.onAttach(context);
         }
@@ -166,7 +169,7 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
     private FragmentDelegate fetchFragmentDelegate(Fragment fragment) {
         if (fragment instanceof IFragment) {
             Cache<String, Object> cache = getCacheFromFragment((IFragment) fragment);
-            return (FragmentDelegate) cache.get(FragmentDelegate.FRAGMENT_DELEGATE);
+            return (FragmentDelegate) cache.get(IntelligentCache.KEY_KEEP + FragmentDelegate.FRAGMENT_DELEGATE);
         }
         return null;
     }

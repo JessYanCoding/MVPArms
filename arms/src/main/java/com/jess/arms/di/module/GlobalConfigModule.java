@@ -217,9 +217,9 @@ public class GlobalConfigModule {
             @Override
             public Cache build(CacheType type) {
                 //若想自定义 LruCache 的 size, 或者不想使用 LruCache, 想使用自己自定义的策略
-                //并使用 GlobalConfigModule.Builder#cacheFactory() 扩展
-                    //Activity, Fragment 以及 Extras 使用 IntelligentCache (具有 LruCache 和 可永久存储数据的 Map)
+                //使用 GlobalConfigModule.Builder#cacheFactory() 即可扩展
                 switch (type.getCacheTypeId()){
+                    //Activity、Fragment 以及 Extras 使用 IntelligentCache (具有 LruCache 和 可永久存储数据的 Map)
                     case CacheType.EXTRAS_TYPE_ID:
                     case CacheType.ACTIVITY_CACHE_TYPE_ID:
                     case CacheType.FRAGMENT_CACHE_TYPE_ID:
