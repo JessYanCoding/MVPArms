@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 JessYan
+ * Copyright 2018 JessYan
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,7 +68,7 @@ public class IntelligentCache<V> implements Cache<String, V> {
     }
 
     /**
-     * 如果在 {@code key} 中使用 {@link #KEY_KEEP} 作为前缀, 则操作 {@link #mMap}, 否则操作 {@link #mCache}
+     * 如果在 {@code key} 中使用 {@link #KEY_KEEP} 作为其前缀, 则操作 {@link #mMap}, 否则操作 {@link #mCache}
      *
      * @param key {@code key}
      * @return {@code value}
@@ -83,7 +83,7 @@ public class IntelligentCache<V> implements Cache<String, V> {
     }
 
     /**
-     * 如果在 {@code key} 中使用 {@link #KEY_KEEP} 作为前缀, 则操作 {@link #mMap}, 否则操作 {@link #mCache}
+     * 如果在 {@code key} 中使用 {@link #KEY_KEEP} 作为其前缀, 则操作 {@link #mMap}, 否则操作 {@link #mCache}
      *
      * @param key   {@code key}
      * @param value {@code value}
@@ -99,10 +99,10 @@ public class IntelligentCache<V> implements Cache<String, V> {
     }
 
     /**
-     * 如果在 {@code key} 中使用 {@link #KEY_KEEP} 作为前缀, 则操作 {@link #mMap}, 否则操作 {@link #mCache}
+     * 如果在 {@code key} 中使用 {@link #KEY_KEEP} 作为其前缀, 则操作 {@link #mMap}, 否则操作 {@link #mCache}
      *
      * @param key {@code key}
-     * @return 如果 {@code key} 在容器中有 {@code value} 并且删除成功则返回删除的 {@code value}, 否则返回 {@code null}
+     * @return 如果这个 {@code key} 在容器中已经储存有 {@code value} 并且删除成功则返回删除的 {@code value}, 否则返回 {@code null}
      */
     @Nullable
     @Override
@@ -114,7 +114,7 @@ public class IntelligentCache<V> implements Cache<String, V> {
     }
 
     /**
-     * 如果在 {@code key} 中使用 {@link #KEY_KEEP} 作为前缀, 则操作 {@link #mMap}, 否则操作 {@link #mCache}
+     * 如果在 {@code key} 中使用 {@link #KEY_KEEP} 作为其前缀, 则操作 {@link #mMap}, 否则操作 {@link #mCache}
      *
      * @param key {@code key}
      * @return {@code true} 为在容器中含有这个 {@code key}, 否则为 {@code false}
@@ -128,9 +128,9 @@ public class IntelligentCache<V> implements Cache<String, V> {
     }
 
     /**
-     * 将 {@link #mMap} 和 {@link #mCache} 的 keySet 合并返回
+     * 将 {@link #mMap} 和 {@link #mCache} 的 {@code keySet} 合并返回
      *
-     * @return 合并后的 keySet
+     * @return 合并后的 {@code keySet}
      */
     @Override
     public Set<String> keySet() {
