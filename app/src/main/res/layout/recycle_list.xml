@@ -22,7 +22,7 @@
         android:layout_gravity="center_horizontal|bottom"
         android:layout_marginBottom="10px"
         android:textColor="@color/white"
-        android:textSize="40px"
+        android:textSize="18sp"
         tools:text="ss" />
 
 </me.jessyan.mvparms.demo.mvp.ui.widget.AutoCardView>
