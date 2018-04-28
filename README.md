@@ -2,7 +2,7 @@
 
 <p align="center">
    <a href="https://bintray.com/jessyancoding/maven/MVPArms/2.4.1/link">
-    <img src="https://img.shields.io/badge/bintray-v2.4.1-brightgreen.svg" alt="Latest Stable Version" />
+    <img src="https://img.shields.io/badge/Jcenter-v2.4.1-brightgreen.svg?style=flat-square" alt="Latest Stable Version" />
   </a>
   <a href="https://travis-ci.org/JessYanCoding/MVPArms">
     <img src="https://travis-ci.org/JessYanCoding/MVPArms.svg?branch=master" alt="Build Status" />
@@ -13,8 +13,11 @@
   <a href="http://www.apache.org/licenses/LICENSE-2.0">
     <img src="http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square" alt="License" />
   </a>
+  <a href="https://www.jianshu.com/u/1d0c0bc634db">
+    <img src="https://img.shields.io/badge/Author-JessYan-orange.svg?style=flat-square" alt="Author" />
+  </a>
   <a href="https://shang.qq.com/wpa/qunwpa?idkey=1a5dc5e9b2e40a780522f46877ba243eeb64405d42398643d544d3eec6624917">
-    <img src="https://img.shields.io/badge/QQ群-301733278-ff69b4.svg" alt="QQ Group" />
+    <img src="https://img.shields.io/badge/QQ群-301733278-orange.svg?style=flat-square" alt="QQ Group" />
   </a>
 </p>
 
