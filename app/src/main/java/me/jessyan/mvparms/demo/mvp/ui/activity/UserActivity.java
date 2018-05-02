@@ -40,6 +40,8 @@ import me.jessyan.mvparms.demo.mvp.contract.UserContract;
 import me.jessyan.mvparms.demo.mvp.presenter.UserPresenter;
 import timber.log.Timber;
 
+import static com.jess.arms.utils.Preconditions.checkNotNull;
+
 
 /**
  * ================================================
@@ -117,12 +119,14 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     }
 
     @Override
-    public void showMessage(String message) {
+    public void showMessage(@NonNull String message) {
+        checkNotNull(message);
         ArmsUtils.snackbarText(message);
     }
 
     @Override
-    public void launchActivity(Intent intent) {
+    public void launchActivity(@NonNull Intent intent) {
+        checkNotNull(intent);
         ArmsUtils.startActivity(intent);
     }
 
