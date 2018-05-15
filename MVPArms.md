@@ -33,11 +33,9 @@
 ## Wiki
 [详细使用方法及扩展功能,请参照 Wiki (**开发前必看!!!**)](https://github.com/JessYanCoding/MVPArms/wiki)
 
-<!--##The project used [In Progress]
-[Inspired by eyepetizer（灵感来源于开眼视频,开发中...）](https://github.com/JessYanCoding/WideEyes) -->
-
-
 ## Notice
+
+* [MVPArms 官方组件化方案 ArmsComponent](https://github.com/JessYanCoding/ArmsComponent)
 
 * [MVPArms 学习项目](https://github.com/JessYanCoding/MVPArms/blob/master/CONTRIBUTING_APP.md)
 
