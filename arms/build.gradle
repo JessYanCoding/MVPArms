@@ -16,6 +16,7 @@ android {
         versionCode rootProject.ext.android["versionCode"]
         versionName rootProject.ext.android["versionName"]
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -23,14 +24,6 @@ android {
         }
     }
 }
-
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-}
-
 
 dependencies {
     //support
@@ -120,6 +113,5 @@ dependencies {
     api rootProject.ext.dependencies["timber"]
     testImplementation rootProject.ext.dependencies["junit"]
 }
-
 
 apply from: 'bintray.gradle'
