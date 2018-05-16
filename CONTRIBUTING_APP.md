@@ -4,7 +4,7 @@
 
 <!-- 格式为: [**项目名字** : 项目描述](项目地址) -->
 ### App
-* [**LQRBiliBlili** : 这是一个基于 **MVPArms** 开发的高仿 **bilibili** 安卓客户端 (请注意, 此项目在 **GlobalConfiguration** 中的部分配置是错误的, 特别是对 **Retrofit** 的配置, 请以官方 **Demo** 为准)](https://github.com/GitLqr/LQRBiliBlili)
+* [**LQRBiliBlili** : 这是一个基于 **MVPArms** 开发的高仿 **bilibili** 安卓客户端 (**请注意, 此项目在 GlobalConfiguration 中的部分配置是不正确的, 特别是对 Retrofit 的配置, 请以官方 Demo 为准**)](https://github.com/GitLqr/LQRBiliBlili)
 * [**DiyCode** : 这是一个基于 **MVPArms** 开发的 **DiyCode** 社区客户端](https://github.com/linsneider/DiyCodeAndroid)
 * [**Ganamrs** : 这是一个基于 **MVPArms** 开发的 **Gank** 开源客户端](https://github.com/lianhuo/Ganamrs)
 * [**P2P** : 这是一个基于 **MVPArms** 开发的 **金融** 客户端](https://github.com/Everglowzz/P2P)
