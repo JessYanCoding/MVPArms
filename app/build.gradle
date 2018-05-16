@@ -18,8 +18,8 @@ android {
         versionName rootProject.ext.android["versionName"]
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
     }
-    buildTypes {
 
+    buildTypes {
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "boolean", "USE_CANARY", "true"
@@ -43,13 +43,6 @@ android {
         abortOnError false
     }
 }
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-}
-
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
