@@ -1,4 +1,4 @@
-![Logo](image/arms_logo_v1.0.jpg)
+![Logo](image/arms_banner_v1.0.jpg)
 
 <p align="center">
    <a href="https://bintray.com/jessyancoding/maven/MVPArms/2.4.1/link">
