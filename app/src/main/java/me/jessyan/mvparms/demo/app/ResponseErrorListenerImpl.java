@@ -76,5 +76,4 @@ public class ResponseErrorListenerImpl implements ResponseErrorListener {
         }
         return msg;
     }
-
 }
