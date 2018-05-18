@@ -27,7 +27,7 @@
   </a>
 </p> 
 
-## A common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects( like Dagger2,RxJava,Retrofit... ),to make your developing quicker and easier.
+## A common Architecture for Android Applications developing based on MVP, integrates many Open Source Projects (like Dagger2、RxJava、Retrofit ...), to make your developing quicker and easier.
 
 ## Architectural
 <img src="https://github.com/JessYanCoding/MVPArms/raw/master/image/Architecture.png" width="80%" height="80%">
