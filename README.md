@@ -33,7 +33,7 @@
 <img src="https://github.com/JessYanCoding/MVPArms/raw/master/image/Architecture.png" width="80%" height="80%">
 
 ## Usage
-> New Project (The following steps are too cumbersome? Use the new function to [generate an app Module with one click](https://github.com/JessYanCoding/MVPArms-Module-Template), to avoid the cumbersome configuration of the project, delete the app module and arms Module that comes with the project)
+> New Project (**The following steps are too cumbersome? Use the new function to [generate an app Module with one click](https://github.com/JessYanCoding/MVPArms-Module-Template), to avoid the cumbersome configuration of the project, delete the app module and arms Module that comes with the project**)
 >> If you are building a new project, directly to the entire project **clone** (or download), as **app** as the main **Module** (It is recommended to remove the **arms Module** and use **Gradle** to [depend](https://github.com/JessYanCoding/MVPArms/wiki#1.1) on this framework remotely for easy updates), then the package name into their own package name , **app Module** contains the package structure can be used directly, a mainstream `MVP` +` Dagger2` + `Retrofit` +` RxJava` framework so easy to build successful, and now you refer **Mvp** Package under the **UserActivity** format,[Use Template to automatically generate MVP, Dagger2 related classes](https://github.com/JessYanCoding/MVPArmsTemplate),With access to [Wiki documents](https://github.com/JessYanCoding/MVPArms/wiki) slowly grasp the framework to see more articles as soon as possible in the project to use it, in practice, learning is the fastest
 
 > Old Project
