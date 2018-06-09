@@ -12,6 +12,7 @@
 * [**DiyCode** : 这是一个基于 **MVPArms** 开发的 **DiyCode** 社区客户端](https://github.com/linsneider/DiyCodeAndroid)
 * [**Ganamrs** : 这是一个基于 **MVPArms** 开发的 **Gank** 开源客户端](https://github.com/lianhuo/Ganamrs)
 * [**P2P** : 这是一个基于 **MVPArms** 开发的 **金融** 客户端](https://github.com/Everglowzz/P2P)
+* [**ZackShop** : 这是一个基于 **MVPArms** 开发的 **仿京东** 客户端](https://github.com/zhangqian666/shop-front-android)
 
 ### Framework
 * [**MVPFrames** : 这个项目是将 **MVPArms** 框架和 **MVPArt** 框架合并成一个通用型项目, 并增加了数据库](https://github.com/DesignQu/MVPFrames)
