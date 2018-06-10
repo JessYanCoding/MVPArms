@@ -47,16 +47,33 @@ public class DataHelper {
     }
 
     /**
+     * 提供全局初始化方法 因为工具是单例模式 所以 Context必须通过全局Application
+     * 为了防止使用者误传入Activity的Context 所以可在框架层面进行初始化
+     * @param context
+     */
+    public static void  initDataHelper(Context context){
+        if (mSharedPreferences == null) {
+            mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+        }
+    }
+
+    /**
      * 存储重要信息到sharedPreferences；
      *
      * @param key
      * @param value
      */
-    public static void setStringSF(Context context, String key, String value) {
+    public static void setStringSF( String key, String value) {
         if (mSharedPreferences == null) {
-            mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+            mSharedErre();
+            return;
         }
         mSharedPreferences.edit().putString(key, value).apply();
+    }
+
+    private static void mSharedErre(){
+        throw  new NullPointerException("DataHelper 未进行 initDataHelper 操作 请在使用前进行初始化操作（可在Application初始化时做初始化工作）");
+
     }
 
     /**
@@ -65,9 +82,9 @@ public class DataHelper {
      * @param key
      * @return
      */
-    public static String getStringSF(Context context, String key) {
+    public static String getStringSF(String key) {
         if (mSharedPreferences == null) {
-            mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+            mSharedErre();
         }
         return mSharedPreferences.getString(key, null);
     }
@@ -78,9 +95,9 @@ public class DataHelper {
      * @param key
      * @param value
      */
-    public static void setIntergerSF(Context context, String key, int value) {
+    public static void setIntergerSF( String key, int value) {
         if (mSharedPreferences == null) {
-            mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+            mSharedErre();
         }
         mSharedPreferences.edit().putInt(key, value).apply();
     }
@@ -91,9 +108,9 @@ public class DataHelper {
      * @param key
      * @return
      */
-    public static int getIntergerSF(Context context, String key) {
+    public static int getIntergerSF(String key) {
         if (mSharedPreferences == null) {
-            mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+            mSharedErre();
         }
         return mSharedPreferences.getInt(key, -1);
     }
@@ -101,9 +118,9 @@ public class DataHelper {
     /**
      * 清除某个内容
      */
-    public static void removeSF(Context context, String key) {
+    public static void removeSF( String key) {
         if (mSharedPreferences == null) {
-            mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+            mSharedErre();
         }
         mSharedPreferences.edit().remove(key).apply();
     }
@@ -111,9 +128,9 @@ public class DataHelper {
     /**
      * 清除Shareprefrence
      */
-    public static void clearShareprefrence(Context context) {
+    public static void clearShareprefrence() {
         if (mSharedPreferences == null) {
-            mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+            mSharedErre();
         }
         mSharedPreferences.edit().clear().apply();
     }
@@ -125,9 +142,9 @@ public class DataHelper {
      * @param device
      * @param <T>
      */
-    public static <T> boolean saveDeviceData(Context context, String key, T device) {
+    public static <T> boolean saveDeviceData(String key, T device) {
         if (mSharedPreferences == null) {
-            mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+            mSharedErre();
         }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {   //Device为自定义类
@@ -153,9 +170,9 @@ public class DataHelper {
      * @param <T>
      * @return
      */
-    public static <T> T getDeviceData(Context context, String key) {
+    public static <T> T getDeviceData(String key) {
         if (mSharedPreferences == null) {
-            mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+            mSharedErre();
         }
         T device = null;
         String productBase64 = mSharedPreferences.getString(key, null);
