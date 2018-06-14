@@ -125,7 +125,7 @@ public class LruCache<K, V> implements Cache<K, V> {
      * @return {@code keySet}
      */
     @Override
-    public Set<K> keySet() {
+    public synchronized Set<K> keySet() {
         return cache.keySet();
     }
 
