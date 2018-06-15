@@ -55,7 +55,6 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
         Preconditions.checkNotNull(config, "ImageConfigImpl is required");
         Preconditions.checkNotNull(config.getImageView(), "ImageView is required");
 
-
         GlideRequests requests;
 
         requests = GlideArms.with(ctx);//如果context是activity则自动使用Activity的生命周期
