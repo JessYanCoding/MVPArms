@@ -88,7 +88,7 @@ ext {
                 "arouter"                  : "com.alibaba:arouter-api:1.3.1",
                 "arouter-compiler"         : "com.alibaba:arouter-compiler:1.1.4",
                 "progressmanager"          : "me.jessyan:progressmanager:1.5.0",
-                "retrofit-url-manager"     : "me.jessyan:retrofit-url-manager:1.2.5",
+                "retrofit-url-manager"     : "me.jessyan:retrofit-url-manager:1.3.0",
                 "lifecyclemodel"           : "me.jessyan:lifecyclemodel:1.0.1",
 
                 //test
