@@ -52,7 +52,8 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
 
 
     /**
-     * 释放资源
+     * 在 Activity 的 onDestroy 中使用 {@link DefaultAdapter#releaseAllHolder(RecyclerView)} 方法 (super.onDestroy() 之前)
+     * {@link BaseHolder#onRelease()} 才会被调用, 可以在此方法中释放一些资源
      */
     protected void onRelease() {
 
