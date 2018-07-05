@@ -260,7 +260,7 @@ public class AppDelegate implements App, AppLifecycles {
 //                case TRIM_MEMORY_MODERATE:
 
 
-            //系统正运行与低内存的状态并且你的进程正处于 LRU 列表中最容易被杀掉的位置, 你应该释放任何不影响你的 App 恢复状态的资源
+            //系统正运行于低内存的状态并且你的进程正处于 LRU 列表中最容易被杀掉的位置, 你应该释放任何不影响你的 App 恢复状态的资源
             //低于 API 14 的 App 可以使用 onLowMemory 回调
 //                case TRIM_MEMORY_COMPLETE:
         }
@@ -279,7 +279,7 @@ public class AppDelegate implements App, AppLifecycles {
          */
         @Override
         public void onLowMemory() {
-            //系统正运行与低内存的状态并且你的进程正处于 LRU 列表中最容易被杀掉的位置, 你应该释放任何不影响你的 App 恢复状态的资源
+            //系统正运行于低内存的状态并且你的进程正处于 LRU 列表中最容易被杀掉的位置, 你应该释放任何不影响你的 App 恢复状态的资源
         }
     }
 
