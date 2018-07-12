@@ -29,10 +29,9 @@ import com.jess.arms.http.imageloader.BaseImageLoaderStrategy;
 import com.jess.arms.http.imageloader.ImageConfig;
 import com.jess.arms.utils.Preconditions;
 
-import io.reactivex.Observable;
+import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -125,6 +124,10 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
         Preconditions.checkNotNull(ctx, "Context is required");
         Preconditions.checkNotNull(config, "ImageConfigImpl is required");
 
+        if (config.getImageView() != null) {
+            GlideArms.get(ctx).getRequestManagerRetriever().get(ctx).clear(config.getImageView());
+        }
+
         if (config.getImageViews() != null && config.getImageViews().length > 0) {//取消在执行的任务并且释放资源
             for (ImageView imageView : config.getImageViews()) {
                 GlideArms.get(ctx).getRequestManagerRetriever().get(ctx).clear(imageView);
@@ -132,29 +135,23 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
         }
 
         if (config.isClearDiskCache()) {//清除本地缓存
-            Observable.just(0)
-                    .observeOn(Schedulers.io())
-                    .subscribe(new Consumer<Integer>() {
-                        @Override
-                        public void accept(@NonNull Integer integer) throws Exception {
-                            Glide.get(ctx).clearDiskCache();
-                        }
-                    });
+            Completable.fromAction(new Action() {
+                @Override
+                public void run() throws Exception {
+                    Glide.get(ctx).clearDiskCache();
+                }
+            }).subscribeOn(Schedulers.io()).subscribe();
         }
 
         if (config.isClearMemory()) {//清除内存缓存
-            Observable.just(0)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<Integer>() {
-                        @Override
-                        public void accept(@NonNull Integer integer) throws Exception {
-                            Glide.get(ctx).clearMemory();
-                        }
-                    });
+            Completable.fromAction(new Action() {
+                @Override
+                public void run() throws Exception {
+                    Glide.get(ctx).clearMemory();
+                }
+            }).subscribeOn(AndroidSchedulers.mainThread()).subscribe();
         }
-
     }
-
 
     @Override
     public void applyGlideOptions(Context context, GlideBuilder builder) {
