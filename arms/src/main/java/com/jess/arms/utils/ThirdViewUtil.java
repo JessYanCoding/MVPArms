@@ -49,8 +49,8 @@ public class ThirdViewUtil {
         throw new IllegalStateException("you can't instantiate me!");
     }
 
-    public static int getUseAutolayout() {
-        return USE_AUTOLAYOUT;
+    public static boolean isUseAutolayout() {
+        return USE_AUTOLAYOUT == 1;
     }
 
     public static Unbinder bindTarget(Object target, Object source) {
