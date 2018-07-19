@@ -103,7 +103,7 @@ public class RepositoryManager implements IRepositoryManager {
      */
     @Override
     public void clearAllCache() {
-        mRxCache.get().evictAll();
+        mRxCache.get().evictAll().subscribe();
     }
 
     @Override
