@@ -43,14 +43,26 @@ import static com.jess.arms.base.delegate.ActivityDelegate.LAYOUT_RELATIVELAYOUT
  * ================================================
  */
 public class ThirdViewUtil {
-    private static int USE_AUTOLAYOUT = -1;//0 说明 AndroidManifest 里面没有使用 AutoLauout 的Meta,即不使用 AutoLayout,1 为有 Meta ,即需要使用
+    public static final boolean DEPENDENCY_AUTO_LAYOUT;
+    private static int HAS_AUTO_LAYOUT_META = -1;//0 说明 AndroidManifest 里面没有使用 AutoLauout 的 Meta, 即不使用 AutoLayout, 1 为有 Meta, 即需要使用
+
+    static {
+        boolean hasDependency;
+        try {
+            Class.forName("com.zhy.autolayout.AutoLayoutInfo");
+            hasDependency = true;
+        } catch (ClassNotFoundException e) {
+            hasDependency = false;
+        }
+        DEPENDENCY_AUTO_LAYOUT = hasDependency;
+    }
 
     private ThirdViewUtil() {
         throw new IllegalStateException("you can't instantiate me!");
     }
 
     public static boolean isUseAutolayout() {
-        return USE_AUTOLAYOUT == 1;
+        return DEPENDENCY_AUTO_LAYOUT && HAS_AUTO_LAYOUT_META == 1;
     }
 
     public static Unbinder bindTarget(Object target, Object source) {
@@ -67,10 +79,11 @@ public class ThirdViewUtil {
 
     @Nullable
     public static View convertAutoView(String name, Context context, AttributeSet attrs) {
-        //本框架并不强制你使用 AutoLayout
-        //如果你不想使用 AutoLayout ,就不要在 AndroidManifest 中声明, AutoLayout 的 Meta属性(design_width,design_height)
-        if (USE_AUTOLAYOUT == -1) {
-            USE_AUTOLAYOUT = 1;
+        //本框架并不强制您使用 AutoLayout
+        //如果您不想使用 AutoLayout, 请不要依赖 AutoLayout, 也不要在 AndroidManifest 中声明 AutoLayout 的 Meta 属性 (design_width, design_height)
+        if (!DEPENDENCY_AUTO_LAYOUT) return null;
+        if (HAS_AUTO_LAYOUT_META == -1) {
+            HAS_AUTO_LAYOUT_META = 1;
             PackageManager packageManager = context.getPackageManager();
             ApplicationInfo applicationInfo;
             try {
@@ -79,14 +92,14 @@ public class ThirdViewUtil {
                 if (applicationInfo == null || applicationInfo.metaData == null
                         || !applicationInfo.metaData.containsKey("design_width")
                         || !applicationInfo.metaData.containsKey("design_height")) {
-                    USE_AUTOLAYOUT = 0;
+                    HAS_AUTO_LAYOUT_META = 0;
                 }
             } catch (PackageManager.NameNotFoundException e) {
-                USE_AUTOLAYOUT = 0;
+                HAS_AUTO_LAYOUT_META = 0;
             }
         }
 
-        if (USE_AUTOLAYOUT == 0) {
+        if (HAS_AUTO_LAYOUT_META == 0) {
             return null;
         }
 
