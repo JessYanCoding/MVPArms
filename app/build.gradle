@@ -56,6 +56,9 @@ dependencies {
     implementation rootProject.ext.dependencies["retrofit-url-manager"]
     implementation rootProject.ext.dependencies["lifecyclemodel"]
     //view
+    implementation(rootProject.ext.dependencies["autolayout"]) {
+        exclude group: 'com.android.support'
+    }
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'support-annotations'
     }
