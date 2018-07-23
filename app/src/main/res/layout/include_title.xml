@@ -34,6 +34,4 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         tools:text="@string/app_name"/>
-
-
 </com.jess.arms.widget.autolayout.AutoToolbar>
