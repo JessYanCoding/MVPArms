@@ -63,18 +63,7 @@ public class AutoToolbar extends Toolbar {
         mTextSize = loadTextSizeFromTextAppearance(titleTextAppearance);
         mSubTextSize = loadTextSizeFromTextAppearance(subtitleTextAppearance);
 
-        TypedArray menuA = context.getTheme().obtainStyledAttributes(attrs, R.styleable.Theme,
-                defStyleAttr, R.style.ThemeOverlay_AppCompat);
-        int menuTextAppearance = menuA.getResourceId(R.styleable.Theme_actionBarTheme,
-                R.style.ThemeOverlay_AppCompat_ActionBar);
-        int menuTextSize = loadTextSizeFromTextAppearance(menuTextAppearance);
-
-        //防止 menu 定义 textSize，而 Toolbar 无定义 textSize 时，title 的 textSize 随 menu 变化
-        if (mTextSize == NO_VALID) mTextSize = menuTextSize;
-        if (mSubTextSize == NO_VALID) mSubTextSize = menuTextSize;
-
         a.recycle();
-        menuA.recycle();
     }
 
     public AutoToolbar(Context context, AttributeSet attrs) {
