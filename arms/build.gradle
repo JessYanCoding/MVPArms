@@ -34,6 +34,11 @@ dependencies {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
+    api(rootProject.ext.dependencies["design"]) {
+        exclude module: 'support-annotations'
+        exclude module: 'appcompat-v7'
+        exclude module: 'support-v4'
+    }
     api rootProject.ext.dependencies["annotations"]
 
     //view
