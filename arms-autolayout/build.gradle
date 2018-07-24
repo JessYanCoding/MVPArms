@@ -23,7 +23,7 @@ android {
 dependencies {
     compileOnly rootProject.ext.dependencies["appcompat-v7"]
     compileOnly rootProject.ext.dependencies["annotations"]
-    api(rootProject.ext.dependencies["design"]) {
+    implementation(rootProject.ext.dependencies["design"]) {
         exclude module: 'support-annotations'
         exclude module: 'appcompat-v7'
         exclude module: 'support-v4'
