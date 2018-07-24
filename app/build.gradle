@@ -46,19 +46,13 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    //support
-    implementation(rootProject.ext.dependencies["cardview-v7"]) {
-        exclude module: 'support-annotations'
-    }
     //tools
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     implementation rootProject.ext.dependencies["progressmanager"]
     implementation rootProject.ext.dependencies["retrofit-url-manager"]
     implementation rootProject.ext.dependencies["lifecyclemodel"]
     //view
-    implementation(rootProject.ext.dependencies["autolayout"]) {
-        exclude group: 'com.android.support'
-    }
+    implementation project(':arms-autolayout') //不想使用 AndroidAutoLayout 就不要依赖 arms-autolayout
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'support-annotations'
     }
