@@ -25,7 +25,7 @@
 
 ## Usage
 > New Project (**以下步骤太麻烦? 现在可直接在新建的新工程中使用新功能 [一键生成 app Module](https://github.com/JessYanCoding/MVPArms-Module-Template), 让您免于项目繁琐的配置, 快速开启 MVPArms 的世界**)
->> 如果您想构建一个全新的项目,直接将整个项目 **clone** (或者下载) 下来,再将 **app** 作为主 **Module** (建议将 **arms Module** 删除,并使用 **Gradle** [远程依赖](https://github.com/JessYanCoding/MVPArms/wiki#1.1) 本框架,便于更新,删除前请务必先查看 [这里](https://github.com/JessYanCoding/MVPArms/wiki/Issues#2)),最后将项目包名改成自己的包名, **app Module** 包含可以直接使用的包结构,一个主流的 `MVP`+`Dagger2`+`Retrofit`+`RxJava` 框架就这样轻松的构建成功了,现在您再参考 **Mvp** 包下的 **UserActivity** 的格式,[使用 Template 一键生成 MVP , Dagger2 相关的所有类](https://github.com/JessYanCoding/MVPArmsTemplate),配合查阅 [Wiki 文档](https://github.com/JessYanCoding/MVPArms/wiki) 慢慢掌握本框架,看再多文章不如早点在项目中使用它,在实践中学习总是最快的
+>> 如果您想构建一个全新的项目, 直接将整个项目 **clone** (或者下载) 下来, 再将 **demo** 作为主 **Module** (建议将 **arms Module** 删除, 并使用 **Gradle** [远程依赖](https://github.com/JessYanCoding/MVPArms/wiki#1.1) 本框架, 便于更新, 删除前请务必先查看 [这里](https://github.com/JessYanCoding/MVPArms/wiki/Issues#2)), 最后将项目包名改成自己的包名, **demo Module** 包含可以直接使用的包结构, 一个主流的 `MVP`+`Dagger2`+`Retrofit`+`RxJava` 框架就这样轻松的构建成功了, 现在您再参考 **Mvp** 包下的 **UserActivity** 的格式, [使用 Template 一键生成 MVP , Dagger2 相关的所有类](https://github.com/JessYanCoding/MVPArmsTemplate), 配合查阅 [Wiki 文档](https://github.com/JessYanCoding/MVPArms/wiki) 慢慢掌握本框架, 看再多文章不如早点在项目中使用它, 在实践中学习总是最快的
  
 > Old Project
 >> [老项目想引入此框架,可以参考 Wiki 文档 ,写的非常详细](https://github.com/JessYanCoding/MVPArms/wiki)
@@ -89,18 +89,6 @@
 **汇财富** | **觅窝** | **晒墨宝** | **(In Progress App ...)** | **(Your App ...)** |
 [<img src="image/hui_cai_fu_logo.png" width="80" height="80">](http://android.myapp.com/myapp/detail.htm?apkName=com.tahone.client) | [<img src="image/mi_wo_logo.png" width="80" height="80">](http://miwo.ai/) | [<img src="image/shaimobao_logo.png" width="80" height="80">](http://sj.qq.com/myapp/search.htm?kw=%E6%99%92%E5%A2%A8%E5%AE%9D)  | <img src="image/android_logo.png" width="80" height="80"> | <img src="image/android_logo.png" width="80" height="80">|  
  
-## Update
-* Tuesday, 26 September 2017: [**Cache**](https://github.com/JessYanCoding/MVPArms/blob/master/arms/src/main/java/com/jess/arms/integration/cache/)
-* Tuesday, 12 September 2017: [**Lifecycleable**](https://github.com/JessYanCoding/MVPArms/blob/master/arms/src/main/java/com/jess/arms/integration/lifecycle)
-* Thursday, 20 July 2017: [**RetrofitUrlManager**](https://github.com/JessYanCoding/RetrofitUrlManager)
-* Tuesday, 13 June 2017: [**ProgressManager**](https://github.com/JessYanCoding/ProgressManager)
-* Wednesday, 31 May 2017: [**Template**](https://github.com/JessYanCoding/MVPArmsTemplate)
-* Monday, 24 April 2017: [**AppDelegate**](https://github.com/JessYanCoding/MVPArms/wiki#3.12)
-* Thursday, 13 April 2017: [**RepositoryManager**](https://github.com/JessYanCoding/MVPArms/wiki#2.3)
-* Thursday, 15 December 2016: [**AppManager**](https://github.com/JessYanCoding/MVPArms/wiki#3.11)
-* Sunday, 25 December 2016: [**GlobeConfigModule**](https://github.com/JessYanCoding/MVPArms/wiki#3.1)
-* Monday, 26 December 2016: [**Version Update**](https://github.com/JessYanCoding/MVPArms/wiki#1.6)
-
 
 ## Acknowledgements 
 感谢本框架所使用到的所有三方库的 **Author** ,以及所有为 **Open Sourece** 做无私贡献的 **Developer** 和 **Organizations** ,使我们能更好的工作和学习,本人也会将业余时间回报给开源社区
