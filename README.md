@@ -34,7 +34,7 @@
 
 ## Usage
 > New Project (**The following steps are too cumbersome? Now you can use the [new feature (generate an app Module with one click)](https://github.com/JessYanCoding/MVPArms-Module-Template) in new projects, to avoid the cumbersome configuration of the project, to quickly open the world of MVPArms**)
->> If you are building a new project, directly to the entire project **clone** (or download), as **app** as the main **Module** (It is recommended to remove the **arms Module** and use **Gradle** to [depend](https://github.com/JessYanCoding/MVPArms/wiki#1.1) on this framework remotely for easy updates), then the package name into their own package name , **app Module** contains the package structure can be used directly, a mainstream `MVP` +` Dagger2` + `Retrofit` +` RxJava` framework so easy to build successful, and now you refer **Mvp** Package under the **UserActivity** format,[Use Template to automatically generate MVP, Dagger2 related classes](https://github.com/JessYanCoding/MVPArmsTemplate),With access to [Wiki documents](https://github.com/JessYanCoding/MVPArms/wiki) slowly grasp the framework to see more articles as soon as possible in the project to use it, in practice, learning is the fastest
+>> If you are building a new project, directly to the entire project **clone** (or download), as **demo** as the main **Module** (It is recommended to remove the **arms Module** and use **Gradle** to [depend](https://github.com/JessYanCoding/MVPArms/wiki#1.1) on this framework remotely for easy updates), then the package name into their own package name, **demo Module** contains the package structure can be used directly, a mainstream `MVP` +` Dagger2` + `Retrofit` +` RxJava` framework so easy to build successful, and now you refer **Mvp** Package under the **UserActivity** format, [Use Template to automatically generate MVP, Dagger2 related classes](https://github.com/JessYanCoding/MVPArmsTemplate), With access to [Wiki documents](https://github.com/JessYanCoding/MVPArms/wiki) slowly grasp the framework to see more articles as soon as possible in the project to use it, in practice, learning is the fastest
 
 > Old Project
 >> [Old projects would like to introduce this framework, you can refer to the Wiki documentation, written in great detail](https://github.com/JessYanCoding/MVPArms/wiki)
@@ -89,17 +89,6 @@
 **汇财富** | **觅窝** | **晒墨宝** | **(In Progress App ...)** | **(Your App ...)** |
 [<img src="image/hui_cai_fu_logo.png" width="80" height="80">](http://android.myapp.com/myapp/detail.htm?apkName=com.tahone.client) | [<img src="image/mi_wo_logo.png" width="80" height="80">](http://miwo.ai/) | [<img src="image/shaimobao_logo.png" width="80" height="80">](http://sj.qq.com/myapp/search.htm?kw=%E6%99%92%E5%A2%A8%E5%AE%9D)  | <img src="image/android_logo.png" width="80" height="80"> | <img src="image/android_logo.png" width="80" height="80">|
 
-## Update
-* Tuesday, 26 September 2017: [**Cache**](https://github.com/JessYanCoding/MVPArms/blob/master/arms/src/main/java/com/jess/arms/integration/cache/)
-* Tuesday, 12 September 2017: [**Lifecycleable**](https://github.com/JessYanCoding/MVPArms/blob/master/arms/src/main/java/com/jess/arms/integration/lifecycle)
-* Thursday, 20 July 2017: [**RetrofitUrlManager**](https://github.com/JessYanCoding/RetrofitUrlManager)
-* Tuesday, 13 June 2017: [**ProgressManager**](https://github.com/JessYanCoding/ProgressManager)
-* Wednesday, 31 May 2017: [**Template**](https://github.com/JessYanCoding/MVPArmsTemplate)
-* Monday, 24 April 2017: [**AppDelegate**](https://github.com/JessYanCoding/MVPArms/wiki#3.12)
-* Thursday, 13 April 2017: [**RepositoryManager**](https://github.com/JessYanCoding/MVPArms/wiki#2.3)
-* Thursday, 15 December 2016: [**AppManager**](https://github.com/JessYanCoding/MVPArms/wiki#3.11)
-* Sunday, 25 December 2016: [**GlobeConfigModule**](https://github.com/JessYanCoding/MVPArms/wiki#3.1)
-* Monday, 26 December 2016: [**Version Update**](https://github.com/JessYanCoding/MVPArms/wiki#1.6)
 
 ## Acknowledgements 
 Thanks to all the three libraries used in this framework **Author**, and all for the **Open Sourece** selfless contributions **Developer** and **Organizations**, so that we can better work and study, I will also spare time return to the open source community
