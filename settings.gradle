@@ -1,1 +1,1 @@
-include ':app', ':arms', ':arms-autolayout'
+include ':demo', ':arms', ':arms-autolayout'
