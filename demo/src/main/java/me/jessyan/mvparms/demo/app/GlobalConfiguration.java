@@ -45,6 +45,10 @@ import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
  *
  * @see com.jess.arms.base.delegate.AppDelegate
  * @see com.jess.arms.integration.ManifestParser
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki">请配合官方 Wiki 文档学习本框架</a>
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki/UpdateLog">更新日志, 升级必看!</a>
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki/Issues">常见 Issues, 踩坑必看!</a>
+ * @see <a href="https://github.com/JessYanCoding/ArmsComponent/wiki">MVPArms 官方组件化方案 ArmsComponent, 进阶指南!</a>
  * Created by JessYan on 12/04/2017 17:25
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
