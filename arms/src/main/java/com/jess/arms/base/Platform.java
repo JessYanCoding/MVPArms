@@ -24,15 +24,17 @@ package com.jess.arms.base;
  */
 public class Platform {
     public static final boolean DEPENDENCY_AUTO_LAYOUT;
+    public static final boolean DEPENDENCY_SUPPORT_DESIGN;
 
     static {
-        DEPENDENCY_AUTO_LAYOUT = findAutoLayout();
+        DEPENDENCY_AUTO_LAYOUT = findClassByClassName("com.zhy.autolayout.AutoLayoutInfo");
+        DEPENDENCY_SUPPORT_DESIGN = findClassByClassName("android.support.design.widget.Snackbar");
     }
 
-    private static boolean findAutoLayout() {
+    private static boolean findClassByClassName(String className) {
         boolean hasDependency;
         try {
-            Class.forName("com.zhy.autolayout.AutoLayoutInfo");
+            Class.forName(className);
             hasDependency = true;
         } catch (ClassNotFoundException e) {
             hasDependency = false;
