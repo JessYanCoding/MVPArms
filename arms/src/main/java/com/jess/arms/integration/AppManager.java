@@ -26,6 +26,7 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.jess.arms.base.delegate.AppLifecycles;
+import com.jess.arms.utils.ArmsUtils;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
@@ -40,6 +41,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import timber.log.Timber;
+
+import static com.jess.arms.base.Platform.DEPENDENCY_SUPPORT_DESIGN;
 
 /**
  * ================================================
@@ -147,7 +150,7 @@ public final class AppManager {
     }
 
     /**
-     * 让在前台的 {@link Activity},使用 {@link Snackbar} 显示文本内容
+     * 让在前台的 {@link Activity}, 使用 {@link Snackbar} 显示文本内容
      *
      * @param message
      * @param isLong
@@ -157,8 +160,16 @@ public final class AppManager {
             Timber.tag(TAG).w("mCurrentActivity == null when showSnackbar(String,boolean)");
             return;
         }
-        View view = getCurrentActivity().getWindow().getDecorView().findViewById(android.R.id.content);
-        Snackbar.make(view, message, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
+        //Arms 已将 com.android.support:design 从依赖中移除 (目的是减小 Arms 体积, design 库中含有太多 View)
+        //因为 Snackbar 在 com.android.support:design 库中, 所以如果框架使用者没有自行依赖 com.android.support:design
+        //Arms 则会使用 Toast 替代 Snackbar 显示信息, 如果框架使用者依赖了 arms-autolayout 库就不用依赖 com.android.support:design 了
+        //因为在 arms-autolayout 库中已经依赖有 com.android.support:design
+        if (DEPENDENCY_SUPPORT_DESIGN) {
+            View view = getCurrentActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+            Snackbar.make(view, message, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
+        } else {
+            ArmsUtils.makeText(mApplication, message);
+        }
     }
 
 

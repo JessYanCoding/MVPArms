@@ -223,6 +223,10 @@ public class ArmsUtils {
 
     /**
      * 使用 {@link Snackbar} 显示文本消息
+     * Arms 已将 com.android.support:design 从依赖中移除 (目的是减小 Arms 体积, design 库中含有太多 View)
+     * 因为 Snackbar 在 com.android.support:design 库中, 所以如果框架使用者没有自行依赖 com.android.support:design
+     * Arms 则会使用 Toast 替代 Snackbar 显示信息, 如果框架使用者依赖了 arms-autolayout 库就不用依赖 com.android.support:design 了
+     * 因为在 arms-autolayout 库中已经依赖有 com.android.support:design
      *
      * @param text
      */
@@ -236,6 +240,10 @@ public class ArmsUtils {
 
     /**
      * 使用 {@link Snackbar} 长时间显示文本消息
+     * Arms 已将 com.android.support:design 从依赖中移除 (目的是减小 Arms 体积, design 库中含有太多 View)
+     * 因为 Snackbar 在 com.android.support:design 库中, 所以如果框架使用者没有自行依赖 com.android.support:design
+     * Arms 则会使用 Toast 替代 Snackbar 显示信息, 如果框架使用者依赖了 arms-autolayout 库就不用依赖 com.android.support:design 了
+     * 因为在 arms-autolayout 库中已经依赖有 com.android.support:design
      *
      * @param text
      */

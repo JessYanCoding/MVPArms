@@ -33,11 +33,8 @@ dependencies {
     api(rootProject.ext.dependencies["appcompat-v7"]) {
         exclude module: 'support-annotations'
     }
-    api(rootProject.ext.dependencies["design"]) {
-        exclude module: 'support-annotations'
-        exclude module: 'appcompat-v7'
-        exclude module: 'support-v4'
-    }
+    compileOnly rootProject.ext.dependencies["design"]
+    api rootProject.ext.dependencies["recyclerview-v7"]
     api rootProject.ext.dependencies["annotations"]
 
     //view
