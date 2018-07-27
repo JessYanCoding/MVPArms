@@ -31,6 +31,7 @@ import com.zhy.autolayout.AutoRelativeLayout;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static com.jess.arms.base.Platform.DEPENDENCY_AUTO_LAYOUT;
 import static com.jess.arms.base.delegate.ActivityDelegate.LAYOUT_FRAMELAYOUT;
 import static com.jess.arms.base.delegate.ActivityDelegate.LAYOUT_LINEARLAYOUT;
 import static com.jess.arms.base.delegate.ActivityDelegate.LAYOUT_RELATIVELAYOUT;
@@ -43,19 +44,7 @@ import static com.jess.arms.base.delegate.ActivityDelegate.LAYOUT_RELATIVELAYOUT
  * ================================================
  */
 public class ThirdViewUtil {
-    public static final boolean DEPENDENCY_AUTO_LAYOUT;
     private static int HAS_AUTO_LAYOUT_META = -1;//0 说明 AndroidManifest 里面没有使用 AutoLauout 的 Meta, 即不使用 AutoLayout, 1 为有 Meta, 即需要使用
-
-    static {
-        boolean hasDependency;
-        try {
-            Class.forName("com.zhy.autolayout.AutoLayoutInfo");
-            hasDependency = true;
-        } catch (ClassNotFoundException e) {
-            hasDependency = false;
-        }
-        DEPENDENCY_AUTO_LAYOUT = hasDependency;
-    }
 
     private ThirdViewUtil() {
         throw new IllegalStateException("you can't instantiate me!");
