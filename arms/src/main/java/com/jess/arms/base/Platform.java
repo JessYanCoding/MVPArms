@@ -25,10 +25,12 @@ package com.jess.arms.base;
 public class Platform {
     public static final boolean DEPENDENCY_AUTO_LAYOUT;
     public static final boolean DEPENDENCY_SUPPORT_DESIGN;
+    public static final boolean DEPENDENCY_GLIDE;
 
     static {
         DEPENDENCY_AUTO_LAYOUT = findClassByClassName("com.zhy.autolayout.AutoLayoutInfo");
         DEPENDENCY_SUPPORT_DESIGN = findClassByClassName("android.support.design.widget.Snackbar");
+        DEPENDENCY_GLIDE = findClassByClassName("com.bumptech.glide.Glide");
     }
 
     private static boolean findClassByClassName(String className) {
