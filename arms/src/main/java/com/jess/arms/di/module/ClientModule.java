@@ -152,7 +152,8 @@ public abstract class ClientModule {
      */
     @Singleton
     @Provides
-    static RxCache provideRxCache(Application application, @Nullable RxCacheConfiguration configuration, @Named("RxCacheDirectory") File cacheDirectory) {
+    static RxCache provideRxCache(Application application, @Nullable RxCacheConfiguration configuration
+            , @Named("RxCacheDirectory") File cacheDirectory, Gson gson) {
         RxCache.Builder builder = new RxCache.Builder();
         RxCache rxCache = null;
         if (configuration != null) {
@@ -160,7 +161,7 @@ public abstract class ClientModule {
         }
         if (rxCache != null) return rxCache;
         return builder
-                .persistence(cacheDirectory, new GsonSpeaker());
+                .persistence(cacheDirectory, new GsonSpeaker(gson));
     }
 
     /**
