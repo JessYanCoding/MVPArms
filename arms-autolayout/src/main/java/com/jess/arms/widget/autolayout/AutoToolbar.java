@@ -24,7 +24,6 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
-import com.jess.arms.widget.R;
 import com.zhy.autolayout.AutoLayoutInfo;
 import com.zhy.autolayout.utils.AutoLayoutHelper;
 import com.zhy.autolayout.utils.AutoUtils;
