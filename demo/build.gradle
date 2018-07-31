@@ -59,6 +59,7 @@ dependencies {
     implementation rootProject.ext.dependencies["paginate"]
     //arms
     implementation project(':arms')
+    implementation project(':arms-imageloader-glide') //想自行扩展 ImageLoaderStrategy 或者想使用其他图片加载框架就不要依赖 arms-imageloader-glide
     //Github 仓库上最新的 Demo 具有下一个版本的新特性, 所以依赖最新的远程库会出现版本不兼容的情况, 详情请查看 https://github.com/JessYanCoding/MVPArms/wiki/Issues#2
 //    implementation 'me.jessyan:arms:2.4.1'
     //test

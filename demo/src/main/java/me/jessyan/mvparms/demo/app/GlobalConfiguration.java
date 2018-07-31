@@ -23,6 +23,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.module.GlobalConfigModule;
+import com.jess.arms.http.imageloader.glide.GlideImageLoaderStrategy;
 import com.jess.arms.http.log.RequestInterceptor;
 import com.jess.arms.integration.ConfigModule;
 import com.jess.arms.integration.cache.IntelligentCache;
@@ -64,9 +65,9 @@ public final class GlobalConfiguration implements ConfigModule {
         }
 
         builder.baseurl(Api.APP_DOMAIN)
-                //强烈建议自己自定义图片加载逻辑,因为默认提供的 GlideImageLoaderStrategy 并不能满足复杂的需求
+                //强烈建议自己自定义图片加载逻辑, 因为 arms-imageloader-glide 提供的 GlideImageLoaderStrategy 并不能满足复杂的需求
                 //请参考 https://github.com/JessYanCoding/MVPArms/wiki#3.4
-//                .imageLoaderStrategy(new CustomLoaderStrategy())
+                .imageLoaderStrategy(new GlideImageLoaderStrategy())
 
                 //想支持多 BaseUrl, 以及运行时动态切换任意一个 BaseUrl, 请使用 https://github.com/JessYanCoding/RetrofitUrlManager
                 //如果 BaseUrl 在 App 启动时不能确定, 需要请求服务器接口动态获取, 请使用以下代码
