@@ -90,10 +90,7 @@ dependencies {
         exclude module: 'okio'
     }
     api rootProject.ext.dependencies["okhttp3"]
-    api(rootProject.ext.dependencies["glide"]) {
-        exclude module: 'support-annotations'
-        exclude module: 'support-fragment'
-    }
+    compileOnly rootProject.ext.dependencies["glide"]
     annotationProcessor(rootProject.ext.dependencies["glide-compiler"]) {
         exclude module: 'jsr305'
     }

@@ -27,7 +27,6 @@ import com.jess.arms.http.log.DefaultFormatPrinter;
 import com.jess.arms.http.log.FormatPrinter;
 import com.jess.arms.http.log.RequestInterceptor;
 import com.jess.arms.http.imageloader.BaseImageLoaderStrategy;
-import com.jess.arms.http.imageloader.glide.GlideImageLoaderStrategy;
 import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.integration.cache.CacheType;
 import com.jess.arms.integration.cache.IntelligentCache;
@@ -129,8 +128,9 @@ public class GlobalConfigModule {
      */
     @Singleton
     @Provides
+    @Nullable
     BaseImageLoaderStrategy provideImageLoaderStrategy() {
-        return mLoaderStrategy == null ? new GlideImageLoaderStrategy() : mLoaderStrategy;
+        return mLoaderStrategy;
     }
 
 

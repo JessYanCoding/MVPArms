@@ -16,6 +16,9 @@
 package com.jess.arms.http.imageloader;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
+
+import com.jess.arms.utils.Preconditions;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -35,6 +38,7 @@ import javax.inject.Singleton;
 @Singleton
 public final class ImageLoader {
     @Inject
+    @Nullable
     BaseImageLoaderStrategy mStrategy;
 
     @Inject
@@ -50,6 +54,7 @@ public final class ImageLoader {
      * @param <T>
      */
     public <T extends ImageConfig> void loadImage(Context context, T config) {
+        Preconditions.checkNotNull(mStrategy, "Please implement BaseImageLoaderStrategy and call GlobalConfigModule.Builder#imageLoaderStrategy(BaseImageLoaderStrategy) in the applyOptions method of ConfigModule");
         this.mStrategy.loadImage(context, config);
     }
 
@@ -61,6 +66,7 @@ public final class ImageLoader {
      * @param <T>
      */
     public <T extends ImageConfig> void clear(Context context, T config) {
+        Preconditions.checkNotNull(mStrategy, "Please implement BaseImageLoaderStrategy and call GlobalConfigModule.Builder#imageLoaderStrategy(BaseImageLoaderStrategy) in the applyOptions method of ConfigModule");
         this.mStrategy.clear(context, config);
     }
 
@@ -70,9 +76,11 @@ public final class ImageLoader {
      * @param strategy
      */
     public void setLoadImgStrategy(BaseImageLoaderStrategy strategy) {
+        Preconditions.checkNotNull(strategy, "strategy == null");
         this.mStrategy = strategy;
     }
 
+    @Nullable
     public BaseImageLoaderStrategy getLoadImgStrategy() {
         return mStrategy;
     }
