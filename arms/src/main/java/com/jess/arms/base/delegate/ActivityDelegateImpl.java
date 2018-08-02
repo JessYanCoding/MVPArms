@@ -20,9 +20,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.jess.arms.integration.EventBusManager;
 import com.jess.arms.utils.ArmsUtils;
-
-import org.simple.eventbus.EventBus;
 
 /**
  * ================================================
@@ -48,7 +47,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         //如果要使用 EventBus 请将此方法返回 true
         if (iActivity.useEventBus()){
             //注册到事件主线
-            EventBus.getDefault().register(mActivity);
+            EventBusManager.getInstance().register(mActivity);
         }
 
         //这里提供 AppComponent 对象给 BaseActivity 的子类, 用于 Dagger2 的依赖注入
@@ -84,7 +83,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
     public void onDestroy() {
         //如果要使用 EventBus 请将此方法返回 true
         if (iActivity != null && iActivity.useEventBus())
-            EventBus.getDefault().unregister(mActivity);
+            EventBusManager.getInstance().unregister(mActivity);
         this.iActivity = null;
         this.mActivity = null;
     }

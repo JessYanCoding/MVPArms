@@ -20,7 +20,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-import org.simple.eventbus.EventBus;
+import com.jess.arms.integration.EventBusManager;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -48,7 +48,7 @@ public abstract class BaseService extends Service {
     public void onCreate() {
         super.onCreate();
         if (useEventBus())
-            EventBus.getDefault().register(this);
+            EventBusManager.getInstance().register(this);
         init();
     }
 
@@ -56,7 +56,7 @@ public abstract class BaseService extends Service {
     public void onDestroy() {
         super.onDestroy();
         if (useEventBus())
-            EventBus.getDefault().unregister(this);
+            EventBusManager.getInstance().unregister(this);
         unDispose();//解除订阅
         this.mCompositeDisposable = null;
     }
