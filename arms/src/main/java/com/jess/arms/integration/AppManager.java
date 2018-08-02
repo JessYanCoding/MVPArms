@@ -29,18 +29,14 @@ import android.view.View;
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.utils.ArmsUtils;
 
-import org.simple.eventbus.EventBus;
-import org.simple.eventbus.Subscriber;
-import org.simple.eventbus.ThreadMode;
-
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
+import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 import timber.log.Timber;
 
 import static com.jess.arms.base.Platform.DEPENDENCY_SUPPORT_DESIGN;
@@ -57,97 +53,91 @@ import static com.jess.arms.base.Platform.DEPENDENCY_SUPPORT_DESIGN;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-@Singleton
 public final class AppManager {
     protected final String TAG = this.getClass().getSimpleName();
-    public static final String APPMANAGER_MESSAGE = "appmanager_message";
-    //true 为不需要加入到 Activity 容器进行统一管理,默认为 false
+    /**
+     * true 为不需要加入到 Activity 容器进行统一管理,默认为 false
+     */
     public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list";
-    public static final int START_ACTIVITY = 5000;
-    public static final int SHOW_SNACKBAR = 5001;
-    public static final int KILL_ALL = 5002;
-    public static final int APP_EXIT = 5003;
-    @Inject
-    Application mApplication;
-    //管理所有存活的 Activity, 容器中的顺序仅仅是 Activity 的创建顺序, 并不能保证和 Activity 任务栈顺序一致
+    private static volatile AppManager sAppManager;
+    private Application mApplication;
+    /**
+     * 管理所有存活的 Activity, 容器中的顺序仅仅是 Activity 的创建顺序, 并不能保证和 Activity 任务栈顺序一致
+     */
     private List<Activity> mActivityList;
-    //当前在前台的 Activity
+    /**
+     * 当前在前台的 Activity
+     */
     private Activity mCurrentActivity;
-    //提供给外部扩展 AppManager 的 onReceive 方法
+    /**
+     * 此方法作废, 现在可通过 {@link AppManager#getAppManager()} 直接访问 {@link AppManager}
+     * <p>
+     * 提供给外部扩展 {@link AppManager} 的 {@link #onReceive(Message)} 方法
+     */
     private HandleListener mHandleListener;
 
-    @Inject
-    public AppManager() {
+    private AppManager() {
     }
 
+    public static AppManager getAppManager() {
+        if (sAppManager == null) {
+            synchronized (AppManager.class) {
+                if (sAppManager == null) {
+                    sAppManager = new AppManager();
+                }
+            }
+        }
+        return sAppManager;
+    }
 
-    @Inject
-    void init() {
-        EventBus.getDefault().register(this);
+    public AppManager init(Application application) {
+        this.mApplication = application;
+        return sAppManager;
     }
 
     /**
-     * 通过 {@link EventBus#post(Object)} 事件, 远程遥控执行对应方法
+     * 此方法作废, 现在可通过 {@link AppManager#getAppManager()} 直接访问 {@link AppManager}
+     * <p>
      * 可通过 {@link #setHandleListener(HandleListener)}, 让外部可扩展新的事件
+     *
+     * @param message
      */
-    @Subscriber(tag = APPMANAGER_MESSAGE, mode = ThreadMode.MAIN)
+    @Deprecated
     public void onReceive(Message message) {
-        switch (message.what) {
-            case START_ACTIVITY:
-                if (message.obj == null)
-                    break;
-                dispatchStart(message);
-                break;
-            case SHOW_SNACKBAR:
-                if (message.obj == null)
-                    break;
-                showSnackbar((String) message.obj, message.arg1 == 0 ? false : true);
-                break;
-            case KILL_ALL:
-                killAll();
-                break;
-            case APP_EXIT:
-                appExit();
-                break;
-            default:
-                Timber.tag(TAG).w("The message.what not match");
-                break;
-        }
         if (mHandleListener != null) {
             mHandleListener.handleMessage(this, message);
         }
     }
 
-    private void dispatchStart(Message message) {
-        if (message.obj instanceof Intent)
-            startActivity((Intent) message.obj);
-        else if (message.obj instanceof Class)
-            startActivity((Class) message.obj);
-    }
-
-
+    @Deprecated
     public HandleListener getHandleListener() {
         return mHandleListener;
     }
 
     /**
+     * 此方法作废, 现在可通过 {@link AppManager#getAppManager()} 直接访问 {@link AppManager}
+     * <p>
      * 提供给外部扩展 {@link AppManager} 的 {@link #onReceive} 方法(远程遥控 {@link AppManager} 的功能)
      * 建议在 {@link ConfigModule#injectAppLifecycle(Context, List)} 中
      * 通过 {@link AppLifecycles#onCreate(Application)} 在 App 初始化时,使用此方法传入自定义的 {@link HandleListener}
      *
      * @param handleListener
      */
+    @Deprecated
     public void setHandleListener(HandleListener handleListener) {
         this.mHandleListener = handleListener;
     }
 
     /**
-     * 通过此方法远程遥控 {@link AppManager} ,使 {@link #onReceive(Message)} 执行对应方法
+     * 此方法作废, 现在可通过 {@link AppManager#getAppManager()} 直接访问 {@link AppManager}
+     * <p>
+     * 通过此方法远程遥控 {@link AppManager}, 使 {@link #onReceive(Message)} 执行对应方法
      *
-     * @param msg
+     * @param msg {@link Message}
      */
+    @Deprecated
     public static void post(Message msg) {
-        EventBus.getDefault().post(msg, APPMANAGER_MESSAGE);
+        getAppManager().onReceive(msg);
     }
 
     /**
@@ -161,18 +151,23 @@ public final class AppManager {
             Timber.tag(TAG).w("mCurrentActivity == null when showSnackbar(String,boolean)");
             return;
         }
-        //Arms 已将 com.android.support:design 从依赖中移除 (目的是减小 Arms 体积, design 库中含有太多 View)
-        //因为 Snackbar 在 com.android.support:design 库中, 所以如果框架使用者没有自行依赖 com.android.support:design
-        //Arms 则会使用 Toast 替代 Snackbar 显示信息, 如果框架使用者依赖了 arms-autolayout 库就不用依赖 com.android.support:design 了
-        //因为在 arms-autolayout 库中已经依赖有 com.android.support:design
-        if (DEPENDENCY_SUPPORT_DESIGN) {
-            View view = getCurrentActivity().getWindow().getDecorView().findViewById(android.R.id.content);
-            Snackbar.make(view, message, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
-        } else {
-            ArmsUtils.makeText(mApplication, message);
-        }
-    }
+        Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                //Arms 已将 com.android.support:design 从依赖中移除 (目的是减小 Arms 体积, design 库中含有太多 View)
+                //因为 Snackbar 在 com.android.support:design 库中, 所以如果框架使用者没有自行依赖 com.android.support:design
+                //Arms 则会使用 Toast 替代 Snackbar 显示信息, 如果框架使用者依赖了 arms-autolayout 库就不用依赖 com.android.support:design 了
+                //因为在 arms-autolayout 库中已经依赖有 com.android.support:design
+                if (DEPENDENCY_SUPPORT_DESIGN) {
+                    View view = getCurrentActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+                    Snackbar.make(view, message, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
+                } else {
+                    ArmsUtils.makeText(mApplication, message);
+                }
+            }
+        }).subscribeOn(AndroidSchedulers.mainThread()).subscribe();
 
+    }
 
     /**
      * 让在栈顶的 {@link Activity} ,打开指定的 {@link Activity}
@@ -203,7 +198,6 @@ public final class AppManager {
      * 释放资源
      */
     public void release() {
-        EventBus.getDefault().unregister(this);
         mActivityList.clear();
         mHandleListener = null;
         mActivityList = null;
@@ -476,6 +470,7 @@ public final class AppManager {
         }
     }
 
+    @Deprecated
     public interface HandleListener {
         void handleMessage(AppManager appManager, Message message);
     }

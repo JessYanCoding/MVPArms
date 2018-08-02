@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
@@ -40,11 +39,6 @@ import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.integration.AppManager;
 
 import java.security.MessageDigest;
-
-import static com.jess.arms.integration.AppManager.APP_EXIT;
-import static com.jess.arms.integration.AppManager.KILL_ALL;
-import static com.jess.arms.integration.AppManager.SHOW_SNACKBAR;
-import static com.jess.arms.integration.AppManager.START_ACTIVITY;
 
 /**
  * ================================================
@@ -231,11 +225,7 @@ public class ArmsUtils {
      * @param text
      */
     public static void snackbarText(String text) {
-        Message message = new Message();
-        message.what = SHOW_SNACKBAR;
-        message.obj = text;
-        message.arg1 = 0;
-        AppManager.post(message);
+        AppManager.getAppManager().showSnackbar(text, false);
     }
 
     /**
@@ -248,11 +238,7 @@ public class ArmsUtils {
      * @param text
      */
     public static void snackbarTextWithLong(String text) {
-        Message message = new Message();
-        message.what = SHOW_SNACKBAR;
-        message.obj = text;
-        message.arg1 = 1;
-        AppManager.post(message);
+        AppManager.getAppManager().showSnackbar(text, true);
     }
 
 
@@ -268,27 +254,21 @@ public class ArmsUtils {
 
 
     /**
-     * 跳转界面 1 ,通过 {@link AppManager#startActivity(Class)}
+     * 跳转界面 1, 通过 {@link AppManager#startActivity(Class)}
      *
      * @param activityClass
      */
     public static void startActivity(Class activityClass) {
-        Message message = new Message();
-        message.what = START_ACTIVITY;
-        message.obj = activityClass;
-        AppManager.post(message);
+        AppManager.getAppManager().startActivity(activityClass);
     }
 
     /**
-     * 跳转界面 2 ,通过 {@link AppManager#startActivity(Intent)}
+     * 跳转界面 2, 通过 {@link AppManager#startActivity(Intent)}
      *
      * @param
      */
     public static void startActivity(Intent content) {
-        Message message = new Message();
-        message.what = START_ACTIVITY;
-        message.obj = content;
-        AppManager.post(message);
+        AppManager.getAppManager().startActivity(content);
     }
 
 
@@ -437,21 +417,17 @@ public class ArmsUtils {
     }
 
     /**
-     * 远程遥控 {@link AppManager#killAll()}
+     * 执行 {@link AppManager#killAll()}
      */
     public static void killAll() {
-        Message message = new Message();
-        message.what = KILL_ALL;
-        AppManager.post(message);
+        AppManager.getAppManager().killAll();
     }
 
     /**
-     * 远程遥控 {@link AppManager#appExit()}
+     * 执行 {@link AppManager#appExit()}
      */
     public static void exitApp() {
-        Message message = new Message();
-        message.what = APP_EXIT;
-        AppManager.post(message);
+        AppManager.getAppManager().appExit();
     }
 
     public static AppComponent obtainAppComponentFromContext(Context context) {

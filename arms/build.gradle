@@ -100,6 +100,7 @@ dependencies {
     api rootProject.ext.dependencies["dagger2"]
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     api rootProject.ext.dependencies["androideventbus"]
+    api 'org.greenrobot:eventbus:3.1.1'
     api rootProject.ext.dependencies["gson"]
 
     //test
