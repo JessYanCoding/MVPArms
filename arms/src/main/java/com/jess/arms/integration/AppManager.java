@@ -147,7 +147,7 @@ public final class AppManager {
      * @param isLong
      */
     public void showSnackbar(String message, boolean isLong) {
-        if (getCurrentActivity() == null) {
+        if (getCurrentActivity() == null && getTopActivity() == null) {
             Timber.tag(TAG).w("mCurrentActivity == null when showSnackbar(String,boolean)");
             return;
         }
@@ -159,7 +159,8 @@ public final class AppManager {
                 //Arms 则会使用 Toast 替代 Snackbar 显示信息, 如果框架使用者依赖了 arms-autolayout 库就不用依赖 com.android.support:design 了
                 //因为在 arms-autolayout 库中已经依赖有 com.android.support:design
                 if (DEPENDENCY_SUPPORT_DESIGN) {
-                    View view = getCurrentActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+                    Activity activity = getCurrentActivity() == null ? getTopActivity() : getCurrentActivity();
+                    View view = activity.getWindow().getDecorView().findViewById(android.R.id.content);
                     Snackbar.make(view, message, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
                 } else {
                     ArmsUtils.makeText(mApplication, message);
