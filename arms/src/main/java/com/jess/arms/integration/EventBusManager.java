@@ -15,6 +15,8 @@
  */
 package com.jess.arms.integration;
 
+import java.lang.reflect.Method;
+
 import static com.jess.arms.base.Platform.DEPENDENCY_ANDROID_EVENTBUS;
 import static com.jess.arms.base.Platform.DEPENDENCY_EVENTBUS;
 
@@ -56,7 +58,9 @@ public final class EventBusManager {
             org.simple.eventbus.EventBus.getDefault().register(subscriber);
         }
         if (DEPENDENCY_EVENTBUS) {
-            org.greenrobot.eventbus.EventBus.getDefault().register(subscriber);
+            if (haveAnnotation(subscriber)) {
+                org.greenrobot.eventbus.EventBus.getDefault().register(subscriber);
+            }
         }
     }
 
@@ -70,7 +74,9 @@ public final class EventBusManager {
             org.simple.eventbus.EventBus.getDefault().unregister(subscriber);
         }
         if (DEPENDENCY_EVENTBUS) {
-            org.greenrobot.eventbus.EventBus.getDefault().unregister(subscriber);
+            if (haveAnnotation(subscriber)) {
+                org.greenrobot.eventbus.EventBus.getDefault().unregister(subscriber);
+            }
         }
     }
 
@@ -126,5 +132,47 @@ public final class EventBusManager {
         } else if (DEPENDENCY_EVENTBUS) {
             org.greenrobot.eventbus.EventBus.clearCaches();
         }
+    }
+
+    /**
+     * {@link org.greenrobot.eventbus.EventBus} 要求注册之前, 订阅者必须含有一个或以上声明 {@link org.greenrobot.eventbus.Subscribe}
+     * 注解的方法, 否则会报错, 所有如果要想完成在基类中自动注册, 避免报错就要先检查是否符合注册资格
+     *
+     * @param subscriber 订阅者
+     * @return 返回 {@code true} 则表示含有 {@link org.greenrobot.eventbus.Subscribe} 注解, {@code false} 为不含有
+     */
+    private boolean haveAnnotation(Object subscriber) {
+        boolean skipSuperClasses = false;
+        Class<?> clazz = subscriber.getClass();
+        //查找类中符合注册要求的方法, 直到Object类
+        while (clazz != null && !isSystemCalss(clazz.getName()) && !skipSuperClasses) {
+            Method[] allMethods;
+            try {
+                allMethods = clazz.getDeclaredMethods();
+            } catch (Throwable th) {
+                try {
+                    allMethods = clazz.getMethods();
+                }catch (Throwable th2){
+                    continue;
+                }finally {
+                    skipSuperClasses = true;
+                }
+            }
+            for (int i = 0; i < allMethods.length; i++) {
+                Method method = allMethods[i];
+                Class<?>[] parameterTypes = method.getParameterTypes();
+                //查看该方法是否含有 Subscribe 注解
+                if (method.isAnnotationPresent(org.greenrobot.eventbus.Subscribe.class) && parameterTypes.length == 1) {
+                    return true;
+                }
+            } //end for
+            //获取父类, 以继续查找父类中符合要求的方法
+            clazz = clazz.getSuperclass();
+        }
+        return false;
+    }
+
+    private boolean isSystemCalss(String name) {
+        return name.startsWith("java.") || name.startsWith("javax.") || name.startsWith("android.");
     }
 }
