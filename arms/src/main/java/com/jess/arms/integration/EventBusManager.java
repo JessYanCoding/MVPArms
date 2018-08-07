@@ -136,7 +136,7 @@ public final class EventBusManager {
 
     /**
      * {@link org.greenrobot.eventbus.EventBus} 要求注册之前, 订阅者必须含有一个或以上声明 {@link org.greenrobot.eventbus.Subscribe}
-     * 注解的方法, 否则会报错, 所有如果要想完成在基类中自动注册, 避免报错就要先检查是否符合注册资格
+     * 注解的方法, 否则会报错, 所以如果要想完成在基类中自动注册, 避免报错就要先检查是否符合注册资格
      *
      * @param subscriber 订阅者
      * @return 返回 {@code true} 则表示含有 {@link org.greenrobot.eventbus.Subscribe} 注解, {@code false} 为不含有
