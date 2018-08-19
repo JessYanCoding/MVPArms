@@ -86,7 +86,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
                 activityDelegate = new ActivityDelegateImpl(activity);
                 //使用 IntelligentCache.KEY_KEEP 作为 key 的前缀, 可以使储存的数据永久存储在内存中
                 //否则存储在 LRU 算法的存储空间中, 前提是 Activity 使用的是 IntelligentCache (框架默认使用)
-                cache.put(IntelligentCache.KEY_KEEP + ActivityDelegate.ACTIVITY_DELEGATE, activityDelegate);
+                cache.put(IntelligentCache.getKeyOfKeep(ActivityDelegate.ACTIVITY_DELEGATE), activityDelegate);
             }
             activityDelegate.onCreate(savedInstanceState);
         }
@@ -167,12 +167,12 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             //注册框架内部已实现的 Fragment 生命周期逻辑
             ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(mFragmentLifecycle.get(), true);
 
-            if (mExtras.containsKey(IntelligentCache.KEY_KEEP + ConfigModule.class.getName())) {
-                List<ConfigModule> modules = (List<ConfigModule>) mExtras.get(IntelligentCache.KEY_KEEP + ConfigModule.class.getName());
+            if (mExtras.containsKey(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()))) {
+                List<ConfigModule> modules = (List<ConfigModule>) mExtras.get(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()));
                 for (ConfigModule module : modules) {
                     module.injectFragmentLifecycle(mApplication, mFragmentLifecycles.get());
                 }
-                mExtras.remove(IntelligentCache.KEY_KEEP + ConfigModule.class.getName());
+                mExtras.remove(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()));
             }
 
             //注册框架外部, 开发者扩展的 Fragment 生命周期逻辑
@@ -186,7 +186,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         ActivityDelegate activityDelegate = null;
         if (activity instanceof IActivity) {
             Cache<String, Object> cache = getCacheFromActivity((IActivity) activity);
-            activityDelegate = (ActivityDelegate) cache.get(IntelligentCache.KEY_KEEP + ActivityDelegate.ACTIVITY_DELEGATE);
+            activityDelegate = (ActivityDelegate) cache.get(IntelligentCache.getKeyOfKeep(ActivityDelegate.ACTIVITY_DELEGATE));
         }
         return activityDelegate;
     }

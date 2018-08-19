@@ -184,7 +184,7 @@ public final class GlobalConfiguration implements ConfigModule {
                 ((RefWatcher) ArmsUtils
                         .obtainAppComponentFromContext(f.getActivity())
                         .extras()
-                        .get(IntelligentCache.KEY_KEEP + RefWatcher.class.getName()))
+                        .get(IntelligentCache.getKeyOfKeep(RefWatcher.class.getName())))
                         .watch(f);
             }
         });
