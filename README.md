@@ -55,7 +55,7 @@
 
 * The use of these technologies for the latter part of the project maintenance and iterative, especially large projects is very helpful, but is to develop a pre-write a page to write a lot of `MVP`,` Dagger2` class and interface, which is indeed a headache for the development of pre- Now the framework has been able to [Template](https://github.com/JessYanCoding/MVPArmsTemplate) automatically generate some `MVP`,` Dagger2` template code, and now we can very easily use the framework.
 
-* Use this frame comes with automatic adaptation function, please refer to [AndroidAutoSize](https://github.com/JessYanCoding/AndroidAutoSize).
+* Use this frame comes with automatic screen adaptation function, please refer to [AndroidAutoSize](https://github.com/JessYanCoding/AndroidAutoSize).
 
 * This framework does not provide any third-party libraries associated with the **UI**.
 
