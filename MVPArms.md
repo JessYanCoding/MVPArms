@@ -24,8 +24,8 @@
 <h2 align="center">一个整合了大量主流开源项目高度可配置化的 Android MVP 快速集成框架</h2>
 
 ## Usage
-> New Project (**以下步骤太麻烦? 现在可直接在新建的新工程中使用新功能 [一键生成 app Module](https://github.com/JessYanCoding/MVPArms-Module-Template), 让您免于项目繁琐的配置, 快速开启 MVPArms 的世界**)
->> 如果您想构建一个全新的项目, 直接将整个项目 **clone** (或者下载) 下来, 再将 **demo** 作为主 **Module** (建议将 **arms Module** 删除, 并使用 **Gradle** [远程依赖](https://github.com/JessYanCoding/MVPArms/wiki#1.1) 本框架, 便于更新, 删除前请务必先查看 [这里](https://github.com/JessYanCoding/MVPArms/wiki/Issues#2)), 最后将项目包名改成自己的包名, **demo Module** 包含可以直接使用的包结构, 一个主流的 `MVP`+`Dagger2`+`Retrofit`+`RxJava` 框架就这样轻松的构建成功了, 现在您再参考 **Mvp** 包下的 **UserActivity** 的格式, [使用 Template 一键生成 MVP , Dagger2 相关的所有类](https://github.com/JessYanCoding/MVPArmsTemplate), 配合查阅 [Wiki 文档](https://github.com/JessYanCoding/MVPArms/wiki) 慢慢掌握本框架, 看再多文章不如早点在项目中使用它, 在实践中学习总是最快的
+> New Project (**以下步骤太麻烦? 现在可直接在新建的新工程中使用新功能 [一键生成 app Module](https://github.com/JessYanCoding/MVPArms-Module-Template), 让您免于项目繁琐的配置，快速开启 MVPArms 的世界**)
+>> 如果您想构建一个全新的项目，直接将整个项目 **clone** (或者下载) 下来，再将 **demo** 作为主 **Module** (建议将 **arms Module** 删除，并使用 **Gradle** [远程依赖](https://github.com/JessYanCoding/MVPArms/wiki#1.1) 本框架，便于更新，删除前请务必先查看 [这里](https://github.com/JessYanCoding/MVPArms/wiki/Issues#2))，最后将项目包名改成自己的包名，**demo Module** 包含可以直接使用的包结构，一个主流的 `MVP`+`Dagger2`+`Retrofit`+`RxJava` 框架就这样轻松的构建成功了，现在您再参考 **Mvp** 包下的 **UserActivity** 的格式，[使用 Template 一键生成 MVP、Dagger2 相关的所有类](https://github.com/JessYanCoding/MVPArmsTemplate)，配合查阅 [Wiki 文档](https://github.com/JessYanCoding/MVPArms/wiki) 慢慢掌握本框架，看再多文章不如早点在项目中使用它，在实践中学习总是最快的
  
 > Old Project
 >> [老项目想引入此框架，可以参考 Wiki 文档，写的非常详细](https://github.com/JessYanCoding/MVPArms/wiki)
@@ -49,7 +49,7 @@
 
 * 看了上面的文章，对为什么使用这些技术应该比较了解了，使用这些技术对项目后期的维护和迭代特别是大型项目非常有帮助，但是在开发前期每写一个页面要多写很多  `MVP`、`Dagger2` 的类和接口，这对于开发前期确实比较头疼，现在本框架已经可以通过 [Template](https://github.com/JessYanCoding/MVPArmsTemplate) 自动生成一些 `MVP`，`Dagger2` 的模版代码，现在大家可以非常轻松的使用本框架.
 
-* 使用此框架自带自动适配功能 (可不使用)，请参考 [AndroidAutoSize 使用方法](https://github.com/JessYanCoding/AndroidAutoSize).
+* 使用此框架自带自动屏幕适配功能 (可不使用)，请参考 [AndroidAutoSize 使用方法](https://github.com/JessYanCoding/AndroidAutoSize).
 
 * 作为通用框架，本框架不提供与 **UI** 有关的任何第三方库.
 
