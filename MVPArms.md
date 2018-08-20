@@ -49,7 +49,7 @@
 
 * 看了上面的文章，对为什么使用这些技术应该比较了解了，使用这些技术对项目后期的维护和迭代特别是大型项目非常有帮助，但是在开发前期每写一个页面要多写很多  `MVP`、`Dagger2` 的类和接口，这对于开发前期确实比较头疼，现在本框架已经可以通过 [Template](https://github.com/JessYanCoding/MVPArmsTemplate) 自动生成一些 `MVP`，`Dagger2` 的模版代码，现在大家可以非常轻松的使用本框架.
 
-* 使用此框架自带自动适配功能 (可不使用)，请参考 [AutoSize 使用方法](https://github.com/JessYanCoding/AndroidAutoSize).
+* 使用此框架自带自动适配功能 (可不使用)，请参考 [AndroidAutoSize 使用方法](https://github.com/JessYanCoding/AndroidAutoSize).
 
 * 作为通用框架，本框架不提供与 **UI** 有关的任何第三方库.
 
@@ -64,7 +64,7 @@
 8. [`RxPermissions` 用于处理 Android 运行时权限的响应式库.](https://github.com/tbruyelle/RxPermissions)
 9. [`Retrofit` 是 Square 出品的网络请求库，极大的减少了 http 请求的代码和步骤.](https://github.com/square/retrofit)
 10. [`Okhttp` 同样Square出品，不多介绍，做Android都应该知道.](https://github.com/square/okhttp)
-11. [`AutoSize` 是今日头条屏幕适配方案终极版，一个极低成本的 Android 屏幕适配方案](https://github.com/JessYanCoding/AndroidAutoSize)
+11. [`AndroidAutoSize` 是今日头条屏幕适配方案终极版，一个极低成本的 Android 屏幕适配方案](https://github.com/JessYanCoding/AndroidAutoSize)
 12. [`Gson` 是 Google 官方的 Json Convert 框架.](https://github.com/google/gson)
 13. [`Butterknife` 是 JakeWharton 大神出品的 View 注入框架.](https://github.com/JakeWharton/butterknife)
 14. [`Androideventbus` 是一个轻量级使用注解的 Eventbus.](https://github.com/hehonghui/AndroidEventBus)
