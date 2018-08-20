@@ -71,7 +71,7 @@
 8. [`RxErroHandler`](https://github.com/JessYanCoding/RxErrorHandler)
 9. [`Retrofit`](https://github.com/square/retrofit)
 10. [`Okhttp`](https://github.com/square/okhttp)
-11. [`Autolayout`](https://github.com/hongyangAndroid/AndroidAutoLayout)
+11. [`AutoSize`](https://github.com/JessYanCoding/AndroidAutoSize)
 12. [`Gson`](https://github.com/google/gson)
 13. [`Butterknife`](https://github.com/JakeWharton/butterknife)
 14. [`Androideventbus`](https://github.com/hehonghui/AndroidEventBus)
