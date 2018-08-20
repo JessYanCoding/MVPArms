@@ -49,7 +49,7 @@
 
 * 看了上面的文章，对为什么使用这些技术应该比较了解了，使用这些技术对项目后期的维护和迭代特别是大型项目非常有帮助，但是在开发前期每写一个页面要多写很多  `MVP`、`Dagger2` 的类和接口，这对于开发前期确实比较头疼，现在本框架已经可以通过 [Template](https://github.com/JessYanCoding/MVPArmsTemplate) 自动生成一些 `MVP`，`Dagger2` 的模版代码，现在大家可以非常轻松的使用本框架.
 
-* 使用此框架自带自动适配功能 (可不使用)，请参考 [AutoLayout 使用方法](https://github.com/hongyangAndroid/AndroidAutoLayout).
+* 使用此框架自带自动适配功能 (可不使用)，请参考 [AutoSize 使用方法](https://github.com/JessYanCoding/AndroidAutoSize).
 
 * 作为通用框架，本框架不提供与 **UI** 有关的任何第三方库.
 
