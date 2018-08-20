@@ -55,7 +55,7 @@
 
 * The use of these technologies for the latter part of the project maintenance and iterative, especially large projects is very helpful, but is to develop a pre-write a page to write a lot of `MVP`,` Dagger2` class and interface, which is indeed a headache for the development of pre- Now the framework has been able to [Template](https://github.com/JessYanCoding/MVPArmsTemplate) automatically generate some `MVP`,` Dagger2` template code, and now we can very easily use the framework.
 
-* Use this frame comes with automatic adaptation function, please refer to [AndroidAutoLayout](https://github.com/hongyangAndroid/AndroidAutoLayout).
+* Use this frame comes with automatic adaptation function, please refer to [AndroidAutoSize](https://github.com/JessYanCoding/AndroidAutoSize).
 
 * This framework does not provide any third-party libraries associated with the **UI**.
 
@@ -70,7 +70,7 @@
 8. [`RxErroHandler`](https://github.com/JessYanCoding/RxErrorHandler)
 9. [`Retrofit`](https://github.com/square/retrofit)
 10. [`Okhttp`](https://github.com/square/okhttp)
-11. [`AutoSize`](https://github.com/JessYanCoding/AndroidAutoSize)
+11. [`AndroidAutoSize`](https://github.com/JessYanCoding/AndroidAutoSize)
 12. [`Gson`](https://github.com/google/gson)
 13. [`Butterknife`](https://github.com/JakeWharton/butterknife)
 14. [`Androideventbus`](https://github.com/hehonghui/AndroidEventBus)
