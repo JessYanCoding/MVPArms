@@ -46,6 +46,7 @@ import retrofit2.Retrofit;
  */
 @Singleton
 public class RepositoryManager implements IRepositoryManager {
+
     @Inject
     Lazy<Retrofit> mRetrofit;
     @Inject
@@ -63,13 +64,9 @@ public class RepositoryManager implements IRepositoryManager {
 
     /**
      * 根据传入的 Class 获取对应的 Retrofit service
-     *
-     * @param service
-     * @param <T>
-     * @return
      */
     @Override
-    public  <T> T obtainRetrofitService(Class<T> service) {
+    public synchronized <T> T obtainRetrofitService(Class<T> service) {
         return createWrapperService(service);
     }
 
@@ -87,9 +84,8 @@ public class RepositoryManager implements IRepositoryManager {
                                 final T service = getRetrofitService(serviceClass);
                                 // 执行真正的 Retrofit 动态代理的方法
                                 return ((Observable) getRetrofitMethod(service, method)
-                                        .invoke(service, args))
-                                        .subscribeOn(Schedulers.io()); })
-                                    .subscribeOn(Schedulers.single());
+                                        .invoke(service, args));
+                            }).subscribeOn(Schedulers.single());
                         }
                         // 返回值不是 Observable 的话不处理
                         final T service = getRetrofitService(serviceClass);
@@ -100,22 +96,14 @@ public class RepositoryManager implements IRepositoryManager {
 
     private <T> T getRetrofitService(Class<T> service) {
         if (mRetrofitServiceCache == null) {
-            synchronized (this) {
-                if (mRetrofitServiceCache == null) {
-                    mRetrofitServiceCache = mCachefactory.build(CacheType.RETROFIT_SERVICE_CACHE);
-                }
-            }
+            mRetrofitServiceCache = mCachefactory.build(CacheType.RETROFIT_SERVICE_CACHE);
         }
-        Preconditions.checkNotNull(mRetrofitServiceCache, "Cannot return null from a Cache.Factory#build(int) method");
-
+        Preconditions.checkNotNull(mRetrofitServiceCache,
+                "Cannot return null from a Cache.Factory#build(int) method");
         T retrofitService = (T) mRetrofitServiceCache.get(service.getCanonicalName());
         if (retrofitService == null) {
-            synchronized (service) {
-                if (retrofitService == null) {
-                    retrofitService = mRetrofit.get().create(service);
-                    mRetrofitServiceCache.put(service.getCanonicalName(), retrofitService);
-                }
-            }
+            retrofitService = mRetrofit.get().create(service);
+            mRetrofitServiceCache.put(service.getCanonicalName(), retrofitService);
         }
         return retrofitService;
     }
@@ -126,30 +114,18 @@ public class RepositoryManager implements IRepositoryManager {
 
     /**
      * 根据传入的 Class 获取对应的 RxCache service
-     *
-     * @param cache
-     * @param <T>
-     * @return
      */
     @Override
-    public  <T> T obtainCacheService(Class<T> cache) {
+    public synchronized <T> T obtainCacheService(Class<T> cache) {
         if (mCacheServiceCache == null) {
-            synchronized (this) {
-                if (mCacheServiceCache == null) {
-                    mCacheServiceCache = mCachefactory.build(CacheType.CACHE_SERVICE_CACHE);
-                }
-            }
+            mCacheServiceCache = mCachefactory.build(CacheType.CACHE_SERVICE_CACHE);
         }
-        Preconditions.checkNotNull(mCacheServiceCache, "Cannot return null from a Cache.Factory#build(int) method");
-
+        Preconditions.checkNotNull(mCacheServiceCache,
+                "Cannot return null from a Cache.Factory#build(int) method");
         T cacheService = (T) mCacheServiceCache.get(cache.getCanonicalName());
         if (cacheService == null) {
-            synchronized (cache) {
-                if (cacheService == null) {
-                    cacheService = mRxCache.get().using(cache);
-                    mCacheServiceCache.put(cache.getCanonicalName(), cacheService);
-                }
-            }
+            cacheService = mRxCache.get().using(cache);
+            mCacheServiceCache.put(cache.getCanonicalName(), cacheService);
         }
         return cacheService;
     }
