@@ -19,12 +19,12 @@ import android.text.TextUtils;
 
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.utils.CharacterHandler;
+import com.jess.arms.utils.LogUtils;
 
 import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.Request;
-import timber.log.Timber;
 
 /**
  * ================================================
@@ -78,11 +78,11 @@ public class DefaultFormatPrinter implements FormatPrinter {
         final String requestBody = LINE_SEPARATOR + BODY_TAG + LINE_SEPARATOR + bodyString;
         final String tag = getTag(true);
 
-        Timber.tag(tag).i(REQUEST_UP_LINE);
+        LogUtils.debugInfo(tag, REQUEST_UP_LINE);
         logLines(tag, new String[]{URL_TAG + request.url()}, false);
         logLines(tag, getRequest(request), true);
         logLines(tag, requestBody.split(LINE_SEPARATOR), true);
-        Timber.tag(tag).i(END_LINE);
+        LogUtils.debugInfo(tag, END_LINE);
     }
 
     /**
@@ -94,11 +94,11 @@ public class DefaultFormatPrinter implements FormatPrinter {
     public void printFileRequest(Request request) {
         final String tag = getTag(true);
 
-        Timber.tag(tag).i(REQUEST_UP_LINE);
+        LogUtils.debugInfo(tag, REQUEST_UP_LINE);
         logLines(tag, new String[]{URL_TAG + request.url()}, false);
         logLines(tag, getRequest(request), true);
         logLines(tag, OMITTED_REQUEST, true);
-        Timber.tag(tag).i(END_LINE);
+        LogUtils.debugInfo(tag, END_LINE);
     }
 
     /**
@@ -124,11 +124,11 @@ public class DefaultFormatPrinter implements FormatPrinter {
         final String tag = getTag(false);
         final String[] urlLine = {URL_TAG + responseUrl, N};
 
-        Timber.tag(tag).i(RESPONSE_UP_LINE);
+        LogUtils.debugInfo(tag, RESPONSE_UP_LINE);
         logLines(tag, urlLine, true);
         logLines(tag, getResponse(headers, chainMs, code, isSuccessful, segments, message), true);
         logLines(tag, responseBody.split(LINE_SEPARATOR), true);
-        Timber.tag(tag).i(END_LINE);
+        LogUtils.debugInfo(tag, END_LINE);
     }
 
     /**
@@ -148,11 +148,11 @@ public class DefaultFormatPrinter implements FormatPrinter {
         final String tag = getTag(false);
         final String[] urlLine = {URL_TAG + responseUrl, N};
 
-        Timber.tag(tag).i(RESPONSE_UP_LINE);
+        LogUtils.debugInfo(tag, RESPONSE_UP_LINE);
         logLines(tag, urlLine, true);
         logLines(tag, getResponse(headers, chainMs, code, isSuccessful, segments, message), true);
         logLines(tag, OMITTED_RESPONSE, true);
-        Timber.tag(tag).i(END_LINE);
+        LogUtils.debugInfo(tag, END_LINE);
     }
 
 
@@ -171,7 +171,7 @@ public class DefaultFormatPrinter implements FormatPrinter {
                 int start = i * MAX_LONG_SIZE;
                 int end = (i + 1) * MAX_LONG_SIZE;
                 end = end > line.length() ? line.length() : end;
-                Timber.tag(resolveTag(tag)).i(DEFAULT_LINE + line.substring(start, end));
+                LogUtils.debugInfo(resolveTag(tag), DEFAULT_LINE + line.substring(start, end));
             }
         }
     }
