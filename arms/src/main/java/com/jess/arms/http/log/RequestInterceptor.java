@@ -64,10 +64,22 @@ public class RequestInterceptor implements Interceptor {
     Level printLevel;
 
     public enum Level {
-        NONE,       //不打印log
-        REQUEST,    //只打印请求信息
-        RESPONSE,   //只打印响应信息
-        ALL         //所有数据全部打印
+        /**
+         * 不打印log
+         */
+        NONE,
+        /**
+         * 只打印请求信息
+         */
+        REQUEST,
+        /**
+         * 只打印响应信息
+         */
+        RESPONSE,
+        /**
+         * 所有数据全部打印
+         */
+        ALL
     }
 
     @Inject
@@ -136,10 +148,10 @@ public class RequestInterceptor implements Interceptor {
     /**
      * 打印响应结果
      *
-     * @param request
-     * @param response
-     * @param logResponse
-     * @return
+     * @param request     {@link Request}
+     * @param response    {@link Response}
+     * @param logResponse 是否打印响应结果
+     * @return 解析后的响应结果
      * @throws IOException
      */
     @Nullable
@@ -170,10 +182,10 @@ public class RequestInterceptor implements Interceptor {
     /**
      * 解析服务器响应的内容
      *
-     * @param responseBody
-     * @param encoding
-     * @param clone
-     * @return
+     * @param responseBody {@link ResponseBody}
+     * @param encoding     编码类型
+     * @param clone        克隆后的服务器响应内容
+     * @return 解析后的响应结果
      */
     private String parseContent(ResponseBody responseBody, String encoding, Buffer clone) {
         Charset charset = Charset.forName("UTF-8");
@@ -193,8 +205,8 @@ public class RequestInterceptor implements Interceptor {
     /**
      * 解析请求服务器的请求参数
      *
-     * @param request
-     * @return
+     * @param request {@link Request}
+     * @return 解析后的请求信息
      * @throws UnsupportedEncodingException
      */
     public static String parseParams(Request request) throws UnsupportedEncodingException {
@@ -218,8 +230,8 @@ public class RequestInterceptor implements Interceptor {
     /**
      * 是否可以解析
      *
-     * @param mediaType
-     * @return
+     * @param mediaType {@link MediaType}
+     * @return {@code true} 为可以解析
      */
     public static boolean isParseable(MediaType mediaType) {
         return isText(mediaType) || isPlain(mediaType)
