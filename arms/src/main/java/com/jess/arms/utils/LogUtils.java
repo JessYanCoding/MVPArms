@@ -66,8 +66,8 @@ public class LogUtils {
     /**
      * 这里使用自己分节的方式来输出足够长度的 message
      *
-     * @param tag
-     * @param msg void
+     * @param tag 标签
+     * @param msg 日志内容
      */
     public static void debugLongInfo(String tag, String msg) {
         if (!isLog || TextUtils.isEmpty(msg)) return;
