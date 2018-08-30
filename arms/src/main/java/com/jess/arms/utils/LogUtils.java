@@ -76,7 +76,6 @@ public class LogUtils {
         int maxLength = 3500;
         String sub;
         while (index < msg.length()) {
-            // java的字符不允许指定超过总的长度end  
             if (msg.length() <= index + maxLength) {
                 sub = msg.substring(index);
             } else {
