@@ -21,18 +21,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
-
 import com.jess.arms.base.delegate.FragmentDelegate;
 import com.jess.arms.base.delegate.FragmentDelegateImpl;
 import com.jess.arms.base.delegate.IFragment;
 import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.integration.cache.IntelligentCache;
 import com.jess.arms.utils.Preconditions;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import timber.log.Timber;
 
 /**
  * ================================================
@@ -53,7 +49,6 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
 
     @Override
     public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {
-        Timber.w(f.toString() + " - onFragmentAttached");
         if (f instanceof IFragment) {
             FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
             if (fragmentDelegate == null || !fragmentDelegate.isAdded()) {
@@ -69,7 +64,6 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
 
     @Override
     public void onFragmentCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState) {
-        Timber.w(f.toString() + " - onFragmentCreated");
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
             fragmentDelegate.onCreate(savedInstanceState);
@@ -78,7 +72,6 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
 
     @Override
     public void onFragmentViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
-        Timber.w(f.toString() + " - onFragmentViewCreated");
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
             fragmentDelegate.onCreateView(v, savedInstanceState);
@@ -87,7 +80,6 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
 
     @Override
     public void onFragmentActivityCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState) {
-        Timber.w(f.toString() + " - onFragmentActivityCreated");
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
             fragmentDelegate.onActivityCreate(savedInstanceState);
@@ -96,7 +88,6 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
 
     @Override
     public void onFragmentStarted(FragmentManager fm, Fragment f) {
-        Timber.w(f.toString() + " - onFragmentStarted");
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
             fragmentDelegate.onStart();
@@ -105,7 +96,6 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
 
     @Override
     public void onFragmentResumed(FragmentManager fm, Fragment f) {
-        Timber.w(f.toString() + " - onFragmentResumed");
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
             fragmentDelegate.onResume();
@@ -114,7 +104,6 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
 
     @Override
     public void onFragmentPaused(FragmentManager fm, Fragment f) {
-        Timber.w(f.toString() + " - onFragmentPaused");
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
             fragmentDelegate.onPause();
@@ -123,7 +112,6 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
 
     @Override
     public void onFragmentStopped(FragmentManager fm, Fragment f) {
-        Timber.w(f.toString() + " - onFragmentStopped");
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
             fragmentDelegate.onStop();
@@ -132,7 +120,6 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
 
     @Override
     public void onFragmentSaveInstanceState(FragmentManager fm, Fragment f, Bundle outState) {
-        Timber.w(f.toString() + " - onFragmentSaveInstanceState");
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
             fragmentDelegate.onSaveInstanceState(outState);
@@ -141,7 +128,6 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
 
     @Override
     public void onFragmentViewDestroyed(FragmentManager fm, Fragment f) {
-        Timber.w(f.toString() + " - onFragmentViewDestroyed");
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
             fragmentDelegate.onDestroyView();
@@ -150,7 +136,6 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
 
     @Override
     public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
-        Timber.w(f.toString() + " - onFragmentDestroyed");
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
             fragmentDelegate.onDestroy();
@@ -159,7 +144,6 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
 
     @Override
     public void onFragmentDetached(FragmentManager fm, Fragment f) {
-        Timber.w(f.toString() + " - onFragmentDetached");
         FragmentDelegate fragmentDelegate = fetchFragmentDelegate(f);
         if (fragmentDelegate != null) {
             fragmentDelegate.onDetach();
