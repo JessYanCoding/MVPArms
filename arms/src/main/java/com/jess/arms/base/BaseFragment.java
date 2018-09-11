@@ -69,7 +69,6 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
         return mCache;
     }
 
-
     @NonNull
     @Override
     public final Subject<FragmentEvent> provideLifecycleSubject() {
@@ -79,7 +78,7 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext =context;
+        mContext = context;
     }
 
     @Nullable
@@ -89,16 +88,16 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mContext = null;
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         if (mPresenter != null) mPresenter.onDestroy();//释放资源
         this.mPresenter = null;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mContext = null;
     }
 
     /**
