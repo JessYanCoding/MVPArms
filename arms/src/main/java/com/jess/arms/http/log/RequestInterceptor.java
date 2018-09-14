@@ -20,6 +20,7 @@ import android.support.annotation.Nullable;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.GlobalHttpHandler;
 import com.jess.arms.utils.CharacterHandler;
+import com.jess.arms.utils.UrlEncoderUtils;
 import com.jess.arms.utils.ZipHelper;
 
 import java.io.IOException;
@@ -220,7 +221,11 @@ public class RequestInterceptor implements Interceptor {
             if (contentType != null) {
                 charset = contentType.charset(charset);
             }
-            return CharacterHandler.jsonFormat(URLDecoder.decode(requestbuffer.readString(charset), convertCharset(charset)));
+            String json = requestbuffer.readString(charset);
+            if (UrlEncoderUtils.hasUrlEncoded(json)) {
+                json = URLDecoder.decode(json, convertCharset(charset));
+            }
+            return CharacterHandler.jsonFormat(json);
         } catch (IOException e) {
             e.printStackTrace();
             return "{\"error\": \"" + e.getMessage() + "\"}";
