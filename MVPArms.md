@@ -74,7 +74,7 @@
 
 ## Who is using MVPArms?
 
-**MVPArms** 从诞生之初, 一直真诚的为开发者做着力所能及的事, 从详细的 [**Wiki**文档](https://github.com/JessYanCoding/MVPArmsTemplate) 到高效的 [代码生成器](https://github.com/JessYanCoding/MVPArms/wiki), 无一不透露着 **MVPArms** 对开发者诚挚的付出和关怀  
+**MVPArms** 从诞生之初, 一直真诚的为开发者做着力所能及的事, 从详细的 [**Wiki**文档](https://github.com/JessYanCoding/MVPArms/wiki) 到高效的 [代码生成器](https://github.com/JessYanCoding/MVPArmsTemplate), 无一不透露着 **MVPArms** 对开发者诚挚的付出和关怀
 
 **MVPArms** 经过近两年时间殷勤的耕耘, 逐渐变得成熟, 稳定, 这不得不归功于 **MVPArms** 大家庭中每一位成员一直以来真诚的反馈和建议, 在此由衷的感谢他们为 **MVPArms** 做出的不可磨灭的贡献  
 
