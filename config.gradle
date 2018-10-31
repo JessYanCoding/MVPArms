@@ -71,7 +71,7 @@ ext {
                 "rxlifecycle2-android"      : "com.trello.rxlifecycle2:rxlifecycle-android:${version["rxlifecycle2SdkVersion"]}",
                 "rxlifecycle2-components"   : "com.trello.rxlifecycle2:rxlifecycle-components:${version["rxlifecycle2SdkVersion"]}",
                 "rxcache2"                  : "com.github.VictorAlbertos.RxCache:runtime:1.8.3-2.x",
-                "rxpermissions2"            : "com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar",
+                "rxpermissions2"            : "com.github.tbruyelle:rxpermissions:0.10.2",
                 "rxerrorhandler2"           : "me.jessyan:rxerrorhandler:2.1.1",
 
                 //tools
