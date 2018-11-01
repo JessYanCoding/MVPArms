@@ -16,7 +16,7 @@ ext {
                    glideSdkVersion         : "4.8.0",
                    butterknifeSdkVersion   : "8.8.1",
                    rxlifecycleSdkVersion   : "1.0",
-                   rxlifecycle2SdkVersion  : "2.2.1",
+                   rxlifecycle2SdkVersion  : "2.2.2",
                    espressoSdkVersion      : "3.0.1",
                    canarySdkVersion        : "1.5.4"
         ]
