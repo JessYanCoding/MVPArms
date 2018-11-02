@@ -17,7 +17,7 @@
     <img src="https://img.shields.io/badge/Author-JessYan-orange.svg?style=flat-square" alt="Author" />
   </a>
   <a href="https://shang.qq.com/wpa/qunwpa?idkey=1a5dc5e9b2e40a780522f46877ba243eeb64405d42398643d544d3eec6624917">
-    <img src="https://img.shields.io/badge/QQ群-301733278-orange.svg?style=flat-square" alt="QQ Group" />
+    <img src="https://img.shields.io/badge/QQ%E7%BE%A4-455850365%20%7C%20301733278-orange.svg?style=flat-square" alt="QQ Group" />
   </a>
 </p>
 
@@ -74,7 +74,7 @@
 
 ## Who is using MVPArms?
 
-**MVPArms** 从诞生之初, 一直真诚的为开发者做着力所能及的事, 从详细的 [**Wiki**文档](https://github.com/JessYanCoding/MVPArmsTemplate) 到高效的 [代码生成器](https://github.com/JessYanCoding/MVPArms/wiki), 无一不透露着 **MVPArms** 对开发者诚挚的付出和关怀  
+**MVPArms** 从诞生之初, 一直真诚的为开发者做着力所能及的事, 从详细的 [**Wiki**文档](https://github.com/JessYanCoding/MVPArms/wiki) 到高效的 [代码生成器](https://github.com/JessYanCoding/MVPArmsTemplate), 无一不透露着 **MVPArms** 对开发者诚挚的付出和关怀
 
 **MVPArms** 经过近两年时间殷勤的耕耘, 逐渐变得成熟, 稳定, 这不得不归功于 **MVPArms** 大家庭中每一位成员一直以来真诚的反馈和建议, 在此由衷的感谢他们为 **MVPArms** 做出的不可磨灭的贡献  
 
@@ -102,8 +102,8 @@
 ## About Me
 * **Email**: <jess.yan.effort@gmail.com>  
 * **Home**: <http://jessyan.me>
-* **掘金**: <https://gold.xitu.io/user/57a9dbd9165abd0061714613>
-* **简书**: <http://www.jianshu.com/u/1d0c0bc634db>
+* **掘金**: <https://juejin.im/user/57a9dbd9165abd0061714613>
+* **简书**: <https://www.jianshu.com/u/1d0c0bc634db>
 
 ## License
 ``` 

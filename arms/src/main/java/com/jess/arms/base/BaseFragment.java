@@ -15,6 +15,7 @@
  */
 package com.jess.arms.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -54,6 +55,7 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     protected final String TAG = this.getClass().getSimpleName();
     private final BehaviorSubject<FragmentEvent> mLifecycleSubject = BehaviorSubject.create();
     private Cache<String, Object> mCache;
+    protected Context mContext;
     @Inject
     @Nullable
     protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
@@ -67,13 +69,17 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
         return mCache;
     }
 
-
     @NonNull
     @Override
     public final Subject<FragmentEvent> provideLifecycleSubject() {
         return mLifecycleSubject;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
 
     @Nullable
     @Override
@@ -81,12 +87,17 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
         return initView(inflater, container, savedInstanceState);
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         if (mPresenter != null) mPresenter.onDestroy();//释放资源
         this.mPresenter = null;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mContext = null;
     }
 
     /**

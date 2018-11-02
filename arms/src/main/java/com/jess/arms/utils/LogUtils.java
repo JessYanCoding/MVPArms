@@ -28,13 +28,20 @@ import android.util.Log;
  * ================================================
  */
 public class LogUtils {
+    private static final String DEFAULT_TAG = "MVPArms";
+    private static boolean isLog = true;
 
     private LogUtils() {
         throw new IllegalStateException("you can't instantiate me!");
     }
 
-    private final static boolean isLog = true;
-    public static final String DEFAULT_TAG = "MVPArms";
+    public static boolean isLog() {
+        return isLog;
+    }
+
+    public static void setLog(boolean isLog) {
+        LogUtils.isLog = isLog;
+    }
 
     public static void debugInfo(String tag, String msg) {
         if (!isLog || TextUtils.isEmpty(msg)) return;
@@ -57,23 +64,22 @@ public class LogUtils {
     }
 
     /**
-     * 所以这里使用自己分节的方式来输出足够长度的message
+     * 这里使用自己分节的方式来输出足够长度的 message
      *
-     * @param tag
-     * @param str void
+     * @param tag 标签
+     * @param msg 日志内容
      */
-    public static void debugLongInfo(String tag, String str) {
-        if (!isLog) return;
-        str = str.trim();
+    public static void debugLongInfo(String tag, String msg) {
+        if (!isLog || TextUtils.isEmpty(msg)) return;
+        msg = msg.trim();
         int index = 0;
         int maxLength = 3500;
         String sub;
-        while (index < str.length()) {
-            // java的字符不允许指定超过总的长度end  
-            if (str.length() <= index + maxLength) {
-                sub = str.substring(index);
+        while (index < msg.length()) {
+            if (msg.length() <= index + maxLength) {
+                sub = msg.substring(index);
             } else {
-                sub = str.substring(index, index + maxLength);
+                sub = msg.substring(index, index + maxLength);
             }
 
             index += maxLength;
@@ -81,8 +87,7 @@ public class LogUtils {
         }
     }
 
-    public static void debugLongInfo(String str) {
-        debugLongInfo(DEFAULT_TAG, str);
+    public static void debugLongInfo(String msg) {
+        debugLongInfo(DEFAULT_TAG, msg);
     }
-
 }

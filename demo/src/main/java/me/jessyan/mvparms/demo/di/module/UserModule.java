@@ -15,6 +15,7 @@
  */
 package me.jessyan.mvparms.demo.di.module;
 
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -69,7 +70,7 @@ public class UserModule {
     @ActivityScope
     @Provides
     RxPermissions provideRxPermissions() {
-        return new RxPermissions(view.getActivity());
+        return new RxPermissions((FragmentActivity) view.getActivity());
     }
 
     @ActivityScope

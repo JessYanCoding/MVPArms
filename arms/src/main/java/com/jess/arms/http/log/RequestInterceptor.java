@@ -20,6 +20,7 @@ import android.support.annotation.Nullable;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.GlobalHttpHandler;
 import com.jess.arms.utils.CharacterHandler;
+import com.jess.arms.utils.UrlEncoderUtils;
 import com.jess.arms.utils.ZipHelper;
 
 import java.io.IOException;
@@ -64,10 +65,22 @@ public class RequestInterceptor implements Interceptor {
     Level printLevel;
 
     public enum Level {
-        NONE,       //不打印log
-        REQUEST,    //只打印请求信息
-        RESPONSE,   //只打印响应信息
-        ALL         //所有数据全部打印
+        /**
+         * 不打印log
+         */
+        NONE,
+        /**
+         * 只打印请求信息
+         */
+        REQUEST,
+        /**
+         * 只打印响应信息
+         */
+        RESPONSE,
+        /**
+         * 所有数据全部打印
+         */
+        ALL
     }
 
     @Inject
@@ -136,10 +149,10 @@ public class RequestInterceptor implements Interceptor {
     /**
      * 打印响应结果
      *
-     * @param request
-     * @param response
-     * @param logResponse
-     * @return
+     * @param request     {@link Request}
+     * @param response    {@link Response}
+     * @param logResponse 是否打印响应结果
+     * @return 解析后的响应结果
      * @throws IOException
      */
     @Nullable
@@ -170,10 +183,10 @@ public class RequestInterceptor implements Interceptor {
     /**
      * 解析服务器响应的内容
      *
-     * @param responseBody
-     * @param encoding
-     * @param clone
-     * @return
+     * @param responseBody {@link ResponseBody}
+     * @param encoding     编码类型
+     * @param clone        克隆后的服务器响应内容
+     * @return 解析后的响应结果
      */
     private String parseContent(ResponseBody responseBody, String encoding, Buffer clone) {
         Charset charset = Charset.forName("UTF-8");
@@ -181,11 +194,11 @@ public class RequestInterceptor implements Interceptor {
         if (contentType != null) {
             charset = contentType.charset(charset);
         }
-        if (encoding != null && encoding.equalsIgnoreCase("gzip")) {//content使用gzip压缩
+        if (encoding != null && encoding.equalsIgnoreCase("gzip")) {//content 使用 gzip 压缩
             return ZipHelper.decompressForGzip(clone.readByteArray(), convertCharset(charset));//解压
-        } else if (encoding != null && encoding.equalsIgnoreCase("zlib")) {//content使用zlib压缩
+        } else if (encoding != null && encoding.equalsIgnoreCase("zlib")) {//content 使用 zlib 压缩
             return ZipHelper.decompressToStringForZlib(clone.readByteArray(), convertCharset(charset));//解压
-        } else {//content没有被压缩
+        } else {//content 没有被压缩, 或者使用其他未知压缩方式
             return clone.readString(charset);
         }
     }
@@ -193,8 +206,8 @@ public class RequestInterceptor implements Interceptor {
     /**
      * 解析请求服务器的请求参数
      *
-     * @param request
-     * @return
+     * @param request {@link Request}
+     * @return 解析后的请求信息
      * @throws UnsupportedEncodingException
      */
     public static String parseParams(Request request) throws UnsupportedEncodingException {
@@ -208,7 +221,11 @@ public class RequestInterceptor implements Interceptor {
             if (contentType != null) {
                 charset = contentType.charset(charset);
             }
-            return CharacterHandler.jsonFormat(URLDecoder.decode(requestbuffer.readString(charset), convertCharset(charset)));
+            String json = requestbuffer.readString(charset);
+            if (UrlEncoderUtils.hasUrlEncoded(json)) {
+                json = URLDecoder.decode(json, convertCharset(charset));
+            }
+            return CharacterHandler.jsonFormat(json);
         } catch (IOException e) {
             e.printStackTrace();
             return "{\"error\": \"" + e.getMessage() + "\"}";
@@ -218,10 +235,11 @@ public class RequestInterceptor implements Interceptor {
     /**
      * 是否可以解析
      *
-     * @param mediaType
-     * @return
+     * @param mediaType {@link MediaType}
+     * @return {@code true} 为可以解析
      */
     public static boolean isParseable(MediaType mediaType) {
+        if (mediaType == null || mediaType.type() == null) return false;
         return isText(mediaType) || isPlain(mediaType)
                 || isJson(mediaType) || isForm(mediaType)
                 || isHtml(mediaType) || isXml(mediaType);
