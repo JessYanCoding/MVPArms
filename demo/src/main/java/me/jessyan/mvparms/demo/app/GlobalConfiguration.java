@@ -114,7 +114,8 @@ public final class GlobalConfiguration implements ConfigModule {
 //                        Timber.i("printFileResponse:" + responseUrl);
 //                    }
 //                })
-
+                // 可以自定义一个单例的线程池供全局使用。
+//                .executorService(Executors.newCachedThreadPool())
                 // 这里提供一个全局处理 Http 请求和响应结果的处理类,可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
                 .globalHttpHandler(new GlobalHttpHandlerImpl(context))
                 // 用来处理 rxjava 中发生的所有错误,rxjava 中发生的每个错误都会回调此接口
