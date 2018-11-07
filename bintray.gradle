@@ -21,7 +21,7 @@ bintray {
 
     pkg {
         repo = 'maven'
-        name = 'MVPArms'
+        name = POM_NAME
         licenses = ["Apache-2.0"]
         websiteUrl = siteUrl
         vcsUrl = gitUrl
@@ -47,7 +47,7 @@ install {
             project {
                 packaging 'aar'
                 // Add your description here
-                name 'MVPArms'
+                name POM_NAME
                 description 'A common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects( like Dagger2,RxJava,Retrofit... ),to make your developing quicker and easier.'
                 url siteUrl
                 // Set your license
