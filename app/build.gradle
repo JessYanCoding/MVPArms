@@ -68,9 +68,14 @@ dependencies {
     }
     implementation rootProject.ext.dependencies["paginate"]
     //arms
-    implementation project(':arms')
+//    implementation project(':arms')
     //Github 仓库上最新的 Demo 具有下一个版本的新特性, 所以依赖最新的远程库会出现版本不兼容的情况, 详情请查看 https://github.com/JessYanCoding/MVPArms/wiki/Issues#2
-//    implementation 'me.jessyan:arms:2.4.1'
+    //关于以下扩展库的详细说明请查看 https://github.com/JessYanCoding/MVPArms/blob/master/demo/build.gradle
+    implementation 'me.jessyan:arms:2.5.0'
+    implementation 'me.jessyan:arms-autolayout:2.5.0'
+    implementation 'me.jessyan:arms-imageloader-glide:2.5.0'
+    implementation rootProject.ext.dependencies["androideventbus"]
+
     //test
     testImplementation rootProject.ext.dependencies["junit"]
     debugImplementation rootProject.ext.dependencies["canary-debug"]
