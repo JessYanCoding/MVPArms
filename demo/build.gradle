@@ -79,7 +79,7 @@ dependencies {
 //    implementation 'me.jessyan:arms-autolayout:2.5.0'
 
     //现在已经将 Demo 中的屏幕适配框架从 AndroidAutoLayout 替换为 AndroidAutoSize, AndroidAutoLayout 和 AndroidAutoSize 可以在项目中共存
-    //所以旧项目只要依赖 arms-autolayout 即可兼容之前的旧页面, 新页面使用 AndroidAutoSize 进行适配即可
+    //所以旧项目只要依赖 arms-autolayout 即可兼容之前的旧页面, 新页面可以使用 AndroidAutoSize 进行适配, 等有时间了再将旧页面全部替换为 AndroidAutoSize
     implementation rootProject.ext.dependencies["autosize"]
 
     //Arms 核心库不再包含 Glide, 想使用其他图片加载框架或者想自行扩展 ImageLoaderStrategy 就不要依赖 arms-imageloader-glide
