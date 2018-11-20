@@ -25,6 +25,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import java.util.ArrayList;
 import java.util.List;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import me.jessyan.mvparms.demo.mvp.contract.UserContract;
@@ -43,35 +44,32 @@ import me.jessyan.mvparms.demo.mvp.ui.adapter.UserAdapter;
  * ================================================
  */
 @Module
-public class UserModule {
+public abstract class UserModule {
+
+    @Binds
+    abstract UserContract.Model bindUserModel(UserModel model);
 
     @ActivityScope
     @Provides
-    UserContract.Model provideUserModel(UserModel model) {
-        return model;
-    }
-
-    @ActivityScope
-    @Provides
-    RxPermissions provideRxPermissions(UserContract.View view) {
+    static RxPermissions provideRxPermissions(UserContract.View view) {
         return new RxPermissions((FragmentActivity) view.getActivity());
     }
 
     @ActivityScope
     @Provides
-    RecyclerView.LayoutManager provideLayoutManager(UserContract.View view) {
+    static RecyclerView.LayoutManager provideLayoutManager(UserContract.View view) {
         return new GridLayoutManager(view.getActivity(), 2);
     }
 
     @ActivityScope
     @Provides
-    List<User> provideUserList() {
+    static List<User> provideUserList() {
         return new ArrayList<>();
     }
 
     @ActivityScope
     @Provides
-    RecyclerView.Adapter provideUserAdapter(List<User> list){
+    static RecyclerView.Adapter provideUserAdapter(List<User> list){
         return new UserAdapter(list);
     }
 }
