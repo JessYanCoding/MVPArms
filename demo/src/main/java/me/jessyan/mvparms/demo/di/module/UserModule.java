@@ -44,22 +44,6 @@ import me.jessyan.mvparms.demo.mvp.ui.adapter.UserAdapter;
  */
 @Module
 public class UserModule {
-    private UserContract.View view;
-
-    /**
-     * 构建 UserModule 时,将 View 的实现类传进来,这样就可以提供 View 的实现类给 Presenter
-     *
-     * @param view
-     */
-    public UserModule(UserContract.View view) {
-        this.view = view;
-    }
-
-    @ActivityScope
-    @Provides
-    UserContract.View provideUserView() {
-        return this.view;
-    }
 
     @ActivityScope
     @Provides
@@ -69,13 +53,13 @@ public class UserModule {
 
     @ActivityScope
     @Provides
-    RxPermissions provideRxPermissions() {
+    RxPermissions provideRxPermissions(UserContract.View view) {
         return new RxPermissions((FragmentActivity) view.getActivity());
     }
 
     @ActivityScope
     @Provides
-    RecyclerView.LayoutManager provideLayoutManager() {
+    RecyclerView.LayoutManager provideLayoutManager(UserContract.View view) {
         return new GridLayoutManager(view.getActivity(), 2);
     }
 
