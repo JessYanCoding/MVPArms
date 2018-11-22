@@ -66,14 +66,14 @@ ext {
                 "rxerrorhandler"           : "me.jessyan:rxerrorhandler:1.0.1",
 
                 //rx2
-                "rxandroid2"                : "io.reactivex.rxjava2:rxandroid:2.1.0",
-                "rxjava2"                   : "io.reactivex.rxjava2:rxjava:2.2.3",
-                "rxlifecycle2"              : "com.trello.rxlifecycle2:rxlifecycle:${version["rxlifecycle2SdkVersion"]}",
-                "rxlifecycle2-android"      : "com.trello.rxlifecycle2:rxlifecycle-android:${version["rxlifecycle2SdkVersion"]}",
-                "rxlifecycle2-components"   : "com.trello.rxlifecycle2:rxlifecycle-components:${version["rxlifecycle2SdkVersion"]}",
-                "rxcache2"                  : "com.github.VictorAlbertos.RxCache:runtime:1.8.3-2.x",
-                "rxpermissions2"            : "com.github.tbruyelle:rxpermissions:0.10.2",
-                "rxerrorhandler2"           : "me.jessyan:rxerrorhandler:2.1.1",
+                "rxandroid2"               : "io.reactivex.rxjava2:rxandroid:2.1.0",
+                "rxjava2"                  : "io.reactivex.rxjava2:rxjava:2.2.3",
+                "rxlifecycle2"             : "com.trello.rxlifecycle2:rxlifecycle:${version["rxlifecycle2SdkVersion"]}",
+                "rxlifecycle2-android"     : "com.trello.rxlifecycle2:rxlifecycle-android:${version["rxlifecycle2SdkVersion"]}",
+                "rxlifecycle2-components"  : "com.trello.rxlifecycle2:rxlifecycle-components:${version["rxlifecycle2SdkVersion"]}",
+                "rxcache2"                 : "com.github.VictorAlbertos.RxCache:runtime:1.8.3-2.x",
+                "rxpermissions2"           : "com.github.tbruyelle:rxpermissions:0.10.2",
+                "rxerrorhandler2"          : "me.jessyan:rxerrorhandler:2.1.1",
 
                 //tools
                 "dagger2"                  : "com.google.dagger:dagger:${version["dagger2SdkVersion"]}",
