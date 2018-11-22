@@ -52,7 +52,7 @@ ext {
                 "nineoldandroids"          : "com.nineoldandroids:library:2.4.0",
                 "paginate"                 : "com.github.markomilos:paginate:0.5.1",
                 "vlayout"                  : "com.alibaba.android:vlayout:1.1.0@aar",
-                "autosize"                 : "me.jessyan:autosize:1.0.6",
+                "autosize"                 : "me.jessyan:autosize:1.1.0",
 
                 //rx1
                 "rxandroid"                : "io.reactivex:rxandroid:1.2.1",
