@@ -64,12 +64,12 @@
 8. [`RxPermissions` 用于处理 Android 运行时权限的响应式库.](https://github.com/tbruyelle/RxPermissions)
 9. [`Retrofit` 是 Square 出品的网络请求库，极大的减少了 http 请求的代码和步骤.](https://github.com/square/retrofit)
 10. [`Okhttp` 同样Square出品，不多介绍，做Android都应该知道.](https://github.com/square/okhttp)
-11. [`AndroidAutoSize` 是今日头条屏幕适配方案终极版，一个极低成本的 Android 屏幕适配方案](https://github.com/JessYanCoding/AndroidAutoSize)
+11. [`AndroidAutoSize` 是今日头条屏幕适配方案终极版，一个极低成本的 Android 屏幕适配方案，该库没有引入到 `Arms`，所以框架使用者可自由选择屏幕适配方案.](https://github.com/JessYanCoding/AndroidAutoSize)
 12. [`Gson` 是 Google 官方的 Json Convert 框架.](https://github.com/google/gson)
 13. [`Butterknife` 是 JakeWharton 大神出品的 View 注入框架.](https://github.com/JakeWharton/butterknife)
-14. [`AndroidEventBus` 是一个轻量级使用注解的 EventBus.](https://github.com/hehonghui/AndroidEventBus)
+14. [`AndroidEventBus` 是一个轻量级的 EventBus，该库没有引入到 `Arms`，所以框架使用者可自由选择 EventBus.](https://github.com/hehonghui/AndroidEventBus)
 15. [`Timber` 是 JakeWharton 大神出品 Log 框架容器，内部代码极少，但是思想非常不错.](https://github.com/JakeWharton/timber)
-16. [`Glide` 是本框架默认封装图片加载库，可参照着例子更改为其他的库，Api 和 `Picasso` 差不多，缓存机制比 `Picasso` 复杂，速度快，适合处理大型图片流，支持 gif 图片，`Fresco` 太大了！在 5.0 以下优势很大，5.0 以上系统默认使用的内存管理和 `Fresco` 类似.](https://github.com/bumptech/glide)
+16. [`Glide` 是本框架默认封装到扩展库 `arms-imageloader-glide` 中的图片加载库，可参照着例子更改为其他的图片加载库，`Glide` 的 Api 和 `Picasso` 差不多，缓存机制比 `Picasso` 复杂，速度快，适合处理大型图片流，支持 gif 图片，`Fresco` 太大了！在 5.0 以下优势很大，5.0 以上系统默认使用的内存管理和 `Fresco` 类似.](https://github.com/bumptech/glide)
 17. [`LeakCanary` 是 Square 出品的专门用来检测 `Android` 和 `Java` 的内存泄漏，通过通知栏提示内存泄漏信息.](https://github.com/square/leakcanary)
 
 ## Who is using MVPArms?
