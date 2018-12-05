@@ -43,9 +43,7 @@ import static com.jess.arms.base.Platform.DEPENDENCY_SUPPORT_DESIGN;
 
 /**
  * ================================================
- * 用于管理所有 {@link Activity},和在前台的 {@link Activity}
- * 可以通过直接持有 {@link AppManager} 对象执行对应方法
- * 也可以通过 {@link #post(Message)} ,远程遥控执行对应方法,用法和 EventBus 类似
+ * 用于管理所有 {@link Activity}, 和在前台的 {@link Activity}
  *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.11">AppManager wiki 官方文档</a>
  * Created by JessYan on 14/12/2016 13:50
