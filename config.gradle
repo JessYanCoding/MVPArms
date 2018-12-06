@@ -67,7 +67,7 @@ ext {
 
                 //rx2
                 "rxandroid2"               : "io.reactivex.rxjava2:rxandroid:2.1.0",
-                "rxjava2"                  : "io.reactivex.rxjava2:rxjava:2.2.3",
+                "rxjava2"                  : "io.reactivex.rxjava2:rxjava:2.2.4",
                 "rxlifecycle2"             : "com.trello.rxlifecycle2:rxlifecycle:${version["rxlifecycle2SdkVersion"]}",
                 "rxlifecycle2-android"     : "com.trello.rxlifecycle2:rxlifecycle-android:${version["rxlifecycle2SdkVersion"]}",
                 "rxlifecycle2-components"  : "com.trello.rxlifecycle2:rxlifecycle-components:${version["rxlifecycle2SdkVersion"]}",
