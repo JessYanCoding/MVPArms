@@ -120,7 +120,7 @@ public final class GlobalConfiguration implements ConfigModule {
 
                 //这里提供一个全局处理 Http 请求和响应结果的处理类, 可以比客户端提前一步拿到服务器返回的结果, 可以做一些操作, 比如 Token 超时后, 重新获取 Token
                 .globalHttpHandler(new GlobalHttpHandlerImpl(context))
-                // 用来处理 RxJava 中发生的所有错误, RxJava 中发生的每个错误都会回调此接口
+                //用来处理 RxJava 中发生的所有错误, RxJava 中发生的每个错误都会回调此接口
                 //RxJava 必须要使用 ErrorHandleSubscriber (默认实现 Subscriber 的 onError 方法), 此监听才生效
                 .responseErrorListener(new ResponseErrorListenerImpl())
                 .gsonConfiguration((context1, gsonBuilder) -> {//这里可以自己自定义配置 Gson 的参数
@@ -167,5 +167,4 @@ public final class GlobalConfiguration implements ConfigModule {
         //可以根据不同的逻辑添加多个实现类
         lifecycles.add(new FragmentLifecycleCallbacksImpl());
     }
-
 }
