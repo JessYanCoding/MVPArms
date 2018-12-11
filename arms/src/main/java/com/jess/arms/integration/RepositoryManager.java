@@ -17,6 +17,7 @@ package com.jess.arms.integration;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.jess.arms.integration.cache.Cache;
@@ -73,8 +74,9 @@ public class RepositoryManager implements IRepositoryManager {
      * @param <T>          ApiService class
      * @return ApiService
      */
+    @NonNull
     @Override
-    public synchronized <T> T obtainRetrofitService(Class<T> serviceClass) {
+    public synchronized <T> T obtainRetrofitService(@NonNull Class<T> serviceClass) {
         return createWrapperService(serviceClass);
     }
 
@@ -86,6 +88,7 @@ public class RepositoryManager implements IRepositoryManager {
      * @return ApiService
      */
     private <T> T createWrapperService(Class<T> serviceClass) {
+        Preconditions.checkNotNull(serviceClass, "serviceClass == null");
         // 通过二次代理，对 Retrofit 代理方法的调用包进新的 Observable 里在 io 线程执行。
         return (T) Proxy.newProxyInstance(serviceClass.getClassLoader(),
                 new Class<?>[]{serviceClass}, new InvocationHandler() {
@@ -141,8 +144,10 @@ public class RepositoryManager implements IRepositoryManager {
      * @param <T>        Cache class
      * @return Cache
      */
+    @NonNull
     @Override
-    public synchronized <T> T obtainCacheService(Class<T> cacheClass) {
+    public synchronized <T> T obtainCacheService(@NonNull Class<T> cacheClass) {
+        Preconditions.checkNotNull(cacheClass, "cacheClass == null");
         if (mCacheServiceCache == null) {
             mCacheServiceCache = mCachefactory.build(CacheType.CACHE_SERVICE_CACHE);
         }
@@ -164,6 +169,7 @@ public class RepositoryManager implements IRepositoryManager {
         mRxCache.get().evictAll().subscribe();
     }
 
+    @NonNull
     @Override
     public Context getContext() {
         return mApplication;
