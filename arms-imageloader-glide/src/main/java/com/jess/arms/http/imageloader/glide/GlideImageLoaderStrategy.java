@@ -17,6 +17,7 @@ package com.jess.arms.http.imageloader.glide;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -154,7 +155,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
     }
 
     @Override
-    public void applyGlideOptions(Context context, GlideBuilder builder) {
+    public void applyGlideOptions(@NonNull Context context, @NonNull GlideBuilder builder) {
         Timber.w("applyGlideOptions");
     }
 }
