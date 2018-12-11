@@ -15,6 +15,8 @@
  */
 package com.jess.arms.http.log;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.jess.arms.di.module.GlobalConfigModule;
@@ -37,7 +39,6 @@ import okhttp3.Request;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-
 public class DefaultFormatPrinter implements FormatPrinter {
     private static final String TAG = "ArmsHttpLog";
     private static final String LINE_SEPARATOR = System.getProperty("line.separator");
@@ -62,7 +63,6 @@ public class DefaultFormatPrinter implements FormatPrinter {
     private static final String CENTER_LINE = "├ ";
     private static final String DEFAULT_LINE = "│ ";
 
-
     private static boolean isEmpty(String line) {
         return TextUtils.isEmpty(line) || N.equals(line) || T.equals(line) || TextUtils.isEmpty(line.trim());
     }
@@ -74,7 +74,7 @@ public class DefaultFormatPrinter implements FormatPrinter {
      * @param bodyString
      */
     @Override
-    public void printJsonRequest(Request request, String bodyString) {
+    public void printJsonRequest(@NonNull Request request, @NonNull String bodyString) {
         final String requestBody = LINE_SEPARATOR + BODY_TAG + LINE_SEPARATOR + bodyString;
         final String tag = getTag(true);
 
@@ -91,7 +91,7 @@ public class DefaultFormatPrinter implements FormatPrinter {
      * @param request
      */
     @Override
-    public void printFileRequest(Request request) {
+    public void printFileRequest(@NonNull Request request) {
         final String tag = getTag(true);
 
         LogUtils.debugInfo(tag, REQUEST_UP_LINE);
@@ -115,8 +115,8 @@ public class DefaultFormatPrinter implements FormatPrinter {
      * @param responseUrl  请求地址
      */
     @Override
-    public void printJsonResponse(long chainMs, boolean isSuccessful, int code, String headers, MediaType contentType,
-                                  String bodyString, List<String> segments, String message, final String responseUrl) {
+    public void printJsonResponse(long chainMs, boolean isSuccessful, int code, @NonNull String headers, @Nullable MediaType contentType,
+                                  @Nullable String bodyString, @NonNull List<String> segments, @NonNull String message, @NonNull final String responseUrl) {
         bodyString = RequestInterceptor.isJson(contentType) ? CharacterHandler.jsonFormat(bodyString)
                 : RequestInterceptor.isXml(contentType) ? CharacterHandler.xmlFormat(bodyString) : bodyString;
 
@@ -143,8 +143,8 @@ public class DefaultFormatPrinter implements FormatPrinter {
      * @param responseUrl  请求地址
      */
     @Override
-    public void printFileResponse(long chainMs, boolean isSuccessful, int code, String headers,
-                                  List<String> segments, String message, final String responseUrl) {
+    public void printFileResponse(long chainMs, boolean isSuccessful, int code, @NonNull String headers,
+                                  @NonNull List<String> segments, @NonNull String message, @NonNull final String responseUrl) {
         final String tag = getTag(false);
         final String[] urlLine = {URL_TAG + responseUrl, N};
 
@@ -154,7 +154,6 @@ public class DefaultFormatPrinter implements FormatPrinter {
         logLines(tag, OMITTED_RESPONSE, true);
         LogUtils.debugInfo(tag, END_LINE);
     }
-
 
     /**
      * 对 {@code lines} 中的信息进行逐行打印
@@ -209,7 +208,6 @@ public class DefaultFormatPrinter implements FormatPrinter {
     private static String resolveTag(String tag) {
         return computeKey() + tag;
     }
-
 
     private static String[] getRequest(Request request) {
         String log;
@@ -267,7 +265,6 @@ public class DefaultFormatPrinter implements FormatPrinter {
         return builder.toString();
     }
 
-
     private static String getTag(boolean isRequest) {
         if (isRequest) {
             return TAG + "-Request";
@@ -275,5 +272,4 @@ public class DefaultFormatPrinter implements FormatPrinter {
             return TAG + "-Response";
         }
     }
-
 }
