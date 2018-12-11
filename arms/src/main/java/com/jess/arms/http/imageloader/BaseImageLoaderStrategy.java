@@ -16,6 +16,7 @@
 package com.jess.arms.http.imageloader;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 /**
  * ================================================
@@ -34,7 +35,7 @@ public interface BaseImageLoaderStrategy<T extends ImageConfig> {
      * @param ctx
      * @param config
      */
-    void loadImage(Context ctx, T config);
+    void loadImage(@Nullable Context ctx, @Nullable T config);
 
     /**
      * 停止加载
@@ -42,5 +43,5 @@ public interface BaseImageLoaderStrategy<T extends ImageConfig> {
      * @param ctx
      * @param config
      */
-    void clear(Context ctx, T config);
+    void clear(@Nullable Context ctx, @Nullable T config);
 }
