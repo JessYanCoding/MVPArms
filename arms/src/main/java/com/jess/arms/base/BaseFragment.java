@@ -113,5 +113,4 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     public boolean useEventBus() {
         return true;
     }
-
 }

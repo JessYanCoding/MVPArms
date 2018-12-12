@@ -29,6 +29,7 @@ import android.support.annotation.Nullable;
  * ================================================
  */
 public interface BaseImageLoaderStrategy<T extends ImageConfig> {
+
     /**
      * 加载图片
      *

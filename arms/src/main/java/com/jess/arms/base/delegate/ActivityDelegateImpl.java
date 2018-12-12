@@ -41,7 +41,6 @@ public class ActivityDelegateImpl implements ActivityDelegate {
         this.iActivity = (IActivity) activity;
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         //如果要使用 EventBus 请将此方法返回 true

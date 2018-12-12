@@ -138,7 +138,6 @@ public class AppDelegate implements App, AppLifecycles {
 
     }
 
-
     @Override
     public void onTerminate(@NonNull Application application) {
         if (mActivityLifecycle != null) {
@@ -169,7 +168,6 @@ public class AppDelegate implements App, AppLifecycles {
         this.mApplication = null;
     }
 
-
     /**
      * 将app的全局配置信息封装进module(使用Dagger注入到需要配置信息的地方)
      * 需要在AndroidManifest中声明{@link ConfigModule}的实现类,和Glide的配置方式相似
@@ -189,7 +187,6 @@ public class AppDelegate implements App, AppLifecycles {
         return builder.build();
     }
 
-
     /**
      * 将 {@link AppComponent} 返回出去, 供其它地方使用, {@link AppComponent} 接口中声明的方法返回的实例, 在 {@link #getAppComponent()} 拿到对象后都可以直接使用
      *
@@ -205,7 +202,6 @@ public class AppDelegate implements App, AppLifecycles {
                         ? Application.class.getName() : mApplication.getClass().getName());
         return mAppComponent;
     }
-
 
     /**
      * {@link ComponentCallbacks2} 是一个细粒度的内存回收管理回调
@@ -283,6 +279,5 @@ public class AppDelegate implements App, AppLifecycles {
             //系统正运行于低内存的状态并且你的进程正处于 LRU 列表中最容易被杀掉的位置, 你应该释放任何不影响你的 App 恢复状态的资源
         }
     }
-
 }
 

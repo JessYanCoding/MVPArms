@@ -164,5 +164,4 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
         Preconditions.checkNotNull(cache, "%s cannot be null on Fragment", Cache.class.getName());
         return cache;
     }
-
 }
