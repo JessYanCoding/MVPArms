@@ -135,7 +135,6 @@ public class AppDelegate implements App, AppLifecycles {
         for (AppLifecycles lifecycle : mAppLifecycles) {
             lifecycle.onCreate(mApplication);
         }
-
     }
 
     @Override
@@ -175,7 +174,6 @@ public class AppDelegate implements App, AppLifecycles {
      * @return GlobalConfigModule
      */
     private GlobalConfigModule getGlobalConfigModule(Context context, List<ConfigModule> modules) {
-
         GlobalConfigModule.Builder builder = GlobalConfigModule
                 .builder();
 
@@ -214,7 +212,7 @@ public class AppDelegate implements App, AppLifecycles {
         private Application mApplication;
         private AppComponent mAppComponent;
 
-        public AppComponentCallbacks(Application application, AppComponent appComponent) {
+        AppComponentCallbacks(Application application, AppComponent appComponent) {
             this.mApplication = application;
             this.mAppComponent = appComponent;
         }

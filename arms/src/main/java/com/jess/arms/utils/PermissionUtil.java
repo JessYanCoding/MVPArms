@@ -46,6 +46,7 @@ public class PermissionUtil {
     }
 
     public interface RequestPermission {
+
         /**
          * 权限请求成功
          */
