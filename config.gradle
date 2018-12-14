@@ -85,7 +85,7 @@ ext {
                 "eventbus"                 : "org.greenrobot:eventbus:3.1.1",
                 "otto"                     : "com.squareup:otto:1.3.8",
                 "gson"                     : "com.google.code.gson:gson:2.8.5",
-                "multidex"                 : "com.android.support:multidex:1.0.1",
+                "multidex"                 : "com.android.support:multidex:1.0.3",
                 "javax.annotation"         : "javax.annotation:jsr250-api:1.0",
                 "arouter"                  : "com.alibaba:arouter-api:1.3.1",
                 "arouter-compiler"         : "com.alibaba:arouter-compiler:1.1.4",
