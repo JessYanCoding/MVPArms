@@ -35,6 +35,7 @@ public interface IRepositoryManager {
 
     /**
      * 根据传入的 Class 获取对应的 Retrofit service
+     * 该方法默认实现会将网络请求切到 IO 线程
      *
      * @param service Retrofit service class
      * @param <T>     Retrofit service 类型
@@ -42,6 +43,17 @@ public interface IRepositoryManager {
      */
     @NonNull
     <T> T obtainRetrofitService(@NonNull Class<T> service);
+
+    /**
+     * 根据传入的 Class 获取对应的 Retrofit service
+     * 该方法默认实现会保留最原本的逻辑
+     *
+     * @param service Retrofit service class
+     * @param <T>     Retrofit service 类型
+     * @return Retrofit service
+     */
+    @NonNull
+    <T> T obtainRetrofitServiceSynchronized(@NonNull Class<T> service);
 
     /**
      * 根据传入的 Class 获取对应的 RxCache service

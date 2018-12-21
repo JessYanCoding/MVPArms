@@ -21,19 +21,14 @@ import android.arch.lifecycle.OnLifecycleEvent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.SupportActivity;
 import android.support.v7.widget.RecyclerView;
-
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.PermissionUtil;
 import com.jess.arms.utils.RxLifecycleUtils;
-
-import java.util.List;
-
-import javax.inject.Inject;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import java.util.List;
+import javax.inject.Inject;
 import me.jessyan.mvparms.demo.mvp.contract.UserContract;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
@@ -117,7 +112,6 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
         }
 
         mModel.getUsers(lastUserId, isEvictCache)
-                .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .doOnSubscribe(disposable -> {
                     if (pullToRefresh)
