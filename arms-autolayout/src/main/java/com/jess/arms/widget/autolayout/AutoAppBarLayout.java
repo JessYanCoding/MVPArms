@@ -54,7 +54,6 @@ public class AutoAppBarLayout extends AppBarLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
-
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
@@ -64,7 +63,6 @@ public class AutoAppBarLayout extends AppBarLayout {
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new LayoutParams(getContext(), attrs);
     }
-
 
     public static class LayoutParams extends AppBarLayout.LayoutParams
             implements AutoLayoutHelper.AutoLayoutParams {
@@ -80,11 +78,9 @@ public class AutoAppBarLayout extends AppBarLayout {
             return mAutoLayoutInfo;
         }
 
-
         public LayoutParams(int width, int height) {
             super(width, height);
         }
-
 
         public LayoutParams(ViewGroup.LayoutParams source) {
             super(source);
@@ -93,7 +89,5 @@ public class AutoAppBarLayout extends AppBarLayout {
         public LayoutParams(ViewGroup.MarginLayoutParams source) {
             super(source);
         }
-
     }
-
 }

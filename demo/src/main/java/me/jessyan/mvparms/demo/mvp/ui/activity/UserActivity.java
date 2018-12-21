@@ -35,7 +35,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.di.component.DaggerUserComponent;
-import me.jessyan.mvparms.demo.di.module.UserModule;
 import me.jessyan.mvparms.demo.mvp.contract.UserContract;
 import me.jessyan.mvparms.demo.mvp.presenter.UserPresenter;
 import timber.log.Timber;
@@ -74,7 +73,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
         DaggerUserComponent
                 .builder()
                 .appComponent(appComponent)
-                .userModule(new UserModule(this))
+                .view(this)
                 .build()
                 .inject(this);
     }

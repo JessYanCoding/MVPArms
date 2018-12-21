@@ -16,6 +16,8 @@
 package me.jessyan.mvparms.demo.app;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
@@ -52,12 +54,13 @@ public class GlobalHttpHandlerImpl implements GlobalHttpHandler {
      * 重新请求 token, 并重新执行请求
      *
      * @param httpResult 服务器返回的结果 (已被框架自动转换为字符串)
-     * @param chain {@link okhttp3.Interceptor.Chain}
-     * @param response {@link Response}
-     * @return
+     * @param chain      {@link okhttp3.Interceptor.Chain}
+     * @param response   {@link Response}
+     * @return {@link Response}
      */
+    @NonNull
     @Override
-    public Response onHttpResultResponse(String httpResult, Interceptor.Chain chain, Response response) {
+    public Response onHttpResultResponse(@Nullable String httpResult, @NonNull Interceptor.Chain chain, @NonNull Response response) {
         if (!TextUtils.isEmpty(httpResult) && RequestInterceptor.isJson(response.body().contentType())) {
             try {
                 List<User> list = ArmsUtils.obtainAppComponentFromContext(context).gson().fromJson(httpResult, new TypeToken<List<User>>() {
@@ -87,13 +90,14 @@ public class GlobalHttpHandlerImpl implements GlobalHttpHandler {
     /**
      * 这里可以在请求服务器之前拿到 {@link Request}, 做一些操作比如给 {@link Request} 统一添加 token 或者 header 以及参数加密等操作
      *
-     * @param chain {@link okhttp3.Interceptor.Chain}
+     * @param chain   {@link okhttp3.Interceptor.Chain}
      * @param request {@link Request}
-     * @return
+     * @return {@link Request}
      */
+    @NonNull
     @Override
-    public Request onHttpRequestBefore(Interceptor.Chain chain, Request request) {
-        /* 如果需要再请求服务器之前做一些操作, 则重新返回一个做过操作的的 Request 如增加 Header, 不做操作则直接返回参数 request
+    public Request onHttpRequestBefore(@NonNull Interceptor.Chain chain, @NonNull Request request) {
+        /* 如果需要在请求服务器之前做一些操作, 则重新构建一个做过操作的 Request 并 return, 如增加 Header、Params 等请求信息, 不做操作则直接返回参数 request
         return chain.request().newBuilder().header("token", tokenId)
                               .build(); */
         return request;

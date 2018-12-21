@@ -21,4 +21,5 @@
 * [**MVVMArms** : Android MVVM Architecture Components based on **MVPArms** and **Android Architecture Components**.](https://github.com/xiaobailong24/MVVMArms)
 * [**smartframework-android-atlas** : 这是一个将 **MVPArms** 框架和 **Atlas** 框架相结合的组件化 **MVP** 框架](https://github.com/smarthane/smartframework-android-atlas)
 * [**smartframework-android** : 这是一个将 **MVPArms** 框架和 **VirtualAPK** 框架相结合的插件化 **MVP** 框架](https://github.com/smarthane/smartframework-android)
+* [**Atoms-mvp** : 这是一个参考 **MVPArms** 框架, 将自己对框架的理解相结合的 **MVP** 框架](https://github.com/xwc520/Atoms-mvp)
 

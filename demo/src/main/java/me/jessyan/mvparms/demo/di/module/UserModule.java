@@ -25,6 +25,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import java.util.ArrayList;
 import java.util.List;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import me.jessyan.mvparms.demo.mvp.contract.UserContract;
@@ -43,51 +44,32 @@ import me.jessyan.mvparms.demo.mvp.ui.adapter.UserAdapter;
  * ================================================
  */
 @Module
-public class UserModule {
-    private UserContract.View view;
+public abstract class UserModule {
 
-    /**
-     * 构建 UserModule 时,将 View 的实现类传进来,这样就可以提供 View 的实现类给 Presenter
-     *
-     * @param view
-     */
-    public UserModule(UserContract.View view) {
-        this.view = view;
-    }
+    @Binds
+    abstract UserContract.Model bindUserModel(UserModel model);
 
     @ActivityScope
     @Provides
-    UserContract.View provideUserView() {
-        return this.view;
-    }
-
-    @ActivityScope
-    @Provides
-    UserContract.Model provideUserModel(UserModel model) {
-        return model;
-    }
-
-    @ActivityScope
-    @Provides
-    RxPermissions provideRxPermissions() {
+    static RxPermissions provideRxPermissions(UserContract.View view) {
         return new RxPermissions((FragmentActivity) view.getActivity());
     }
 
     @ActivityScope
     @Provides
-    RecyclerView.LayoutManager provideLayoutManager() {
+    static RecyclerView.LayoutManager provideLayoutManager(UserContract.View view) {
         return new GridLayoutManager(view.getActivity(), 2);
     }
 
     @ActivityScope
     @Provides
-    List<User> provideUserList() {
+    static List<User> provideUserList() {
         return new ArrayList<>();
     }
 
     @ActivityScope
     @Provides
-    RecyclerView.Adapter provideUserAdapter(List<User> list){
+    static RecyclerView.Adapter provideUserAdapter(List<User> list){
         return new UserAdapter(list);
     }
 }

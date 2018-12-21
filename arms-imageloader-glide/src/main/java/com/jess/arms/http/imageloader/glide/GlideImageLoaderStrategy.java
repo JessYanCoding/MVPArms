@@ -17,6 +17,8 @@ package com.jess.arms.http.imageloader.glide;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -49,7 +51,7 @@ import timber.log.Timber;
 public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageConfigImpl>, GlideAppliesOptions {
 
     @Override
-    public void loadImage(Context ctx, ImageConfigImpl config) {
+    public void loadImage(@Nullable Context ctx, @Nullable ImageConfigImpl config) {
         Preconditions.checkNotNull(ctx, "Context is required");
         Preconditions.checkNotNull(config, "ImageConfigImpl is required");
         Preconditions.checkNotNull(config.getImageView(), "ImageView is required");
@@ -114,13 +116,12 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
         if (config.getFallback() != 0)//设置请求 url 为空图片
             glideRequest.fallback(config.getFallback());
 
-
         glideRequest
                 .into(config.getImageView());
     }
 
     @Override
-    public void clear(final Context ctx, ImageConfigImpl config) {
+    public void clear(@Nullable final Context ctx, @Nullable ImageConfigImpl config) {
         Preconditions.checkNotNull(ctx, "Context is required");
         Preconditions.checkNotNull(config, "ImageConfigImpl is required");
 
@@ -154,7 +155,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
     }
 
     @Override
-    public void applyGlideOptions(Context context, GlideBuilder builder) {
-        Timber.w("applyGlideOptions");
+    public void applyGlideOptions(@NonNull Context context, @NonNull GlideBuilder builder) {
+        Timber.i("applyGlideOptions");
     }
 }

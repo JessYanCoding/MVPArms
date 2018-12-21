@@ -135,9 +135,7 @@ public class AppDelegate implements App, AppLifecycles {
         for (AppLifecycles lifecycle : mAppLifecycles) {
             lifecycle.onCreate(mApplication);
         }
-
     }
-
 
     @Override
     public void onTerminate(@NonNull Application application) {
@@ -169,7 +167,6 @@ public class AppDelegate implements App, AppLifecycles {
         this.mApplication = null;
     }
 
-
     /**
      * 将app的全局配置信息封装进module(使用Dagger注入到需要配置信息的地方)
      * 需要在AndroidManifest中声明{@link ConfigModule}的实现类,和Glide的配置方式相似
@@ -177,7 +174,6 @@ public class AppDelegate implements App, AppLifecycles {
      * @return GlobalConfigModule
      */
     private GlobalConfigModule getGlobalConfigModule(Context context, List<ConfigModule> modules) {
-
         GlobalConfigModule.Builder builder = GlobalConfigModule
                 .builder();
 
@@ -188,7 +184,6 @@ public class AppDelegate implements App, AppLifecycles {
 
         return builder.build();
     }
-
 
     /**
      * 将 {@link AppComponent} 返回出去, 供其它地方使用, {@link AppComponent} 接口中声明的方法返回的实例, 在 {@link #getAppComponent()} 拿到对象后都可以直接使用
@@ -206,7 +201,6 @@ public class AppDelegate implements App, AppLifecycles {
         return mAppComponent;
     }
 
-
     /**
      * {@link ComponentCallbacks2} 是一个细粒度的内存回收管理回调
      * {@link Application}、{@link Activity}、{@link Service}、{@link ContentProvider}、{@link Fragment} 实现了 {@link ComponentCallbacks2} 接口
@@ -218,7 +212,7 @@ public class AppDelegate implements App, AppLifecycles {
         private Application mApplication;
         private AppComponent mAppComponent;
 
-        public AppComponentCallbacks(Application application, AppComponent appComponent) {
+        AppComponentCallbacks(Application application, AppComponent appComponent) {
             this.mApplication = application;
             this.mAppComponent = appComponent;
         }
@@ -283,6 +277,5 @@ public class AppDelegate implements App, AppLifecycles {
             //系统正运行于低内存的状态并且你的进程正处于 LRU 列表中最容易被杀掉的位置, 你应该释放任何不影响你的 App 恢复状态的资源
         }
     }
-
 }
 

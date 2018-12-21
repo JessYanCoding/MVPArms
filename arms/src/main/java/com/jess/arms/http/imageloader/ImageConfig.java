@@ -33,7 +33,6 @@ public class ImageConfig {
     protected int placeholder;//占位符
     protected int errorPic;//错误占位符
 
-
     public String getUrl() {
         return url;
     }

@@ -47,6 +47,9 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
+    //support
+    implementation rootProject.ext.dependencies["cardview-v7"]
+
     //tools
     //注意 Arms 核心库现在并不会依赖某个 EventBus, 要想使用 EventBus, 还请在项目中自行依赖对应的 EventBus
     //现在支持两种 EventBus, greenrobot 的 EventBus 和畅销书 《Android源码设计模式解析与实战》的作者 何红辉 所作的 AndroidEventBus
@@ -69,13 +72,18 @@ dependencies {
 
     //arms
     implementation project(':arms')
-    //Arms 核心库不再包含 AndroidAutoLayout, 可自行选择屏幕适配方案, 不想使用 AndroidAutoLayout 就不要依赖 arms-autolayout
-    implementation project(':arms-autolayout')
+//    implementation 'me.jessyan:arms:2.5.0'
+
+    //Arms 核心库不再包含 AndroidAutoLayout, 现在可自行选择屏幕适配方案, 不想使用 AndroidAutoLayout 就不要依赖 arms-autolayout
+//    implementation 'me.jessyan:arms-autolayout:2.5.0'
+
+    //现在已经将 Demo 中的屏幕适配框架从 AndroidAutoLayout 替换为 AndroidAutoSize, AndroidAutoLayout 和 AndroidAutoSize 可以在项目中共存
+    //所以旧项目只要依赖 arms-autolayout 即可兼容之前的旧页面, 新页面可以使用 AndroidAutoSize 进行适配, 等有时间了再将旧页面全部替换为 AndroidAutoSize
+    implementation rootProject.ext.dependencies["autosize"]
+
     //Arms 核心库不再包含 Glide, 想使用其他图片加载框架或者想自行扩展 ImageLoaderStrategy 就不要依赖 arms-imageloader-glide
     //依赖 arms-imageloader-glide 后还需要在 GlobalConfiguration 中手动注册 GlideImageLoaderStrategy
-    implementation project(':arms-imageloader-glide')
-    //Github 仓库上最新的 Demo 具有下一个版本的新特性, 所以依赖最新的远程库会出现版本不兼容的情况, 详情请查看 https://github.com/JessYanCoding/MVPArms/wiki/Issues#2
-//    implementation 'me.jessyan:arms:2.4.1'
+    implementation 'me.jessyan:arms-imageloader-glide:2.5.0'
 
     //test
     testImplementation rootProject.ext.dependencies["junit"]

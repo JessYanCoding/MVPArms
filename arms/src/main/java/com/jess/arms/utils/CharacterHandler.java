@@ -52,7 +52,6 @@ public class CharacterHandler {
     }
 
     public static final InputFilter emojiFilter = new InputFilter() {//emoji过滤器
-
         Pattern emoji = Pattern.compile(
                 "[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
                 Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
@@ -69,7 +68,6 @@ public class CharacterHandler {
             return null;
         }
     };
-
 
     /**
      * 字符串转换成十六进制字符串
@@ -91,7 +89,6 @@ public class CharacterHandler {
         }
         return sb.toString().trim();
     }
-
 
     /**
      * json 格式化
@@ -120,7 +117,6 @@ public class CharacterHandler {
         }
         return message;
     }
-
 
     /**
      * xml 格式化

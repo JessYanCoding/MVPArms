@@ -20,6 +20,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.InflateException;
@@ -122,7 +123,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
      * 确保依赖后, 将此方法返回 true, Arms 会自动检测您依赖的 EventBus, 并自动注册
      * 这种做法可以让使用者有自行选择三方库的权利, 并且还可以减轻 Arms 的体积
      *
-     * @return 返回 {@code true} (默认为使用 {@code true}), Arms 会自动注册 EventBus
+     * @return 返回 {@code true} (默认为 {@code true}), Arms 会自动注册 EventBus
      */
     @Override
     public boolean useEventBus() {
@@ -130,10 +131,10 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     }
 
     /**
-     * 这个Activity是否会使用Fragment,框架会根据这个属性判断是否注册{@link android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks}
-     * 如果返回false,那意味着这个Activity不需要绑定Fragment,那你再在这个Activity中绑定继承于 {@link com.jess.arms.base.BaseFragment} 的Fragment将不起任何作用
+     * 这个 {@link Activity} 是否会使用 {@link Fragment}, 框架会根据这个属性判断是否注册 {@link android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks}
+     * 如果返回 {@code false}, 那意味着这个 {@link Activity} 不需要绑定 {@link Fragment}, 那你再在这个 {@link Activity} 中绑定继承于 {@link BaseFragment} 的 {@link Fragment} 将不起任何作用
      *
-     * @return
+     * @return 返回 {@code true} (默认为 {@code true}), 则需要使用 {@link Fragment}
      */
     @Override
     public boolean useFragment() {

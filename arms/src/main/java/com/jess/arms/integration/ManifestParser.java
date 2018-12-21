@@ -34,7 +34,6 @@ import java.util.List;
  */
 public final class ManifestParser {
     private static final String MODULE_VALUE = "ConfigModule";
-
     private final Context context;
 
     public ManifestParser(Context context) {
