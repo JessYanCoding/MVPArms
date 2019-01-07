@@ -111,6 +111,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
             isEvictCache = false;
         }
 
+        // 框架默认情况下，将网络请求切换到异步执行。
         mModel.getUsers(lastUserId, isEvictCache)
                 .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .doOnSubscribe(disposable -> {
