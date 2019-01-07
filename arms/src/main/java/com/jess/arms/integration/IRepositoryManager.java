@@ -35,7 +35,10 @@ public interface IRepositoryManager {
 
     /**
      * 根据传入的 Class 获取对应的 Retrofit service
-     * 该方法默认实现会将网络请求切到 IO 线程
+     * 该方法默认实现会将网络请求切到 IO 线程执行
+     * 说明：如果使用 Rxjava 的 merge 操作符通过该 API
+     * 进行多个网络请求，将可能造成所获得的数据流错乱（因为异步了）
+     * 因此此时请使用 obtainRetrofitServiceSynchronized()
      *
      * @param service Retrofit service class
      * @param <T>     Retrofit service 类型

@@ -81,7 +81,7 @@ public class RepositoryManager implements IRepositoryManager {
 
     @NonNull
     @Override
-    public <T> T obtainRetrofitServiceSynchronized(@NonNull Class<T> serviceClass) {
+    public synchronized <T> T obtainRetrofitServiceSynchronized(@NonNull Class<T> serviceClass) {
         return createWrapperService(serviceClass, false);
     }
 
@@ -98,22 +98,27 @@ public class RepositoryManager implements IRepositoryManager {
         if (!isAsyn) {
             return getRetrofitService(serviceClass);
         }
-        // 通过二次代理，对 Retrofit 代理方法的调用包进新的 Observable 或 single 里在 io 线程执行。
+        // 二次代理
         return (T) Proxy.newProxyInstance(serviceClass.getClassLoader(),
                 new Class<?>[]{serviceClass}, new InvocationHandler() {
                     @Override
                     public Object invoke(Object proxy, Method method, @Nullable Object[] args)
                             throws Throwable {
+                        // 此处在调用 serviceClass 中的方法时触发。
 
                         if (method.getReturnType() == Observable.class) {
-                            // 如果方法返回值是 Observable 的话，则包一层再返回
+                            // 如果方法返回值是 Observable 的话，则包一层再返回，
+                            // 该被观察者在被订阅时触发执行。
                             return Observable.defer(() -> {
+                                // ((Observable) getRetrofitMethod(service, method).invoke(service, args))
+                                // 就是 Retrofit.create(serviceClass).getXXX() 的执行，也就是耗时操作所在。
+                                // 2.此时为 single 线程，执行被观察者链的构造（也是耗时操作所在）。
+                                // 3.然后接着被订阅后，切换到 io 线程再执行网络请求，并向外部的观察者传递结果。
                                 final T service = getRetrofitService(serviceClass);
-                                // 执行真正的 Retrofit 动态代理的方法
                                 return ((Observable) getRetrofitMethod(service, method)
                                         .invoke(service, args))
                                         .subscribeOn(Schedulers.io());
-                            }).subscribeOn(Schedulers.single());
+                            }).subscribeOn(Schedulers.single()); // 1.被订阅后先切换到 single 线程
                         } else if (method.getReturnType() == Single.class) {
                             // 如果方法返回值是 Single 的话，则包一层再返回。
                             return Single.defer((Callable<SingleSource<?>>) () -> {
