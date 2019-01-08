@@ -19,23 +19,22 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
 import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.integration.cache.CacheType;
 import com.jess.arms.mvp.IModel;
 import com.jess.arms.utils.Preconditions;
-
+import dagger.Lazy;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.SingleSource;
+import io.reactivex.schedulers.Schedulers;
+import io.rx_cache2.internal.RxCache;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-
+import java.util.concurrent.Callable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import dagger.Lazy;
-import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
-import io.rx_cache2.internal.RxCache;
 import retrofit2.Retrofit;
 
 /**
@@ -71,41 +70,67 @@ public class RepositoryManager implements IRepositoryManager {
      * 根据传入的 Class 获取对应的 Retrofit service
      *
      * @param serviceClass ApiService class
-     * @param <T>          ApiService class
+     * @param <T> ApiService class
      * @return ApiService
      */
     @NonNull
     @Override
     public synchronized <T> T obtainRetrofitService(@NonNull Class<T> serviceClass) {
-        return createWrapperService(serviceClass);
+        return createWrapperService(serviceClass, true);
+    }
+
+    @NonNull
+    @Override
+    public synchronized <T> T obtainRetrofitServiceSynchronized(@NonNull Class<T> serviceClass) {
+        return createWrapperService(serviceClass, false);
     }
 
     /**
      * 根据 https://zhuanlan.zhihu.com/p/40097338 对 Retrofit 进行的优化
      *
      * @param serviceClass ApiService class
-     * @param <T>          ApiService class
+     * @param <T> ApiService class
      * @return ApiService
      */
-    private <T> T createWrapperService(Class<T> serviceClass) {
+    private <T> T createWrapperService(Class<T> serviceClass, boolean isAsyn) {
         Preconditions.checkNotNull(serviceClass, "serviceClass == null");
-        // 通过二次代理，对 Retrofit 代理方法的调用包进新的 Observable 里在 io 线程执行。
+        // 如果是同步请求，直接返回.
+        if (!isAsyn) {
+            return getRetrofitService(serviceClass);
+        }
+        // 二次代理
         return (T) Proxy.newProxyInstance(serviceClass.getClassLoader(),
                 new Class<?>[]{serviceClass}, new InvocationHandler() {
                     @Override
                     public Object invoke(Object proxy, Method method, @Nullable Object[] args)
                             throws Throwable {
+                        // 此处在调用 serviceClass 中的方法时触发。
+
                         if (method.getReturnType() == Observable.class) {
-                            // 如果方法返回值是 Observable 的话，则包一层再返回
+                            // 如果方法返回值是 Observable 的话，则包一层再返回，
+                            // 该被观察者在被订阅时触发执行。
                             return Observable.defer(() -> {
+                                // ((Observable) getRetrofitMethod(service, method).invoke(service, args))
+                                // 就是 Retrofit.create(serviceClass).getXXX() 的执行，也就是耗时操作所在。
+                                // 2.此时为 single 线程，执行被观察者链的构造（也是耗时操作所在）。
+                                // 3.然后接着被订阅后，切换到 io 线程再执行网络请求，并向外部的观察者传递结果。
+                                final T service = getRetrofitService(serviceClass);
+                                return ((Observable) getRetrofitMethod(service, method)
+                                        .invoke(service, args))
+                                        .subscribeOn(Schedulers.io());
+                            }).subscribeOn(Schedulers.single()); // 1.被订阅后先切换到 single 线程
+                        } else if (method.getReturnType() == Single.class) {
+                            // 如果方法返回值是 Single 的话，则包一层再返回。
+                            return Single.defer((Callable<SingleSource<?>>) () -> {
                                 final T service = getRetrofitService(serviceClass);
                                 // 执行真正的 Retrofit 动态代理的方法
-                                return ((Observable) getRetrofitMethod(service, method)
+                                return ((Single) getRetrofitMethod(service, method)
                                         .invoke(service, args))
                                         .subscribeOn(Schedulers.io());
                             }).subscribeOn(Schedulers.single());
                         }
-                        // 返回值不是 Observable 的话不处理
+
+                        // 返回值不是 Observable 或 Single 的话不处理。
                         final T service = getRetrofitService(serviceClass);
                         return getRetrofitMethod(service, method).invoke(service, args);
                     }
@@ -116,7 +141,7 @@ public class RepositoryManager implements IRepositoryManager {
      * 根据传入的 Class 获取对应的 Retrofit service
      *
      * @param serviceClass ApiService class
-     * @param <T>          ApiService class
+     * @param <T> ApiService class
      * @return ApiService
      */
     private <T> T getRetrofitService(Class<T> serviceClass) {
@@ -141,7 +166,7 @@ public class RepositoryManager implements IRepositoryManager {
      * 根据传入的 Class 获取对应的 RxCache service
      *
      * @param cacheClass Cache class
-     * @param <T>        Cache class
+     * @param <T> Cache class
      * @return Cache
      */
     @NonNull
