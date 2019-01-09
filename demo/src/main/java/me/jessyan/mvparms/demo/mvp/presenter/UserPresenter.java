@@ -27,6 +27,7 @@ import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.PermissionUtil;
 import com.jess.arms.utils.RxLifecycleUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import java.util.List;
 import javax.inject.Inject;
 import me.jessyan.mvparms.demo.mvp.contract.UserContract;
@@ -111,8 +112,8 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
             isEvictCache = false;
         }
 
-        // 框架默认情况下，将网络请求切换到异步执行。
         mModel.getUsers(lastUserId, isEvictCache)
+                .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .doOnSubscribe(disposable -> {
                     if (pullToRefresh)
