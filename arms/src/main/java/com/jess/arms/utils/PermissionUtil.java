@@ -41,12 +41,12 @@ import timber.log.Timber;
 public class PermissionUtil {
     public static final String TAG = "Permission";
 
-
     private PermissionUtil() {
         throw new IllegalStateException("you can't instantiate me!");
     }
 
     public interface RequestPermission {
+
         /**
          * 权限请求成功
          */
@@ -66,7 +66,6 @@ public class PermissionUtil {
          */
         void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions);
     }
-
 
     public static void requestPermission(final RequestPermission requestPermission, RxPermissions rxPermissions, RxErrorHandler errorHandler, String... permissions) {
         if (permissions == null || permissions.length == 0) return;
@@ -118,14 +117,12 @@ public class PermissionUtil {
 
     }
 
-
     /**
      * 请求摄像头权限
      */
     public static void launchCamera(RequestPermission requestPermission, RxPermissions rxPermissions, RxErrorHandler errorHandler) {
         requestPermission(requestPermission, rxPermissions, errorHandler, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA);
     }
-
 
     /**
      * 请求外部存储的权限
@@ -134,14 +131,12 @@ public class PermissionUtil {
         requestPermission(requestPermission, rxPermissions, errorHandler, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
-
     /**
      * 请求发送短信权限
      */
     public static void sendSms(RequestPermission requestPermission, RxPermissions rxPermissions, RxErrorHandler errorHandler) {
         requestPermission(requestPermission, rxPermissions, errorHandler, Manifest.permission.SEND_SMS);
     }
-
 
     /**
      * 请求打电话权限
@@ -150,13 +145,11 @@ public class PermissionUtil {
         requestPermission(requestPermission, rxPermissions, errorHandler, Manifest.permission.CALL_PHONE);
     }
 
-
     /**
      * 请求获取手机状态的权限
      */
     public static void readPhonestate(RequestPermission requestPermission, RxPermissions rxPermissions, RxErrorHandler errorHandler) {
         requestPermission(requestPermission, rxPermissions, errorHandler, Manifest.permission.READ_PHONE_STATE);
     }
-
 }
 

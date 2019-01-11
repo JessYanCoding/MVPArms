@@ -197,5 +197,4 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         Preconditions.checkNotNull(cache, "%s cannot be null on Activity", Cache.class.getName());
         return cache;
     }
-
 }

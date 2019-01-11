@@ -46,7 +46,6 @@ import io.reactivex.functions.Action;
 public class BasePresenter<M extends IModel, V extends IView> implements IPresenter, LifecycleObserver {
     protected final String TAG = this.getClass().getSimpleName();
     protected CompositeDisposable mCompositeDisposable;
-
     protected M mModel;
     protected V mRootView;
 
@@ -79,7 +78,6 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
         onStart();
     }
 
-
     @Override
     public void onStart() {
         //将 LifecycleObserver 注册给 LifecycleOwner 后 @OnLifecycleEvent 才可以正常使用
@@ -89,8 +87,8 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
                 ((LifecycleOwner) mRootView).getLifecycle().addObserver((LifecycleObserver) mModel);
             }
         }
-        if (useEventBus())//如果要使用 Eventbus 请将此方法返回 true
-            EventBusManager.getInstance().register(this);//注册 Eventbus
+        if (useEventBus())//如果要使用 EventBus 请将此方法返回 true
+            EventBusManager.getInstance().register(this);//注册 EventBus
     }
 
     /**
@@ -98,8 +96,8 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
      */
     @Override
     public void onDestroy() {
-        if (useEventBus())//如果要使用 Eventbus 请将此方法返回 true
-            EventBusManager.getInstance().unregister(this);//解除注册 Eventbus
+        if (useEventBus())//如果要使用 EventBus 请将此方法返回 true
+            EventBusManager.getInstance().unregister(this);//注销 EventBus
         unDispose();//解除订阅
         if (mModel != null)
             mModel.onDestroy();
@@ -139,7 +137,6 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
         return true;
     }
 
-
     /**
      * 将 {@link Disposable} 添加到 {@link CompositeDisposable} 中统一管理
      * 可在 {@link Activity#onDestroy()} 中使用 {@link #unDispose()} 停止正在执行的 RxJava 任务,避免内存泄漏
@@ -151,7 +148,7 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
         if (mCompositeDisposable == null) {
             mCompositeDisposable = new CompositeDisposable();
         }
-        mCompositeDisposable.add(disposable);//将所有 Disposable 放入集中处理
+        mCompositeDisposable.add(disposable);//将所有 Disposable 放入容器集中处理
     }
 
     /**
@@ -162,6 +159,4 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
             mCompositeDisposable.clear();//保证 Activity 结束时取消所有正在执行的订阅
         }
     }
-
-
 }

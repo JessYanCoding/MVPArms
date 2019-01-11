@@ -52,14 +52,12 @@ public class FragmentLifecycleForRxLifecycle extends FragmentManager.FragmentLif
         }
     }
 
-
     @Override
     public void onFragmentCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState) {
         if (f instanceof FragmentLifecycleable) {
             obtainSubject(f).onNext(FragmentEvent.CREATE);
         }
     }
-
 
     @Override
     public void onFragmentViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {

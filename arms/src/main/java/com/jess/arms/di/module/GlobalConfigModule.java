@@ -19,6 +19,7 @@ import android.app.Application;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+
 import com.bumptech.glide.Glide;
 import com.jess.arms.http.BaseUrl;
 import com.jess.arms.http.GlobalHttpHandler;
@@ -32,8 +33,7 @@ import com.jess.arms.integration.cache.IntelligentCache;
 import com.jess.arms.integration.cache.LruCache;
 import com.jess.arms.utils.DataHelper;
 import com.jess.arms.utils.Preconditions;
-import dagger.Module;
-import dagger.Provides;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
 import javax.inject.Singleton;
+
+import dagger.Module;
+import dagger.Provides;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -98,14 +102,12 @@ public class GlobalConfigModule {
         return new Builder();
     }
 
-
     @Singleton
     @Provides
     @Nullable
     List<Interceptor> provideInterceptors() {
         return mInterceptors;
     }
-
 
     /**
      * 提供 BaseUrl,默认使用 <"https://api.github.com/">
@@ -124,7 +126,6 @@ public class GlobalConfigModule {
         return mApiUrl == null ? HttpUrl.parse("https://api.github.com/") : mApiUrl;
     }
 
-
     /**
      * 提供图片加载框架,默认使用 {@link Glide}
      *
@@ -136,7 +137,6 @@ public class GlobalConfigModule {
     BaseImageLoaderStrategy provideImageLoaderStrategy() {
         return mLoaderStrategy;
     }
-
 
     /**
      * 提供处理 Http 请求和响应结果的处理类
@@ -150,7 +150,6 @@ public class GlobalConfigModule {
         return mHandler;
     }
 
-
     /**
      * 提供缓存文件
      */
@@ -159,7 +158,6 @@ public class GlobalConfigModule {
     File provideCacheFile(Application application) {
         return mCacheFile == null ? DataHelper.getCacheFile(application) : mCacheFile;
     }
-
 
     /**
      * 提供处理 RxJava 错误的管理器的回调
@@ -171,7 +169,6 @@ public class GlobalConfigModule {
     ResponseErrorListener provideResponseErrorListener() {
         return mErrorListener == null ? ResponseErrorListener.EMPTY : mErrorListener;
     }
-
 
     @Singleton
     @Provides
@@ -209,7 +206,7 @@ public class GlobalConfigModule {
 
     @Singleton
     @Provides
-    FormatPrinter provideFormatPrinter(){
+    FormatPrinter provideFormatPrinter() {
         return mFormatPrinter == null ? new DefaultFormatPrinter() : mFormatPrinter;
     }
 
@@ -222,7 +219,7 @@ public class GlobalConfigModule {
             public Cache build(CacheType type) {
                 //若想自定义 LruCache 的 size, 或者不想使用 LruCache, 想使用自己自定义的策略
                 //使用 GlobalConfigModule.Builder#cacheFactory() 即可扩展
-                switch (type.getCacheTypeId()){
+                switch (type.getCacheTypeId()) {
                     //Activity、Fragment 以及 Extras 使用 IntelligentCache (具有 LruCache 和 可永久存储数据的 Map)
                     case CacheType.EXTRAS_TYPE_ID:
                     case CacheType.ACTIVITY_CACHE_TYPE_ID:
@@ -248,7 +245,6 @@ public class GlobalConfigModule {
         return mExecutorService == null ? new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60, TimeUnit.SECONDS,
                 new SynchronousQueue<Runnable>(), Util.threadFactory("Arms Executor", false)) : mExecutorService;
     }
-
 
     public static final class Builder {
         private HttpUrl apiUrl;
@@ -300,12 +296,10 @@ public class GlobalConfigModule {
             return this;
         }
 
-
         public Builder responseErrorListener(ResponseErrorListener listener) {//处理所有RxJava的onError逻辑
             this.responseErrorListener = listener;
             return this;
         }
-
 
         public Builder cacheFile(File cacheFile) {
             this.cacheFile = cacheFile;
@@ -337,7 +331,7 @@ public class GlobalConfigModule {
             return this;
         }
 
-        public Builder formatPrinter(FormatPrinter formatPrinter){
+        public Builder formatPrinter(FormatPrinter formatPrinter) {
             this.formatPrinter = Preconditions.checkNotNull(formatPrinter, FormatPrinter.class.getCanonicalName() + "can not be null.");
             return this;
         }
@@ -355,9 +349,5 @@ public class GlobalConfigModule {
         public GlobalConfigModule build() {
             return new GlobalConfigModule(this);
         }
-
-
     }
-
-
 }

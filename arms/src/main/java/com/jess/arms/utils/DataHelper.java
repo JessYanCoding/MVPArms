@@ -41,7 +41,6 @@ public class DataHelper {
     private static SharedPreferences mSharedPreferences;
     public static final String SP_NAME = "config";
 
-
     private DataHelper() {
         throw new IllegalStateException("you can't instantiate me!");
     }
@@ -210,7 +209,6 @@ public class DataHelper {
         return "/mnt/sdcard/" + packageName;
     }
 
-
     /**
      * 创建未存在的文件夹
      *
@@ -274,7 +272,6 @@ public class DataHelper {
         return true;
     }
 
-
     public static String bytyToString(InputStream in) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         byte[] buf = new byte[1024];
@@ -286,5 +283,4 @@ public class DataHelper {
         out.close();
         return result;
     }
-
 }

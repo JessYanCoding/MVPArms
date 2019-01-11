@@ -73,7 +73,7 @@
 11. [`AndroidAutoSize`](https://github.com/JessYanCoding/AndroidAutoSize)
 12. [`Gson`](https://github.com/google/gson)
 13. [`Butterknife`](https://github.com/JakeWharton/butterknife)
-14. [`Androideventbus`](https://github.com/hehonghui/AndroidEventBus)
+14. [`AndroidEventBus`](https://github.com/hehonghui/AndroidEventBus)
 15. [`Timber`](https://github.com/JakeWharton/timber)
 16. [`Glide`](https://github.com/bumptech/glide)
 17. [`LeakCanary`](https://github.com/square/leakcanary)

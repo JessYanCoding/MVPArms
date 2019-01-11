@@ -63,7 +63,6 @@ public class DeviceUtils {
     public static final int NETTYPE_WIFI = 0x01;
     public static final int NETTYPE_CMWAP = 0x02;
     public static final int NETTYPE_CMNET = 0x03;
-
     public static boolean GTE_HC;
     public static boolean GTE_ICS;
     public static boolean PRE_HC;
@@ -212,7 +211,6 @@ public class DeviceUtils {
         }
         return 0;
     }
-
 
     public static boolean hasBigScreen(Context context) {
         boolean flag = true;
@@ -371,7 +369,6 @@ public class DeviceUtils {
         return _isTablet.booleanValue();
     }
 
-
     public static void showAnimatedView(View view) {
         if (PRE_HC && view != null)
             view.setPadding(0, 0, 0, 0);
@@ -432,7 +429,6 @@ public class DeviceUtils {
         str = nf.format(p3);
         return str;
     }
-
 
     public static boolean isHaveMarket(Context context) {
         Intent intent = new Intent();
@@ -719,7 +715,6 @@ public class DeviceUtils {
         return sbar;
     }
 
-
     public static boolean hasStatusBar(Activity activity) {
         WindowManager.LayoutParams attrs = activity.getWindow().getAttributes();
         if ((attrs.flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
@@ -798,8 +793,6 @@ public class DeviceUtils {
         else
             return false;
     }
-
-
 }
 
 

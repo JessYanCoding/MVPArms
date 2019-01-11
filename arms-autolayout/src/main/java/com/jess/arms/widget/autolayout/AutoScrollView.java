@@ -58,18 +58,15 @@ public class AutoScrollView extends ScrollView {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
-
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
     }
 
-
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new LayoutParams(getContext(), attrs);
     }
-
 
     public static class LayoutParams extends ScrollView.LayoutParams
             implements AutoLayoutHelper.AutoLayoutParams {
@@ -85,11 +82,9 @@ public class AutoScrollView extends ScrollView {
             return mAutoLayoutInfo;
         }
 
-
         public LayoutParams(int width, int height) {
             super(width, height);
         }
-
 
         public LayoutParams(ViewGroup.LayoutParams source) {
             super(source);
@@ -98,6 +93,5 @@ public class AutoScrollView extends ScrollView {
         public LayoutParams(MarginLayoutParams source) {
             super(source);
         }
-
     }
 }

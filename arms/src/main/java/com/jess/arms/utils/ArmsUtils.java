@@ -53,7 +53,6 @@ import java.security.MessageDigest;
 public class ArmsUtils {
     static public Toast mToast;
 
-
     private ArmsUtils() {
         throw new IllegalStateException("you can't instantiate me!");
     }
@@ -176,7 +175,6 @@ public class ArmsUtils {
      *
      * @return
      */
-
     public static String getString(Context context, String strName) {
         return getString(context, getResources(context).getIdentifier(strName, "string", context.getPackageName()));
     }
@@ -269,7 +267,6 @@ public class ArmsUtils {
         AppManager.getAppManager().showSnackbar(text, true);
     }
 
-
     /**
      * 通过资源id获得drawable
      *
@@ -279,7 +276,6 @@ public class ArmsUtils {
     public static Drawable getDrawablebyResource(Context context, int rID) {
         return getResources(context).getDrawable(rID);
     }
-
 
     /**
      * 跳转界面 1, 通过 {@link AppManager#startActivity(Class)}
@@ -298,7 +294,6 @@ public class ArmsUtils {
     public static void startActivity(Intent content) {
         AppManager.getAppManager().startActivity(content);
     }
-
 
     /**
      * 跳转界面 3
@@ -338,7 +333,6 @@ public class ArmsUtils {
         return getResources(context).getDisplayMetrics().heightPixels;
     }
 
-
     /**
      * 获得颜色
      */
@@ -373,7 +367,6 @@ public class ArmsUtils {
         return false;
     }
 
-
     /**
      * MD5
      *
@@ -399,7 +392,6 @@ public class ArmsUtils {
         return hex.toString();
     }
 
-
     /**
      * 全屏,并且沉侵式状态栏
      *
@@ -412,7 +404,6 @@ public class ArmsUtils {
         activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
         activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
-
 
     /**
      * 配置 RecyclerView
@@ -463,5 +454,4 @@ public class ArmsUtils {
         Preconditions.checkState(context.getApplicationContext() instanceof App, "%s must be implements %s", context.getApplicationContext().getClass().getName(), App.class.getName());
         return ((App) context.getApplicationContext()).getAppComponent();
     }
-
 }

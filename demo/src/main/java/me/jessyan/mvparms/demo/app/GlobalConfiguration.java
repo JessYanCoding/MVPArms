@@ -17,6 +17,7 @@ package me.jessyan.mvparms.demo.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.module.GlobalConfigModule;
@@ -51,7 +52,7 @@ public final class GlobalConfiguration implements ConfigModule {
 //    public static String sDomain = Api.APP_DOMAIN;
 
     @Override
-    public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
+    public void applyOptions(@NonNull Context context, @NonNull GlobalConfigModule.Builder builder) {
         if (!BuildConfig.LOG_DEBUG) { //Release 时, 让框架不再打印 Http 请求和响应的信息
             builder.printHttpLogLevel(RequestInterceptor.Level.NONE);
         }
@@ -120,7 +121,7 @@ public final class GlobalConfiguration implements ConfigModule {
 
                 //这里提供一个全局处理 Http 请求和响应结果的处理类, 可以比客户端提前一步拿到服务器返回的结果, 可以做一些操作, 比如 Token 超时后, 重新获取 Token
                 .globalHttpHandler(new GlobalHttpHandlerImpl(context))
-                // 用来处理 RxJava 中发生的所有错误, RxJava 中发生的每个错误都会回调此接口
+                //用来处理 RxJava 中发生的所有错误, RxJava 中发生的每个错误都会回调此接口
                 //RxJava 必须要使用 ErrorHandleSubscriber (默认实现 Subscriber 的 onError 方法), 此监听才生效
                 .responseErrorListener(new ResponseErrorListenerImpl())
                 .gsonConfiguration((context1, gsonBuilder) -> {//这里可以自己自定义配置 Gson 的参数
@@ -148,24 +149,23 @@ public final class GlobalConfiguration implements ConfigModule {
     }
 
     @Override
-    public void injectAppLifecycle(Context context, List<AppLifecycles> lifecycles) {
+    public void injectAppLifecycle(@NonNull Context context, @NonNull List<AppLifecycles> lifecycles) {
         //AppLifecycles 中的所有方法都会在基类 Application 的对应生命周期中被调用, 所以在对应的方法中可以扩展一些自己需要的逻辑
         //可以根据不同的逻辑添加多个实现类
         lifecycles.add(new AppLifecyclesImpl());
     }
 
     @Override
-    public void injectActivityLifecycle(Context context, List<Application.ActivityLifecycleCallbacks> lifecycles) {
+    public void injectActivityLifecycle(@NonNull Context context, @NonNull List<Application.ActivityLifecycleCallbacks> lifecycles) {
         //ActivityLifecycleCallbacks 中的所有方法都会在 Activity (包括三方库) 的对应生命周期中被调用, 所以在对应的方法中可以扩展一些自己需要的逻辑
         //可以根据不同的逻辑添加多个实现类
         lifecycles.add(new ActivityLifecycleCallbacksImpl());
     }
 
     @Override
-    public void injectFragmentLifecycle(Context context, List<FragmentManager.FragmentLifecycleCallbacks> lifecycles) {
+    public void injectFragmentLifecycle(@NonNull Context context, @NonNull List<FragmentManager.FragmentLifecycleCallbacks> lifecycles) {
         //FragmentLifecycleCallbacks 中的所有方法都会在 Fragment (包括三方库) 的对应生命周期中被调用, 所以在对应的方法中可以扩展一些自己需要的逻辑
         //可以根据不同的逻辑添加多个实现类
         lifecycles.add(new FragmentLifecycleCallbacksImpl());
     }
-
 }
