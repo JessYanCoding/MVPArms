@@ -19,7 +19,7 @@ public abstract class BaseLazyLoadFragment<P extends IPresenter> extends BaseFra
     /**
      * 此处实现具体的数据请求逻辑
      */
-    public abstract void lazyLoadData();
+    protected abstract void lazyLoadData();
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
