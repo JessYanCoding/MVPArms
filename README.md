@@ -1,5 +1,10 @@
 ![Logo](image/arms_banner_v1.0.jpg)
 
+<p>
+  <img src="image/official_accounts.JPG" alt="Latest Stable Version"  width="48%" height="48%"/>
+  <img src="image/wechat_group.JPG" alt="Latest Stable Version"  width="48%" height="48%" align="right"/>
+</p>
+
 <p align="center">
    <a href="https://bintray.com/jessyancoding/maven/MVPArms/_latestVersion">
     <img src="https://img.shields.io/badge/Jcenter-v2.5.0-brightgreen.svg?style=flat-square" alt="Latest Stable Version" />
