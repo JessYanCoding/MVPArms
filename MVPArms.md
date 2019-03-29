@@ -1,4 +1,5 @@
 ![Logo](image/arms_banner_v1.0.jpg)
+![Logo](image/official.jpeg)
 
 <p align="center">
    <a href="https://bintray.com/jessyancoding/maven/MVPArms/_latestVersion">
