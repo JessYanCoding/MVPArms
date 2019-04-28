@@ -135,6 +135,7 @@
 -keepclassmembers class * {
     @org.greenrobot.eventbus.Subscribe <methods>;
 }
+-keep class org.greenrobot.eventbus.EventBus { *; }
 -keep enum org.greenrobot.eventbus.ThreadMode { *; }
 
 -keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
