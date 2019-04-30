@@ -63,19 +63,19 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
         GlideRequest<Drawable> glideRequest = requests.load(config.getUrl());
 
         switch (config.getCacheStrategy()) {//缓存策略
-            case 0:
+            case CacheStrategy.ALL:
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.ALL);
                 break;
-            case 1:
+            case CacheStrategy.NONE:
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.NONE);
                 break;
-            case 2:
+            case CacheStrategy.RESOURCE:
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.RESOURCE);
                 break;
-            case 3:
+            case CacheStrategy.DATA:
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.DATA);
                 break;
-            case 4:
+            case CacheStrategy.AUTOMATIC:
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
                 break;
             default:
