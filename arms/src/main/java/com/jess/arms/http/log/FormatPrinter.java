@@ -15,8 +15,8 @@
  */
 package com.jess.arms.http.log;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.jess.arms.di.module.GlobalConfigModule;
 

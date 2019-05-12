@@ -17,7 +17,7 @@ package me.jessyan.mvparms.demo.app;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.integration.cache.IntelligentCache;

@@ -15,7 +15,7 @@
  */
 package com.jess.arms.utils;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * ================================================

@@ -17,7 +17,7 @@ package com.jess.arms.mvp;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.jess.arms.utils.ArmsUtils;
 

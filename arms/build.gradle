@@ -92,6 +92,7 @@ dependencies {
         exclude module: 'retrofit'
         exclude module: 'okio'
     }
+    annotationProcessor 'com.android.support:support-annotations:28.0.0'
     api rootProject.ext.dependencies["okhttp3"]
     compileOnly rootProject.ext.dependencies["glide"]
     annotationProcessor(rootProject.ext.dependencies["glide-compiler"]) {

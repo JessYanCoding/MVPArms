@@ -17,7 +17,7 @@ package com.jess.arms.widget.autolayout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.design.widget.TabLayout;
+import com.google.android.material.tabs.TabLayout;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;

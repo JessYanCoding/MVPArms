@@ -16,7 +16,7 @@
 package com.jess.arms.http.imageloader;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.jess.arms.utils.Preconditions;
 

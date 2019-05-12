@@ -16,7 +16,7 @@
 package com.jess.arms.widget.autolayout;
 
 import android.content.Context;
-import android.support.design.widget.AppBarLayout;
+import com.google.android.material.appbar.AppBarLayout;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;

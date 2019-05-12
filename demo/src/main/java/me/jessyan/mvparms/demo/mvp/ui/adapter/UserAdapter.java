@@ -15,7 +15,7 @@
  */
 package me.jessyan.mvparms.demo.mvp.ui.adapter;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.View;
 
 import com.jess.arms.base.BaseHolder;
