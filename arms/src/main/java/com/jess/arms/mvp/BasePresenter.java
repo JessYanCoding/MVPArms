@@ -46,7 +46,6 @@ import io.reactivex.functions.Action;
 public class BasePresenter<M extends IModel, V extends IView> implements IPresenter, LifecycleObserver {
     protected final String TAG = this.getClass().getSimpleName();
     protected CompositeDisposable mCompositeDisposable;
-
     protected M mModel;
     protected V mRootView;
 

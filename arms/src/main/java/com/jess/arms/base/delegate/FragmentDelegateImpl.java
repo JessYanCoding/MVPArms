@@ -43,7 +43,6 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     private IFragment iFragment;
     private Unbinder mUnbinder;
 
-
     public FragmentDelegateImpl(@NonNull android.support.v4.app.FragmentManager fragmentManager, @NonNull android.support.v4.app.Fragment fragment) {
         this.mFragmentManager = fragmentManager;
         this.mFragment = fragment;

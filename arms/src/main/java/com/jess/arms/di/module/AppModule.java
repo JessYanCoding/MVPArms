@@ -17,6 +17,7 @@ package com.jess.arms.di.module;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 
@@ -73,7 +74,7 @@ public abstract class AppModule {
      */
     @Singleton
     @Provides
-    static AppManager provideAppManager(Application application){
+    static AppManager provideAppManager(Application application) {
         return AppManager.getAppManager().init(application);
     }
 
@@ -99,11 +100,11 @@ public abstract class AppModule {
 
     @Singleton
     @Provides
-    static List<FragmentManager.FragmentLifecycleCallbacks> provideFragmentLifecycles(){
+    static List<FragmentManager.FragmentLifecycleCallbacks> provideFragmentLifecycles() {
         return new ArrayList<>();
     }
 
     public interface GsonConfiguration {
-        void configGson(Context context, GsonBuilder builder);
+        void configGson(@NonNull Context context, @NonNull GsonBuilder builder);
     }
 }

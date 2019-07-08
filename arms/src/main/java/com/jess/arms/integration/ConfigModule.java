@@ -15,8 +15,11 @@
  */
 package com.jess.arms.integration;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.jess.arms.base.delegate.AppLifecycles;
@@ -36,35 +39,34 @@ import java.util.List;
  */
 public interface ConfigModule {
     /**
-     * 使用{@link GlobalConfigModule.Builder}给框架配置一些配置参数
+     * 使用 {@link GlobalConfigModule.Builder} 给框架配置一些配置参数
      *
-     * @param context
-     * @param builder
+     * @param context {@link Context}
+     * @param builder {@link GlobalConfigModule.Builder}
      */
-    void applyOptions(Context context, GlobalConfigModule.Builder builder);
+    void applyOptions(@NonNull Context context, @NonNull GlobalConfigModule.Builder builder);
 
     /**
-     * 使用{@link AppLifecycles}在Application的生命周期中注入一些操作
+     * 使用 {@link AppLifecycles} 在 {@link Application} 的生命周期中注入一些操作
      *
-     * @param context
-     * @param lifecycles
+     * @param context    {@link Context}
+     * @param lifecycles {@link Application} 的生命周期容器, 可向框架中添加多个 {@link Application} 的生命周期类
      */
-    void injectAppLifecycle(Context context, List<AppLifecycles> lifecycles);
+    void injectAppLifecycle(@NonNull Context context, @NonNull List<AppLifecycles> lifecycles);
 
     /**
-     * 使用{@link Application.ActivityLifecycleCallbacks}在Activity的生命周期中注入一些操作
+     * 使用 {@link Application.ActivityLifecycleCallbacks} 在 {@link Activity} 的生命周期中注入一些操作
      *
-     * @param context
-     * @param lifecycles
+     * @param context    {@link Context}
+     * @param lifecycles {@link Activity} 的生命周期容器, 可向框架中添加多个 {@link Activity} 的生命周期类
      */
-    void injectActivityLifecycle(Context context, List<Application.ActivityLifecycleCallbacks> lifecycles);
-
+    void injectActivityLifecycle(@NonNull Context context, @NonNull List<Application.ActivityLifecycleCallbacks> lifecycles);
 
     /**
-     * 使用{@link FragmentManager.FragmentLifecycleCallbacks}在Fragment的生命周期中注入一些操作
+     * 使用 {@link FragmentManager.FragmentLifecycleCallbacks} 在 {@link Fragment} 的生命周期中注入一些操作
      *
-     * @param context
-     * @param lifecycles
+     * @param context    {@link Context}
+     * @param lifecycles {@link Fragment} 的生命周期容器, 可向框架中添加多个 {@link Fragment} 的生命周期类
      */
-    void injectFragmentLifecycle(Context context, List<FragmentManager.FragmentLifecycleCallbacks> lifecycles);
+    void injectFragmentLifecycle(@NonNull Context context, @NonNull List<FragmentManager.FragmentLifecycleCallbacks> lifecycles);
 }

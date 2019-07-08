@@ -39,7 +39,6 @@ public class AdapterViewPager extends FragmentStatePagerAdapter {
         this.mList = list;
     }
 
-
     public AdapterViewPager(FragmentManager fragmentManager, List<Fragment> list, CharSequence[] titles) {
         super(fragmentManager);
         this.mList = list;

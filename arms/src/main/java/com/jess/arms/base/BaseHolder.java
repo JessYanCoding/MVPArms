@@ -15,6 +15,7 @@
  */
 package com.jess.arms.base;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -36,20 +37,21 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
 
     public BaseHolder(View itemView) {
         super(itemView);
-        itemView.setOnClickListener(this);//点击事件
-        if (ThirdViewUtil.isUseAutolayout()) AutoUtils.autoSize(itemView);//适配
-        ThirdViewUtil.bindTarget(this, itemView);//绑定
+        //点击事件
+        itemView.setOnClickListener(this);
+        //屏幕适配
+        if (ThirdViewUtil.isUseAutolayout()) AutoUtils.autoSize(itemView);
+        //绑定 ButterKnife
+        ThirdViewUtil.bindTarget(this, itemView);
     }
-
 
     /**
      * 设置数据
      *
-     * @param data
-     * @param position
+     * @param data     数据
+     * @param position 在 RecyclerView 中的位置
      */
-    public abstract void setData(T data, int position);
-
+    public abstract void setData(@NonNull T data, int position);
 
     /**
      * 在 Activity 的 onDestroy 中使用 {@link DefaultAdapter#releaseAllHolder(RecyclerView)} 方法 (super.onDestroy() 之前)
@@ -66,7 +68,17 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
         }
     }
 
+    /**
+     * item 点击事件
+     */
     public interface OnViewClickListener {
+
+        /**
+         * item 被点击
+         *
+         * @param view     被点击的 {@link View}
+         * @param position 在 RecyclerView 中的位置
+         */
         void onViewClick(View view, int position);
     }
 

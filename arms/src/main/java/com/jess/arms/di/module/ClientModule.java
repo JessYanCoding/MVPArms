@@ -17,6 +17,7 @@ package com.jess.arms.di.module;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -207,14 +208,14 @@ public abstract class ClientModule {
      * {@link Retrofit} 自定义配置接口
      */
     public interface RetrofitConfiguration {
-        void configRetrofit(Context context, Retrofit.Builder builder);
+        void configRetrofit(@NonNull Context context, @NonNull Retrofit.Builder builder);
     }
 
     /**
      * {@link OkHttpClient} 自定义配置接口
      */
     public interface OkhttpConfiguration {
-        void configOkhttp(Context context, OkHttpClient.Builder builder);
+        void configOkhttp(@NonNull Context context, @NonNull OkHttpClient.Builder builder);
     }
 
     /**
@@ -229,6 +230,6 @@ public abstract class ClientModule {
          * @param builder {@link RxCache.Builder}
          * @return {@link RxCache}
          */
-        RxCache configRxCache(Context context, RxCache.Builder builder);
+        RxCache configRxCache(@NonNull Context context, @NonNull RxCache.Builder builder);
     }
 }

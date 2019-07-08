@@ -252,7 +252,6 @@ public final class AppManager {
         return mActivityList.size() > 0 ? mActivityList.get(mActivityList.size() - 1) : null;
     }
 
-
     /**
      * 返回一个存储所有未销毁的 {@link Activity} 的集合
      *
@@ -264,7 +263,6 @@ public final class AppManager {
         }
         return mActivityList;
     }
-
 
     /**
      * 添加 {@link Activity} 到集合
@@ -336,7 +334,6 @@ public final class AppManager {
         }
     }
 
-
     /**
      * 指定的 {@link Activity} 实例是否存活
      *
@@ -350,7 +347,6 @@ public final class AppManager {
         }
         return mActivityList.contains(activity);
     }
-
 
     /**
      * 指定的 {@link Activity} class 是否存活(同一个 {@link Activity} class 可能有多个实例)
@@ -371,7 +367,6 @@ public final class AppManager {
         return false;
     }
 
-
     /**
      * 获取指定 {@link Activity} class 的实例,没有则返回 null(同一个 {@link Activity} class 有多个实例,则返回最早创建的实例)
      *
@@ -390,7 +385,6 @@ public final class AppManager {
         }
         return null;
     }
-
 
     /**
      * 关闭所有 {@link Activity}
@@ -450,7 +444,6 @@ public final class AppManager {
             }
         }
     }
-
 
     /**
      * 退出应用程序

@@ -15,6 +15,7 @@
  */
 package me.jessyan.mvparms.demo.mvp.ui.holder;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,7 +29,6 @@ import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
 
 import butterknife.BindView;
-import io.reactivex.Observable;
 import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
 
@@ -48,19 +48,21 @@ public class UserItemHolder extends BaseHolder<User> {
     @BindView(R.id.tv_name)
     TextView mName;
     private AppComponent mAppComponent;
-    private ImageLoader mImageLoader;//用于加载图片的管理类,默认使用 Glide,使用策略模式,可替换框架
+    /**
+     * 用于加载图片的管理类, 默认使用 Glide, 使用策略模式, 可替换框架
+     */
+    private ImageLoader mImageLoader;
 
     public UserItemHolder(View itemView) {
         super(itemView);
-        //可以在任何可以拿到 Context 的地方,拿到 AppComponent,从而得到用 Dagger 管理的单例对象
+        //可以在任何可以拿到 Context 的地方, 拿到 AppComponent, 从而得到用 Dagger 管理的单例对象
         mAppComponent = ArmsUtils.obtainAppComponentFromContext(itemView.getContext());
         mImageLoader = mAppComponent.imageLoader();
     }
 
     @Override
-    public void setData(User data, int position) {
-        Observable.just(data.getLogin())
-                .subscribe(s -> mName.setText(s));
+    public void setData(@NonNull User data, int position) {
+        mName.setText(data.getLogin());
 
         //itemView 的 Context 就是 Activity, Glide 会自动处理并和该 Activity 的生命周期绑定
         mImageLoader.loadImage(itemView.getContext(),
@@ -70,7 +72,6 @@ public class UserItemHolder extends BaseHolder<User> {
                         .imageView(mAvatar)
                         .build());
     }
-
 
     /**
      * 在 Activity 的 onDestroy 中使用 {@link DefaultAdapter#releaseAllHolder(RecyclerView)} 方法 (super.onDestroy() 之前)

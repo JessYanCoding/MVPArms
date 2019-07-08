@@ -16,6 +16,7 @@
 package com.jess.arms.http.imageloader.glide;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
@@ -52,7 +53,7 @@ public class GlideConfiguration extends AppGlideModule {
     public static final int IMAGE_DISK_CACHE_MAX_SIZE = 100 * 1024 * 1024;//图片缓存文件最大值为100Mb
 
     @Override
-    public void applyOptions(Context context, GlideBuilder builder) {
+    public void applyOptions(@NonNull Context context, @NonNull GlideBuilder builder) {
         final AppComponent appComponent = ArmsUtils.obtainAppComponentFromContext(context);
         builder.setDiskCache(new DiskCache.Factory() {
             @Override
@@ -82,7 +83,7 @@ public class GlideConfiguration extends AppGlideModule {
     }
 
     @Override
-    public void registerComponents(Context context, Glide glide, Registry registry) {
+    public void registerComponents(@NonNull Context context, @NonNull Glide glide, @NonNull Registry registry) {
         //Glide 默认使用 HttpURLConnection 做网络请求,在这切换成 Okhttp 请求
         AppComponent appComponent = ArmsUtils.obtainAppComponentFromContext(context);
         registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(appComponent.okHttpClient()));

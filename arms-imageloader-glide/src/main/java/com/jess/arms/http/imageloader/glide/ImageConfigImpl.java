@@ -124,7 +124,6 @@ public class ImageConfigImpl extends ImageConfig {
         return new Builder();
     }
 
-
     public static final class Builder {
         private String url;
         private ImageView imageView;
@@ -235,7 +234,6 @@ public class ImageConfigImpl extends ImageConfig {
             this.isClearDiskCache = isClearDiskCache;
             return this;
         }
-
 
         public ImageConfigImpl build() {
             return new ImageConfigImpl(this);

@@ -146,7 +146,6 @@ public class DrawableProvider {
         return returnBm;
     }
 
-
     /**
      * 将图片按照某个角度进行旋转
      *
@@ -174,7 +173,6 @@ public class DrawableProvider {
         }
         return returnBm;
     }
-
 
     /**
      * 读取图片的旋转的角度
@@ -206,5 +204,4 @@ public class DrawableProvider {
         }
         return degree;
     }
-
 }
