@@ -130,6 +130,18 @@
 }
 -keepattributes *Annotation*
 
+
+################EventBus###############
+-keepclassmembers class * {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep class org.greenrobot.eventbus.EventBus { *; }
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
+
 ################autolayout###############
 -keep class com.zhy.autolayout.** { *; }
 -keep interface com.zhy.autolayout.** { *; }
