@@ -24,6 +24,7 @@ dependencies {
     api(rootProject.ext.dependencies["glide"]) {
         exclude module: 'support-annotations'
         exclude module: 'support-fragment'
+        exclude module: 'animated-vector-drawable'
     }
     compileOnly project(':arms')
 }
