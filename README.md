@@ -3,7 +3,7 @@
 
 <p align="center">
    <a href="https://bintray.com/jessyancoding/maven/MVPArms/_latestVersion">
-    <img src="https://img.shields.io/badge/Jcenter-v2.5.1-brightgreen.svg?style=flat-square" alt="Latest Stable Version" />
+    <img src="https://img.shields.io/badge/Jcenter-v2.5.2-brightgreen.svg?style=flat-square" alt="Latest Stable Version" />
   </a>
   <a href="https://travis-ci.org/JessYanCoding/MVPArms">
     <img src="https://travis-ci.org/JessYanCoding/MVPArms.svg?branch=master" alt="Build Status" />
