@@ -92,7 +92,7 @@ dependencies {
         exclude module: 'retrofit'
         exclude module: 'okio'
     }
-    api rootProject.ext.dependencies["okhttp4"]
+    api rootProject.ext.dependencies["okhttp3"]
     compileOnly rootProject.ext.dependencies["glide"]
     annotationProcessor(rootProject.ext.dependencies["glide-compiler"]) {
         exclude module: 'jsr305'

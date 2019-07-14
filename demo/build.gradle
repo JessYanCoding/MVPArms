@@ -71,8 +71,8 @@ dependencies {
     implementation rootProject.ext.dependencies["paginate"]
 
     //arms
-//    implementation project(':arms')
-    implementation 'me.jessyan:arms:2.5.1'
+    implementation project(':arms')
+//    implementation 'me.jessyan:arms:2.5.1'
 
     //Arms 核心库不再包含 AndroidAutoLayout, 现在可自行选择屏幕适配方案, 不想使用 AndroidAutoLayout 就不要依赖 arms-autolayout
 //    implementation 'me.jessyan:arms-autolayout:2.5.1'
