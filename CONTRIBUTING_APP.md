@@ -1,11 +1,14 @@
 **如果您使用或基于 MVPArms 开发过开源的 APP 或者 Framework, 恳请您将项目地址 [Pull Request](https://github.com/JessYanCoding/MVPArms/pull/new/master) 到这个页面, 方便更多人学习的同时, 也能为您的开源项目引入更多的流量, 也衷心的希望大家在学习 MVPArms 获得自我提升的同时, 也能帮助其他朋友更快的成长, 将开源精神传递下去!**
 
+**同时也可以给自己的开源项目打上 mvparms 的标签，这样大家就能在 [Topics](https://github.com/topics/mvparms) 中找到您的开源项目**
+
 > **Tips: 以下项目并不能百分百保证完全按照框架的正规流程和正确配置, 大家可以作为参考, 但主要还是以官方 Demo 为准**
 
 <!-- 格式为: [**项目名字** : 项目描述](项目地址) -->
 ### App
 #### Kotlin
 * [**养眼** : 这是一个基于 **MVPArms** 使用 **kotlin** 开发的 **看图 App** (**程序媛建议路过**) ](https://github.com/miaoMiaoDaShi/YangYanNew)
+* [**NoblesSpiritsKotlin** : 这是一个基于 **MVPArms** 使用 **kotlin** 开发的 **Mall App**](https://github.com/miaoMiaoDaShi/YangYanNew)
 
 #### Java
 * [**Hands-Chopping** : 这是一个基于 **MVPArms + ArmsComponent** 开发的包含 **Steam** 和 **杉果** 的组件化客户端](https://github.com/noterpopo/Hands-Chopping)
