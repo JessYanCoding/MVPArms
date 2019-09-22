@@ -17,8 +17,11 @@ package com.jess.arms.integration;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.jess.arms.mvp.IModel;
+
+import retrofit2.Retrofit;
 
 /**
  * ================================================
@@ -66,4 +69,17 @@ public interface IRepositoryManager {
      */
     @NonNull
     Context getContext();
+
+    /**
+     * 设置一个可以委托创建服务的接口
+     *
+     * @param delegate 委托接口，可为空
+     */
+    void setObtainServiceDelegate(@Nullable ObtainServiceDelegate delegate);
+
+    interface ObtainServiceDelegate {
+
+        @Nullable
+        <T> T createRetrofitService(Retrofit retrofit, Class<T> serviceClass);
+    }
 }
