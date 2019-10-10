@@ -23,6 +23,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.Registry;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -157,5 +158,10 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
     @Override
     public void applyGlideOptions(@NonNull Context context, @NonNull GlideBuilder builder) {
         Timber.i("applyGlideOptions");
+    }
+
+    @Override
+    public void registerComponents(@NonNull Context context, @NonNull Glide glide, @NonNull Registry registry) {
+        Timber.i("registerComponents");
     }
 }

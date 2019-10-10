@@ -70,13 +70,6 @@ public interface IRepositoryManager {
     @NonNull
     Context getContext();
 
-    /**
-     * 设置一个可以委托创建服务的接口
-     *
-     * @param delegate 委托接口，可为空
-     */
-    void setObtainServiceDelegate(@Nullable ObtainServiceDelegate delegate);
-
     interface ObtainServiceDelegate {
 
         @Nullable

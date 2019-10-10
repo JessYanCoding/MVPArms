@@ -27,6 +27,7 @@ import com.jess.arms.http.imageloader.BaseImageLoaderStrategy;
 import com.jess.arms.http.log.DefaultFormatPrinter;
 import com.jess.arms.http.log.FormatPrinter;
 import com.jess.arms.http.log.RequestInterceptor;
+import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.integration.cache.CacheType;
 import com.jess.arms.integration.cache.IntelligentCache;
@@ -79,6 +80,7 @@ public class GlobalConfigModule {
     private FormatPrinter mFormatPrinter;
     private Cache.Factory mCacheFactory;
     private ExecutorService mExecutorService;
+    private IRepositoryManager.ObtainServiceDelegate mObtainServiceDelegate;
 
     private GlobalConfigModule(Builder builder) {
         this.mApiUrl = builder.apiUrl;
@@ -96,6 +98,7 @@ public class GlobalConfigModule {
         this.mFormatPrinter = builder.formatPrinter;
         this.mCacheFactory = builder.cacheFactory;
         this.mExecutorService = builder.executorService;
+        this.mObtainServiceDelegate = builder.obtainServiceDelegate;
     }
 
     public static Builder builder() {
@@ -246,6 +249,13 @@ public class GlobalConfigModule {
                 new SynchronousQueue<Runnable>(), Util.threadFactory("Arms Executor", false)) : mExecutorService;
     }
 
+    @Singleton
+    @Provides
+    @Nullable
+    IRepositoryManager.ObtainServiceDelegate provideObtainServiceDelegate() {
+        return mObtainServiceDelegate;
+    }
+
     public static final class Builder {
         private HttpUrl apiUrl;
         private BaseUrl baseUrl;
@@ -262,6 +272,7 @@ public class GlobalConfigModule {
         private FormatPrinter formatPrinter;
         private Cache.Factory cacheFactory;
         private ExecutorService executorService;
+        private IRepositoryManager.ObtainServiceDelegate obtainServiceDelegate;
 
         private Builder() {
         }
@@ -343,6 +354,11 @@ public class GlobalConfigModule {
 
         public Builder executorService(ExecutorService executorService) {
             this.executorService = executorService;
+            return this;
+        }
+
+        public Builder obtainServiceDelegate(IRepositoryManager.ObtainServiceDelegate obtainServiceDelegate) {
+            this.obtainServiceDelegate = obtainServiceDelegate;
             return this;
         }
 
