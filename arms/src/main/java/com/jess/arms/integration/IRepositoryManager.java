@@ -63,6 +63,11 @@ public interface IRepositoryManager {
     void clearAllCache();
 
     /**
+     * 清理Retrofit的缓存
+     */
+    void clearRetrofitCache();
+
+    /**
      * 获取 {@link Context}
      *
      * @return {@link Context}

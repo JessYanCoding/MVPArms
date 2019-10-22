@@ -131,6 +131,16 @@ public class RepositoryManager implements IRepositoryManager {
         mRxCache.get().evictAll().subscribe();
     }
 
+    /**
+     * 清理RetrofitService的缓存
+     */
+    @Override
+    public void clearRetrofitCache() {
+        if (mRetrofitServiceCache != null) {
+            mRetrofitServiceCache.clear();
+        }
+    }
+
     @NonNull
     @Override
     public Context getContext() {
