@@ -8,7 +8,7 @@
 ### App
 #### Kotlin
 * [**养眼** : 这是一个基于 **MVPArms** 使用 **kotlin** 开发的 **看图 App** (**程序媛建议路过**) ](https://github.com/miaoMiaoDaShi/YangYanNew)
-* [**NoblesSpiritsKotlin** : 这是一个基于 **MVPArms** 使用 **kotlin** 开发的 **Mall App**](https://github.com/miaoMiaoDaShi/YangYanNew)
+* [**NoblesSpiritsKotlin** : 这是一个基于 **MVPArms** 使用 **kotlin** 开发的 **Mall App**](https://github.com/haife/NoblesSpiritsKotlin)
 
 #### Java
 * [**Hands-Chopping** : 这是一个基于 **MVPArms + ArmsComponent** 开发的包含 **Steam** 和 **杉果** 的组件化客户端](https://github.com/noterpopo/Hands-Chopping)
