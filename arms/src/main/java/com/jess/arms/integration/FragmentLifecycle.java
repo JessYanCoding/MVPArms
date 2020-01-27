@@ -17,16 +17,19 @@ package com.jess.arms.integration;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import com.jess.arms.base.delegate.FragmentDelegate;
 import com.jess.arms.base.delegate.FragmentDelegateImpl;
 import com.jess.arms.base.delegate.IFragment;
 import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.integration.cache.IntelligentCache;
 import com.jess.arms.utils.Preconditions;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 

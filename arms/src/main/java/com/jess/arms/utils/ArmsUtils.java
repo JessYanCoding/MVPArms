@@ -20,10 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
@@ -35,10 +31,16 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.jess.arms.base.App;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.integration.AppManager;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 /**
@@ -189,7 +191,7 @@ public class ArmsUtils {
      */
     public static <T extends View> T findViewByName(Context context, View view, String viewName) {
         int id = getResources(context).getIdentifier(viewName, "id", context.getPackageName());
-        T v = (T) view.findViewById(id);
+        T v = view.findViewById(id);
         return v;
     }
 
@@ -203,7 +205,7 @@ public class ArmsUtils {
      */
     public static <T extends View> T findViewByName(Context context, Activity activity, String viewName) {
         int id = getResources(context).getIdentifier(viewName, "id", context.getPackageName());
-        T v = (T) activity.findViewById(id);
+        T v = activity.findViewById(id);
         return v;
     }
 
@@ -361,10 +363,7 @@ public class ArmsUtils {
     }
 
     public static boolean isEmpty(Object obj) {
-        if (obj == null) {
-            return true;
-        }
-        return false;
+        return obj == null;
     }
 
     /**
@@ -378,7 +377,7 @@ public class ArmsUtils {
         byte[] hash = new byte[0];
         try {
             hash = MessageDigest.getInstance("MD5").digest(
-                    string.getBytes("UTF-8"));
+                    string.getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
             e.printStackTrace();
         }

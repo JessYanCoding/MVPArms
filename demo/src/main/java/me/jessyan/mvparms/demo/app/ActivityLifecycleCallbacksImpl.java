@@ -19,9 +19,9 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import me.jessyan.mvparms.demo.R;
 import timber.log.Timber;
@@ -52,11 +52,11 @@ public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifec
             //这里全局给Activity设置toolbar和title,你想象力有多丰富,这里就有多强大,以前放到BaseActivity的操作都可以放到这里
             if (activity.findViewById(R.id.toolbar) != null) {
                 if (activity instanceof AppCompatActivity) {
-                    ((AppCompatActivity) activity).setSupportActionBar((Toolbar) activity.findViewById(R.id.toolbar));
+                    ((AppCompatActivity) activity).setSupportActionBar(activity.findViewById(R.id.toolbar));
                     ((AppCompatActivity) activity).getSupportActionBar().setDisplayShowTitleEnabled(false);
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        activity.setActionBar((android.widget.Toolbar) activity.findViewById(R.id.toolbar));
+                        activity.setActionBar(activity.findViewById(R.id.toolbar));
                         activity.getActionBar().setDisplayShowTitleEnabled(false);
                     }
                 }

@@ -15,7 +15,7 @@
  */
 package com.jess.arms.utils;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * ================================================
@@ -104,11 +104,11 @@ public final class Preconditions {
 
     private static String badElementIndex(int index, int size, String desc) {
         if(index < 0) {
-            return format("%s (%s) must not be negative", new Object[]{desc, Integer.valueOf(index)});
+            return format("%s (%s) must not be negative", desc, Integer.valueOf(index));
         } else if(size < 0) {
             throw new IllegalArgumentException((new StringBuilder(26)).append("negative size: ").append(size).toString());
         } else {
-            return format("%s (%s) must be less than size (%s)", new Object[]{desc, Integer.valueOf(index), Integer.valueOf(size)});
+            return format("%s (%s) must be less than size (%s)", desc, Integer.valueOf(index), Integer.valueOf(size));
         }
     }
 
@@ -126,11 +126,11 @@ public final class Preconditions {
 
     private static String badPositionIndex(int index, int size, String desc) {
         if(index < 0) {
-            return format("%s (%s) must not be negative", new Object[]{desc, Integer.valueOf(index)});
+            return format("%s (%s) must not be negative", desc, Integer.valueOf(index));
         } else if(size < 0) {
             throw new IllegalArgumentException((new StringBuilder(26)).append("negative size: ").append(size).toString());
         } else {
-            return format("%s (%s) must not be greater than size (%s)", new Object[]{desc, Integer.valueOf(index), Integer.valueOf(size)});
+            return format("%s (%s) must not be greater than size (%s)", desc, Integer.valueOf(index), Integer.valueOf(size));
         }
     }
 
@@ -141,7 +141,7 @@ public final class Preconditions {
     }
 
     private static String badPositionIndexes(int start, int end, int size) {
-        return start >= 0 && start <= size?(end >= 0 && end <= size?format("end index (%s) must not be less than start index (%s)", new Object[]{Integer.valueOf(end), Integer.valueOf(start)}):badPositionIndex(end, size, "end index")):badPositionIndex(start, size, "start index");
+        return start >= 0 && start <= size ? (end >= 0 && end <= size ? format("end index (%s) must not be less than start index (%s)", Integer.valueOf(end), Integer.valueOf(start)) : badPositionIndex(end, size, "end index")) : badPositionIndex(start, size, "start index");
     }
 
     static String format(String template, @Nullable Object... args) {

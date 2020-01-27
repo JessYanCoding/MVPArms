@@ -15,14 +15,16 @@
  */
 package com.jess.arms.http;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.bumptech.glide.load.Options;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.ModelLoader;
 import com.bumptech.glide.load.model.ModelLoaderFactory;
 import com.bumptech.glide.load.model.MultiModelLoaderFactory;
+
 import java.io.InputStream;
+
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 
