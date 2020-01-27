@@ -55,6 +55,7 @@ public final class ImageLoader {
      */
     public <T extends ImageConfig> void loadImage(Context context, T config) {
         Preconditions.checkNotNull(mStrategy, "Please implement BaseImageLoaderStrategy and call GlobalConfigModule.Builder#imageLoaderStrategy(BaseImageLoaderStrategy) in the applyOptions method of ConfigModule");
+        //noinspection unchecked
         this.mStrategy.loadImage(context, config);
     }
 
@@ -67,6 +68,7 @@ public final class ImageLoader {
      */
     public <T extends ImageConfig> void clear(Context context, T config) {
         Preconditions.checkNotNull(mStrategy, "Please implement BaseImageLoaderStrategy and call GlobalConfigModule.Builder#imageLoaderStrategy(BaseImageLoaderStrategy) in the applyOptions method of ConfigModule");
+        //noinspection unchecked
         this.mStrategy.clear(context, config);
     }
 

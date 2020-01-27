@@ -46,7 +46,9 @@ public class PermissionUtil {
     }
 
     public static void requestPermission(final RequestPermission requestPermission, RxPermissions rxPermissions, RxErrorHandler errorHandler, String... permissions) {
-        if (permissions == null || permissions.length == 0) return;
+        if (permissions == null || permissions.length == 0) {
+            return;
+        }
 
         List<String> needRequest = new ArrayList<>();
         for (String permission : permissions) { //过滤调已经申请过的权限
@@ -59,7 +61,7 @@ public class PermissionUtil {
             requestPermission.onRequestPermissionSuccess();
         } else {//没有申请过,则开始申请
             rxPermissions
-                    .requestEach(needRequest.toArray(new String[needRequest.size()]))
+                    .requestEach(needRequest.toArray(new String[0]))
                     .buffer(permissions.length)
                     .subscribe(new ErrorHandleSubscriber<List<Permission>>(errorHandler) {
                         @Override

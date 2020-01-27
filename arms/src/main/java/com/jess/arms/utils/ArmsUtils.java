@@ -15,11 +15,13 @@
  */
 package com.jess.arms.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
@@ -191,8 +193,7 @@ public class ArmsUtils {
      */
     public static <T extends View> T findViewByName(Context context, View view, String viewName) {
         int id = getResources(context).getIdentifier(viewName, "id", context.getPackageName());
-        T v = view.findViewById(id);
-        return v;
+        return view.findViewById(id);
     }
 
     /**
@@ -205,8 +206,7 @@ public class ArmsUtils {
      */
     public static <T extends View> T findViewByName(Context context, Activity activity, String viewName) {
         int id = getResources(context).getIdentifier(viewName, "id", context.getPackageName());
-        T v = activity.findViewById(id);
-        return v;
+        return activity.findViewById(id);
     }
 
     /**
@@ -216,8 +216,7 @@ public class ArmsUtils {
      * @return
      */
     public static int findLayout(Context context, String layoutName) {
-        int id = getResources(context).getIdentifier(layoutName, "layout", context.getPackageName());
-        return id;
+        return getResources(context).getIdentifier(layoutName, "layout", context.getPackageName());
     }
 
     /**
@@ -235,6 +234,7 @@ public class ArmsUtils {
      *
      * @param string
      */
+    @SuppressLint("ShowToast")
     public static void makeText(Context context, String string) {
         if (mToast == null) {
             mToast = Toast.makeText(context, string, Toast.LENGTH_SHORT);
@@ -376,8 +376,10 @@ public class ArmsUtils {
     public static String encodeToMD5(String string) {
         byte[] hash = new byte[0];
         try {
-            hash = MessageDigest.getInstance("MD5").digest(
-                    string.getBytes(StandardCharsets.UTF_8));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                hash = MessageDigest.getInstance("MD5").digest(
+                        string.getBytes(StandardCharsets.UTF_8));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

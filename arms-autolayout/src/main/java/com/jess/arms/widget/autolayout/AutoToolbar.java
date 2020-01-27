@@ -78,8 +78,9 @@ public class AutoToolbar extends Toolbar {
         TypedArray a = getContext().obtainStyledAttributes(textAppearanceResId,
                 R.styleable.TextAppearance);
         try {
-            if (!DimenUtils.isPxVal(a.peekValue(R.styleable.TextAppearance_android_textSize)))
+            if (!DimenUtils.isPxVal(a.peekValue(R.styleable.TextAppearance_android_textSize))) {
                 return NO_VALID;
+            }
             return a.getDimensionPixelSize(R.styleable.TextAppearance_android_textSize, NO_VALID);
         } finally {
             a.recycle();
@@ -88,11 +89,13 @@ public class AutoToolbar extends Toolbar {
 
     private void setUpTitleTextSize() {
         CharSequence title = getTitle();
-        if (!TextUtils.isEmpty(title) && mTextSize != NO_VALID)
+        if (!TextUtils.isEmpty(title) && mTextSize != NO_VALID) {
             setUpTitleTextSize("mTitleTextView", mTextSize);
+        }
         CharSequence subtitle = getSubtitle();
-        if (!TextUtils.isEmpty(subtitle) && mSubTextSize != NO_VALID)
+        if (!TextUtils.isEmpty(subtitle) && mSubTextSize != NO_VALID) {
             setUpTitleTextSize("mSubtitleTextView", mSubTextSize);
+        }
     }
 
     private void setUpTitleTextSize(String name, int val) {

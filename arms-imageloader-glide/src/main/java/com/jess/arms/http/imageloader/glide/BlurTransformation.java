@@ -40,7 +40,7 @@ public class BlurTransformation extends BitmapTransformation {
     public static final int DEFAULT_RADIUS = 15;
     private static final String ID = BlurTransformation.class.getName();
     private static final byte[] ID_BYTES = ID.getBytes(Key.CHARSET);
-    private int mRadius = DEFAULT_RADIUS;
+    private int mRadius;
 
     public BlurTransformation(@IntRange(from = 0) int radius) {
         mRadius = radius;

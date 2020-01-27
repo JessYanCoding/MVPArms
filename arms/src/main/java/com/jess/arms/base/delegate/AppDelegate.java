@@ -210,12 +210,8 @@ public class AppDelegate implements App, AppLifecycles {
      * 不响应 {@link ComponentCallbacks2#onTrimMemory(int)} 回调, 系统 kill 掉进程的几率更大
      */
     private static class AppComponentCallbacks implements ComponentCallbacks2 {
-        private Application mApplication;
-        private AppComponent mAppComponent;
 
         AppComponentCallbacks(Application application, AppComponent appComponent) {
-            this.mApplication = application;
-            this.mAppComponent = appComponent;
         }
 
         /**

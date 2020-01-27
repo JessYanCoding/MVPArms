@@ -60,8 +60,9 @@ public abstract class AppModule {
     @Provides
     static Gson provideGson(Application application, @Nullable GsonConfiguration configuration) {
         GsonBuilder builder = new GsonBuilder();
-        if (configuration != null)
+        if (configuration != null) {
             configuration.configGson(application, builder);
+        }
         return builder.create();
     }
 
@@ -82,6 +83,7 @@ public abstract class AppModule {
     @Singleton
     @Provides
     static Cache<String, Object> provideExtras(Cache.Factory cacheFactory) {
+        //noinspection unchecked
         return cacheFactory.build(CacheType.EXTRAS);
     }
 

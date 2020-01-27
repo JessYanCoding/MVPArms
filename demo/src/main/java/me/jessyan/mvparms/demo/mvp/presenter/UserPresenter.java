@@ -106,7 +106,9 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
     }
 
     private void requestFromModel(boolean pullToRefresh) {
-        if (pullToRefresh) lastUserId = 1;//下拉刷新默认只请求第一页
+        if (pullToRefresh) {
+            lastUserId = 1;//下拉刷新默认只请求第一页
+        }
 
         //关于RxCache缓存库的使用请参考 http://www.jianshu.com/p/b58ef6b0624b
 
@@ -121,30 +123,35 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .doOnSubscribe(disposable -> {
-                    if (pullToRefresh)
+                    if (pullToRefresh) {
                         mRootView.showLoading();//显示下拉刷新的进度条
-                    else
+                    } else {
                         mRootView.startLoadMore();//显示上拉加载更多的进度条
+                    }
                 }).subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> {
-                    if (pullToRefresh)
+                    if (pullToRefresh) {
                         mRootView.hideLoading();//隐藏下拉刷新的进度条
-                    else
+                    } else {
                         mRootView.endLoadMore();//隐藏上拉加载更多的进度条
+                    }
                 })
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
                 .subscribe(new ErrorHandleSubscriber<List<User>>(mErrorHandler) {
                     @Override
                     public void onNext(List<User> users) {
                         lastUserId = users.get(users.size() - 1).getId();//记录最后一个id,用于下一次请求
-                        if (pullToRefresh) mUsers.clear();//如果是下拉刷新则清空列表
+                        if (pullToRefresh) {
+                            mUsers.clear();//如果是下拉刷新则清空列表
+                        }
                         preEndIndex = mUsers.size();//更新之前列表总长度,用于确定加载更多的起始位置
                         mUsers.addAll(users);
-                        if (pullToRefresh)
+                        if (pullToRefresh) {
                             mAdapter.notifyDataSetChanged();
-                        else
+                        } else {
                             mAdapter.notifyItemRangeInserted(preEndIndex, users.size());
+                        }
                     }
                 });
     }

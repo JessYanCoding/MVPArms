@@ -71,7 +71,9 @@ public class ThirdViewUtil {
     public static View convertAutoView(String name, Context context, AttributeSet attrs) {
         //本框架并不强制您使用 AutoLayout
         //如果您不想使用 AutoLayout, 请不要依赖 AutoLayout, 也不要在 AndroidManifest 中声明 AutoLayout 的 Meta 属性 (design_width, design_height)
-        if (!DEPENDENCY_AUTO_LAYOUT) return null;
+        if (!DEPENDENCY_AUTO_LAYOUT) {
+            return null;
+        }
         if (HAS_AUTO_LAYOUT_META == -1) {
             HAS_AUTO_LAYOUT_META = 1;
             PackageManager packageManager = context.getPackageManager();
@@ -94,12 +96,18 @@ public class ThirdViewUtil {
         }
 
         View view = null;
-        if (name.equals(LAYOUT_FRAMELAYOUT)) {
-            view = new AutoFrameLayout(context, attrs);
-        } else if (name.equals(LAYOUT_LINEARLAYOUT)) {
-            view = new AutoLinearLayout(context, attrs);
-        } else if (name.equals(LAYOUT_RELATIVELAYOUT)) {
-            view = new AutoRelativeLayout(context, attrs);
+        switch (name) {
+            case LAYOUT_FRAMELAYOUT:
+                view = new AutoFrameLayout(context, attrs);
+                break;
+            case LAYOUT_LINEARLAYOUT:
+                view = new AutoLinearLayout(context, attrs);
+                break;
+            case LAYOUT_RELATIVELAYOUT:
+                view = new AutoRelativeLayout(context, attrs);
+                break;
+            default:
+                break;
         }
         return view;
     }

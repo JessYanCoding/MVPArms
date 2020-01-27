@@ -15,6 +15,8 @@
  */
 package com.jess.arms.integration;
 
+import org.greenrobot.eventbus.Subscribe;
+
 import java.lang.reflect.Method;
 
 import static com.jess.arms.base.Platform.DEPENDENCY_ANDROID_EVENTBUS;
@@ -159,11 +161,10 @@ public final class EventBusManager {
                     skipSuperClasses = true;
                 }
             }
-            for (int i = 0; i < allMethods.length; i++) {
-                Method method = allMethods[i];
+            for (Method method : allMethods) {
                 Class<?>[] parameterTypes = method.getParameterTypes();
                 //查看该方法是否含有 Subscribe 注解
-                if (method.isAnnotationPresent(org.greenrobot.eventbus.Subscribe.class) && parameterTypes.length == 1) {
+                if (method.isAnnotationPresent(Subscribe.class) && parameterTypes.length == 1) {
                     return true;
                 }
             } //end for

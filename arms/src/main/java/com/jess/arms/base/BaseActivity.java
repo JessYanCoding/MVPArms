@@ -72,6 +72,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     @Override
     public synchronized Cache<String, Object> provideCache() {
         if (mCache == null) {
+            //noinspection unchecked
             mCache = ArmsUtils.obtainAppComponentFromContext(this).cacheFactory().build(CacheType.ACTIVITY_CACHE);
         }
         return mCache;
@@ -101,7 +102,9 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
                 mUnbinder = ButterKnife.bind(this);
             }
         } catch (Exception e) {
-            if (e instanceof InflateException) throw e;
+            if (e instanceof InflateException) {
+                throw e;
+            }
             e.printStackTrace();
         }
         initData(savedInstanceState);
@@ -110,11 +113,13 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mUnbinder != null && mUnbinder != Unbinder.EMPTY)
+        if (mUnbinder != null && mUnbinder != Unbinder.EMPTY) {
             mUnbinder.unbind();
+        }
         this.mUnbinder = null;
-        if (mPresenter != null)
+        if (mPresenter != null) {
             mPresenter.onDestroy();//释放资源
+        }
         this.mPresenter = null;
     }
 

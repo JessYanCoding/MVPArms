@@ -85,10 +85,10 @@ public class DefaultFormatPrinter implements FormatPrinter {
     private static void logLines(String tag, String[] lines, boolean withLineSize) {
         for (String line : lines) {
             int lineLength = line.length();
-            int MAX_LONG_SIZE = withLineSize ? 110 : lineLength;
-            for (int i = 0; i <= lineLength / MAX_LONG_SIZE; i++) {
-                int start = i * MAX_LONG_SIZE;
-                int end = (i + 1) * MAX_LONG_SIZE;
+            int maxLongSize = withLineSize ? 110 : lineLength;
+            for (int i = 0; i <= lineLength / maxLongSize; i++) {
+                int start = i * maxLongSize;
+                int end = (i + 1) * maxLongSize;
                 end = end > line.length() ? line.length() : end;
                 LogUtils.debugInfo(resolveTag(tag), DEFAULT_LINE + line.substring(start, end));
             }

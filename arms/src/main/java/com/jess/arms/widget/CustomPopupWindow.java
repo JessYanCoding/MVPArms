@@ -82,7 +82,9 @@ public class CustomPopupWindow extends PopupWindow {
         setOutsideTouchable(isOutsideTouch);
         setBackgroundDrawable(mBackgroundDrawable);
         if (mAnimationStyle != -1)//如果设置了动画则使用动画
+        {
             setAnimationStyle(mAnimationStyle);
+        }
         setContentView(mContentView);
     }
 
@@ -162,10 +164,12 @@ public class CustomPopupWindow extends PopupWindow {
         }
 
         public CustomPopupWindow build() {
-            if (contentView == null)
+            if (contentView == null) {
                 throw new IllegalStateException("ContentView is required");
-            if (listener == null)
+            }
+            if (listener == null) {
                 throw new IllegalStateException("CustomPopupWindowListener is required");
+            }
 
             return new CustomPopupWindow(this);
         }

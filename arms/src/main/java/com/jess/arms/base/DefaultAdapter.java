@@ -22,6 +22,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 /**
@@ -36,7 +38,6 @@ import java.util.List;
 public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<T>> {
     protected List<T> mInfos;
     protected OnRecyclerViewItemClickListener mOnItemClickListener = null;
-    private BaseHolder<T> mHolder;
 
     public DefaultAdapter(List<T> infos) {
         super();
@@ -49,11 +50,13 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
      * @param recyclerView {@link RecyclerView}
      */
     public static void releaseAllHolder(RecyclerView recyclerView) {
-        if (recyclerView == null) return;
+        if (recyclerView == null) {
+            return;
+        }
         for (int i = recyclerView.getChildCount() - 1; i >= 0; i--) {
             final View view = recyclerView.getChildAt(i);
             RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
-            if (viewHolder != null && viewHolder instanceof BaseHolder) {
+            if (viewHolder instanceof BaseHolder) {
                 ((BaseHolder) viewHolder).onRelease();
             }
         }
@@ -66,17 +69,16 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<BaseHolder<
      * @param viewType 布局类型
      * @return {@link BaseHolder}
      */
+    @NotNull
     @Override
     public BaseHolder<T> onCreateViewHolder(ViewGroup parent, final int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(getLayoutId(viewType), parent, false);
-        mHolder = getHolder(view, viewType);
+        BaseHolder<T> mHolder = getHolder(view, viewType);
         //设置Item点击事件
-        mHolder.setOnItemClickListener(new BaseHolder.OnViewClickListener() {
-            @Override
-            public void onViewClick(View view, int position) {
-                if (mOnItemClickListener != null && mInfos.size() > 0) {
-                    mOnItemClickListener.onItemClick(view, viewType, mInfos.get(position), position);
-                }
+        mHolder.setOnItemClickListener((view1, position) -> {
+            if (mOnItemClickListener != null && mInfos.size() > 0) {
+                //noinspection unchecked
+                mOnItemClickListener.onItemClick(view1, viewType, mInfos.get(position), position);
             }
         });
         return mHolder;

@@ -64,10 +64,8 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
 
         GlideRequest<Drawable> glideRequest = requests.load(config.getUrl());
 
-        switch (config.getCacheStrategy()) {//缓存策略
-            case CacheStrategy.ALL:
-                glideRequest.diskCacheStrategy(DiskCacheStrategy.ALL);
-                break;
+        switch (config.getCacheStrategy()) {
+            //缓存策略
             case CacheStrategy.NONE:
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.NONE);
                 break;
@@ -110,13 +108,19 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
         }
 
         if (config.getPlaceholder() != 0)//设置占位符
+        {
             glideRequest.placeholder(config.getPlaceholder());
+        }
 
         if (config.getErrorPic() != 0)//设置错误的图片
+        {
             glideRequest.error(config.getErrorPic());
+        }
 
         if (config.getFallback() != 0)//设置请求 url 为空图片
+        {
             glideRequest.fallback(config.getFallback());
+        }
 
         glideRequest
                 .into(config.getImageView());

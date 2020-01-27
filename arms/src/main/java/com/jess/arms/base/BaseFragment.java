@@ -65,6 +65,7 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     @Override
     public synchronized Cache<String, Object> provideCache() {
         if (mCache == null) {
+            //noinspection unchecked
             mCache = ArmsUtils.obtainAppComponentFromContext(getActivity()).cacheFactory().build(CacheType.FRAGMENT_CACHE);
         }
         return mCache;
@@ -91,7 +92,9 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null) mPresenter.onDestroy();//释放资源
+        if (mPresenter != null) {
+            mPresenter.onDestroy();//释放资源
+        }
         this.mPresenter = null;
     }
 

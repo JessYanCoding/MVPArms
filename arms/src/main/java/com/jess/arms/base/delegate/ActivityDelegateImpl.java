@@ -82,8 +82,9 @@ public class ActivityDelegateImpl implements ActivityDelegate {
     @Override
     public void onDestroy() {
         //如果要使用 EventBus 请将此方法返回 true
-        if (iActivity != null && iActivity.useEventBus())
+        if (iActivity != null && iActivity.useEventBus()) {
             EventBusManager.getInstance().unregister(mActivity);
+        }
         this.iActivity = null;
         this.mActivity = null;
     }

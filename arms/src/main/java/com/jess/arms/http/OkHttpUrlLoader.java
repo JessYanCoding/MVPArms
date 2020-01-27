@@ -23,6 +23,8 @@ import com.bumptech.glide.load.model.ModelLoader;
 import com.bumptech.glide.load.model.ModelLoaderFactory;
 import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.InputStream;
 
 import okhttp3.Call;
@@ -90,7 +92,7 @@ public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
 
         @NonNull
         @Override
-        public ModelLoader<GlideUrl, InputStream> build(MultiModelLoaderFactory multiFactory) {
+        public ModelLoader<GlideUrl, InputStream> build(@NotNull MultiModelLoaderFactory multiFactory) {
             return new OkHttpUrlLoader(client);
         }
 
