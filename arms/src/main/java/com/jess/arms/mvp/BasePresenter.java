@@ -84,7 +84,7 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
         //将 LifecycleObserver 注册给 LifecycleOwner 后 @OnLifecycleEvent 才可以正常使用
         if (mRootView != null && mRootView instanceof LifecycleOwner) {
             ((LifecycleOwner) mRootView).getLifecycle().addObserver(this);
-            if (mModel!= null && mModel instanceof LifecycleObserver){
+            if (mModel != null && mModel instanceof LifecycleObserver) {
                 ((LifecycleOwner) mRootView).getLifecycle().addObserver((LifecycleObserver) mModel);
             }
         }

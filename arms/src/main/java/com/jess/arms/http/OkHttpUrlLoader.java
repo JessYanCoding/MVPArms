@@ -61,17 +61,6 @@ public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
         private static volatile Call.Factory internalClient;
         private final Call.Factory client;
 
-        private static Call.Factory getInternalClient() {
-            if (internalClient == null) {
-                synchronized (Factory.class) {
-                    if (internalClient == null) {
-                        internalClient = new OkHttpClient();
-                    }
-                }
-            }
-            return internalClient;
-        }
-
         /**
          * Constructor for a new Factory that runs requests using a static singleton client.
          */
@@ -86,6 +75,17 @@ public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
          */
         public Factory(@NonNull Call.Factory client) {
             this.client = client;
+        }
+
+        private static Call.Factory getInternalClient() {
+            if (internalClient == null) {
+                synchronized (Factory.class) {
+                    if (internalClient == null) {
+                        internalClient = new OkHttpClient();
+                    }
+                }
+            }
+            return internalClient;
         }
 
         @NonNull

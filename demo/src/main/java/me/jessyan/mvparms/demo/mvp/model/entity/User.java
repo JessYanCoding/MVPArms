@@ -49,7 +49,8 @@ public class User {
         return login;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return "id -> " + id + " login -> " + login;
     }
 }

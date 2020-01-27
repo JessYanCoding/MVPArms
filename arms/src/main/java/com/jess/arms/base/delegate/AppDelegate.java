@@ -58,14 +58,14 @@ import javax.inject.Named;
  * ================================================
  */
 public class AppDelegate implements App, AppLifecycles {
-    private Application mApplication;
-    private AppComponent mAppComponent;
     @Inject
     @Named("ActivityLifecycle")
     protected Application.ActivityLifecycleCallbacks mActivityLifecycle;
     @Inject
     @Named("ActivityLifecycleForRxLifecycle")
     protected Application.ActivityLifecycleCallbacks mActivityLifecycleForRxLifecycle;
+    private Application mApplication;
+    private AppComponent mAppComponent;
     private List<ConfigModule> mModules;
     private List<AppLifecycles> mAppLifecycles = new ArrayList<>();
     private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();

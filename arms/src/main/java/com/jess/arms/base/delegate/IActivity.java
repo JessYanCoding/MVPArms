@@ -88,9 +88,9 @@ public interface IActivity {
     /**
      * 这个 Activity 是否会使用 Fragment,框架会根据这个属性判断是否注册 {@link FragmentManager.FragmentLifecycleCallbacks}
      * 如果返回{@code false},那意味着这个 Activity 不需要绑定 Fragment,那你再在这个 Activity 中绑定继承于 {@link BaseFragment} 的 Fragment 将不起任何作用
-     * @see ActivityLifecycle#registerFragmentCallbacks (Fragment 的注册过程)
      *
      * @return
+     * @see ActivityLifecycle#registerFragmentCallbacks (Fragment 的注册过程)
      */
     boolean useFragment();
 }

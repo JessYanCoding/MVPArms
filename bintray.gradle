@@ -3,7 +3,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 
 Properties properties = new Properties()
 boolean isHasFile = false
-if (project.rootProject.findProject('local.properties') != null){
+if (project.rootProject.findProject('local.properties') != null) {
     isHasFile = true
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
 }
@@ -37,7 +37,6 @@ bintray {
     }
     configurations = ['archives']
 }
-
 
 
 install {

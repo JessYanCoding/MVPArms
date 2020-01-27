@@ -55,11 +55,11 @@ import io.reactivex.subjects.Subject;
 public abstract class BaseFragment<P extends IPresenter> extends Fragment implements IFragment, FragmentLifecycleable {
     protected final String TAG = this.getClass().getSimpleName();
     private final BehaviorSubject<FragmentEvent> mLifecycleSubject = BehaviorSubject.create();
-    private Cache<String, Object> mCache;
     protected Context mContext;
     @Inject
     @Nullable
     protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
+    private Cache<String, Object> mCache;
 
     @NonNull
     @Override

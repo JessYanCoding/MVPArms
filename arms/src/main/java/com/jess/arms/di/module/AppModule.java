@@ -79,14 +79,20 @@ public abstract class AppModule {
         return AppManager.getAppManager().init(application);
     }
 
-    @Binds
-    abstract IRepositoryManager bindRepositoryManager(RepositoryManager repositoryManager);
-
     @Singleton
     @Provides
     static Cache<String, Object> provideExtras(Cache.Factory cacheFactory) {
         return cacheFactory.build(CacheType.EXTRAS);
     }
+
+    @Singleton
+    @Provides
+    static List<FragmentManager.FragmentLifecycleCallbacks> provideFragmentLifecycles() {
+        return new ArrayList<>();
+    }
+
+    @Binds
+    abstract IRepositoryManager bindRepositoryManager(RepositoryManager repositoryManager);
 
     @Binds
     @Named("ActivityLifecycle")
@@ -98,12 +104,6 @@ public abstract class AppModule {
 
     @Binds
     abstract FragmentManager.FragmentLifecycleCallbacks bindFragmentLifecycle(FragmentLifecycle fragmentLifecycle);
-
-    @Singleton
-    @Provides
-    static List<FragmentManager.FragmentLifecycleCallbacks> provideFragmentLifecycles() {
-        return new ArrayList<>();
-    }
 
     public interface GsonConfiguration {
         void configGson(@NonNull Context context, @NonNull GsonBuilder builder);

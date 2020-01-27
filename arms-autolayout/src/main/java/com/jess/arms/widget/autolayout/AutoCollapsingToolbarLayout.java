@@ -76,11 +76,6 @@ public class AutoCollapsingToolbarLayout extends CollapsingToolbarLayout {
             mAutoLayoutInfo = AutoLayoutHelper.getAutoLayoutInfo(c, attrs);
         }
 
-        @Override
-        public AutoLayoutInfo getAutoLayoutInfo() {
-            return mAutoLayoutInfo;
-        }
-
         public LayoutParams(int width, int height) {
             super(width, height);
         }
@@ -91,6 +86,11 @@ public class AutoCollapsingToolbarLayout extends CollapsingToolbarLayout {
 
         public LayoutParams(ViewGroup.MarginLayoutParams source) {
             super(source);
+        }
+
+        @Override
+        public AutoLayoutInfo getAutoLayoutInfo() {
+            return mAutoLayoutInfo;
         }
     }
 }

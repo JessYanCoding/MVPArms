@@ -38,8 +38,8 @@ import java.io.ObjectOutputStream;
  * ================================================
  */
 public class DataHelper {
-    private static SharedPreferences mSharedPreferences;
     public static final String SP_NAME = "config";
+    private static SharedPreferences mSharedPreferences;
 
     private DataHelper() {
         throw new IllegalStateException("you can't instantiate me!");

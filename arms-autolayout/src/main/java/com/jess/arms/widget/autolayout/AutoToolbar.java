@@ -45,9 +45,9 @@ import java.lang.reflect.Field;
  */
 public class AutoToolbar extends Toolbar {
     private static final int NO_VALID = -1;
+    private final AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
     private int mTextSize;
     private int mSubTextSize;
-    private final AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
 
     public AutoToolbar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -137,11 +137,6 @@ public class AutoToolbar extends Toolbar {
             this.mDimenLayoutInfo = AutoLayoutHelper.getAutoLayoutInfo(c, attrs);
         }
 
-        @Override
-        public AutoLayoutInfo getAutoLayoutInfo() {
-            return this.mDimenLayoutInfo;
-        }
-
         public LayoutParams(int width, int height) {
             super(width, height);
         }
@@ -152,6 +147,11 @@ public class AutoToolbar extends Toolbar {
 
         public LayoutParams(MarginLayoutParams source) {
             super(source);
+        }
+
+        @Override
+        public AutoLayoutInfo getAutoLayoutInfo() {
+            return this.mDimenLayoutInfo;
         }
     }
 }

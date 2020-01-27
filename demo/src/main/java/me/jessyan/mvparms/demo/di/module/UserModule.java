@@ -46,9 +46,6 @@ import me.jessyan.mvparms.demo.mvp.ui.adapter.UserAdapter;
 @Module
 public abstract class UserModule {
 
-    @Binds
-    abstract UserContract.Model bindUserModel(UserModel model);
-
     @ActivityScope
     @Provides
     static RxPermissions provideRxPermissions(UserContract.View view) {
@@ -69,7 +66,10 @@ public abstract class UserModule {
 
     @ActivityScope
     @Provides
-    static RecyclerView.Adapter provideUserAdapter(List<User> list){
+    static RecyclerView.Adapter provideUserAdapter(List<User> list) {
         return new UserAdapter(list);
     }
+
+    @Binds
+    abstract UserContract.Model bindUserModel(UserModel model);
 }

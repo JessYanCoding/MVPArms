@@ -62,6 +62,18 @@ public class CustomPopupWindow extends PopupWindow {
         return new Builder();
     }
 
+    /**
+     * 用于填充contentView,必须传ContextThemeWrapper(比如activity)不然popupwindow要报错
+     *
+     * @param context
+     * @param layoutId
+     * @return
+     */
+    public static View inflateView(ContextThemeWrapper context, int layoutId) {
+        return LayoutInflater.from(context)
+                .inflate(layoutId, null);
+    }
+
     private void initLayout() {
         mListener.initPopupView(mContentView);
         setWidth(isWrap ? LayoutParams.WRAP_CONTENT : LayoutParams.MATCH_PARENT);
@@ -84,23 +96,16 @@ public class CustomPopupWindow extends PopupWindow {
         return mContentView;
     }
 
-    /**
-     * 用于填充contentView,必须传ContextThemeWrapper(比如activity)不然popupwindow要报错
-     * @param context
-     * @param layoutId
-     * @return
-     */
-    public static View inflateView(ContextThemeWrapper context, int layoutId) {
-        return LayoutInflater.from(context)
-                .inflate(layoutId, null);
-    }
-
     public void show() {//默认显示到中间
         if (mParentView == null) {
             showAtLocation(mContentView, Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
         } else {
             showAtLocation(mParentView, Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
         }
+    }
+
+    public interface CustomPopupWindowListener {
+        void initPopupView(View contentView);
     }
 
     public static final class Builder {
@@ -164,9 +169,5 @@ public class CustomPopupWindow extends PopupWindow {
 
             return new CustomPopupWindow(this);
         }
-    }
-
-    public interface CustomPopupWindowListener {
-        public void initPopupView(View contentView);
     }
 }

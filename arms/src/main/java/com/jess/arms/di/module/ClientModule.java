@@ -148,9 +148,6 @@ public abstract class ClientModule {
         return new OkHttpClient.Builder();
     }
 
-    @Binds
-    abstract Interceptor bindInterceptor(RequestInterceptor interceptor);
-
     /**
      * 提供 {@link RxCache}
      *
@@ -204,6 +201,9 @@ public abstract class ClientModule {
                 .responseErrorListener(listener)
                 .build();
     }
+
+    @Binds
+    abstract Interceptor bindInterceptor(RequestInterceptor interceptor);
 
     /**
      * {@link Retrofit} 自定义配置接口

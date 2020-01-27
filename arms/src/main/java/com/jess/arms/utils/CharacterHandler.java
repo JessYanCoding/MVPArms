@@ -47,10 +47,6 @@ import javax.xml.transform.stream.StreamSource;
  */
 public class CharacterHandler {
 
-    private CharacterHandler() {
-        throw new IllegalStateException("you can't instantiate me!");
-    }
-
     public static final InputFilter emojiFilter = new InputFilter() {//emoji过滤器
         Pattern emoji = Pattern.compile(
                 "[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
@@ -69,6 +65,10 @@ public class CharacterHandler {
         }
     };
 
+    private CharacterHandler() {
+        throw new IllegalStateException("you can't instantiate me!");
+    }
+
     /**
      * 字符串转换成十六进制字符串
      *
@@ -77,7 +77,7 @@ public class CharacterHandler {
     public static String str2HexStr(String str) {
 
         char[] chars = "0123456789ABCDEF".toCharArray();
-        StringBuilder sb = new StringBuilder("");
+        StringBuilder sb = new StringBuilder();
         byte[] bs = str.getBytes();
         int bit;
 

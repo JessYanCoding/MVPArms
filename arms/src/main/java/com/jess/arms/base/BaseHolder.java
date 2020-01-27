@@ -33,8 +33,8 @@ import com.zhy.autolayout.utils.AutoUtils;
  * ================================================
  */
 public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements View.OnClickListener {
-    protected OnViewClickListener mOnViewClickListener = null;
     protected final String TAG = this.getClass().getSimpleName();
+    protected OnViewClickListener mOnViewClickListener = null;
 
     public BaseHolder(View itemView) {
         super(itemView);
@@ -69,6 +69,10 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
         }
     }
 
+    public void setOnItemClickListener(OnViewClickListener listener) {
+        this.mOnViewClickListener = listener;
+    }
+
     /**
      * item 点击事件
      */
@@ -81,9 +85,5 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
          * @param position 在 RecyclerView 中的位置
          */
         void onViewClick(View view, int position);
-    }
-
-    public void setOnItemClickListener(OnViewClickListener listener) {
-        this.mOnViewClickListener = listener;
     }
 }

@@ -70,6 +70,11 @@ public final class ImageLoader {
         this.mStrategy.clear(context, config);
     }
 
+    @Nullable
+    public BaseImageLoaderStrategy getLoadImgStrategy() {
+        return mStrategy;
+    }
+
     /**
      * 可在运行时随意切换 {@link BaseImageLoaderStrategy}
      *
@@ -78,10 +83,5 @@ public final class ImageLoader {
     public void setLoadImgStrategy(BaseImageLoaderStrategy strategy) {
         Preconditions.checkNotNull(strategy, "strategy == null");
         this.mStrategy = strategy;
-    }
-
-    @Nullable
-    public BaseImageLoaderStrategy getLoadImgStrategy() {
-        return mStrategy;
     }
 }

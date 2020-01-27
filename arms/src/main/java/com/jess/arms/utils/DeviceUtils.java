@@ -66,11 +66,11 @@ public class DeviceUtils {
     public static boolean GTE_HC;
     public static boolean GTE_ICS;
     public static boolean PRE_HC;
+    public static float displayDensity = 0.0F;
     private static Boolean _hasBigScreen = null;
     private static Boolean _hasCamera = null;
     private static Boolean _isTablet = null;
     private static Integer _loadFactor = null;
-    public static float displayDensity = 0.0F;
 
     static {
         GTE_ICS = Build.VERSION.SDK_INT >= 14;
@@ -246,10 +246,7 @@ public class DeviceUtils {
                     .hasSystemFeature("android.hardware.camera.front");
             boolean flag1 = pckMgr.hasSystemFeature("android.hardware.camera");
             boolean flag2;
-            if (flag || flag1)
-                flag2 = true;
-            else
-                flag2 = false;
+            flag2 = flag || flag1;
             _hasCamera = Boolean.valueOf(flag2);
         }
         return _hasCamera.booleanValue();
@@ -281,10 +278,7 @@ public class DeviceUtils {
     public static boolean hasInternet(Context context) {
         boolean flag;
         ConnectivityManager manager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (manager != null && manager.getActiveNetworkInfo() != null)
-            flag = true;
-        else
-            flag = false;
+        flag = manager != null && manager.getActiveNetworkInfo() != null;
         return flag;
     }
 
@@ -336,10 +330,7 @@ public class DeviceUtils {
      */
     public static boolean isLandscape(Context context) {
         boolean flag;
-        if (context.getResources().getConfiguration().orientation == 2)
-            flag = true;
-        else
-            flag = false;
+        flag = context.getResources().getConfiguration().orientation == 2;
         return flag;
     }
 
@@ -359,11 +350,8 @@ public class DeviceUtils {
     public static boolean isTablet(Context context) {
         if (_isTablet == null) {
             boolean flag;
-            if ((0xf & context.getResources()
-                    .getConfiguration().screenLayout) >= 3)
-                flag = true;
-            else
-                flag = false;
+            flag = (0xf & context.getResources()
+                    .getConfiguration().screenLayout) >= 3;
             _isTablet = Boolean.valueOf(flag);
         }
         return _isTablet.booleanValue();
@@ -406,10 +394,7 @@ public class DeviceUtils {
     public static boolean isZhCN(Context context) {
         String lang = context.getResources()
                 .getConfiguration().locale.getCountry();
-        if (lang.equalsIgnoreCase("CN")) {
-            return true;
-        }
-        return false;
+        return lang.equalsIgnoreCase("CN");
     }
 
     public static String percent(double p1, double p2) {
@@ -717,11 +702,7 @@ public class DeviceUtils {
 
     public static boolean hasStatusBar(Activity activity) {
         WindowManager.LayoutParams attrs = activity.getWindow().getAttributes();
-        if ((attrs.flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
-            return false;
-        } else {
-            return true;
-        }
+        return (attrs.flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) != WindowManager.LayoutParams.FLAG_FULLSCREEN;
     }
 
     /**
@@ -774,11 +755,8 @@ public class DeviceUtils {
         NetworkInfo mobNetInfo = connectMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         //WIFI连接状态
         NetworkInfo wifiNetInfo = connectMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
-            //当前无可用的网络
-            return false;
-        }
-        return true;
+        //当前无可用的网络
+        return mobNetInfo.isConnected() || wifiNetInfo.isConnected();
     }
 
     /**
@@ -787,11 +765,8 @@ public class DeviceUtils {
      * @return
      */
     public static boolean isExitsSdcard() {
-        if (Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED))
-            return true;
-        else
-            return false;
+        return Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED);
     }
 }
 

@@ -35,6 +35,9 @@ import static com.jess.arms.base.Platform.DEPENDENCY_EVENTBUS;
 public final class EventBusManager {
     private static volatile EventBusManager sInstance;
 
+    private EventBusManager() {
+    }
+
     public static EventBusManager getInstance() {
         if (sInstance == null) {
             synchronized (EventBusManager.class) {
@@ -45,8 +48,6 @@ public final class EventBusManager {
         }
         return sInstance;
     }
-
-    private EventBusManager() { }
 
     /**
      * 注册订阅者, 允许在项目中同时依赖两个 EventBus, 只要您喜欢
@@ -152,9 +153,9 @@ public final class EventBusManager {
             } catch (Throwable th) {
                 try {
                     allMethods = clazz.getMethods();
-                }catch (Throwable th2){
+                } catch (Throwable th2) {
                     continue;
-                }finally {
+                } finally {
                     skipSuperClasses = true;
                 }
             }

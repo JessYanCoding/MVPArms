@@ -62,11 +62,11 @@ import static com.jess.arms.utils.ThirdViewUtil.convertAutoView;
 public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IActivity, ActivityLifecycleable {
     protected final String TAG = this.getClass().getSimpleName();
     private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
-    private Cache<String, Object> mCache;
-    private Unbinder mUnbinder;
     @Inject
     @Nullable
     protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
+    private Cache<String, Object> mCache;
+    private Unbinder mUnbinder;
 
     @NonNull
     @Override

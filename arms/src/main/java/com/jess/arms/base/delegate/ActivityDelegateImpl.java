@@ -45,7 +45,7 @@ public class ActivityDelegateImpl implements ActivityDelegate {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         //如果要使用 EventBus 请将此方法返回 true
-        if (iActivity.useEventBus()){
+        if (iActivity.useEventBus()) {
             //注册到事件主线
             EventBusManager.getInstance().register(mActivity);
         }
