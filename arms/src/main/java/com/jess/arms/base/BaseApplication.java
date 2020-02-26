@@ -17,7 +17,8 @@ package com.jess.arms.base;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.jess.arms.base.delegate.AppDelegate;
 import com.jess.arms.base.delegate.AppLifecycles;
@@ -52,16 +53,18 @@ public class BaseApplication extends Application implements App {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        if (mAppDelegate == null)
+        if (mAppDelegate == null) {
             this.mAppDelegate = new AppDelegate(base);
+        }
         this.mAppDelegate.attachBaseContext(base);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        if (mAppDelegate != null)
+        if (mAppDelegate != null) {
             this.mAppDelegate.onCreate(this);
+        }
     }
 
     /**
@@ -70,15 +73,16 @@ public class BaseApplication extends Application implements App {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        if (mAppDelegate != null)
+        if (mAppDelegate != null) {
             this.mAppDelegate.onTerminate(this);
+        }
     }
 
     /**
      * 将 {@link AppComponent} 返回出去, 供其它地方使用, {@link AppComponent} 接口中声明的方法所返回的实例, 在 {@link #getAppComponent()} 拿到对象后都可以直接使用
      *
-     * @see ArmsUtils#obtainAppComponentFromContext(Context) 可直接获取 {@link AppComponent}
      * @return AppComponent
+     * @see ArmsUtils#obtainAppComponentFromContext(Context) 可直接获取 {@link AppComponent}
      */
     @NonNull
     @Override

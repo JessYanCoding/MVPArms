@@ -17,13 +17,14 @@ package com.jess.arms.mvp;
 
 import android.app.Activity;
 import android.app.Service;
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.OnLifecycleEvent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.SupportActivity;
 import android.view.View;
+
+import androidx.core.app.ComponentActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.OnLifecycleEvent;
 
 import com.jess.arms.integration.EventBusManager;
 import com.jess.arms.utils.Preconditions;
@@ -83,12 +84,14 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
         //将 LifecycleObserver 注册给 LifecycleOwner 后 @OnLifecycleEvent 才可以正常使用
         if (mRootView != null && mRootView instanceof LifecycleOwner) {
             ((LifecycleOwner) mRootView).getLifecycle().addObserver(this);
-            if (mModel!= null && mModel instanceof LifecycleObserver){
+            if (mModel != null && mModel instanceof LifecycleObserver) {
                 ((LifecycleOwner) mRootView).getLifecycle().addObserver((LifecycleObserver) mModel);
             }
         }
         if (useEventBus())//如果要使用 EventBus 请将此方法返回 true
+        {
             EventBusManager.getInstance().register(this);//注册 EventBus
+        }
     }
 
     /**
@@ -97,10 +100,13 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
     @Override
     public void onDestroy() {
         if (useEventBus())//如果要使用 EventBus 请将此方法返回 true
+        {
             EventBusManager.getInstance().unregister(this);//注销 EventBus
+        }
         unDispose();//解除订阅
-        if (mModel != null)
+        if (mModel != null) {
             mModel.onDestroy();
+        }
         this.mModel = null;
         this.mRootView = null;
         this.mCompositeDisposable = null;
@@ -111,7 +117,7 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
      * 所以当您想在 {@link Service} 以及一些自定义 {@link View} 或自定义类中使用 {@code Presenter} 时
      * 您也将不能继续使用 {@link OnLifecycleEvent} 绑定生命周期
      *
-     * @param owner link {@link SupportActivity} and {@link Fragment}
+     * @param owner link {@link ComponentActivity} and {@link Fragment}
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     void onDestroy(LifecycleOwner owner) {

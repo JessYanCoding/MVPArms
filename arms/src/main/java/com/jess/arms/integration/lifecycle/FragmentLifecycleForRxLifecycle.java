@@ -17,12 +17,16 @@ package com.jess.arms.integration.lifecycle;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.trello.rxlifecycle2.RxLifecycle;
 import com.trello.rxlifecycle2.android.FragmentEvent;
+
+import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -46,70 +50,70 @@ public class FragmentLifecycleForRxLifecycle extends FragmentManager.FragmentLif
     }
 
     @Override
-    public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {
+    public void onFragmentAttached(@NotNull @NonNull FragmentManager fm, @NotNull @NonNull Fragment f, @NotNull @NonNull Context context) {
         if (f instanceof FragmentLifecycleable) {
             obtainSubject(f).onNext(FragmentEvent.ATTACH);
         }
     }
 
     @Override
-    public void onFragmentCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState) {
+    public void onFragmentCreated(@NotNull @NonNull FragmentManager fm, @NotNull @NonNull Fragment f, Bundle savedInstanceState) {
         if (f instanceof FragmentLifecycleable) {
             obtainSubject(f).onNext(FragmentEvent.CREATE);
         }
     }
 
     @Override
-    public void onFragmentViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
+    public void onFragmentViewCreated(@NotNull @NonNull FragmentManager fm, @NotNull @NonNull Fragment f, @NotNull @NonNull View v, Bundle savedInstanceState) {
         if (f instanceof FragmentLifecycleable) {
             obtainSubject(f).onNext(FragmentEvent.CREATE_VIEW);
         }
     }
 
     @Override
-    public void onFragmentStarted(FragmentManager fm, Fragment f) {
+    public void onFragmentStarted(@NotNull FragmentManager fm, @NotNull Fragment f) {
         if (f instanceof FragmentLifecycleable) {
             obtainSubject(f).onNext(FragmentEvent.START);
         }
     }
 
     @Override
-    public void onFragmentResumed(FragmentManager fm, Fragment f) {
+    public void onFragmentResumed(@NotNull FragmentManager fm, @NotNull Fragment f) {
         if (f instanceof FragmentLifecycleable) {
             obtainSubject(f).onNext(FragmentEvent.RESUME);
         }
     }
 
     @Override
-    public void onFragmentPaused(FragmentManager fm, Fragment f) {
+    public void onFragmentPaused(@NotNull FragmentManager fm, @NotNull Fragment f) {
         if (f instanceof FragmentLifecycleable) {
             obtainSubject(f).onNext(FragmentEvent.PAUSE);
         }
     }
 
     @Override
-    public void onFragmentStopped(FragmentManager fm, Fragment f) {
+    public void onFragmentStopped(@NotNull FragmentManager fm, @NotNull Fragment f) {
         if (f instanceof FragmentLifecycleable) {
             obtainSubject(f).onNext(FragmentEvent.STOP);
         }
     }
 
     @Override
-    public void onFragmentViewDestroyed(FragmentManager fm, Fragment f) {
+    public void onFragmentViewDestroyed(@NotNull FragmentManager fm, @NotNull Fragment f) {
         if (f instanceof FragmentLifecycleable) {
             obtainSubject(f).onNext(FragmentEvent.DESTROY_VIEW);
         }
     }
 
     @Override
-    public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
+    public void onFragmentDestroyed(@NotNull FragmentManager fm, @NotNull Fragment f) {
         if (f instanceof FragmentLifecycleable) {
             obtainSubject(f).onNext(FragmentEvent.DESTROY);
         }
     }
 
     @Override
-    public void onFragmentDetached(FragmentManager fm, Fragment f) {
+    public void onFragmentDetached(@NotNull FragmentManager fm, @NotNull Fragment f) {
         if (f instanceof FragmentLifecycleable) {
             obtainSubject(f).onNext(FragmentEvent.DETACH);
         }

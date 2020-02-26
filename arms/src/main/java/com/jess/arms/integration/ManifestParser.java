@@ -40,25 +40,6 @@ public final class ManifestParser {
         this.context = context;
     }
 
-    public List<ConfigModule> parse() {
-        List<ConfigModule> modules = new ArrayList<ConfigModule>();
-        try {
-            ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(
-                    context.getPackageName(), PackageManager.GET_META_DATA);
-            if (appInfo.metaData != null) {
-                for (String key : appInfo.metaData.keySet()) {
-                    if (MODULE_VALUE.equals(appInfo.metaData.get(key))) {
-                        modules.add(parseModule(key));
-                    }
-                }
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            throw new RuntimeException("Unable to find metadata to parse ConfigModule", e);
-        }
-
-        return modules;
-    }
-
     private static ConfigModule parseModule(String className) {
         Class<?> clazz;
         try {
@@ -80,5 +61,24 @@ public final class ManifestParser {
             throw new RuntimeException("Expected instanceof ConfigModule, but found: " + module);
         }
         return (ConfigModule) module;
+    }
+
+    public List<ConfigModule> parse() {
+        List<ConfigModule> modules = new ArrayList<>();
+        try {
+            ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(
+                    context.getPackageName(), PackageManager.GET_META_DATA);
+            if (appInfo.metaData != null) {
+                for (String key : appInfo.metaData.keySet()) {
+                    if (MODULE_VALUE.equals(appInfo.metaData.get(key))) {
+                        modules.add(parseModule(key));
+                    }
+                }
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new RuntimeException("Unable to find metadata to parse ConfigModule", e);
+        }
+
+        return modules;
     }
 }

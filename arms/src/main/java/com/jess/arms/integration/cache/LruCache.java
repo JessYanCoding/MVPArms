@@ -16,7 +16,8 @@
 package com.jess.arms.integration.cache;
 
 import android.app.Application;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.jess.arms.di.module.GlobalConfigModule;
 

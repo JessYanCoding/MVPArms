@@ -15,7 +15,7 @@
  */
 package com.jess.arms.http.log;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.GlobalHttpHandler;
@@ -64,27 +64,105 @@ public class RequestInterceptor implements Interceptor {
     @Inject
     Level printLevel;
 
-    public enum Level {
-        /**
-         * 不打印log
-         */
-        NONE,
-        /**
-         * 只打印请求信息
-         */
-        REQUEST,
-        /**
-         * 只打印响应信息
-         */
-        RESPONSE,
-        /**
-         * 所有数据全部打印
-         */
-        ALL
-    }
-
     @Inject
     public RequestInterceptor() {
+    }
+
+    /**
+     * 解析请求服务器的请求参数
+     *
+     * @param request {@link Request}
+     * @return 解析后的请求信息
+     * @throws UnsupportedEncodingException
+     */
+    public static String parseParams(Request request) throws UnsupportedEncodingException {
+        try {
+            RequestBody body = request.newBuilder().build().body();
+            if (body == null) {
+                return "";
+            }
+            Buffer requestbuffer = new Buffer();
+            body.writeTo(requestbuffer);
+            Charset charset = Charset.forName("UTF-8");
+            MediaType contentType = body.contentType();
+            if (contentType != null) {
+                charset = contentType.charset(charset);
+            }
+            String json = requestbuffer.readString(charset);
+            if (UrlEncoderUtils.hasUrlEncoded(json)) {
+                json = URLDecoder.decode(json, convertCharset(charset));
+            }
+            return CharacterHandler.jsonFormat(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "{\"error\": \"" + e.getMessage() + "\"}";
+        }
+    }
+
+    /**
+     * 是否可以解析
+     *
+     * @param mediaType {@link MediaType}
+     * @return {@code true} 为可以解析
+     */
+    public static boolean isParseable(MediaType mediaType) {
+        if (mediaType == null || mediaType.type() == null) {
+            return false;
+        }
+        return isText(mediaType) || isPlain(mediaType)
+                || isJson(mediaType) || isForm(mediaType)
+                || isHtml(mediaType) || isXml(mediaType);
+    }
+
+    public static boolean isText(MediaType mediaType) {
+        if (mediaType == null || mediaType.type() == null) {
+            return false;
+        }
+        return "text".equals(mediaType.type());
+    }
+
+    public static boolean isPlain(MediaType mediaType) {
+        if (mediaType == null || mediaType.subtype() == null) {
+            return false;
+        }
+        return mediaType.subtype().toLowerCase().contains("plain");
+    }
+
+    public static boolean isJson(MediaType mediaType) {
+        if (mediaType == null || mediaType.subtype() == null) {
+            return false;
+        }
+        return mediaType.subtype().toLowerCase().contains("json");
+    }
+
+    public static boolean isXml(MediaType mediaType) {
+        if (mediaType == null || mediaType.subtype() == null) {
+            return false;
+        }
+        return mediaType.subtype().toLowerCase().contains("xml");
+    }
+
+    public static boolean isHtml(MediaType mediaType) {
+        if (mediaType == null || mediaType.subtype() == null) {
+            return false;
+        }
+        return mediaType.subtype().toLowerCase().contains("html");
+    }
+
+    public static boolean isForm(MediaType mediaType) {
+        if (mediaType == null || mediaType.subtype() == null) {
+            return false;
+        }
+        return mediaType.subtype().toLowerCase().contains("x-www-form-urlencoded");
+    }
+
+    public static String convertCharset(Charset charset) {
+        String s = charset.toString();
+        int i = s.indexOf("[");
+        if (i == -1) {
+            return s;
+        }
+        return s.substring(i + 1, s.length() - 1);
     }
 
     @Override
@@ -109,7 +187,7 @@ public class RequestInterceptor implements Interceptor {
         try {
             originalResponse = chain.proceed(request);
         } catch (Exception e) {
-            Timber.w("Http Error: " + e);
+            Timber.w("Http Error: %s", e);
             throw e;
         }
         long t2 = logResponse ? System.nanoTime() : 0;
@@ -141,7 +219,9 @@ public class RequestInterceptor implements Interceptor {
         }
 
         if (mHandler != null)//这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
+        {
             return mHandler.onHttpResultResponse(bodyString, chain, originalResponse);
+        }
 
         return originalResponse;
     }
@@ -193,92 +273,35 @@ public class RequestInterceptor implements Interceptor {
         if (contentType != null) {
             charset = contentType.charset(charset);
         }
-        if (encoding != null && encoding.equalsIgnoreCase("gzip")) {//content 使用 gzip 压缩
-            return ZipHelper.decompressForGzip(clone.readByteArray(), convertCharset(charset));//解压
-        } else if (encoding != null && encoding.equalsIgnoreCase("zlib")) {//content 使用 zlib 压缩
-            return ZipHelper.decompressToStringForZlib(clone.readByteArray(), convertCharset(charset));//解压
-        } else {//content 没有被压缩, 或者使用其他未知压缩方式
+        //content 使用 gzip 压缩
+        if ("gzip".equalsIgnoreCase(encoding)) {
+            //解压
+            return ZipHelper.decompressForGzip(clone.readByteArray(), convertCharset(charset));
+        } else if ("zlib".equalsIgnoreCase(encoding)) {
+            //content 使用 zlib 压缩
+            return ZipHelper.decompressToStringForZlib(clone.readByteArray(), convertCharset(charset));
+        } else {
+            //content 没有被压缩, 或者使用其他未知压缩方式
             return clone.readString(charset);
         }
     }
 
-    /**
-     * 解析请求服务器的请求参数
-     *
-     * @param request {@link Request}
-     * @return 解析后的请求信息
-     * @throws UnsupportedEncodingException
-     */
-    public static String parseParams(Request request) throws UnsupportedEncodingException {
-        try {
-            RequestBody body = request.newBuilder().build().body();
-            if (body == null) return "";
-            Buffer requestbuffer = new Buffer();
-            body.writeTo(requestbuffer);
-            Charset charset = Charset.forName("UTF-8");
-            MediaType contentType = body.contentType();
-            if (contentType != null) {
-                charset = contentType.charset(charset);
-            }
-            String json = requestbuffer.readString(charset);
-            if (UrlEncoderUtils.hasUrlEncoded(json)) {
-                json = URLDecoder.decode(json, convertCharset(charset));
-            }
-            return CharacterHandler.jsonFormat(json);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "{\"error\": \"" + e.getMessage() + "\"}";
-        }
-    }
-
-    /**
-     * 是否可以解析
-     *
-     * @param mediaType {@link MediaType}
-     * @return {@code true} 为可以解析
-     */
-    public static boolean isParseable(MediaType mediaType) {
-        if (mediaType == null || mediaType.type() == null) return false;
-        return isText(mediaType) || isPlain(mediaType)
-                || isJson(mediaType) || isForm(mediaType)
-                || isHtml(mediaType) || isXml(mediaType);
-    }
-
-    public static boolean isText(MediaType mediaType) {
-        if (mediaType == null || mediaType.type() == null) return false;
-        return mediaType.type().equals("text");
-    }
-
-    public static boolean isPlain(MediaType mediaType) {
-        if (mediaType == null || mediaType.subtype() == null) return false;
-        return mediaType.subtype().toLowerCase().contains("plain");
-    }
-
-    public static boolean isJson(MediaType mediaType) {
-        if (mediaType == null || mediaType.subtype() == null) return false;
-        return mediaType.subtype().toLowerCase().contains("json");
-    }
-
-    public static boolean isXml(MediaType mediaType) {
-        if (mediaType == null || mediaType.subtype() == null) return false;
-        return mediaType.subtype().toLowerCase().contains("xml");
-    }
-
-    public static boolean isHtml(MediaType mediaType) {
-        if (mediaType == null || mediaType.subtype() == null) return false;
-        return mediaType.subtype().toLowerCase().contains("html");
-    }
-
-    public static boolean isForm(MediaType mediaType) {
-        if (mediaType == null || mediaType.subtype() == null) return false;
-        return mediaType.subtype().toLowerCase().contains("x-www-form-urlencoded");
-    }
-
-    public static String convertCharset(Charset charset) {
-        String s = charset.toString();
-        int i = s.indexOf("[");
-        if (i == -1)
-            return s;
-        return s.substring(i + 1, s.length() - 1);
+    public enum Level {
+        /**
+         * 不打印log
+         */
+        NONE,
+        /**
+         * 只打印请求信息
+         */
+        REQUEST,
+        /**
+         * 只打印响应信息
+         */
+        RESPONSE,
+        /**
+         * 所有数据全部打印
+         */
+        ALL
     }
 }

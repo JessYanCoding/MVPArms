@@ -16,9 +16,9 @@
 package com.jess.arms.di.module;
 
 import android.app.Application;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
+
+import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.jess.arms.http.BaseUrl;
@@ -216,22 +216,18 @@ public class GlobalConfigModule {
     @Singleton
     @Provides
     Cache.Factory provideCacheFactory(Application application) {
-        return mCacheFactory == null ? new Cache.Factory() {
-            @NonNull
-            @Override
-            public Cache build(CacheType type) {
-                //若想自定义 LruCache 的 size, 或者不想使用 LruCache, 想使用自己自定义的策略
-                //使用 GlobalConfigModule.Builder#cacheFactory() 即可扩展
-                switch (type.getCacheTypeId()) {
-                    //Activity、Fragment 以及 Extras 使用 IntelligentCache (具有 LruCache 和 可永久存储数据的 Map)
-                    case CacheType.EXTRAS_TYPE_ID:
-                    case CacheType.ACTIVITY_CACHE_TYPE_ID:
-                    case CacheType.FRAGMENT_CACHE_TYPE_ID:
-                        return new IntelligentCache(type.calculateCacheSize(application));
-                    //其余使用 LruCache (当达到最大容量时可根据 LRU 算法抛弃不合规数据)
-                    default:
-                        return new LruCache(type.calculateCacheSize(application));
-                }
+        return mCacheFactory == null ? type -> {
+            //若想自定义 LruCache 的 size, 或者不想使用 LruCache, 想使用自己自定义的策略
+            //使用 GlobalConfigModule.Builder#cacheFactory() 即可扩展
+            switch (type.getCacheTypeId()) {
+                //Activity、Fragment 以及 Extras 使用 IntelligentCache (具有 LruCache 和 可永久存储数据的 Map)
+                case CacheType.EXTRAS_TYPE_ID:
+                case CacheType.ACTIVITY_CACHE_TYPE_ID:
+                case CacheType.FRAGMENT_CACHE_TYPE_ID:
+                    return new IntelligentCache(type.calculateCacheSize(application));
+                //其余使用 LruCache (当达到最大容量时可根据 LRU 算法抛弃不合规数据)
+                default:
+                    return new LruCache(type.calculateCacheSize(application));
             }
         } : mCacheFactory;
     }
@@ -246,7 +242,7 @@ public class GlobalConfigModule {
     @Provides
     ExecutorService provideExecutorService() {
         return mExecutorService == null ? new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60, TimeUnit.SECONDS,
-                new SynchronousQueue<Runnable>(), Util.threadFactory("Arms Executor", false)) : mExecutorService;
+                new SynchronousQueue<>(), Util.threadFactory("Arms Executor", false)) : mExecutorService;
     }
 
     @Singleton
@@ -301,8 +297,9 @@ public class GlobalConfigModule {
         }
 
         public Builder addInterceptor(Interceptor interceptor) {//动态添加任意个interceptor
-            if (interceptors == null)
+            if (interceptors == null) {
                 interceptors = new ArrayList<>();
+            }
             this.interceptors.add(interceptor);
             return this;
         }

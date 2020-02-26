@@ -22,10 +22,11 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.utils.ArmsUtils;
 
@@ -36,7 +37,6 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Action;
 import timber.log.Timber;
 
 import static com.jess.arms.base.Platform.DEPENDENCY_SUPPORT_DESIGN;
@@ -52,12 +52,12 @@ import static com.jess.arms.base.Platform.DEPENDENCY_SUPPORT_DESIGN;
  * ================================================
  */
 public final class AppManager {
-    protected final String TAG = this.getClass().getSimpleName();
     /**
      * true 为不需要加入到 Activity 容器进行统一管理,默认为 false
      */
     public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list";
     private static volatile AppManager sAppManager;
+    protected final String TAG = this.getClass().getSimpleName();
     private Application mApplication;
     /**
      * 管理所有存活的 Activity, 容器中的顺序仅仅是 Activity 的创建顺序, 并不能保证和 Activity 任务栈顺序一致
@@ -86,6 +86,18 @@ public final class AppManager {
             }
         }
         return sAppManager;
+    }
+
+    /**
+     * 此方法作废, 现在可通过 {@link AppManager#getAppManager()} 直接访问 {@link AppManager}
+     * <p>
+     * 通过此方法远程遥控 {@link AppManager}, 使 {@link #onReceive(Message)} 执行对应方法
+     *
+     * @param msg {@link Message}
+     */
+    @Deprecated
+    public static void post(Message msg) {
+        getAppManager().onReceive(msg);
     }
 
     public AppManager init(Application application) {
@@ -127,18 +139,6 @@ public final class AppManager {
     }
 
     /**
-     * 此方法作废, 现在可通过 {@link AppManager#getAppManager()} 直接访问 {@link AppManager}
-     * <p>
-     * 通过此方法远程遥控 {@link AppManager}, 使 {@link #onReceive(Message)} 执行对应方法
-     *
-     * @param msg {@link Message}
-     */
-    @Deprecated
-    public static void post(Message msg) {
-        getAppManager().onReceive(msg);
-    }
-
-    /**
      * 让在前台的 {@link Activity}, 使用 {@link Snackbar} 显示文本内容
      *
      * @param message
@@ -149,20 +149,17 @@ public final class AppManager {
             Timber.tag(TAG).w("mCurrentActivity == null when showSnackbar(String,boolean)");
             return;
         }
-        Completable.fromAction(new Action() {
-            @Override
-            public void run() throws Exception {
-                //Arms 已将 com.android.support:design 从依赖中移除 (目的是减小 Arms 体积, design 库中含有太多 View)
-                //因为 Snackbar 在 com.android.support:design 库中, 所以如果框架使用者没有自行依赖 com.android.support:design
-                //Arms 则会使用 Toast 替代 Snackbar 显示信息, 如果框架使用者依赖了 arms-autolayout 库就不用依赖 com.android.support:design 了
-                //因为在 arms-autolayout 库中已经依赖有 com.android.support:design
-                if (DEPENDENCY_SUPPORT_DESIGN) {
-                    Activity activity = getCurrentActivity() == null ? getTopActivity() : getCurrentActivity();
-                    View view = activity.getWindow().getDecorView().findViewById(android.R.id.content);
-                    Snackbar.make(view, message, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
-                } else {
-                    ArmsUtils.makeText(mApplication, message);
-                }
+        Completable.fromAction(() -> {
+            //Arms 已将 com.android.support:design 从依赖中移除 (目的是减小 Arms 体积, design 库中含有太多 View)
+            //因为 Snackbar 在 com.android.support:design 库中, 所以如果框架使用者没有自行依赖 com.android.support:design
+            //Arms 则会使用 Toast 替代 Snackbar 显示信息, 如果框架使用者依赖了 arms-autolayout 库就不用依赖 com.android.support:design 了
+            //因为在 arms-autolayout 库中已经依赖有 com.android.support:design
+            if (DEPENDENCY_SUPPORT_DESIGN) {
+                Activity activity = getCurrentActivity() == null ? getTopActivity() : getCurrentActivity();
+                View view = activity.getWindow().getDecorView().findViewById(android.R.id.content);
+                Snackbar.make(view, message, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
+            } else {
+                ArmsUtils.makeText(mApplication, message);
             }
         }).subscribeOn(AndroidSchedulers.mainThread()).subscribe();
 
@@ -205,18 +202,6 @@ public final class AppManager {
     }
 
     /**
-     * 将在前台的 {@link Activity} 赋值给 {@code currentActivity}, 注意此方法是在 {@link Activity#onResume} 方法执行时将栈顶的 {@link Activity} 赋值给 {@code currentActivity}
-     * 所以在栈顶的 {@link Activity} 执行 {@link Activity#onCreate} 方法时使用 {@link #getCurrentActivity()} 获取的就不是当前栈顶的 {@link Activity}, 可能是上一个 {@link Activity}
-     * 如果在 App 启动第一个 {@link Activity} 执行 {@link Activity#onCreate} 方法时使用 {@link #getCurrentActivity()} 则会出现返回为 {@code null} 的情况
-     * 想避免这种情况请使用 {@link #getTopActivity()}
-     *
-     * @param currentActivity
-     */
-    public void setCurrentActivity(Activity currentActivity) {
-        this.mCurrentActivity = currentActivity;
-    }
-
-    /**
      * 获取在前台的 {@link Activity} (保证获取到的 {@link Activity} 正处于可见状态, 即未调用 {@link Activity#onStop()}), 获取的 {@link Activity} 存续时间
      * 是在 {@link Activity#onStop()} 之前, 所以如果当此 {@link Activity} 调用 {@link Activity#onStop()} 方法之后, 没有其他的 {@link Activity} 回到前台(用户返回桌面或者打开了其他 App 会出现此状况)
      * 这时调用 {@link #getCurrentActivity()} 有可能返回 {@code null}, 所以请注意使用场景和 {@link #getTopActivity()} 不一样
@@ -231,6 +216,18 @@ public final class AppManager {
     @Nullable
     public Activity getCurrentActivity() {
         return mCurrentActivity;
+    }
+
+    /**
+     * 将在前台的 {@link Activity} 赋值给 {@code currentActivity}, 注意此方法是在 {@link Activity#onResume} 方法执行时将栈顶的 {@link Activity} 赋值给 {@code currentActivity}
+     * 所以在栈顶的 {@link Activity} 执行 {@link Activity#onCreate} 方法时使用 {@link #getCurrentActivity()} 获取的就不是当前栈顶的 {@link Activity}, 可能是上一个 {@link Activity}
+     * 如果在 App 启动第一个 {@link Activity} 执行 {@link Activity#onCreate} 方法时使用 {@link #getCurrentActivity()} 则会出现返回为 {@code null} 的情况
+     * 想避免这种情况请使用 {@link #getTopActivity()}
+     *
+     * @param currentActivity
+     */
+    public void setCurrentActivity(Activity currentActivity) {
+        this.mCurrentActivity = currentActivity;
     }
 
     /**
@@ -287,9 +284,7 @@ public final class AppManager {
             return;
         }
         synchronized (AppManager.class) {
-            if (mActivityList.contains(activity)) {
-                mActivityList.remove(activity);
-            }
+            mActivityList.remove(activity);
         }
     }
 
@@ -415,8 +410,9 @@ public final class AppManager {
             while (iterator.hasNext()) {
                 Activity next = iterator.next();
 
-                if (excludeList.contains(next.getClass()))
+                if (excludeList.contains(next.getClass())) {
                     continue;
+                }
 
                 iterator.remove();
                 next.finish();
@@ -436,8 +432,9 @@ public final class AppManager {
             while (iterator.hasNext()) {
                 Activity next = iterator.next();
 
-                if (excludeList.contains(next.getClass().getName()))
+                if (excludeList.contains(next.getClass().getName())) {
                     continue;
+                }
 
                 iterator.remove();
                 next.finish();

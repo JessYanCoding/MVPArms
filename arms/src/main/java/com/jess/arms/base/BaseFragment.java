@@ -17,12 +17,13 @@ package com.jess.arms.base;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.jess.arms.base.delegate.IFragment;
 import com.jess.arms.integration.cache.Cache;
@@ -54,16 +55,17 @@ import io.reactivex.subjects.Subject;
 public abstract class BaseFragment<P extends IPresenter> extends Fragment implements IFragment, FragmentLifecycleable {
     protected final String TAG = this.getClass().getSimpleName();
     private final BehaviorSubject<FragmentEvent> mLifecycleSubject = BehaviorSubject.create();
-    private Cache<String, Object> mCache;
     protected Context mContext;
     @Inject
     @Nullable
     protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
+    private Cache<String, Object> mCache;
 
     @NonNull
     @Override
     public synchronized Cache<String, Object> provideCache() {
         if (mCache == null) {
+            //noinspection unchecked
             mCache = ArmsUtils.obtainAppComponentFromContext(getActivity()).cacheFactory().build(CacheType.FRAGMENT_CACHE);
         }
         return mCache;
@@ -90,7 +92,9 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null) mPresenter.onDestroy();//释放资源
+        if (mPresenter != null) {
+            mPresenter.onDestroy();//释放资源
+        }
         this.mPresenter = null;
     }
 

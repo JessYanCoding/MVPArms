@@ -18,12 +18,13 @@ package com.jess.arms.base.delegate;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
@@ -120,7 +121,7 @@ public interface IFragment {
      * data.arg1 = 1;
      * fragment.setData(data);
      * </pre>
-     *
+     * <p>
      * {@link #setData(Object)} 框架是不会调用的, 是拿给开发者自己去调用的, 让 {@link Activity} 或者其他类可以和 {@link Fragment} 通信,
      * 并且因为 {@link #setData(Object)} 是 {@link IFragment} 的方法, 所以你可以通过多态, 持有父类,
      * 不持有具体子类的方式就可以和子类 {@link Fragment} 通信, 这样如果需要替换子类, 就不会影响到其他地方,

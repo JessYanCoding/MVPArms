@@ -16,8 +16,9 @@
 package com.jess.arms.http.imageloader.glide;
 
 import android.graphics.Bitmap;
-import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
 
 import com.bumptech.glide.load.Key;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
@@ -36,10 +37,10 @@ import java.security.MessageDigest;
  * ================================================
  */
 public class BlurTransformation extends BitmapTransformation {
+    public static final int DEFAULT_RADIUS = 15;
     private static final String ID = BlurTransformation.class.getName();
     private static final byte[] ID_BYTES = ID.getBytes(Key.CHARSET);
-    public static final int DEFAULT_RADIUS = 15;
-    private int mRadius = DEFAULT_RADIUS;
+    private int mRadius;
 
     public BlurTransformation(@IntRange(from = 0) int radius) {
         mRadius = radius;

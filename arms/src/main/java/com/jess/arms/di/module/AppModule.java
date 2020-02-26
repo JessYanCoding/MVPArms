@@ -17,9 +17,10 @@ package com.jess.arms.di.module;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -59,8 +60,9 @@ public abstract class AppModule {
     @Provides
     static Gson provideGson(Application application, @Nullable GsonConfiguration configuration) {
         GsonBuilder builder = new GsonBuilder();
-        if (configuration != null)
+        if (configuration != null) {
             configuration.configGson(application, builder);
+        }
         return builder.create();
     }
 
@@ -78,14 +80,21 @@ public abstract class AppModule {
         return AppManager.getAppManager().init(application);
     }
 
-    @Binds
-    abstract IRepositoryManager bindRepositoryManager(RepositoryManager repositoryManager);
-
     @Singleton
     @Provides
     static Cache<String, Object> provideExtras(Cache.Factory cacheFactory) {
+        //noinspection unchecked
         return cacheFactory.build(CacheType.EXTRAS);
     }
+
+    @Singleton
+    @Provides
+    static List<FragmentManager.FragmentLifecycleCallbacks> provideFragmentLifecycles() {
+        return new ArrayList<>();
+    }
+
+    @Binds
+    abstract IRepositoryManager bindRepositoryManager(RepositoryManager repositoryManager);
 
     @Binds
     @Named("ActivityLifecycle")
@@ -97,12 +106,6 @@ public abstract class AppModule {
 
     @Binds
     abstract FragmentManager.FragmentLifecycleCallbacks bindFragmentLifecycle(FragmentLifecycle fragmentLifecycle);
-
-    @Singleton
-    @Provides
-    static List<FragmentManager.FragmentLifecycleCallbacks> provideFragmentLifecycles() {
-        return new ArrayList<>();
-    }
 
     public interface GsonConfiguration {
         void configGson(@NonNull Context context, @NonNull GsonBuilder builder);

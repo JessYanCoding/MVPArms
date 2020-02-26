@@ -66,11 +66,11 @@ public class DeviceUtils {
     public static boolean GTE_HC;
     public static boolean GTE_ICS;
     public static boolean PRE_HC;
+    public static float displayDensity = 0.0F;
     private static Boolean _hasBigScreen = null;
     private static Boolean _hasCamera = null;
     private static Boolean _isTablet = null;
     private static Integer _loadFactor = null;
-    public static float displayDensity = 0.0F;
 
     static {
         GTE_ICS = Build.VERSION.SDK_INT >= 14;
@@ -106,17 +106,18 @@ public class DeviceUtils {
 
     public static int getDefaultLoadFactor(Context context) {
         if (_loadFactor == null) {
-            Integer integer = Integer.valueOf(0xf & context
-                    .getResources().getConfiguration().screenLayout);
+            Integer integer = 0xf & context
+                    .getResources().getConfiguration().screenLayout;
             _loadFactor = integer;
-            _loadFactor = Integer.valueOf(Math.max(integer.intValue(), 1));
+            _loadFactor = Math.max(integer, 1);
         }
-        return _loadFactor.intValue();
+        return _loadFactor;
     }
 
     public static float getDensity(Context context) {
-        if (displayDensity == 0.0)
+        if (displayDensity == 0.0) {
             displayDensity = getDisplayMetrics(context).density;
+        }
         return displayDensity;
     }
 
@@ -156,7 +157,7 @@ public class DeviceUtils {
      */
     public static int[] getRealScreenSize(Activity activity) {
         int[] size = new int[2];
-        int screenWidth = 0, screenHeight = 0;
+        int screenWidth, screenHeight;
         WindowManager w = activity.getWindowManager();
         Display d = w.getDefaultDisplay();
         DisplayMetrics metrics = new DisplayMetrics();
@@ -165,7 +166,7 @@ public class DeviceUtils {
         screenWidth = metrics.widthPixels;
         screenHeight = metrics.heightPixels;
         // includes window decorations (statusbar bar/menu bar)
-        if (Build.VERSION.SDK_INT >= 14 && Build.VERSION.SDK_INT < 17)
+        if (Build.VERSION.SDK_INT >= 14 && Build.VERSION.SDK_INT < 17) {
             try {
                 screenWidth = (Integer) Display.class.getMethod("getRawWidth")
                         .invoke(d);
@@ -173,8 +174,9 @@ public class DeviceUtils {
                         .getMethod("getRawHeight").invoke(d);
             } catch (Exception ignored) {
             }
+        }
         // includes window decorations (statusbar bar/menu bar)
-        if (Build.VERSION.SDK_INT >= 17)
+        if (Build.VERSION.SDK_INT >= 17) {
             try {
                 Point realSize = new Point();
                 Display.class.getMethod("getRealSize", Point.class).invoke(d,
@@ -183,6 +185,7 @@ public class DeviceUtils {
                 screenHeight = realSize.y;
             } catch (Exception ignored) {
             }
+        }
         size[0] = screenWidth;
         size[1] = screenHeight;
         return size;
@@ -195,10 +198,10 @@ public class DeviceUtils {
      * @return
      */
     public static int getStatusBarHeight(Context context) {
-        Class<?> c = null;
-        Object obj = null;
-        Field field = null;
-        int x = 0;
+        Class<?> c;
+        Object obj;
+        Field field;
+        int x;
         try {
             c = Class.forName("com.android.internal.R$dimen");
             obj = c.newInstance();
@@ -217,19 +220,21 @@ public class DeviceUtils {
         if (_hasBigScreen == null) {
             boolean flag1;
             if ((0xf & context.getResources()
-                    .getConfiguration().screenLayout) >= 3)
+                    .getConfiguration().screenLayout) >= 3) {
                 flag1 = flag;
-            else
+            } else {
                 flag1 = false;
-            Boolean boolean1 = Boolean.valueOf(flag1);
+            }
+            Boolean boolean1 = flag1;
             _hasBigScreen = boolean1;
-            if (!boolean1.booleanValue()) {
-                if (getDensity(context) <= 1.5F)
+            if (!boolean1) {
+                if (getDensity(context) <= 1.5F) {
                     flag = false;
-                _hasBigScreen = Boolean.valueOf(flag);
+                }
+                _hasBigScreen = flag;
             }
         }
-        return _hasBigScreen.booleanValue();
+        return _hasBigScreen;
     }
 
     /**
@@ -238,7 +243,7 @@ public class DeviceUtils {
      * @param context
      * @return
      */
-    public static final boolean hasCamera(Context context) {
+    public static boolean hasCamera(Context context) {
         if (_hasCamera == null) {
             PackageManager pckMgr = context
                     .getPackageManager();
@@ -246,13 +251,10 @@ public class DeviceUtils {
                     .hasSystemFeature("android.hardware.camera.front");
             boolean flag1 = pckMgr.hasSystemFeature("android.hardware.camera");
             boolean flag2;
-            if (flag || flag1)
-                flag2 = true;
-            else
-                flag2 = false;
-            _hasCamera = Boolean.valueOf(flag2);
+            flag2 = flag || flag1;
+            _hasCamera = flag2;
         }
-        return _hasCamera.booleanValue();
+        return _hasCamera;
     }
 
     /**
@@ -262,13 +264,14 @@ public class DeviceUtils {
      * @return
      */
     public static boolean hasHardwareMenuKey(Context context) {
-        boolean flag = false;
-        if (PRE_HC)
+        boolean flag;
+        if (PRE_HC) {
             flag = true;
-        else if (GTE_ICS) {
+        } else if (GTE_ICS) {
             flag = ViewConfiguration.get(context).hasPermanentMenuKey();
-        } else
+        } else {
             flag = false;
+        }
         return flag;
     }
 
@@ -281,10 +284,7 @@ public class DeviceUtils {
     public static boolean hasInternet(Context context) {
         boolean flag;
         ConnectivityManager manager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (manager != null && manager.getActiveNetworkInfo() != null)
-            flag = true;
-        else
-            flag = false;
+        flag = manager != null && manager.getActiveNetworkInfo() != null;
         return flag;
     }
 
@@ -299,8 +299,9 @@ public class DeviceUtils {
         try {
             PackageInfo pckInfo = context.getPackageManager()
                     .getPackageInfo(pckName, 0);
-            if (pckInfo != null)
+            if (pckInfo != null) {
                 return true;
+            }
         } catch (PackageManager.NameNotFoundException e) {
             Log.e("TDvice", e.getMessage());
         }
@@ -308,8 +309,9 @@ public class DeviceUtils {
     }
 
     public static void hideAnimatedView(View view) {
-        if (PRE_HC && view != null)
+        if (PRE_HC && view != null) {
             view.setPadding(view.getWidth(), 0, 0, 0);
+        }
     }
 
     /**
@@ -319,13 +321,15 @@ public class DeviceUtils {
      * @param view
      */
     public static void hideSoftKeyboard(Context context, View view) {
-        if (view == null)
+        if (view == null) {
             return;
+        }
         InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(
                 Context.INPUT_METHOD_SERVICE);
-        if (inputMethodManager.isActive())
+        if (inputMethodManager.isActive()) {
             inputMethodManager.hideSoftInputFromWindow(
                     view.getWindowToken(), 0);
+        }
     }
 
     /**
@@ -336,10 +340,7 @@ public class DeviceUtils {
      */
     public static boolean isLandscape(Context context) {
         boolean flag;
-        if (context.getResources().getConfiguration().orientation == 2)
-            flag = true;
-        else
-            flag = false;
+        flag = context.getResources().getConfiguration().orientation == 2;
         return flag;
     }
 
@@ -351,27 +352,26 @@ public class DeviceUtils {
      */
     public static boolean isPortrait(Context context) {
         boolean flag = true;
-        if (context.getResources().getConfiguration().orientation != 1)
+        if (context.getResources().getConfiguration().orientation != 1) {
             flag = false;
+        }
         return flag;
     }
 
     public static boolean isTablet(Context context) {
         if (_isTablet == null) {
             boolean flag;
-            if ((0xf & context.getResources()
-                    .getConfiguration().screenLayout) >= 3)
-                flag = true;
-            else
-                flag = false;
-            _isTablet = Boolean.valueOf(flag);
+            flag = (0xf & context.getResources()
+                    .getConfiguration().screenLayout) >= 3;
+            _isTablet = flag;
         }
-        return _isTablet.booleanValue();
+        return _isTablet;
     }
 
     public static void showAnimatedView(View view) {
-        if (PRE_HC && view != null)
+        if (PRE_HC && view != null) {
             view.setPadding(0, 0, 0, 0);
+        }
     }
 
     public static void showSoftKeyboard(Dialog dialog) {
@@ -406,10 +406,7 @@ public class DeviceUtils {
     public static boolean isZhCN(Context context) {
         String lang = context.getResources()
                 .getConfiguration().locale.getCountry();
-        if (lang.equalsIgnoreCase("CN")) {
-            return true;
-        }
-        return false;
+        return "CN".equalsIgnoreCase(lang);
     }
 
     public static String percent(double p1, double p2) {
@@ -474,7 +471,7 @@ public class DeviceUtils {
      * @return
      */
     public static int getVersionCode(Context context) {
-        int versionCode = 0;
+        int versionCode;
         try {
             versionCode = context.getPackageManager()
                     .getPackageInfo(context.getPackageName(),
@@ -493,7 +490,7 @@ public class DeviceUtils {
      * @return
      */
     public static int getVersionCode(Context context, String packageName) {
-        int versionCode = 0;
+        int versionCode;
         try {
             versionCode = context.getPackageManager()
                     .getPackageInfo(packageName, 0).versionCode;
@@ -510,7 +507,7 @@ public class DeviceUtils {
      * @return
      */
     public static String getVersionName(Context context) {
-        String name = "";
+        String name;
         try {
             name = context.getPackageManager()
                     .getPackageInfo(context.getPackageName(),
@@ -533,8 +530,9 @@ public class DeviceUtils {
      * @param file
      */
     public static void installAPK(Context context, File file) {
-        if (file == null || !file.exists())
+        if (file == null || !file.exists()) {
             return;
+        }
         Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setAction(Intent.ACTION_VIEW);
@@ -605,7 +603,6 @@ public class DeviceUtils {
                 .getLaunchIntentForPackage(packageName);
         if (mainIntent == null) {
             mainIntent = new Intent(packageName);
-        } else {
         }
         context.startActivity(mainIntent);
     }
@@ -635,12 +632,12 @@ public class DeviceUtils {
         ConnectivityManager cm = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         // check the networkInfos numbers
         NetworkInfo[] networkInfos = cm.getAllNetworkInfo();
-        for (int i = 0; i < networkInfos.length; i++) {
-            if (networkInfos[i].getState() == NetworkInfo.State.CONNECTED) {
-                if (networkInfos[i].getType() == ConnectivityManager.TYPE_MOBILE) {
+        for (NetworkInfo networkInfo : networkInfos) {
+            if (networkInfo.getState() == NetworkInfo.State.CONNECTED) {
+                if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
                     isWifiConnect = false;
                 }
-                if (networkInfos[i].getType() == ConnectivityManager.TYPE_WIFI) {
+                if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
                     isWifiConnect = true;
                 }
             }
@@ -665,8 +662,9 @@ public class DeviceUtils {
 
     @SuppressWarnings("deprecation")
     public static void copyTextToBoard(Context context, String string) {
-        if (TextUtils.isEmpty(string))
+        if (TextUtils.isEmpty(string)) {
             return;
+        }
         ClipboardManager clip = (ClipboardManager) context
                 .getSystemService(Context.CLIPBOARD_SERVICE);
         clip.setText(string);
@@ -697,10 +695,10 @@ public class DeviceUtils {
     }
 
     public static int getStatuBarHeight(Context context) {
-        Class<?> c = null;
-        Object obj = null;
-        Field field = null;
-        int x = 0, sbar = 38;// 默认为38，貌似大部分是这样的
+        Class<?> c;
+        Object obj;
+        Field field;
+        int x, sbar = 38;// 默认为38，貌似大部分是这样的
         try {
             c = Class.forName("com.android.internal.R$dimen");
             obj = c.newInstance();
@@ -717,11 +715,7 @@ public class DeviceUtils {
 
     public static boolean hasStatusBar(Activity activity) {
         WindowManager.LayoutParams attrs = activity.getWindow().getAttributes();
-        if ((attrs.flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
-            return false;
-        } else {
-            return true;
-        }
+        return (attrs.flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) != WindowManager.LayoutParams.FLAG_FULLSCREEN;
     }
 
     /**
@@ -756,7 +750,7 @@ public class DeviceUtils {
         if (nType == ConnectivityManager.TYPE_MOBILE) {
             String extraInfo = networkInfo.getExtraInfo();
             if (extraInfo != null && !extraInfo.isEmpty()) {
-                if (extraInfo.equalsIgnoreCase("cmnet")) {
+                if ("cmnet".equalsIgnoreCase(extraInfo)) {
                     netType = NETTYPE_CMNET;
                 } else {
                     netType = NETTYPE_CMWAP;
@@ -774,11 +768,8 @@ public class DeviceUtils {
         NetworkInfo mobNetInfo = connectMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         //WIFI连接状态
         NetworkInfo wifiNetInfo = connectMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
-            //当前无可用的网络
-            return false;
-        }
-        return true;
+        //当前无可用的网络
+        return mobNetInfo.isConnected() || wifiNetInfo.isConnected();
     }
 
     /**
@@ -787,11 +778,8 @@ public class DeviceUtils {
      * @return
      */
     public static boolean isExitsSdcard() {
-        if (Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED))
-            return true;
-        else
-            return false;
+        return Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED);
     }
 }
 

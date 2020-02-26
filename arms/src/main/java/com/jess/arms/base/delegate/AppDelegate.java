@@ -22,8 +22,9 @@ import android.content.ComponentCallbacks2;
 import android.content.ContentProvider;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.jess.arms.base.App;
 import com.jess.arms.base.BaseApplication;
@@ -57,14 +58,14 @@ import javax.inject.Named;
  * ================================================
  */
 public class AppDelegate implements App, AppLifecycles {
-    private Application mApplication;
-    private AppComponent mAppComponent;
     @Inject
     @Named("ActivityLifecycle")
     protected Application.ActivityLifecycleCallbacks mActivityLifecycle;
     @Inject
     @Named("ActivityLifecycleForRxLifecycle")
     protected Application.ActivityLifecycleCallbacks mActivityLifecycleForRxLifecycle;
+    private Application mApplication;
+    private AppComponent mAppComponent;
     private List<ConfigModule> mModules;
     private List<AppLifecycles> mAppLifecycles = new ArrayList<>();
     private List<Application.ActivityLifecycleCallbacks> mActivityLifecycles = new ArrayList<>();
@@ -209,12 +210,8 @@ public class AppDelegate implements App, AppLifecycles {
      * 不响应 {@link ComponentCallbacks2#onTrimMemory(int)} 回调, 系统 kill 掉进程的几率更大
      */
     private static class AppComponentCallbacks implements ComponentCallbacks2 {
-        private Application mApplication;
-        private AppComponent mAppComponent;
 
         AppComponentCallbacks(Application application, AppComponent appComponent) {
-            this.mApplication = application;
-            this.mAppComponent = appComponent;
         }
 
         /**

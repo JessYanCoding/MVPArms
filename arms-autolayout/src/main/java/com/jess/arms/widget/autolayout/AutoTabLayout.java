@@ -17,13 +17,15 @@ package com.jess.arms.widget.autolayout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.design.widget.TabLayout;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.material.tabs.TabLayout;
 import com.zhy.autolayout.utils.AutoUtils;
 import com.zhy.autolayout.utils.DimenUtils;
 
@@ -76,8 +78,9 @@ public class AutoTabLayout extends TabLayout {
                 R.styleable.TextAppearance);
 
         try {
-            if (!DimenUtils.isPxVal(a.peekValue(R.styleable.TextAppearance_android_textSize)))
+            if (!DimenUtils.isPxVal(a.peekValue(R.styleable.TextAppearance_android_textSize))) {
                 return NO_VALID;
+            }
             return a.getDimensionPixelSize(R.styleable.TextAppearance_android_textSize, NO_VALID);
         } finally {
             a.recycle();
@@ -85,19 +88,21 @@ public class AutoTabLayout extends TabLayout {
     }
 
     @Override
-    public void addTab(Tab tab, int position, boolean setSelected) {
+    public void addTab(@NonNull Tab tab, int position, boolean setSelected) {
         super.addTab(tab, position, setSelected);
         setUpTabTextSize(tab);
     }
 
     @Override
-    public void addTab(Tab tab, boolean setSelected) {
+    public void addTab(@NonNull Tab tab, boolean setSelected) {
         super.addTab(tab, setSelected);
         setUpTabTextSize(tab);
     }
 
     private void setUpTabTextSize(Tab tab) {
-        if (mTextSize == NO_VALID || tab.getCustomView() != null) return;
+        if (mTextSize == NO_VALID || tab.getCustomView() != null) {
+            return;
+        }
 
         ViewGroup tabGroup = (ViewGroup) getChildAt(0);
         ViewGroup tabContainer = (ViewGroup) tabGroup.getChildAt(tab.getPosition());
@@ -106,7 +111,7 @@ public class AutoTabLayout extends TabLayout {
         if (AutoUtils.autoed(textView)) {
             return;
         }
-        int autoTextSize = 0;
+        int autoTextSize;
         if (mTextSizeBaseWidth) {
             autoTextSize = AutoUtils.getPercentWidthSize(mTextSize);
         } else {

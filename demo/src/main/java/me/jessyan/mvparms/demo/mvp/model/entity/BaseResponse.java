@@ -52,10 +52,6 @@ public class BaseResponse<T> implements Serializable {
      * @return
      */
     public boolean isSuccess() {
-        if (code.equals(Api.RequestSuccess)) {
-            return true;
-        } else {
-            return false;
-        }
+        return code.equals(Api.REQUEST_SUCCESS);
     }
 }

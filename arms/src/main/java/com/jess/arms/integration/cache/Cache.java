@@ -16,8 +16,9 @@
 package com.jess.arms.integration.cache;
 
 import android.app.Application;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.jess.arms.di.module.GlobalConfigModule;
 
@@ -37,18 +38,6 @@ import java.util.Set;
  * ================================================
  */
 public interface Cache<K, V> {
-
-    interface Factory {
-
-        /**
-         * Returns a new cache
-         *
-         * @param type 框架中需要缓存的模块类型
-         * @return {@link Cache}
-         */
-        @NonNull
-        Cache build(CacheType type);
-    }
 
     /**
      * 返回当前缓存已占用的总 size
@@ -77,7 +66,7 @@ public interface Cache<K, V> {
      * 将 {@code key} 和 {@code value} 以条目的形式加入缓存,如果这个 {@code key} 在缓存中已经有对应的 {@code value}
      * 则此 {@code value} 被新的 {@code value} 替换并返回,如果为 {@code null} 说明是一个新条目
      *
-     * @param key {@code key}
+     * @param key   {@code key}
      * @param value {@code value}
      * @return 如果这个 {@code key} 在容器中已经储存有 {@code value}, 则返回之前的 {@code value} 否则返回 {@code null}
      */
@@ -113,4 +102,16 @@ public interface Cache<K, V> {
      * 清除缓存中所有的内容
      */
     void clear();
+
+    interface Factory {
+
+        /**
+         * Returns a new cache
+         *
+         * @param type 框架中需要缓存的模块类型
+         * @return {@link Cache}
+         */
+        @NonNull
+        Cache build(CacheType type);
+    }
 }

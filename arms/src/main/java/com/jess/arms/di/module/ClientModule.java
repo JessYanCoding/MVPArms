@@ -17,8 +17,9 @@ package com.jess.arms.di.module;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.jess.arms.http.GlobalHttpHandler;
@@ -26,7 +27,6 @@ import com.jess.arms.http.log.RequestInterceptor;
 import com.jess.arms.utils.DataHelper;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -45,7 +45,6 @@ import okhttp3.Dispatcher;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -82,8 +81,9 @@ public abstract class ClientModule {
                 .baseUrl(httpUrl)//域名
                 .client(client);//设置 OkHttp
 
-        if (configuration != null)
+        if (configuration != null) {
             configuration.configRetrofit(application, builder);
+        }
 
         builder
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用 RxJava
@@ -112,13 +112,9 @@ public abstract class ClientModule {
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .addNetworkInterceptor(intercept);
 
-        if (handler != null)
-            builder.addInterceptor(new Interceptor() {
-                @Override
-                public Response intercept(Chain chain) throws IOException {
-                    return chain.proceed(handler.onHttpRequestBefore(chain, chain.request()));
-                }
-            });
+        if (handler != null) {
+            builder.addInterceptor(chain -> chain.proceed(handler.onHttpRequestBefore(chain, chain.request())));
+        }
 
         //如果外部提供了 Interceptor 的集合则遍历添加
         if (interceptors != null) {
@@ -130,8 +126,9 @@ public abstract class ClientModule {
         //为 OkHttp 设置默认的线程池
         builder.dispatcher(new Dispatcher(executorService));
 
-        if (configuration != null)
+        if (configuration != null) {
             configuration.configOkhttp(application, builder);
+        }
         return builder.build();
     }
 
@@ -146,9 +143,6 @@ public abstract class ClientModule {
     static OkHttpClient.Builder provideClientBuilder() {
         return new OkHttpClient.Builder();
     }
-
-    @Binds
-    abstract Interceptor bindInterceptor(RequestInterceptor interceptor);
 
     /**
      * 提供 {@link RxCache}
@@ -168,7 +162,9 @@ public abstract class ClientModule {
         if (configuration != null) {
             rxCache = configuration.configRxCache(application, builder);
         }
-        if (rxCache != null) return rxCache;
+        if (rxCache != null) {
+            return rxCache;
+        }
         return builder
                 .persistence(cacheDirectory, new GsonSpeaker(gson));
     }
@@ -203,6 +199,9 @@ public abstract class ClientModule {
                 .responseErrorListener(listener)
                 .build();
     }
+
+    @Binds
+    abstract Interceptor bindInterceptor(RequestInterceptor interceptor);
 
     /**
      * {@link Retrofit} 自定义配置接口

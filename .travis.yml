@@ -1,7 +1,7 @@
 language: android
 jdk: oraclejdk8
 before_install:
-- yes | sdkmanager "platforms;android-28"
+  - yes | sdkmanager "platforms;android-28"
 
 env:
   global:
@@ -24,7 +24,7 @@ android:
     - '.+'
 
 script:
-    - ./gradlew clean
-#    - ./gradlew install
-#    - ./gradlew bintrayUpload
-    - ./gradlew assembleDebug
+  - ./gradlew clean
+  #    - ./gradlew install
+  #    - ./gradlew bintrayUpload
+  - ./gradlew assembleDebug

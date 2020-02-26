@@ -38,8 +38,8 @@ import java.io.ObjectOutputStream;
  * ================================================
  */
 public class DataHelper {
-    private static SharedPreferences mSharedPreferences;
     public static final String SP_NAME = "config";
+    private static SharedPreferences mSharedPreferences;
 
     private DataHelper() {
         throw new IllegalStateException("you can't instantiate me!");
@@ -135,9 +135,9 @@ public class DataHelper {
             // 将对象写入字节流
             oos.writeObject(device);
             // 将字节流编码成base64的字符串
-            String oAuth_Base64 = new String(Base64.encode(baos
+            String oAuthBase64 = new String(Base64.encode(baos
                     .toByteArray(), Base64.DEFAULT));
-            mSharedPreferences.edit().putString(key, oAuth_Base64).apply();
+            mSharedPreferences.edit().putString(key, oAuthBase64).apply();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -172,6 +172,7 @@ public class DataHelper {
             ObjectInputStream bis = new ObjectInputStream(bais);
 
             // 读取对象
+            //noinspection unchecked
             device = (T) bis.readObject();
 
         } catch (Exception e) {
@@ -186,7 +187,7 @@ public class DataHelper {
      */
     public static File getCacheFile(Context context) {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            File file = null;
+            File file;
             file = context.getExternalCacheDir();//获取系统管理的sd卡缓存文件
             if (file == null) {//如果获取的文件为空,就使用自己定义的缓存文件夹做缓存路径
                 file = new File(getCacheFilePath(context));
@@ -206,7 +207,7 @@ public class DataHelper {
      */
     public static String getCacheFilePath(Context context) {
         String packageName = context.getPackageName();
-        return "/mnt/sdcard/" + packageName;
+        return Environment.getExternalStorageDirectory().getPath() + packageName;
     }
 
     /**
@@ -275,8 +276,7 @@ public class DataHelper {
     public static String bytyToString(InputStream in) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         byte[] buf = new byte[1024];
-        int num = 0;
-        while ((num = in.read(buf)) != -1) {
+        while (in.read(buf) != -1) {
             out.write(buf, 0, buf.length);
         }
         String result = out.toString();

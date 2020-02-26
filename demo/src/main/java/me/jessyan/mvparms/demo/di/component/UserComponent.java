@@ -38,11 +38,14 @@ import me.jessyan.mvparms.demo.mvp.ui.activity.UserActivity;
 @Component(modules = UserModule.class, dependencies = AppComponent.class)
 public interface UserComponent {
     void inject(UserActivity activity);
+
     @Component.Builder
     interface Builder {
         @BindsInstance
         UserComponent.Builder view(UserContract.View view);
+
         UserComponent.Builder appComponent(AppComponent appComponent);
+
         UserComponent build();
     }
 }

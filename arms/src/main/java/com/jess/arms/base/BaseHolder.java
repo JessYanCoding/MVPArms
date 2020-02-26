@@ -15,9 +15,10 @@
  */
 package com.jess.arms.base;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.jess.arms.utils.ThirdViewUtil;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -32,15 +33,17 @@ import com.zhy.autolayout.utils.AutoUtils;
  * ================================================
  */
 public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements View.OnClickListener {
-    protected OnViewClickListener mOnViewClickListener = null;
     protected final String TAG = this.getClass().getSimpleName();
+    protected OnViewClickListener mOnViewClickListener = null;
 
     public BaseHolder(View itemView) {
         super(itemView);
         //点击事件
         itemView.setOnClickListener(this);
         //屏幕适配
-        if (ThirdViewUtil.isUseAutolayout()) AutoUtils.autoSize(itemView);
+        if (ThirdViewUtil.isUseAutolayout()) {
+            AutoUtils.autoSize(itemView);
+        }
         //绑定 ButterKnife
         ThirdViewUtil.bindTarget(this, itemView);
     }
@@ -68,6 +71,10 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
         }
     }
 
+    public void setOnItemClickListener(OnViewClickListener listener) {
+        this.mOnViewClickListener = listener;
+    }
+
     /**
      * item 点击事件
      */
@@ -80,9 +87,5 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements V
          * @param position 在 RecyclerView 中的位置
          */
         void onViewClick(View view, int position);
-    }
-
-    public void setOnItemClickListener(OnViewClickListener listener) {
-        this.mOnViewClickListener = listener;
     }
 }

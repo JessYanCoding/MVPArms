@@ -19,8 +19,9 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
-import android.media.ExifInterface;
 import android.widget.TextView;
+
+import androidx.exifinterface.media.ExifInterface;
 
 import java.io.IOException;
 
@@ -197,6 +198,8 @@ public class DrawableProvider {
                     break;
                 case ExifInterface.ORIENTATION_ROTATE_270:
                     degree = 270;
+                    break;
+                default:
                     break;
             }
         } catch (IOException e) {

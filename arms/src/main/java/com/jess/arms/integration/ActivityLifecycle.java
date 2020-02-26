@@ -18,9 +18,10 @@ package com.jess.arms.integration;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.base.delegate.ActivityDelegate;
@@ -72,11 +73,13 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         //如果 intent 包含了此字段,并且为 true 说明不加入到 list 进行统一管理
         boolean isNotAdd = false;
-        if (activity.getIntent() != null)
+        if (activity.getIntent() != null) {
             isNotAdd = activity.getIntent().getBooleanExtra(AppManager.IS_NOT_ADD_ACTIVITY_LIST, false);
+        }
 
-        if (!isNotAdd)
+        if (!isNotAdd) {
             mAppManager.addActivity(activity);
+        }
 
         //配置ActivityDelegate
         if (activity instanceof IActivity) {
@@ -160,7 +163,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
      */
     private void registerFragmentCallbacks(Activity activity) {
 
-        boolean useFragment = activity instanceof IActivity ? ((IActivity) activity).useFragment() : true;
+        boolean useFragment = !(activity instanceof IActivity) || ((IActivity) activity).useFragment();
         if (activity instanceof FragmentActivity && useFragment) {
 
             //mFragmentLifecycle 为 Fragment 生命周期实现类, 用于框架内部对每个 Fragment 的必要操作, 如给每个 Fragment 配置 FragmentDelegate
@@ -168,9 +171,12 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
             ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(mFragmentLifecycle.get(), true);
 
             if (mExtras.containsKey(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()))) {
+                @SuppressWarnings("unchecked")
                 List<ConfigModule> modules = (List<ConfigModule>) mExtras.get(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()));
-                for (ConfigModule module : modules) {
-                    module.injectFragmentLifecycle(mApplication, mFragmentLifecycles.get());
+                if (modules != null) {
+                    for (ConfigModule module : modules) {
+                        module.injectFragmentLifecycle(mApplication, mFragmentLifecycles.get());
+                    }
                 }
                 mExtras.remove(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()));
             }

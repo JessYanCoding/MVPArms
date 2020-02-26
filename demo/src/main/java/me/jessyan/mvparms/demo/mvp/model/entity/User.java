@@ -15,6 +15,8 @@
  */
 package me.jessyan.mvparms.demo.mvp.model.entity;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * ================================================
  * User 实体类
@@ -29,14 +31,16 @@ public class User {
     private final String login;
     private final String avatar_url;
 
-    public User(int id, String login, String avatar_url) {
+    public User(int id, String login, String avatarUrl) {
         this.id = id;
         this.login = login;
-        this.avatar_url = avatar_url;
+        this.avatar_url = avatarUrl;
     }
 
     public String getAvatarUrl() {
-        if (avatar_url.isEmpty()) return avatar_url;
+        if (avatar_url.isEmpty()) {
+            return avatar_url;
+        }
         return avatar_url.split("\\?")[0];
     }
 
@@ -49,7 +53,9 @@ public class User {
         return login;
     }
 
-    @Override public String toString() {
+    @NotNull
+    @Override
+    public String toString() {
         return "id -> " + id + " login -> " + login;
     }
 }

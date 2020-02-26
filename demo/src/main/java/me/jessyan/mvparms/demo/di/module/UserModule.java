@@ -15,9 +15,9 @@
  */
 package me.jessyan.mvparms.demo.di.module;
 
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.jess.arms.di.scope.ActivityScope;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -46,9 +46,6 @@ import me.jessyan.mvparms.demo.mvp.ui.adapter.UserAdapter;
 @Module
 public abstract class UserModule {
 
-    @Binds
-    abstract UserContract.Model bindUserModel(UserModel model);
-
     @ActivityScope
     @Provides
     static RxPermissions provideRxPermissions(UserContract.View view) {
@@ -69,7 +66,10 @@ public abstract class UserModule {
 
     @ActivityScope
     @Provides
-    static RecyclerView.Adapter provideUserAdapter(List<User> list){
+    static RecyclerView.Adapter provideUserAdapter(List<User> list) {
         return new UserAdapter(list);
     }
+
+    @Binds
+    abstract UserContract.Model bindUserModel(UserModel model);
 }

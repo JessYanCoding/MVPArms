@@ -16,9 +16,10 @@
 package com.jess.arms.widget.autolayout;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.cardview.widget.CardView;
 
 import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.utils.AutoLayoutHelper;

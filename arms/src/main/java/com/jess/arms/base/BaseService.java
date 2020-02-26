@@ -18,7 +18,8 @@ package com.jess.arms.base;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.jess.arms.integration.EventBusManager;
 
@@ -47,16 +48,18 @@ public abstract class BaseService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (useEventBus())
+        if (useEventBus()) {
             EventBusManager.getInstance().register(this);
+        }
         init();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (useEventBus())
+        if (useEventBus()) {
             EventBusManager.getInstance().unregister(this);
+        }
         unDispose();//解除订阅
         this.mCompositeDisposable = null;
     }

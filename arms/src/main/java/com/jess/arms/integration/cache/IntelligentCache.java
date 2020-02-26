@@ -15,8 +15,8 @@
  */
 package com.jess.arms.integration.cache;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.jess.arms.utils.Preconditions;
 
@@ -41,13 +41,25 @@ import java.util.Set;
  * ================================================
  */
 public class IntelligentCache<V> implements Cache<String, V> {
+    public static final String KEY_KEEP = "Keep=";
     private final Map<String, V> mMap;//可将数据永久存储至内存中的存储容器
     private final Cache<String, V> mCache;//当达到最大容量时可根据 LRU 算法抛弃不合规数据的存储容器
-    public static final String KEY_KEEP = "Keep=";
 
     public IntelligentCache(int size) {
         this.mMap = new HashMap<>();
         this.mCache = new LruCache<>(size);
+    }
+
+    /**
+     * 使用此方法返回的值作为 key, 可以将数据永久存储至内存中
+     *
+     * @param key {@code key}
+     * @return Keep= + {@code key}
+     */
+    @NonNull
+    public static String getKeyOfKeep(@NonNull String key) {
+        Preconditions.checkNotNull(key, "key == null");
+        return IntelligentCache.KEY_KEEP + key;
     }
 
     /**
@@ -149,17 +161,5 @@ public class IntelligentCache<V> implements Cache<String, V> {
     public void clear() {
         mCache.clear();
         mMap.clear();
-    }
-
-    /**
-     * 使用此方法返回的值作为 key, 可以将数据永久存储至内存中
-     *
-     * @param key {@code key}
-     * @return Keep= + {@code key}
-     */
-    @NonNull
-    public static String getKeyOfKeep(@NonNull String key) {
-        Preconditions.checkNotNull(key, "key == null");
-        return IntelligentCache.KEY_KEEP + key;
     }
 }

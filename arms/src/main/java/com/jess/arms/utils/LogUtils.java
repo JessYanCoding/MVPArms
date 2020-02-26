@@ -44,7 +44,9 @@ public class LogUtils {
     }
 
     public static void debugInfo(String tag, String msg) {
-        if (!isLog || TextUtils.isEmpty(msg)) return;
+        if (!isLog || TextUtils.isEmpty(msg)) {
+            return;
+        }
         Log.d(tag, msg);
 
     }
@@ -54,7 +56,9 @@ public class LogUtils {
     }
 
     public static void warnInfo(String tag, String msg) {
-        if (!isLog || TextUtils.isEmpty(msg)) return;
+        if (!isLog || TextUtils.isEmpty(msg)) {
+            return;
+        }
         Log.w(tag, msg);
 
     }
@@ -70,7 +74,9 @@ public class LogUtils {
      * @param msg 日志内容
      */
     public static void debugLongInfo(String tag, String msg) {
-        if (!isLog || TextUtils.isEmpty(msg)) return;
+        if (!isLog || TextUtils.isEmpty(msg)) {
+            return;
+        }
         msg = msg.trim();
         int index = 0;
         int maxLength = 3500;

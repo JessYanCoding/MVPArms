@@ -16,11 +16,12 @@
 package com.jess.arms.widget.autolayout;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
+
+import androidx.annotation.Nullable;
 
 import com.zhy.autolayout.AutoLayoutInfo;
 import com.zhy.autolayout.utils.AutoLayoutHelper;
@@ -53,8 +54,9 @@ public class AutoScrollView extends ScrollView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (!isInEditMode())
+        if (!isInEditMode()) {
             mHelper.adjustChildren();
+        }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
@@ -77,11 +79,6 @@ public class AutoScrollView extends ScrollView {
             mAutoLayoutInfo = AutoLayoutHelper.getAutoLayoutInfo(c, attrs);
         }
 
-        @Override
-        public AutoLayoutInfo getAutoLayoutInfo() {
-            return mAutoLayoutInfo;
-        }
-
         public LayoutParams(int width, int height) {
             super(width, height);
         }
@@ -92,6 +89,11 @@ public class AutoScrollView extends ScrollView {
 
         public LayoutParams(MarginLayoutParams source) {
             super(source);
+        }
+
+        @Override
+        public AutoLayoutInfo getAutoLayoutInfo() {
+            return mAutoLayoutInfo;
         }
     }
 }

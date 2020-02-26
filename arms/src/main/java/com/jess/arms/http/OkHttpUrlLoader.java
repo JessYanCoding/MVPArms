@@ -15,14 +15,18 @@
  */
 package com.jess.arms.http;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.bumptech.glide.load.Options;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.ModelLoader;
 import com.bumptech.glide.load.model.ModelLoaderFactory;
 import com.bumptech.glide.load.model.MultiModelLoaderFactory;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.io.InputStream;
+
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 
@@ -59,17 +63,6 @@ public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
         private static volatile Call.Factory internalClient;
         private final Call.Factory client;
 
-        private static Call.Factory getInternalClient() {
-            if (internalClient == null) {
-                synchronized (Factory.class) {
-                    if (internalClient == null) {
-                        internalClient = new OkHttpClient();
-                    }
-                }
-            }
-            return internalClient;
-        }
-
         /**
          * Constructor for a new Factory that runs requests using a static singleton client.
          */
@@ -86,9 +79,20 @@ public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
             this.client = client;
         }
 
+        private static Call.Factory getInternalClient() {
+            if (internalClient == null) {
+                synchronized (Factory.class) {
+                    if (internalClient == null) {
+                        internalClient = new OkHttpClient();
+                    }
+                }
+            }
+            return internalClient;
+        }
+
         @NonNull
         @Override
-        public ModelLoader<GlideUrl, InputStream> build(MultiModelLoaderFactory multiFactory) {
+        public ModelLoader<GlideUrl, InputStream> build(@NotNull MultiModelLoaderFactory multiFactory) {
             return new OkHttpUrlLoader(client);
         }
 
