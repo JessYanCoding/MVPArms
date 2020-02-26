@@ -15,6 +15,8 @@
  */
 package com.jess.arms.utils;
 
+import android.os.Build;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
@@ -176,10 +178,21 @@ public class ZipHelper {
     public static byte[] compressForZlib(String stringToCompress) {
         byte[] returnValues = null;
 
-        returnValues = compressForZlib
-                (
-                        stringToCompress.getBytes(StandardCharsets.UTF_8)
-                );
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                returnValues = compressForZlib
+                        (
+                                stringToCompress.getBytes(StandardCharsets.UTF_8)
+                        );
+            } else {
+                returnValues = compressForZlib
+                        (
+                                stringToCompress.getBytes("UTF-8")
+                        );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return returnValues;
     }
@@ -197,7 +210,11 @@ public class ZipHelper {
         try {
             os = new ByteArrayOutputStream(string.length());
             gos = new GZIPOutputStream(os);
-            gos.write(string.getBytes(StandardCharsets.UTF_8));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                gos.write(string.getBytes(StandardCharsets.UTF_8));
+            } else {
+                gos.write(string.getBytes("UTF-8"));
+            }
             return os.toByteArray();
         } catch (IOException e) {
             e.printStackTrace();

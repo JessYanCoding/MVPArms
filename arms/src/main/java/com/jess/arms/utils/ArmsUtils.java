@@ -33,10 +33,6 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.jess.arms.base.App;
 import com.jess.arms.di.component.AppComponent;
@@ -44,6 +40,10 @@ import com.jess.arms.integration.AppManager;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * ================================================
@@ -379,6 +379,9 @@ public class ArmsUtils {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 hash = MessageDigest.getInstance("MD5").digest(
                         string.getBytes(StandardCharsets.UTF_8));
+            } else {
+                hash = MessageDigest.getInstance("MD5").digest(
+                        string.getBytes("UTF-8"));
             }
         } catch (Exception e) {
             e.printStackTrace();
