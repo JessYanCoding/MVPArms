@@ -21,20 +21,21 @@ android {
 }
 
 dependencies {
-    compileOnly rootProject.ext.dependencies["appcompat-v7"]
+    compileOnly rootProject.ext.dependencies["appcompat"]
     compileOnly rootProject.ext.dependencies["annotations"]
     api(rootProject.ext.dependencies["design"]) {
-        exclude module: 'support-annotations'
-        exclude module: 'appcompat-v7'
-        exclude module: 'support-v4'
-        exclude module: 'recyclerview-v7'
+        exclude module: 'annotation'
+        exclude module: 'appcompat'
+        exclude module: 'legacy-support-v4'
+        exclude module: 'recyclerview'
     }
-    api(rootProject.ext.dependencies["cardview-v7"]) {
-        exclude module: 'support-annotations'
+    api(rootProject.ext.dependencies["cardview"]) {
+        exclude module: 'annotation'
     }
     api(rootProject.ext.dependencies["autolayout"]) {
-        exclude group: 'com.android.support'
-        exclude module: 'recyclerview-v7'
+        exclude module: 'recyclerview'
+        exclude module: 'appcompat'
+        exclude module: 'vectordrawable-animated'
     }
 }
 

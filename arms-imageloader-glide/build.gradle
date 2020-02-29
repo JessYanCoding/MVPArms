@@ -22,9 +22,9 @@ android {
 
 dependencies {
     api(rootProject.ext.dependencies["glide"]) {
-        exclude module: 'support-annotations'
-        exclude module: 'support-fragment'
-        exclude module: 'animated-vector-drawable'
+        exclude module: 'annotation'
+        exclude module: 'fragment'
+        exclude module: 'vectordrawable-animated'
     }
     compileOnly project(':arms')
 }

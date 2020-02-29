@@ -26,24 +26,25 @@ android {
 }
 
 dependencies {
-    //support
-    api(rootProject.ext.dependencies["support-v4"]) {
-        exclude module: 'support-annotations'
+    api(rootProject.ext.dependencies["legacy-support-v4"]) {
+        exclude module: 'annotation'
+        exclude module: 'coordinatorlayout'
     }
-    api(rootProject.ext.dependencies["appcompat-v7"]) {
-        exclude module: 'support-annotations'
+    //androidx
+    api(rootProject.ext.dependencies["appcompat"]) {
+        exclude module: 'annotation'
     }
     compileOnly rootProject.ext.dependencies["design"]
-    api(rootProject.ext.dependencies["recyclerview-v7"]) {
-        exclude module: 'support-annotations'
+    api(rootProject.ext.dependencies["recyclerview"]) {
+        exclude module: 'annotation'
     }
     api rootProject.ext.dependencies["annotations"]
 
     //view
     compileOnly rootProject.ext.dependencies["autolayout"]
     api(rootProject.ext.dependencies["butterknife"]) {
-        exclude module: 'support-annotations'
-        exclude module: 'support-compat'
+        exclude module: 'annotation'
+        exclude module: 'core'
     }
 
     //rx
@@ -64,14 +65,14 @@ dependencies {
         exclude module: 'jsr305'
     }
     api(rootProject.ext.dependencies["rxlifecycle2-android"]) {
-        exclude module: 'support-annotations'
+        exclude module: 'annotation'
         exclude module: 'rxjava'
         exclude module: 'rxandroid'
         exclude module: 'rxlifecycle'
     }
     api(rootProject.ext.dependencies["rxpermissions2"]) {
         exclude module: 'rxjava'
-        exclude module: 'support-annotations'
+        exclude module: 'annotation'
     }
     api rootProject.ext.dependencies['rxerrorhandler2']
 
