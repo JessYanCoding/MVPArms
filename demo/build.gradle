@@ -92,6 +92,4 @@ dependencies {
     //test
     testImplementation rootProject.ext.dependencies["junit"]
     debugImplementation rootProject.ext.dependencies["canary-debug"]
-    releaseImplementation rootProject.ext.dependencies["canary-release"]
-    testImplementation rootProject.ext.dependencies["canary-release"]
 }

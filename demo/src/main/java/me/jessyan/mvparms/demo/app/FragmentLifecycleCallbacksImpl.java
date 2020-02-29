@@ -19,18 +19,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
+import org.jetbrains.annotations.NotNull;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
-import com.jess.arms.integration.cache.IntelligentCache;
-import com.jess.arms.utils.ArmsUtils;
-import com.squareup.leakcanary.RefWatcher;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
-
 import timber.log.Timber;
 
 /**
@@ -102,11 +95,6 @@ public class FragmentLifecycleCallbacksImpl extends FragmentManager.FragmentLife
     @Override
     public void onFragmentDestroyed(@NotNull FragmentManager fm, Fragment f) {
         Timber.i("%s - onFragmentDestroyed", f.toString());
-        ((RefWatcher) Objects.requireNonNull(ArmsUtils
-                .obtainAppComponentFromContext(Objects.requireNonNull(f.getActivity()))
-                .extras()
-                .get(IntelligentCache.getKeyOfKeep(RefWatcher.class.getName()))))
-                .watch(f);
     }
 
     @Override

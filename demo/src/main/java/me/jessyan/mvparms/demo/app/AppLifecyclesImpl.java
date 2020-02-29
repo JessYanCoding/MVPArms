@@ -18,14 +18,9 @@ package me.jessyan.mvparms.demo.app;
 import android.app.Application;
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-
 import com.jess.arms.base.delegate.AppLifecycles;
-import com.jess.arms.integration.cache.IntelligentCache;
-import com.jess.arms.utils.ArmsUtils;
-import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
 
+import androidx.annotation.NonNull;
 import butterknife.ButterKnife;
 import me.jessyan.mvparms.demo.BuildConfig;
 import timber.log.Timber;
@@ -48,11 +43,6 @@ public class AppLifecyclesImpl implements AppLifecycles {
 
     @Override
     public void onCreate(@NonNull Application application) {
-        if (LeakCanary.isInAnalyzerProcess(application)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
         if (BuildConfig.LOG_DEBUG) {//Timber初始化
             //Timber 是一个日志框架容器,外部使用统一的Api,内部可以动态的切换成任何日志框架(打印策略)进行日志打印
             //并且支持添加多个日志框架(打印策略),做到外部调用一次 Api,内部却可以做到同时使用多个策略
@@ -68,12 +58,13 @@ public class AppLifecyclesImpl implements AppLifecycles {
 //                    });
             ButterKnife.setDebug(true);
         }
-        //LeakCanary 内存泄露检查
+        //LeakCanary v2.0+ 版本会自动完成框架的初始化, 以及对 Activity#onDestroy、Fragment#onDestroy、Fragment#onDestroyView 的监听
+        //原理和 AndroidAutoSize 一致, 所以注释掉下面 v1.0 的初始化代码
         //使用 IntelligentCache.KEY_KEEP 作为 key 的前缀, 可以使储存的数据永久存储在内存中
         //否则存储在 LRU 算法的存储空间中, 前提是 extras 使用的是 IntelligentCache (框架默认使用)
-        ArmsUtils.obtainAppComponentFromContext(application).extras()
-                .put(IntelligentCache.getKeyOfKeep(RefWatcher.class.getName())
-                        , BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
+//        ArmsUtils.obtainAppComponentFromContext(application).extras()
+//                .put(IntelligentCache.getKeyOfKeep(RefWatcher.class.getName())
+//                        , BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
     }
 
     @Override

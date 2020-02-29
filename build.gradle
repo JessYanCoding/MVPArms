@@ -31,8 +31,8 @@ configurations.all {
         eachDependency { details ->
             // Force all of the primary libraries to use the same version.
             if (details.requested.name == 'appcompat'
-                    && details.requested.name != 'multidex'
-                    && details.requested.name != 'multidex-instrumentation') {
+                    && details.requested.name == 'annotation'
+                    && details.requested.name == 'recyclerview') {
                 details.useVersion rootProject.ext.version["androidXSdkVersion"]
             }
         }
