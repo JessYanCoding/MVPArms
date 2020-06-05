@@ -3,10 +3,10 @@ apply from: "config.gradle"
 buildscript {
     repositories {
         google()
-        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.0'
+        classpath 'com.android.tools.build:gradle:4.0.0'
         //Gradle Android Maven plugin
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         //Gradle Bintray Plugin
@@ -17,7 +17,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
         maven { url "https://jitpack.io" }
     }
 }
