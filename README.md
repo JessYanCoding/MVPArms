@@ -28,7 +28,7 @@
   </a>
 </p> 
 
-## A common Architecture for Android Applications developing based on MVP, integrates many Open Source Projects (like Dagger2、RxJava、Retrofit ...), to make your developing quicker and easier.
+## A common architecture for Android application development based on MVP, integrating many open-source projects (such as Dagger2, RxJava, Retrofit, and more) to make development quicker and easier.
 
 ## Architectural
 <img src="https://github.com/JessYanCoding/MVPArms/raw/master/image/Architecture.png" width="80%" height="80%">
@@ -56,7 +56,7 @@
 
 * The use of these technologies for the latter part of the project maintenance and iterative, especially large projects is very helpful, but is to develop a pre-write a page to write a lot of `MVP`,` Dagger2` class and interface, which is indeed a headache for the development of pre- Now the framework has been able to [Template](https://github.com/JessYanCoding/MVPArmsTemplate) automatically generate some `MVP`,` Dagger2` template code, and now we can very easily use the framework.
 
-* Use this frame comes with automatic screen adaptation function, please refer to [AndroidAutoSize](https://github.com/JessYanCoding/AndroidAutoSize).
+* This framework includes an automatic screen adaptation feature. Please refer to AndroidAutoSize.(https://github.com/JessYanCoding/AndroidAutoSize).
 
 * This framework does not provide any third-party libraries associated with the **UI**.
 
